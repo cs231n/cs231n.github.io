@@ -15,7 +15,7 @@ In this assignment you will practice putting together a simple image classificat
 - understand the differences and tradeoffs between these classifiers
 - get a basic understanding of performance improvements from using **higher-level representations** than raw pixels (e.g. color histograms, Histogram of Gradient (HOG) features)
 
-**Deliverables:** The assignment is spread across four IPython Notebooks. Complete, print and hand in your IPython notebooks. The IPython Notebooks will also ask you to edit external files in the *cs231n* folder: print and hand in all of these files as well.
+Stanford students taking the class: See the [assignment page](http://vision.stanford.edu/teaching/cs231n/assignments.html) for further details.
 
 ### Q1: k-Nearest Neighbor classifier (30 points)
 
@@ -35,10 +35,10 @@ The IPython Notebook **features.ipynb** will walk you through this exercise, in 
 
 ### Q5: Bonus: Design your own features! (+10 points)
 
-In this assignment we provide you with Color Histograms and HOG features. To claim these bonus points, implement your own additional features from scratch, and using only numpy or scipy (no external dependencies). You will have to research different feature types to get ideas for what you might want to implement. Your new feature should help you improve the performance beyond what you got in Q4 if you wish to get these bonus points.
-
-**Submit to the class leaderboard**. We also provide some test images for which you do not have labels. Apply your classifier on these test images and upload your classifications using the script `blah.py`. This will submit your entry to a leaderboard.
+In question 4 we provided you with some features. For bonus points, implement your own additional features from scratch using only numpy or scipy (no external dependencies). You may have to research different feature types to get ideas for what you might want to implement. To get the bonus points, concatenating your new feature to the old features should improve your performance beyond what you got in Q4.
 
 ### Q6: Cool Bonus: Do something extra! (+10 points)
 
-Implement, investigate or analyze something extra surrounding the topics in this assignment, and using the code you developed. For example, is there some other interesting question we could have asked? Is there any insightful visualization you can plot? Or maybe you can experiment with a spin on the loss function? If you try out something cool we'll give you points and might feature your results in the lecture.
+When completing assignments, your task as a student is usually to answer a set of questions we wrote. In this Cool Bonus meta question, we'd like to flip this and encourage you to make up and answer your own questions regarding the material. 
+
+To claim these points implement, investigate and analyze something related to the topics in this assignment, using the code base and data in this assignment. For example, is there some other interesting question we could have asked? Pose it, explore it and answer it. Or is there any insightful visualization you can make? Plot it and interpret it. Or maybe you can devise a new experiment, such as a different spin on the loss function? If you try out something fun and get some cool results you'll get the points, and **we will feature the coolest results in the lecture**.
