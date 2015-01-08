@@ -83,9 +83,7 @@ The IPython Notebook **features.ipynb** will walk you through this exercise, in 
 
 ### Q5: Bonus: Design your own features! (+10 points)
 
-In this assignment we provide you with Color Histograms and HOG features. To claim these bonus points, implement your own additional features from scratch, and using only numpy or scipy (no external dependencies). You will have to research different feature types to get ideas for what you might want to implement. Your new feature should help you improve the performance beyond what you got in Q4 if you wish to get these bonus points.
-
-**Submit to the class leaderboard**. We also provide some test images for which you do not have labels. Apply your classifier on these test images and upload your classifications using the script `blah.py`. This will submit your entry to a leaderboard.
+In this assignment we provide you with Color Histograms and HOG features. To claim these bonus points, implement your own additional features from scratch, and using only numpy or scipy (no external dependencies). You will have to research different feature types to get ideas for what you might want to implement. Your new feature should help you improve the performance beyond what you got in Q4 if you wish to get these bonus points. If you come up with nice features we'll feature them in the lecture.
 
 ### Q6: Cool Bonus: Do something extra! (+10 points)
 
