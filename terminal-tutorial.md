@@ -1,15 +1,15 @@
 ---
 layout: page
-title: Terminal Tutorial
+title: Terminal.com Tutorial
 permalink: /terminal-tutorial/
 ---
-For the assignments, we offer an option to use [Terminal](https://www.terminal.com) for developing and testing your implementations. [Terminal](https://www.terminal.com) is an online computing platform that allows us to access pre-configured command line environments. Note that, it's not required to use [Terminal](https://www.terminal.com) for your assignments; however, it might make life easier with all the required dependencies and development toolkits configured for you.
+For the assignments, we offer an option to use [Terminal.com](https://www.terminal.com) for developing and testing your implementations. [Terminal](https://www.terminal.com) is an online computing platform that allows us to access pre-configured command line environments. Note that, it's not required to use [Terminal](https://www.terminal.com) for your assignments; however, it might make life easier with all the required dependencies and development toolkits configured for you.
 
 This tutorial lists the necessary steps of working on the assignments using Terminal. First of all, [sign up your own account](https://www.terminal.com/signup). Log in [Terminal](https://www.terminal.com) with the account that you have just created.
 
 For each assignment, we will provide you a link to a shared terminal snapshot. These snapshots are pre-configured command line environments with the starter code, where you can write your implementations and execute the code. Let's take Assignment #1 as an example:
 
-The snapshot of Assignment #1 can be found [here](https://www.terminal.com/tiny/aUHzioD0pS). Let's go to this link:
+The snapshot of Assignment #1 can be found [here](https://www.terminal.com/tiny/C9uqWtabDt). Let's go to this link:
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/terminal-shared.jpg'>

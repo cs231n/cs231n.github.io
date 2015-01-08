@@ -65,7 +65,7 @@ After you have the CIFAR-10 data, you should start the IPython notebook server f
 
 ### Working on Terminal.com
 We have created a Terminal.com snapshot that is preconfigured for this assignment;
-you can [find it here](https://www.terminal.com/snapshot/c45dbef456e1d7d195800b54321024cfecb28a22a0755008d377b04bb3b2fbef). You can find a tutorial on how to use it [here](/terminal-tutorial).
+you can [find it here](https://www.terminal.com/tiny/C9uqWtabDt). You can find a tutorial on how to use it [here](/terminal-tutorial).
 
 
 ### Q1: k-Nearest Neighbor classifier (30 points)
