@@ -15,7 +15,58 @@ In this assignment you will practice putting together a simple image classificat
 - understand the differences and tradeoffs between these classifiers
 - get a basic understanding of performance improvements from using **higher-level representations** than raw pixels (e.g. color histograms, Histogram of Gradient (HOG) features)
 
-Stanford students taking the class: See the [assignment page](http://vision.stanford.edu/teaching/cs231n/assignments.html) for further details.
+## Setup
+You can work on the assignment in one of two ways: locally on your own machine, or on a virtual machine
+through [Terminal.com](https://www.terminal.com/).
+
+### Working locally
+**Get the code:** You can find the code [on GitHub](https://github.com/cs231n/assignment1).
+You can either download a zip file containing the starter code, or clone / fork our assignment repository.
+If you decide to fork the repository, **DO NOT upload your solutions to GitHub**.
+
+To clone the repository, run the following on your local machine:
+
+```bash
+git clone https://github.com/cs231n/assignment1.git
+```
+
+This will create a directory called `assignment1` containing all of the starter code.
+
+**[Optional] virtual environment:**
+Once you have the starter code, you might want to create a
+[virtual environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/)
+for the project. If you choose not to use a virtual environment, it is up to you
+to make sure that all dependencies for the code are installed on your machine.
+To set up a virtual environment, run the following:
+
+```bash
+cd assignment1
+sudo pip install virtualenv      # This may already be installed
+virtualenv .env                  # Create a virtual environment
+source .env/bin/activate         # Activate the virtual environment
+pip install -r requirements.txt  # Install dependencies
+# Work on the assignment for a while ...
+deactivate                       # Exit the virtual environment
+```
+
+**Download data:**
+Once you have the starter code, you will need to download the CIFAR-10 dataset.
+Run the following from the `assignment1` directory:
+
+```bash
+cd cs231n/datasets
+./get_datasets.sh
+```
+
+**Start IPython:**
+After you have the CIFAR-10 data, you should start the IPython notebook server from the
+`assignment1` directory. If you are unfamiliar with IPython, you should read our
+[IPython tutorial](/ipython-tutorial).
+
+### Working on Terminal.com
+We have created a Terminal.com snapshot that is preconfigured for this assignment;
+you can [find it here](https://www.terminal.com/snapshot/c45dbef456e1d7d195800b54321024cfecb28a22a0755008d377b04bb3b2fbef). You can find a tutorial on how to use it [here](/terminal-tutorial).
+
 
 ### Q1: k-Nearest Neighbor classifier (30 points)
 
@@ -35,10 +86,10 @@ The IPython Notebook **features.ipynb** will walk you through this exercise, in 
 
 ### Q5: Bonus: Design your own features! (+10 points)
 
-In question 4 we provided you with some features. For bonus points, implement your own additional features from scratch using only numpy or scipy (no external dependencies). You may have to research different feature types to get ideas for what you might want to implement. To get the bonus points, concatenating your new feature to the old features should improve your performance beyond what you got in Q4.
+In this assignment we provide you with Color Histograms and HOG features. To claim these bonus points, implement your own additional features from scratch, and using only numpy or scipy (no external dependencies). You will have to research different feature types to get ideas for what you might want to implement. Your new feature should help you improve the performance beyond what you got in Q4 if you wish to get these bonus points.
+
+**Submit to the class leaderboard**. We also provide some test images for which you do not have labels. Apply your classifier on these test images and upload your classifications using the script `blah.py`. This will submit your entry to a leaderboard.
 
 ### Q6: Cool Bonus: Do something extra! (+10 points)
 
-When completing assignments, your task as a student is usually to answer a set of questions we wrote. In this Cool Bonus meta question, we'd like to flip this and encourage you to make up and answer your own questions regarding the material. 
-
-To claim these points implement, investigate and analyze something related to the topics in this assignment, using the code base and data in this assignment. For example, is there some other interesting question we could have asked? Pose it, explore it and answer it. Or is there any insightful visualization you can make? Plot it and interpret it. Or maybe you can devise a new experiment, such as a different spin on the loss function? If you try out something fun and get some cool results you'll get the points, and **we will feature the coolest results in the lecture**.
+Implement, investigate or analyze something extra surrounding the topics in this assignment, and using the code you developed. For example, is there some other interesting question we could have asked? Is there any insightful visualization you can plot? Or maybe you can experiment with a spin on the loss function? If you try out something cool we'll give you points and might feature your results in the lecture.
