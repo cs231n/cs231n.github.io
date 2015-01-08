@@ -56,7 +56,7 @@ After you have the CIFAR-10 data, you should start the IPython notebook server f
 
 ### Working on Terminal
 We have created a Terminal snapshot that is preconfigured for this assignment;
-you can [find it here](https://www.terminal.com/tiny/C9uqWtabDt). You can find a tutorial on how to use it [here](/terminal-tutorial).
+you can [find it here](https://www.terminal.com/tiny/LMQJt9dcq3). Terminal allows you to work on the assignment from your browser. You can find a tutorial on how to use it [here](/terminal-tutorial).
 
 ### Submitting your work:
 Whether you work on the assignment locally or using Terminal, once you are done
