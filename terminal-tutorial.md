@@ -27,7 +27,11 @@ You are all set! To work on the assignments, click the link (shown in the red bo
   <img src='/assets/terminal-development.jpg'>
 </div>
 
-We have set up the [IPython Notebook](http://ipython.org/notebook.html) and other dependencies in the terminal. You can find these notebooks and skeleton codes in the folder **assignment1-master**. Follow the detailed assignment descriptions to complete and submit your work.
+We have set up the [IPython Notebook](http://ipython.org/notebook.html) and other dependencies in the terminal. You can find these notebooks and skeleton codes in the folder **assignment1-master**. Follow the detailed assignment descriptions to complete and submit your work. For submission, go to [Coursework](https://coursework.stanford.edu/portal/) using the browser in terminal (see below). You should be able to upload your work to Coursework.
+
+<div class='fig figcenter fighighlight'>
+  <img src='/assets/terminal-coursework.jpg'>
+</div>
 
 For more information about [Terminal](https://www.terminal.com/terminals), check out the [FAQ](https://www.terminal.com/faq) page.
 
