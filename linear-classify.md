@@ -54,7 +54,7 @@ Notice that a linear classifier computes the score of a class as a weighted sum 
 
 <div class="fig figcenter fighighlight">
   <img src="/assets/imagemap.jpg">
-  <div class="figcaption">An example of mapping an image to class scores. For sake of visualization we assume the image only has 4 pixels and that we have 3 classes. We stretch the image into a column and perform matrix multiplication to get the class scores. Note that this particular set of weights W is not good at all: the weights assign our cat image a very low cat score. In particular, this set of weights seems convinced that it's looking at a dog.</div>
+  <div class="figcaption">An example of mapping an image to class scores. For sake of visualization we assume the image only has 4 pixels and that we have 3 classes (red, blue, green class). We stretch the image pixels into a column and perform matrix multiplication to get the scores for each class. Note that this particular set of weights W is not good at all: the weights assign our cat image a very low cat score. In particular, this set of weights seems convinced that it's looking at a dog.</div>
 </div>
 
 **Analogy of images as high-dimensional points.** Since the images are stretched into high-dimensional column vectors, we can interpret each image as a single point in this space (e.g. each image in CIFAR-10 is a point in 3072-dimensional space of 32x32x3 images). Analogously, the entire dataset is a (labeled) set of points.
