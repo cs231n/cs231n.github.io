@@ -232,6 +232,21 @@ The takeaway from this section is that the SVM loss takes one particular approac
 
 **Setting Delta.** Note that we brushed over the hyperparameter \\(\Delta\\) and its setting. What value should it be set to, and do we have to cross-validate it? It turns out that this hyperparameter can safely be set to \\(\Delta = 1.0\\) in all cases. The reason behind this is closely related to our previous discussion about regularization. Concretely, notice that we can always scale all differences between class scores by scaling the weights \\(W\\). For example, suppose that we train a classifier with some particular setting, such as \\(\Delta = 100\\). Then if we were to modify \\(\Delta = 1\\) (i.e. divide it by factor of 100), we could similarly scale \\(W \rightarrow \frac{1}{100}W\\) to get a loss identical to the one before, except scaled down by a constant factor of 0.01. Note that since we've changed the weights this would also influence the regularization penalty \\(R(W)\\) : with smaller weights it would now take on a much smaller value. However, we could *fix* this by changing the value of \\(\lambda\\) and achieve the exact same loss as before (modulo constant scale). The takeaway is that the hyperparameters \\(\lambda\\) and \\(\Delta\\) are two knobs over the same tradeoff (the tradeoff between the regularization part of the loss, and the data loss): If we change one then we could always change the other to obtain the exact same loss as before. Therefore, it is common to only cross-validate \\(\lambda\\) and fix \\(\Delta = 1.0\\).
 
+To make this more precise, we can inspect a single term in the data loss. Let \\( \delta f \\) denote the difference in the class scores (which we can scale arbitrarily by uniformly scaling the magnitudes of the weights), then:
+
+$$
+\begin{aligned}
+& \max(0, \delta f + \Delta) \\\\
+\rightarrow &  \max(0, \delta f + \Delta\_2) \hspace{1in} \text{if  } \Delta \rightarrow \Delta\_2 \\\\
+\rightarrow & \max(0, \frac{\Delta\_2}{\Delta} \delta f + \Delta\_2) \hspace{0.6in} \text{then scale the weights by   } \frac{\Delta\_2}{\Delta} \\\\
+= & \max(0, \frac{\Delta\_2}{\Delta} (\delta f + \Delta)) \\\\
+= & \frac{\Delta\_2}{\Delta} \max(0, \delta f + \Delta)
+\end{aligned}
+$$
+
+In the end, we're left with the exact same expression as before, but scaled by the ratio \\(\frac{\Delta\_2}{\Delta}\\). This scale factor can then be similarly absorbed into the constant \\(\lambda\\).
+
+
 **Relation to Binary Support Vector Machine**. You may be coming to this class with previous experience with Binary Support Vector Machines, where the loss for the i-th example can be written as:
 
 $$
