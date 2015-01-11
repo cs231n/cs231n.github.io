@@ -290,7 +290,7 @@ The momentum update agrees with the physical formula above but additionally incl
 <div class="fig figcenter fighighlight">
   <img src="/assets/dataflow.jpeg">
   <div class="figcaption">
-    Summary of the information flow. The dataset of pairs of <b>(x,y)</b> is given and fixed. The weights start out as random numbers and can change. During the forward pass the score function computes class scores, stored in vector <b>f</b>. The loss function contains two components: The data loss computes the compatibility between the scores <b>f</b> and the labels <b>y</b>. The regularization loss is only a function of the weights. During Gradient Descent, we compute the gradient on the inputs (the weights and the data). The gradients on the weights are used for a parameter update. However, the gradients on the inputs are usually discarded (since the data is fixed).
+    Summary of the information flow. The dataset of pairs of <b>(x,y)</b> is given and fixed. The weights start out as random numbers and can change. During the forward pass the score function computes class scores, stored in vector <b>f</b>. The loss function contains two components: The data loss computes the compatibility between the scores <b>f</b> and the labels <b>y</b>. The regularization loss is only a function of the weights. During Gradient Descent, we compute the gradient on the weights (and optionally on data if we wish) and use them to perform a parameter update during Gradient Descent.
   </div>
 </div>
 
