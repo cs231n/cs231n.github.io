@@ -3,6 +3,23 @@ layout: page
 permalink: /optimization-1/
 ---
 
+Table of Contents:
+
+- [Introduction](#intro)
+- [Visualizing the loss function](#vis)
+- [Optimization](#optimization)
+  - [Strategy #1: Random Search](#opt1)
+  - [Strategy #2: Random Local Search](#opt2)
+  - [Strategy #3: Following the gradient](#opt3)
+- [Computing the gradient](#gradcompute)
+  - [Numerically with finite differences](#numerical)
+  - [Analytically with calculus](#analytic)
+- [Gradient descent](#gd)
+- [Summary](#summary)
+
+<a name='intro'></a>
+### Introduction
+
 In the previous section we introduced two key components in context of the image classification task:
 
 1. A (parameterized) **score function** mapping the raw image pixels to class scores (e.g. a linear function)
@@ -18,7 +35,7 @@ We saw that a setting of the parameters \\(W\\) that produced predictions for ex
 
 **Foreshadowing:** Once we understand how these three core components interact, we will revisit the first component (the parameterized function mapping) and extend it to functions much more complicated than a linear mapping: First entire Neural Networks, and then Convolutional Neural Networks. The loss functions and the optimization process will remain relatively unchanged.
 
-
+<a name='vis'></a>
 ### Visualizing the loss function
 
 The loss functions we'll look at in this class are usually defined over very high-dimensional spaces (e.g. in CIFAR-10 a linear classifier weight matrix is of size [10 x 3073] for a total of 30,730 parameters), making them difficult to visualize. However, we can still gain some intuitions about one by slicing through the high-dimensional space along rays (1 dimension), or along planes (2 dimensions). For example, we can generate a random weight matrix \\(W\\) (which corresponds to a single point in the space), then march along a ray and record the loss function value along the way. That is, we can generate a random direction \\(W\_1\\) and compute the loss along this direction by evaluating \\(L(W + a W\_1)\\) for different values of \\(a\\). This process generates a simple plot with the value of \\(a\\) as the x-axis and the value of the loss function as the y-axis. We can also carry out the same procedure with two dimensions by evaluating the loss \\( L(W + a W\_1 + b W\_2) \\) as we vary \\(a, b\\). In a plot, \\(a, b\\) could then correspond to the x-axis and the y-axis, and the value of the loss function can be visualized with a color:
@@ -51,11 +68,13 @@ As an aside, you may have guessed from its bowl-shaped appearance that the SVM c
 
 Non-differentiable. As a technical note, you can also see that the *kinks* in the loss function (due to the max operation) technically make the loss function non-differentiable because at these kinks the gradient is not defined. In this class will use the terms *subgradient* and *gradient* interchangeably to mean subgradient.
 
+<a name='optimization'></a>
 ### Optimization
 
 To reiterate, the loss function lets us quantify the quality of any particular set of weights **W**. The goal of optimization is to find **W** that minimizes the loss function.
 
-#### A first very bad idea solution: Random search
+<a name='opt1'></a>
+#### Strategy #1: A first very bad idea solution: Random search
 
 Since it is so simple to check how good a given set of parameters **W** is, the first (very bad) idea that may come to mind is to simply try out many different random weights and keep track of what works best. This procedure might look as follows:
 
@@ -102,7 +121,8 @@ With the best **W** this gives an accuracy of about **15.5%**. Given that guessi
 
 **Blindfolded hiker analogy.** One analogy that you may find helpful going forward is to think of yourself as hiking on a hilly terrain with a blindfold on, and trying to reach the bottom. In the example of CIFAR-10, the hills are 30,730-dimensional, since the dimensions of **W** are 3073 x 10. At every point on the hill we achieve a particular loss (the height of the terrain).
 
-#### Strategy #1: Random Local Search
+<a name='opt2'></a>
+#### Strategy #2: Random Local Search
 
 The first strategy you may think of is to to try to extend one foot in a random direction and then take a step only if it leads downhill. Concretely, we will start out with a random \\(W\\), generate random pertubations \\( \delta W \\) to it and if the loss at the peturbed \\(W + \delta W\\) is lower, we will perform an update. The code for this procedure is as follows:
 
@@ -121,7 +141,8 @@ for i in xrange(1000):
 
 Using the same number of loss function evaluations as before (1000), this approach achieves test set classification accuracy of **21.4%**. This is better, but still wasteful and computationally expensive.
 
-#### Strategy #2: Following the Gradient
+<a name='opt3'></a>
+#### Strategy #3: Following the Gradient
 
 In the previous section we tried to find a direction in the weight-space that would improve our weight vector (and give us a lower loss). It turns out that there is no need to randomly search for a good direction: we can compute the *best* direction along which we should change our weight vector that is mathematically guaranteed to be the direction of the steepest descend (at least in the limit as the step size goes towards zero). This direction will be related to the **gradient** of the loss function. In our hiking analogy, this approach roughly corresponds to feeling the slope of the hill below our feet and stepping down the direction that feels steepest.
 
@@ -133,6 +154,12 @@ $$
 
 When the functions of interest take a vector of numbers instead of a single number, we call the derivatives **partial derivatives**, and the gradient is simply the vector of partial derivatives in each dimension.
 
+<a name='gradcompute'></a>
+### Computing the gradient
+
+There are two ways to compute the gradient: A slow, approximate but easy way (**numerical gradient**), and a fast, exact but more error-prone way that requires calculus (**analytic gradient**). We will now present both.
+
+<a name='numerical'></a>
 #### Computing the gradient numerically with finite differences
 
 The formula given above allows us to compute the gradient numerically. Here is a generic function that takes a function `f`, a vector `x` to evaluate the gradient on, and returns the gradient of `f` at `x`:
@@ -224,6 +251,7 @@ for step_size_log in [-5,-4,-3,-2,-1,0,1,2]:
 
 **A problem of efficiency**. You may have noticed that evaluating the numerical gradient has complexity linear in the number of parameters. In our example we had 30730 parameters in total and therefore had to perform 30,731 evaluations of the loss function to evaluate the gradient and to perform only a single parameter update. This problem only gets worse, since modern Neural Networks can easily have tens of millions of parameters. Clearly, this strategy is not scalable and we need something better.
 
+<a name='analytic'></a>
 #### Computing the gradient analytically with Calculus
 
 The numerical gradient is very simple to compute using the finite difference approximation, but the downside is that it is approximate (since we have to pick a small value of *h*, while the true gradient is defined as the limit as *h* goes to zero), and that it is very computationally expensive to compute. The second way to compute the gradient is analytically using Calculus, which allows us to derive a direct formula for the gradient (no approximations) that is also very fast to compute. However, unlike the numerical gradient it can be more error prone to implement, which is why in practice it is very common to compute the analytic gradient and compare it to the numerical gradient to check the correctnes of your implementation. This is called a **gradient check**.
@@ -248,7 +276,8 @@ $$
 
 Once you derive the expression for the gradient it is straight-forward to implement the expressions and use them to perform the gradient update. A proficiency at computing gradients of loss expressions (and understanding what they look like intuitively) is the single most important technical skill needed to understand and efficiently use and develop Neural Networks. The next section will be entirely devoted to getting you to understand and practice the process, and by the end of the class you will become an expert!
 
-#### Gradient Descent
+<a name='gd'></a>
+### Gradient Descent
 
 Now that we can compute the gradient of the loss function, the procedure of repeatedly evaluating the gradient and then performing a parameter update is called *Gradient Descent*. Its **vanilla** version looks as follows:
 
@@ -285,6 +314,7 @@ x += vel
 The momentum update agrees with the physical formula above but additionally includes a damping term (0.9) that reduces the particle's velocity (and therefore also its kinetic energy), otherwise the particle would never come to a stop at the bottom of the hill. As we will see later in the class, this update formulation very often accelerates the convergence and is in almost all cases preferrable to the simple *vanilla* SGD update.
 
 
+<a name='summary'></a>
 ### Summary
 
 <div class="fig figcenter fighighlight">
