@@ -237,7 +237,7 @@ $$
 We can differentiate the function with respect to the weights. For example, taking the gradient with respect to \\(w\_{y\_i}\\) we obtain:
 
 $$
-\nabla\_{w\_{y\_i}} L\_i = \left( \sum\_{j\neq y\_i} \mathbb{1}(w\_j^Tx\_i - w\_{y\_i}^Tx\_i + \Delta > 0) \right) x\_i
+\nabla\_{w\_{y\_i}} L\_i = - \left( \sum\_{j\neq y\_i} \mathbb{1}(w\_j^Tx\_i - w\_{y\_i}^Tx\_i + \Delta > 0) \right) x\_i
 $$
 
 where \\(\mathbb{1}\\) is the indicator function that is one if the condition inside is true or zero otherwise. While the expression may look scary when it is written out, when you're implementing this in code you'd simply count the number of classes that didn't meet the desired margin (and hence contributed to the loss function) and then the data vector \\(x\_i\\) scaled by this number is the gradient. Similarly, for any \\(j \neq y\_i \\) the gradient is:
@@ -286,6 +286,14 @@ The momentum update agrees with the physical formula above but additionally incl
 
 
 ### Summary
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/dataflow.jpeg">
+  <div class="figcaption">
+    Summary of the information flow. The dataset of pairs of <b>(x,y)</b> is given and fixed. The weights start out as random numbers and can change. During the forward pass the score function computes class scores, stored in vector <b>f</b>. The loss function contains two components: The data loss computes the compatibility between the scores <b>f</b> and the labels <b>y</b>. The regularization loss is only a function of the weights. During Gradient Descent, we compute the gradient on the inputs (the weights and the data). The gradients on the weights are used for a parameter update. However, the gradients on the inputs are usually discarded (since the data is fixed).
+  </div>
+</div>
+
 
 In this section,
 
