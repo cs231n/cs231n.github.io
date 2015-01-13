@@ -28,7 +28,7 @@ In the previous section we introduced two key components in context of the image
 Concretely, recall that the linear function had the form \\( f(x\_i, W) =  W x\_i \\) and the SVM we developed was formulated as:
 
 $$
-L = \frac{1}{N} \sum\_i \sum\_{j\neq y\_i} \left[ \max(0, f(x\_i; W)\_j - f(x\_i; W)\_{y\_i} + \Delta) \right] + \alpha R(W)
+L = \frac{1}{N} \sum\_i \sum\_{j\neq y\_i} \left[ \max(0, f(x\_i; W)\_j - f(x\_i; W)\_{y\_i} + 1) \right] + \alpha R(W)
 $$
 
 We saw that a setting of the parameters \\(W\\) that produced predictions for examples \\(x\_i\\) consistent with their ground truth labels \\(y\_i\\) would also have a very low loss \\(L\\). We are now going to introduce the third and last key component: **optimization**. Optimization is the process of finding the set of parameters \\(W\\) that minimize the loss function.
@@ -52,10 +52,20 @@ The loss functions we'll look at in this class are usually defined over very hig
 We can explain the piecewise-linear structure of the loss function by examing the math. For a single example we have:
 
 $$
-L\_i = \sum\_{j\neq y\_i} \left[ \max(0, w\_j^Tx\_i - w\_{y\_i}^Tx\_i + \Delta) \right]
+L\_i = \sum\_{j\neq y\_i} \left[ \max(0, w\_j^Tx\_i - w\_{y\_i}^Tx\_i + 1) \right]
 $$
 
-Notice that the expression \\( \max(0, w\_j^Tx\_i - w\_{y\_i}^Tx\_i + \Delta) \\) is a linear function of \\(W\\) that is clamped at zero with the max operation. Furthermore, the loss above sums a function of this form for all incorrect classes (the \\(\sum\_{j\neq y\_i}\\) part). For example, CIFAR-10 has 10 classes so the sum would be over 9 clamped linear functions. Performing a sum of these functions gives the distinct piece-wise linear bowl shape. This idea is further illustrated below in the 1D case:
+Lets write this out in more concrete terms to see the form of the equation more easily. For example, suppose that \\(y\_i = 0\\) (so the first class is correct) and suppose we only have four classes. Then this equation becomes:
+
+$$
+\begin{align}
+L\_i = & \max(0, w\_1^Tx\_i - w\_0^Tx\_i + 1) \\\\
+& \max(0, w\_2^Tx\_i - w\_0^Tx\_i + 1) \\\\
+& \max(0, w\_3^Tx\_i - w\_0^Tx\_i + 1) \\\\
+\end{align}
+$$
+
+where \\(w\_j\\) is the j-th row of \\(W\\), in form of a column vector. This expanded form makes it easier to see that we're adding up a set of terms (in this case four), and each one is a linear function of the weights \\(W\\), but clamped to zero with \\(\max(0,-)\\). We can try to gain intuition for what this looks like in 1 dimension:
 
 <div class="fig figcenter fighighlight">
   <img src="/assets/svmbowl.png">
