@@ -96,7 +96,7 @@ Since it is so simple to check how good a given set of parameters **W** is, the 
 
 bestloss = float("inf") # Python assigns the highest possible float value
 for num in xrange(1000):
-  W = np.random.randn(10, 3073) * 0.001 # generate random parameters
+  W = np.random.randn(10, 3073) * 0.0001 # generate random parameters
   loss = L(X_train, Y_train, W) # get the loss over the entire training set
   if loss < bestloss: # keep track of the best solution
     bestloss = loss
@@ -104,11 +104,13 @@ for num in xrange(1000):
   print 'in attempt %d the loss was %f, best %f' % (num, loss, bestloss)
 
 # prints:
-# in attempt 0 the loss was 152.809580, best 152.809580
-# in attempt 1 the loss was 144.893118, best 144.893118
-# in attempt 2 the loss was 147.129064, best 144.893118
-# in attempt 3 the loss was 145.654845, best 144.893118
-# in attempt 4 the loss was 149.853233, best 144.893118
+# in attempt 0 the loss was 9.401632, best 9.401632
+# in attempt 1 the loss was 8.959668, best 8.959668
+# in attempt 2 the loss was 9.044034, best 8.959668
+# in attempt 3 the loss was 9.278948, best 8.959668
+# in attempt 4 the loss was 8.857370, best 8.857370
+# in attempt 5 the loss was 8.943151, best 8.857370
+# in attempt 6 the loss was 8.605604, best 8.605604
 # ... (trunctated: continues for 1000 lines)
 ```
 
@@ -193,9 +195,10 @@ def eval_numerical_gradient(f, x):
 
     # evaluate function at x+h
     ix = it.multi_index
-    x[ix] += h # increment by h
+    old_value = x[ix]
+    x[ix] = old_value + h # increment by h
     fxh = f(x) # evalute f(x + h)
-    x[ix] -= h # restore to previous value (very important!)
+    x[ix] = old_value # restore to previous value (very important!)
 
     # compute the partial derivative
     grad[ix] = (fxh - fx) / h # the slope
@@ -295,31 +298,47 @@ Now that we can compute the gradient of the loss function, the procedure of repe
 ```python
 # Vanilla Gradient Descent
 
-# assume a function that retuns the loss, f
-# assume an initially random point x (e.g. the weights)
 while True:
-  grad = evaluate_gradient(f, x) # evaluate the gradient
-  x += - step_size * grad # perform parameter update
+  weights_grad = evaluate_gradient(loss_fun, data, weights)
+  weights += - step_size * weights_grad # perform parameter update
 ```
 
 This simple loop is at the core of all Neural Network libraries. There are other ways of performing the optimization (e.g. LBFGS), but Gradient Descent is currently by far the most common and established way of optimizing Neural Network loss functions. Throughout the class we will put some bells and whistles on the details of this loop (e.g. the exact details of the update equation), but the core idea of following the gradient until we're happy with the results will remain the same.
 
-**Aside: Physical intuitions for parameter updates.** If you're coming from a physics background then there is another way to view the optimization problem. In this interpretation the loss function can be thought of as a high-dimensional hilly terrain where the value of the loss is the terrain's height (and therefore also to the potential energy since \\(U = mgh\\) and therefore \\( U \propto h \\) ). Initializing the weight matrix with random numbers is equivalent to setting a particle with zero initial velocity at some location. You can then imagine the optimization process as being equivalent to the process of simulating the particle rolling on this hill.
+**Mini-batch gradient descent.** In large-scale applications (such as the ILSVRC challenge), the training data can have on order of millions of examples. Hence, it seems wasteful to compute the full loss function over the entire training set in order to perform only a single parameter update. A very common approach to addressing this challenge is to compute the gradient over **batches** of the training data. For example, in current state of the art ConvNets, a typical batch contains 256 examples from the entire training set of 1.2 million. This batch is then used to perform a parameter update:
+
+```python
+# Vanilla Minibatch Gradient Descent
+
+while True:
+  data_batch = sample_training_data(data, 256) # sample 256 examples
+  weights_grad = evaluate_gradient(loss_fun, data_batch, weights)
+  weights += - step_size * weights_grad # perform parameter update
+```
+
+The reason this works well is that the examples in the training data are correlated. To see this, consider the extreme case where all 1.2 million images in ILSVRC are in fact made up of exact duplicates of only 1000 unique images (one for each class, or in other words 1200 identical copies of each image). Then it is clear that the gradients we would compute for all 1200 identical copies would all be the same, and when we average the data loss over all 1.2 million images we would get the exact same loss as if we only evaluated on a small subset of 1000. In practice of course, the dataset would not contain duplicate images, the gradient from a mini-batch is a good approximation of the gradient of the full objective. Therefore, much faster convergence can be achieved in practice by evaluating the mini-batch gradients to perform more frequent parameter updates.
+
+The extreme case of this is a setting where the mini-batch contains only a single example. This process is called **Stochastic Gradient Descent (SGD)** (or also sometimes **on-line** gradient descent). This is relatively less common to see because in practice due to vectorized code optimizations it can be computationally much more efficient to evaluate the gradient for 100 examples, than the gradient for one example 100 times. Even though SGD technically refers to using a single example at a time to evaluate the gradient, you will hear people use the term SGD even when referring to mini-batch gradient descent (i.e. mentions of MGD for "Minibatch Gradient Descent", or BGD for "Batch gradient descent" are rare to see), where it is usually assumed that mini-batches are used.
+
+**TLDR**: Always use mini-batch gradient descent. Incorrectly refer to it as "doing SGD", similar to everyone else, or use the longer term "batch gradient descent". The size of the mini-batch is a hyperparameter but it is not very common to cross-validate it. It is usually based on memory constraints.
+
+**Physical intuitions for parameter updates.** If you're coming from a physics background then there is another way to view the optimization problem. In this interpretation the loss function can be thought of as a high-dimensional hilly terrain where the value of the loss is the terrain's height (and therefore also to the potential energy since \\(U = mgh\\) and therefore \\( U \propto h \\) ). Initializing the weight matrix with random numbers is equivalent to setting a particle with zero initial velocity at some location. You can then imagine the optimization process as being equivalent to the process of simulating the particle rolling on this hill.
 
 Since the force on the particle is related to the gradient of potential energy (i.e. \\(F = - \nabla U \\) ), the **force** felt by the particle is precisely the (negative) **gradient** of the loss function. Moreover, \\(F = ma \\) so the (negative) gradient is in this view proportional to the acceleration of the particle. Note that this is different from the SGD update shown above, where the gradient directly integrates the position. Instead, the physics view suggests an update of the form:
 
 ```python
-grad = evaluate_gradient(f, x) # gradient is the force (and acceleration)
-vel += - step_size * grad # integrate the velocity of the particle
-x += vel # perform parameter update
+# gradient is the force (and also proportional to acceleration)
+weights_grad = evaluate_gradient(loss_fun, data, weights) 
+vel += - step_size * weights_grad # integrate the velocity of the particle
+weights += vel # perform parameter update
 ```
 
 In future sections we will discuss different ways of performing the update once the gradient is computed. Among these, a very commonly used scheme is the **momentum update** which computes:
 
 ```python
-grad = evaluate_gradient(f, x) # gradient is the force (and acceleration)
-vel = vel * 0.9 - step_size * grad
-x += vel
+weights_grad = evaluate_gradient(loss_fun, data, weights) 
+vel = vel * 0.9 - step_size * weights_grad
+weights += vel
 ```
 
 The momentum update agrees with the physical formula above but additionally includes a damping term (0.9) that reduces the particle's velocity (and therefore also its kinetic energy), otherwise the particle would never come to a stop at the bottom of the hill. As we will see later in the class, this update formulation very often accelerates the convergence and is in almost all cases preferrable to the simple *vanilla* SGD update.
