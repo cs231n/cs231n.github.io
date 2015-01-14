@@ -45,7 +45,7 @@ The loss functions we'll look at in this class are usually defined over very hig
   <img src="/assets/svm_one.jpg">
   <img src="/assets/svm_all.jpg">
   <div class="figcaption">
-    Loss function landscape for the Multiclass SVM for one single example (left,middle) and for a hundred examples (right) in CIFAR-10. Left: one-dimensional loss by only varying <b>a</b>. Middle, Right: two-dimensional loss slice, Blue = low loss, Red = high loss. Notice the piecewise-linear structure of the loss function. The losses for multiple examples are combined with average, so the bowl shape on the right is the average of many piece-wise linear bowls (such as the one in the middle).
+    Loss function landscape for the Multiclass SVM (without regularization) for one single example (left,middle) and for a hundred examples (right) in CIFAR-10. Left: one-dimensional loss by only varying <b>a</b>. Middle, Right: two-dimensional loss slice, Blue = low loss, Red = high loss. Notice the piecewise-linear structure of the loss function. The losses for multiple examples are combined with average, so the bowl shape on the right is the average of many piece-wise linear bowls (such as the one in the middle).
   </div>
 </div>
 
@@ -55,22 +55,23 @@ $$
 L\_i = \sum\_{j\neq y\_i} \left[ \max(0, w\_j^Tx\_i - w\_{y\_i}^Tx\_i + 1) \right]
 $$
 
-Lets write this out in more concrete terms to see the form of the equation more easily. For example, suppose that \\(y\_i = 0\\) (so the first class is correct) and suppose we only have four classes. Then this equation becomes:
+It is clear from the equation that the data loss for each example is a sum of (zero-thresholded due to the \\(\max(0,-)\\) function) linear functions of \\(W\\). Moreover, each row of \\(W\\) (i.e. \\(w\_j\\)) sometimes has a positive sign in front of it (when it corresponds to a wrong class for an example), and sometimes a negative sign (when it corresponds to the correct class for that example). To make this more explicit, consider a simple dataset that contains three 1-dimensional points and three classes. The full SVM loss (without regularization) becomes:
 
 $$
 \begin{align}
-L\_i = & \max(0, w\_1^Tx\_i - w\_0^Tx\_i + 1) \\\\
-& \max(0, w\_2^Tx\_i - w\_0^Tx\_i + 1) \\\\
-& \max(0, w\_3^Tx\_i - w\_0^Tx\_i + 1) \\\\
+L\_0 = & \max(0, w\_1^Tx\_0 - w\_0^Tx\_0 + 1) + \max(0, w\_2^Tx\_0 - w\_0^Tx\_0 + 1) \\\\
+L\_1 = & \max(0, w\_0^Tx\_1 - w\_1^Tx\_1 + 1) + \max(0, w\_2^Tx\_1 - w\_1^Tx\_1 + 1) \\\\
+L\_2 = & \max(0, w\_0^Tx\_2 - w\_2^Tx\_2 + 1) + \max(0, w\_1^Tx\_2 - w\_2^Tx\_2 + 1) \\\\
+L = & (L\_0 + L\_1 + L\_2)/3
 \end{align}
 $$
 
-where \\(w\_j\\) is the j-th row of \\(W\\), in form of a column vector. This expanded form makes it easier to see that we're adding up a set of terms (in this case four), and each one is a linear function of the weights \\(W\\), but clamped to zero with \\(\max(0,-)\\). We can try to gain intuition for what this looks like in 1 dimension:
+Since these examples are 1-dimensional, the data \\(x\_i\\) and weights \\(w\_j\\) are numbers. Looking at, for instance, \\(w\_0\\), some terms above are linear functions of \\(w\_0\\) and each is clamped at zero. We can visualize this as follows:
 
 <div class="fig figcenter fighighlight">
   <img src="/assets/svmbowl.png">
   <div class="figcaption">
-    1-dimensional illustration of half-planes from each of the incorrect classes (in CIFAR-10 there are 9 of these but here we only visualize 3), and the sum operation which creates the piecewise-linear bowl shape. The x-axis is a random element in W, and the y-axis is the loss. The SVM cost function in CIFAR-10 for a single example is a 30,730-dimensional version of this shape.
+    1-dimensional illustration of the data loss. The x-axis is a single weight and the y-axis is the loss. The data loss is a sum multiple terms, each of which is either independent of a particular weight, or a linear function of it that is thresholded at zero. The full SVM data loss is a 30,730-dimensional version of this shape.
   </div>
 </div>
 
