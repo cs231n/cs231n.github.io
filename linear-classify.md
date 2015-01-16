@@ -68,7 +68,7 @@ Since we defined the score of each class as a weighted sum of all image pixels, 
   </div>
 </div>
 
-As we saw above, every row of \\(W\\) is a classifier for one of the classes. The geometric interpretation of these numbers is that as we change one of the rows of \\(W\\), the corresponding line in the pixel space will rotate in different directions. The biases \\(b\\), on the other hand, allow our classifiers to move the lines away from the origin. To see this, note that without the bias terms, plugging in \\( x\_i = 0 \\) would always give score of zero regardless of the weights.
+As we saw above, every row of \\(W\\) is a classifier for one of the classes. The geometric interpretation of these numbers is that as we change one of the rows of \\(W\\), the corresponding line in the pixel space will rotate in different directions. The biases \\(b\\), on the other hand, allow our classifiers to translate the lines. In particular, note that without the bias terms, plugging in \\( x\_i = 0 \\) would always give score of zero regardless of the weights, so all lines would be forced to cross the origin.
 
 **Interpretation of linear classifiers as template matching.**
 Another interpretation for the weights \\(W\\) is that each row of \\(W\\) corresponds to a *template* (or sometimes also called a *prototype*) for one of the classes. The score of each class for an image is then obtained by comparing each template with the image with an *inner product* (or *dot product*) one by one to find the one that "fits" best. In this terminology, the linear classifier is doing template matching, where the templates are learned. Another way to think of it is that we are still effectively doing Nearest Neighbor, but instead of having thousands of training images we are only using a single image per class (although we will learn it, and it does not necessarily have to be one of the images in the training set), and we use the (negative) inner product as the distance instead of the L1 or L2 distance.
@@ -159,10 +159,16 @@ $$
 R(W) = \sum\_k\sum\_l W\_{k,l}^2
 $$
 
-In the expression above, we are summing up all the elements of \\(W\\) squared. Notice that the regularization function is not a function of the data, it is only based on the weights. Including the regularization penalty completes the full Multiclass Support Vector Machine loss:
+In the expression above, we are summing up all the elements of \\(W\\) squared. Notice that the regularization function is not a function of the data, it is only based on the weights. Including the regularization penalty completes the full Multiclass Support Vector Machine loss, which is is made up of two components: the **data loss** (which is the average loss \\(L\_i\\) over all examples) and the **regularization loss**. That is, the full Multiclass SVM loss becomes:
 
 $$
-L = \frac{1}{N} \sum\_i \sum\_{j\neq y\_i} \left[ \max(0, f(x\_i; W)\_j - f(x\_i; W)\_{y\_i} + \Delta) \right] + \lambda R(W)
+L =  \underbrace{ \frac{1}{N} \sum\_i L\_i }\_\text{data loss} + \underbrace{ \lambda R(W) }\_\text{regularization loss} \\\\
+$$
+
+Or expanding this out in its full form:
+
+$$
+L = \frac{1}{N} \sum\_i \sum\_{j\neq y\_i} \left[ \max(0, f(x\_i; W)\_j - f(x\_i; W)\_{y\_i} + \Delta) \right] + \lambda \sum\_k\sum\_l W\_{k,l}^2
 $$
 
 Where \\(N\\) is the number of training examples. As you can see, we append the regularization penalty to the loss objective, weighted by a hyperparameter \\(\lambda\\). There is no simple way of setting this hyperparameter and it is usually determined by cross-validation.
@@ -230,22 +236,7 @@ The takeaway from this section is that the SVM loss takes one particular approac
 
 ### Practical Considerations
 
-**Setting Delta.** Note that we brushed over the hyperparameter \\(\Delta\\) and its setting. What value should it be set to, and do we have to cross-validate it? It turns out that this hyperparameter can safely be set to \\(\Delta = 1.0\\) in all cases. The reason behind this is closely related to our previous discussion about regularization. Concretely, notice that we can always scale all differences between class scores by scaling the weights \\(W\\). For example, suppose that we train a classifier with some particular setting, such as \\(\Delta = 100\\). Then if we were to modify \\(\Delta = 1\\) (i.e. divide it by factor of 100), we could similarly scale \\(W \rightarrow \frac{1}{100}W\\) to get a loss identical to the one before, except scaled down by a constant factor of 0.01. Note that since we've changed the weights this would also influence the regularization penalty \\(R(W)\\) : with smaller weights it would now take on a much smaller value. However, we could *fix* this by changing the value of \\(\lambda\\) and achieve the exact same loss as before (modulo constant scale). The takeaway is that the hyperparameters \\(\lambda\\) and \\(\Delta\\) are two knobs over the same tradeoff (the tradeoff between the regularization part of the loss, and the data loss): If we change one then we could always change the other to obtain the exact same loss as before. Therefore, it is common to only cross-validate \\(\lambda\\) and fix \\(\Delta = 1.0\\).
-
-To make this more precise, we can inspect a single term in the data loss. Let \\( \delta f \\) denote the difference in the class scores (which we can scale arbitrarily by uniformly scaling the magnitudes of the weights), then:
-
-$$
-\begin{aligned}
-& \max(0, \delta f + \Delta) \\\\
-\rightarrow &  \max(0, \delta f + \Delta\_2) \hspace{1in} \text{if  } \Delta \rightarrow \Delta\_2 \\\\
-\rightarrow & \max(0, \frac{\Delta\_2}{\Delta} \delta f + \Delta\_2) \hspace{0.6in} \text{then scale the weights by   } \frac{\Delta\_2}{\Delta} \\\\
-= & \max(0, \frac{\Delta\_2}{\Delta} (\delta f + \Delta)) \\\\
-= & \frac{\Delta\_2}{\Delta} \max(0, \delta f + \Delta)
-\end{aligned}
-$$
-
-In the end, we're left with the exact same expression as before, but scaled by the ratio \\(\frac{\Delta\_2}{\Delta}\\). This scale factor can then be similarly absorbed into the constant \\(\lambda\\).
-
+**Setting Delta.** Note that we brushed over the hyperparameter \\(\Delta\\) and its setting. What value should it be set to, and do we have to cross-validate it? It turns out that this hyperparameter can safely be set to \\(\Delta = 1.0\\) in all cases. The hyperparameters \\(\Delta\\) and \\(\lambda\\) seem like two different hyperparameters, but in fact they both control the same tradeoff: The tradeoff between the data loss and the regularization loss in the objective. The key to understanding this is that the magnitude of the weights \\(W\\) has direct effect on the scores (and hence also their differences): As we shrink all values inside \\(W\\) the score differences will become lower, and as we scale up the weights the score differences will all become higher. Therefore, the exact value of the margin between the scores (e.g. \\(\Delta = 1\\), or \\(\Delta = 100\\)) is in some sense meaningless because the weights can shrink or stretch the differences arbitrarily. Hence, the only real tradeoff is how large we allow the weights to grow (through the regularization strength \\(\lambda\\)).
 
 **Relation to Binary Support Vector Machine**. You may be coming to this class with previous experience with Binary Support Vector Machines, where the loss for the i-th example can be written as:
 
