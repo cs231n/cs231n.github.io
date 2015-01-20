@@ -231,7 +231,7 @@ loss_original = CIFAR10_loss_fun(W) # the original loss
 print 'original loss: %f' % (loss_original, )
 
 # lets see the effect of multiple step sizes
-for step_size_log in [-5,-4,-3,-2,-1,0,1,2]:
+for step_size_log in [-10, -9, -8, -7, -6, -5,-4,-3,-2,-1]:
   step_size = 10 ** step_size_log
   W_new = W - step_size * df # new position in the weight space
   loss_new = CIFAR10_loss_fun(W_new)
