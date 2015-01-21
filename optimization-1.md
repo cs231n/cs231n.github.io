@@ -231,7 +231,7 @@ loss_original = CIFAR10_loss_fun(W) # the original loss
 print 'original loss: %f' % (loss_original, )
 
 # lets see the effect of multiple step sizes
-for step_size_log in [-5,-4,-3,-2,-1,0,1,2]:
+for step_size_log in [-10, -9, -8, -7, -6, -5,-4,-3,-2,-1]:
   step_size = 10 ** step_size_log
   W_new = W - step_size * df # new position in the weight space
   loss_new = CIFAR10_loss_fun(W_new)
@@ -282,7 +282,7 @@ $$
 \nabla\_{w\_{y\_i}} L\_i = - \left( \sum\_{j\neq y\_i} \mathbb{1}(w\_j^Tx\_i - w\_{y\_i}^Tx\_i + \Delta > 0) \right) x\_i
 $$
 
-where \\(\mathbb{1}\\) is the indicator function that is one if the condition inside is true or zero otherwise. While the expression may look scary when it is written out, when you're implementing this in code you'd simply count the number of classes that didn't meet the desired margin (and hence contributed to the loss function) and then the data vector \\(x\_i\\) scaled by this number is the gradient. Notice that this is is the grdient only with respect to the row of \\(W\\) that corresponds to the correct class. For the other rows where \\(j \neq y\_i \\) the gradient is:
+where \\(\mathbb{1}\\) is the indicator function that is one if the condition inside is true or zero otherwise. While the expression may look scary when it is written out, when you're implementing this in code you'd simply count the number of classes that didn't meet the desired margin (and hence contributed to the loss function) and then the data vector \\(x\_i\\) scaled by this number is the gradient. Notice that this is the gradient only with respect to the row of \\(W\\) that corresponds to the correct class. For the other rows where \\(j \neq y\_i \\) the gradient is:
 
 $$
 \nabla\_{w\_j} L\_i = \mathbb{1}(w\_j^Tx\_i - w\_{y\_i}^Tx\_i + \Delta > 0) x\_i

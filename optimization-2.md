@@ -117,7 +117,7 @@ $$
 f(w,x) = \frac{1}{1+e^{-(w\_0x\_0 + w\_1x\_1 + w\_2)}}
 $$
 
-as we will see later in the class, this expression describes a 2-dimensional neuron (with inputs **x** and weights **w**) that uses the *sigmoid activation* function. But for now lets think of this very simply as just a function from inputs *w,x** to a single number. The function is made up of multiple gates. In addition to the ones described already above (add, mul, max), there are four more:
+as we will see later in the class, this expression describes a 2-dimensional neuron (with inputs **x** and weights **w**) that uses the *sigmoid activation* function. But for now lets think of this very simply as just a function from inputs *w,x* to a single number. The function is made up of multiple gates. In addition to the ones described already above (add, mul, max), there are four more:
 
 $$
 f(x) = \frac{1}{x} 
