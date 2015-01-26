@@ -1,0 +1,264 @@
+---
+layout: page
+permalink: /neural-networks-2/
+---
+
+Table of Contents:
+
+- [Setting up the data and the model](#intro)
+  - [Data Preprocessing](#datapre)
+  - [Weight Initialization](#init)
+  - [Regularization](#reg) (L2/L1/Maxnorm/Dropout)
+- [Loss functions](#losses)
+- [Summary](#summary)
+
+<a name='intro'></a>
+## Setting up the data and the model
+
+In the previous section we introduced a model of a Neuron, which computes a dot product following a non-linearity, and Neural Networks that arrange neurons into layers. Together, these choices define the new form of the **score function**, which we have extended from the simple linear mapping that we have seen in the Linear Classification section. In particular, a Neural Network performs a sequence of linear mappings with interwoven non-linearities. In this section we will discuss additional design choices regarding data preprocessing, weight initialization, and loss functions.
+
+<a name='datapre'></a>
+### Data Preprocessing
+
+There are three common forms of data preprocessing a data matrix `X`, where we will assume that `X` is of size `[N x D]` (`N` is the number of data, `D` is their dimensionality).
+
+**Mean subtraction**  is the most common form of preprocessing. It involves subtracting the mean across every individual *feature* in the data, and has the geometric interpretation of centering the cloud of data around the origin along every dimension. In numpy, this operation would be implemented as: `X -= np.mean(X, axis = 0)`. With images specifically, for convenience it can be common to subract a single value from all pixels (e.g. `X -= np.mean(X)`), or to do so separately across the three color channels.
+
+**Normalization** refers to normalizing the data dimensions so that they are of approximately the same scale. There are two common ways of achieving this normalization. One is to divide each dimension by its standard deviation, once it has been zero-centered: (`X /= np.std(X, axis = 0)`). Another form of this preprocessing normalizes each dimension so that the min and max along the dimension is -1 and 1 respectively. It only makes sense to apply this preprocessing if you have a reason to believe that different input features have different scales (or units), but they should be of approximately equal importance to the learning algorithm.
+In case of images, the relative scales of pixels are already approximately equal (and in range from 0 to 255), so it is not strictly necessary to perform this additional pre-processing step.
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/nn2/prepro1.jpeg">
+  <div class="figcaption">Common data preprocessing pipeline. <b>Left</b>: Original toy, 2-dimensional input data. <b>Middle</b>: The data is zero-centered by subtracting the mean in each dimension. The data cloud is now centered around the origin. <b>Right</b>: Each dimension is additionally scaled by its standard deviation. The red lines indicate the extent of the data - they are of unequal lenght in the middle, but of equal length on the right.</div>
+</div>
+
+**PCA and Whitening** is another form of preprocessing. In this process, the data is first centered as described above. Then, we can compute the covariance matrix that tells us about the correlation structure in the data:
+
+```python
+# Assume input data matrix X of size [N x D]
+X -= np.mean(X, axis = 0) # zero-center the data (important)
+cov = np.dot(X.T, X) / X.shape[0] # get the data covariance matrix
+```
+
+The (i,j) element of the data covariance matrix contains the *covariance* between i-th and j-th dimension of the data. In particular, the diagonal of this matrix contains the variances. Furthermore, the covariance matrix is symmetric and [positive semi-definite](http://en.wikipedia.org/wiki/Positive-definite_matrix#Negative-definite.2C_semidefinite_and_indefinite_matrices). We can compute the SVD factorization of the data covariance matrix:
+
+```python
+U,S,V = np.linalg.svd(cov)
+```
+
+where the columns of `U` are the eigenvectors and `S` is a 1-D array of the singular values (which are equal to the eigenvalues squared since `cov` is symmetric and positive semi-definite). To decorrelate the data, we project the original (but zero-centered) data into the eigenbasis:
+
+```python
+Xrot = np.dot(X, U) # decorrelate the data
+```
+
+Notice that the columns of `U` are a set of orthonormal vectors (norm of 1, and orthogonal to each other), so they can be regarded as basis vectors. The projection therefore corresponds to a rotation of the the data in `X` so that the new axes are the eigenvectors. If we were to compute the covariance matrix of `Xrot`, we would see that it is now diagonal. A nice property of `np.linalg.svd` is that in its returned value `U`, the eigenvector columns are sorted by their eigenvalues. We can use this to reduce the dimensionality of the data by only using the top few eigenvectors, and discarding the dimensions along which the data has no variance. This is also sometimes refered to as [Principal Component Analysis (PCA)](http://en.wikipedia.org/wiki/Principal_component_analysis) dimensionality reduction:
+
+```python
+Xrot_reduced = np.dot(X, U[:,:100]) # Xrot_reduced becomes [N x 100]
+```
+
+After this operation, we would have reduced the original dataset of size [N x D] to one of size [N x 100], keeping the 100 dimensions of the data that contain the most variance. It is very often the case that you can get very good performance by training linear classifiers or neural networks on the PCA-reduced datasets, obtaining savings in both space and time.
+
+The last transformation you may see in practice is **whitening**. The whitening operation takes the data in the eigenbasis and divides every dimension by the eigenvalue to normalize the scale. The geometric interpretation of this transformation is that if the input data is a multivariable gaussian, then the whitened data will be a gaussian with zero mean and identity covariance matrix. This step would take the form:
+
+```python
+# whiten the data:
+# divide by the eigenvalues (which are square roots of the singular values)
+Xwhite = Xrot / np.sqrt(S + 1e-5)
+```
+
+*Warning: Exaggerating noise.* Note that we're adding 1e-5 (or a small constant) to prevent division by zero. One weakness of this transformation is that it can greatly exaggerate the noise in the data, since it stretches all dimensions (including the irrelevant dimensions of tiny variance that are mostly noise) to be of equal size in the input. This can in practice be mitigated by stronger smoothing (i.e. increasing 1e-5 to be a larger number).
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/nn2/prepro2.jpeg">
+  <div class="figcaption">PCA / Whitening. <b>Left</b>: Original toy, 2-dimensional input data. <b>Middle</b>: After performing PCA. The data is centered at zero and then rotated into the eigenbasis of the data covariance matrix. This decorrelates the data (the covariance matrix becomes diagonal). <b>Right</b>: Each dimension is additionally scaled by the eigenvalues, transforming the data covariance matrix into the identity matrix. Geometrically, this corresponds to stretching and squeezing the data into an isotropic gaussian blob.</div>
+</div>
+
+We can also try to visualize these transformations with CIFAR-10 images. The training set of CIFAR-10 is of size 50,000 x 3072, where every image is stretched out into a 3072-dimensional row vector. We can then compute the [3072 x 3072] covariance matrix and compute its SVD decomposition (which can be relatively expensive). What do the computed eigenvectors look like visually? An image might help:
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/nn2/cifar10pca.jpeg">
+  <div class="figcaption"><b>Left:</b>An example set of 49 images. <b>2nd from Left:</b> The top 144 out of 3072 eigenvectors. The top eigenvectors account for most of the variance in the data, and we can see that they correspond to lower frequencies in the images.  <b>2nd from Right:</b> The 49 images reduced with PCA, using the 144 eigenvectors shown here. That is, instead of expressing every image as a 3072-dimensional vector where each element is the brightness of a particular pixel at some location and channel, every image above is only represented with a 144-dimensional vector, where each element measures how much of each eigenvector adds up to make up the image. You can see that the images are slightly more blurry, reflecting the fact that the top eigenvectors capture lower frequencies. However, most of the information is still preserved. (The way to obtain the 3072 numbers in the original pixel domain from every 144-dimensional vector is to "undo" the rotation back into pixel space: e.g. multiplying a 144-d vector by U[:,:144].T) <b>Right:</b> Whitened images, where the variance along every one of the 144 dimensions is squashed to equal length. The lower frequencies (which accounted for most variance) are now negligeable, while the higher frequencies (which account for relatively little variance originally) become exaggerated.</div>
+</div>
+
+**In practice.** We mention PCA/Whitening in these notes for completeness, but these transformations are not used with Convolutional Networks. However, it is very important to zero-center the data, and it is common to see normalization of every pixel as well.
+
+**Common pitfall**. An important point to make about the preprocessing is that any preprocessing statstics (e.g. the data mean) must only be computed on the training data, and then applied to the validation / test data. E.g. computing the mean and subtracting it from every image across the entire dataset and then splitting the data into train/val/test splits would be a mistake. Instead, the mean must be computed only over the training data and then subtracted equally from all splits (train/val/test).
+
+<a name='init'></a>
+### Weight Initialization
+
+We have seen how to construct a Neural Network architecture, and how to preprocess the data. Before we can begin to train the network we have to initialize its parameters.
+
+**Pitfall: all zero initialization**. Lets start with what we should not do. Note that we do not know what the final value of every weight should be in the trained network, but with proper data normalization it is reasonable to assume that approximately half of the weights will be positive and half of them will be negative. A reasonable-sounding idea then might be to set all the initial weights to zero, which we expect to be the "best guess" in expectation. This turns out to be a mistake, because if every neuron in the network computes the same output, then they will also all compute the same gradients during backpropagation and undergo the exact same parameter updates. In other words, there is no source of assymetry between neurons if their weights are initialized to be the same.
+
+**Small random numbers**. Therefore, we still want the weights to be very close to zero, but as we have argued above, not identically zero. As a solution, it is common to initialize the weights of the neurons to very small numbers and refer to doing so as *symmetry breaking*. The idea is that the neurons are all random and unique in the beginning, so they will compute distinct updates and integrate themselves as diverse parts of the full network. The implementation for one weight matrix might look like `W = 0.001* np.random.randn(D,H)`, where `randn` samples from a zero mean, unit standard deviation gaussian. With this formulation, every neuron's weight vector is initialized as a random vector sampled from a multi-dimensional gaussian, so the neurons point in random direction in the input space. It is also possible to use small numbers drawn from a uniform distribution, but this seems to have relatively little impact on the final performance in practice.
+
+**Callibrating the variances with 1/sqrt(n)**. One problem with the above suggestion is that the distribution of the outputs from a randomly initialized neuron has a variance that depends on the number of inputs: As the number of inputs grows, the expected output from the neuron will remain zero-centered but the variance will grow approximately as \\(\propto \sqrt{n}\\), where \\(n\\) is the number of inputs to the neuron. It is therefore common to normalize the random initialization of a neuron by the *fan-in* of the neuron (i.e. its number of inputs). This initialization heuristic takes the form: `W = 0.001 * np.random.randn(D,H) / sqrt(D)`, where it is assumed that `D` is the dimensionality of the input. This initialization ensures that all neurons have an approximately equal output variance distribution. This makes the properties of the neurons more homogeneous across the network and can lead to faster convergence.
+
+**Sparse initializaton**. Another way to address the uncallibrated variances problem is to set all weight matrices to zero, but to break symmetry every neuron is randomly connected (with weights sampled from a small gaussian as above) to a fixed number of neurons below it. A typical number of neurons to connect to may be as small as 10.
+
+**Initializing sigmoids / tanhs**. There have been some studies of the flow of gradients in sigmoid/tanh networks. An often cited paper is [Glorot and Bengio 2010](http://www.iro.umontreal.ca/~lisa/publications2/index.php/publications/show/447), which recommends the use of tanh nonlinearities over sigmoids, and recommends the *normalized initialization* \\( W \sim U [- \frac{\sqrt{6}}{\sqrt{n\_{in} + n\_{out}}}, \frac{\sqrt{6}}{\sqrt{n\_{in} + n\_{out}}}] \\). where \\(U\\) is the uniform distribution. However, the ReLU units have been found to be much less susceptible to the problems discussed in the paper, which stem mostly from the saturating properties of sigmoid/tanh units.
+
+**Initializing the biases**. It is possible and common to initialize the biases to be zero, since the assymetry breaking is provided by the small random numbers in the weights. For ReLU non-linearities, some people like to use small constant value such as 0.01 for all biases because this ensures that all ReLU units fire in the beginning and therefore obtain and propagate some gradient. However, it is not clear if this provides a consistent improvement and it is more common to simply use 0 bias initialization.
+
+**In practice**, the current recommendation is to use ReLU units, initialize with small random numbers drawn from a gaussian (and normalized by the square of the fan in as discussed above), and set biases to zero. The details of the initialization are less likely to matter for simpler, shallower networks than for very deep networks.
+
+<a name='reg'></a>
+### Regularization
+
+There are several ways of controling the capacity of Neural Networks to prevent overfitting:
+
+**L2 regularization** is perhaps the most common form of regularization. It can be implemented by penalizing the squared magnitude of all parameters directly in the objective. That is, for every weight \\(w\\) in the network, we add the term \\(\frac{1}{2} \lambda w^2\\) to the objective, where \\(\lambda\\) is the regularization strength. It is common to see the factor of \\(\frac{1}{2}\\) in front because then the gradient of this term with respect to the parameter \\(w\\) is simply \\(\lambda w\\) instead of \\(2 \lambda w\\). The L2 regularization has the intuitive interpretation of heavily penalizing peaky weight vectors and preferring diffuse weight vectors. As we discussed in the Linear Classification section, due to multiplicative interactions between weights and inputs this has the appealing property of encouraging the network to use all of its inputs a little rather thatn some of its inputs a lot. Lastly, notice that during gradient descent parameter update, using the L2 regularization ultimately means that every weight is decayed linearly: `W += -lambda * W` towards zero.
+
+**L1 regularization** is another relatively common form of regularization, where for each weight \\(w\\) we add the term \\(\lambda  \mid w \mid\\) to the objective. It is possible to combine the L1 regularization with the L2 regularization: \\(\lambda\_1 \mid w \mid + \lambda\_2 w^2\\) (this is called *Elastic net regularization*). The L1 regularization has the intriguing property that it leads the weight vectors to become sparse during optimization (i.e. very close to exactly zero). In other words, neurons with L1 regularization end up using only a sparse subset of their most important inputs and become nearly invariant to the "noisy" inputs. In comparison, final weight vectors from L2 regularization are usually diffuse, small numbers.
+
+**Max norm constraints**. Another form of regularization is to enforce an absolute upper bound on the magnitude of the weight vector for every neuron and use projected gradient descent to enforce the constraint. In practice, this corresponds to performing the parameter update as normal, and then enforcing the constraint by clamping the weight vector \\(\vec{w}\\) of every neuron to satisfy \\(\Vert \vec{w} \Vert\_2 < c\\). Some people report improvements when using this form of regularization. One of its appealing properties is that network cannot "explode" even when the learning rates are set too high because the updates are always bounded.
+
+**Dropout** is an extremely effective, simple and recently introduced regularization technique by Srivastava et al. in [Dropout: A Simple Way to Prevent Neural Networks from Overfitting](http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf) (pdf) that complements the other methods (L1, L2, maxnorm). While training, dropout is implemented by only keeping a neuron active with some probability \\(p\\) (a hyperparameter), or setting it to zero otherwise.
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/nn2/dropout.jpeg" width="70%">
+  <div class="figcaption">Figure taken from the <a href="http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf">Dropout paper</a> that illustrates the idea. During training, Dropout can be interpreted as sampling a Neural Network within the full Neural Network, and only updating the parameters of the sampled network based on the input data. (However, the exponential number of possible sampled networks are not independent because they share the parameters.) During testing there is no dropout applied, with the interpretation of evaluating an averaged prediction across the exponentially-sized ensemble of all sub-networks (more about ensembles in the next section).</div>
+</div>
+
+Vanilla dropout in an example 3-layer Neural Network would be implemented as follows:
+
+```python
+""" Vanilla Dropout: Not recommended implementation (see notes below) """
+
+p = 0.5 # probability of keeping a unit active. higher = less dropout
+
+def train_step(X):
+  """ X contains the data """
+  
+  # forward pass for example 3-layer neural network
+  H1 = np.maximum(0, np.dot(W1, X) + b1)
+  U1 = np.random.rand(*H1.shape) < p # first dropout mask
+  H1 *= U1 # drop!
+  H2 = np.maximum(0, np.dot(W2, H1) + b2)
+  U2 = np.random.rand(*H2.shape) < p # second dropout mask
+  H2 *= U2 # drop!
+  out = np.dot(W3, H2) + b3
+  
+  # backward pass: compute gradients... (not shown)
+  # perform parameter update... (not shown)
+  
+def predict(X):
+  # ensembled forward pass
+  H1 = np.maximum(0, np.dot(W1, X) + b1) * p # NOTE: scale the activations
+  H2 = np.maximum(0, np.dot(W2, H1) + b2) * p # NOTE: scale the activations
+  out = np.dot(W3, H2) + b3
+```
+
+In the code above, inside the `train_step` function we have performed dropout twice: on the first hidden layer and on the second hidden layer. It is also possible to perform dropout right on the input layer, in which case we would also create a binary mask for the input `X`. The backward pass remains unchanged, but of course has to take into account the generated masks `U1,U2`. 
+
+Crucially, note that in the `predict` function we are not dropping anymore, but we are performing a scaling of both hidden layer outputs by \\(p\\). This is important because at test time all neurons see all their inputs, so we want the outputs of neurons at test time to be identical to their expected outputs at training time. For example, in case of \\(p = 0.5\\), the neurons must halve their outputs at test time to have the same output as they had during traning time (in expectation). To see this, consider an output of a neuron \\(x\\) (before dropout). With dropout, the expected output from this neuron will become \\(px + (1-p)0\\), because the neuron's output will be set to zero with probability \\(1-p\\). At test time, when we keep the neuron always active, we must adjust \\(x \rightarrow px\\) to keep the same expected output.
+
+The undesirable property of the scheme presented above is that we must scale the activations by \\(p\\) at test time. Since test-time performance is so critical, it is always preferrable to use **inverted dropout**, which performs the scaling at train time, leaving the forward pass at test time untouched:
+
+```python
+""" 
+Inverted Dropout: Recommended implementation example.
+We drop and scale at train time and don't do anything at test time.
+"""
+
+p = 0.5 # probability of keeping a unit active. higher = less dropout
+
+def train_step(X):
+  # forward pass for example 3-layer neural network
+  H1 = np.maximum(0, np.dot(W1, X) + b1)
+  U1 = (np.random.rand(*H1.shape) < p) / p # first dropout mask. Notice /p!
+  H1 *= U1 # drop!
+  H2 = np.maximum(0, np.dot(W2, H1) + b2)
+  U2 = (np.random.rand(*H2.shape) < p) / p # second dropout mask. Notice /p!
+  H2 *= U2 # drop!
+  out = np.dot(W3, H2) + b3
+  
+  # backward pass: compute gradients... (not shown)
+  # perform parameter update... (not shown)
+  
+def predict(X):
+  # ensembled forward pass
+  H1 = np.maximum(0, np.dot(W1, X) + b1) # no scaling necessary
+  H2 = np.maximum(0, np.dot(W2, H1) + b2)
+  out = np.dot(W3, H2) + b3
+```
+
+There has a been a large amount of research after the first introduction of dropout that tries to understand the source of its power in practice, and its relation to the other regularization techniques. Recommended further reading for an interested reader includes:
+
+- [Dropout paper](http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf) by Srivastava et al. 2014.
+- [Dropout Training as Adaptive Regularization](http://papers.nips.cc/paper/4882-dropout-training-as-adaptive-regularization.pdf): "we show that the dropout regularizer is first-order equivalent to an L2 regularizer applied after scaling the features by an estimate of the inverse diagonal Fisher information matrix". There you have it.
+
+**Bias regularization**. As we already mentioned in the Linear Classification section, it is not common to regularize the bias parameters because they do not interact with the data through multiplicative interactions, and therefore do not have the interpretation of controlling the influence of a data dimension on the final objective. However, in practical applications (and with proper data preprocessing) regularizing the bias rarely leads to significantly worse performance. This is likely because there are very few bias terms compared to all the weights, so the classifier can "afford to" use the biases if it needs them to obtain a better data loss.
+
+**Per-layer regularization**. It is not very common to regularize different layers to different amounts (except perhaps the output layer). Relatively few results regarding this idea have been published in the literature.
+
+**In practice**: It is most common to use a single, global L2 regularization strength that is cross-validated. It is also common to combine this with dropout applied after all layers. The value of \\(p = 0.5\\) is a reasonable default, but this can be tuned on validation data.
+
+<a name='losses'></a>
+### Loss functions
+
+We have discussed the regularization loss part of the objective, which can be seen as penalizing some measure of complexity of the model. The second part of an objective is the *data loss*, which in a supervised learning problem measures the compatibility between a prediction (e.g. the class scores in classification) and the ground truth label. The data loss takes the form of an average over the data losses for every individual example. That is, \\(L = \frac{1}{N} \sum\_i L\_i\\) where \\(N\\) is the number of training data. Lets abbreviate \\(f = f(x\_i; W)\\) to be the activations of the output layer in a Neural Network. There are several types of problems you might want to solve in practice:
+
+**Classification** is the case that we have so far discussed at length. Here, we assume a dataset of examples and a single correct label (out of a fixed set) for each example. One of two most commonly seen cost functions in this setting are the SVM (e.g. the Weston Watkins formulation):
+
+$$
+L\_i = \sum\_{j\neq y\_i} \max(0, f\_j - f\_{y\_i} + 1)
+$$
+
+As we briefly alluded to, some people repot better performance with the squared hinge loss (i.e. instead using \\(\max(0, f\_j - f\_{y\_i} + 1)^2\\)). The second common choice is the Softmax classifier that uses the cross-entropy loss:
+
+$$
+L\_i = -\log\left(\frac{e^{f\_{y\_i}}}{ \sum\_j e^{f\_j} }\right)
+$$
+
+**Problem: Large number of classes**. When the set of labels is very large (e.g. words in English dictionary, or ImageNet which contains 22,000 categories), it may be helpful to use *Hierarchical Softmax* (see one explanation [here](http://arxiv.org/pdf/1310.4546.pdf) (pdf)). The hierarchical softmax decomposes labels into a tree. Each label is then represented as a path along the tree, and a Softmax classifier is trained at every node of the tree to disambiguate between the left and right branch. The structure of the tree strongly impacts the performance and is generally problem-dependent.
+
+**Attribute classification**. Both losses above assume that there is a single correct answer \\(y\_i\\). But what if \\(y\_i\\) is a binary vector where every example may or may not have a certain attribute, and where the attributes are not exclusive? For example, images on Instagram can be thought of as labeled with a certain subset of hashtags from a large set of all hashtags, and an image may contain multiple. A sensible approach in this case is to build a binary classifier for every single attribute independently. For example, a binary classifier for each category independently would take the form:
+
+$$
+L\_i = \sum\_j \max(0, 1 - y\_{ij} f\_j)
+$$
+
+where the sum is over all categories \\(j\\), and \\(y\_{ij}\\) is either +1 or -1 depending on whether the i-th example is labeled with the j-th attribute, and the score vector \\(f\_j\\) will be positive when the class is predicted to be present and negative otherwise. Notice that loss is accumulated if a positive example has score less than +1, or when a negative example has score greater than -1. 
+
+An alternative to this loss would be to train a logistic regression classifier for every attribute independently:
+
+$$
+L\_i = \sum\_j y\_{ij} \log(\sigma(f\_j)) + (1 - y\_{ij}) \log(1 - \sigma(f\_j))
+$$
+
+where the labels \\(y\_{ij}\\) are assumed to be either 1 (positive) or 0 (negative), and \\(\sigma(\cdot)\\) is the sigmoid function. The expression above can look scary but the gradient on \\(f\\) is in fact extremely simple and intuitive: \\(\partial{L\_i} / \partial{f\_j} = y\_{ij} - \sigma(f\_j)\\) (as you can double check yourself by taking the derivatives).
+
+**Regression** is the task of predicting real-valued quantities, such as the price of houses or the length of something in an image. For this task, it is common to compute the loss between the predicted quantity and the true answer and then measure the L2 squared norm, or L1 norm of the difference. The L2 norm squared would compute the loss for a single example of the form:
+
+$$
+L\_i = \Vert f - y\_i \Vert\_2^2
+$$
+
+The reason the L2 norm is squared in the objective is that the gradient becomes much simpler, without changing the optimal parameters since squaring is a monotonic operation. The L1 norm would be formulated by summing the absolute value along each dimension:
+
+$$
+L\_i = \Vert f - y\_i \Vert\_1 = \sum\_j \mid f\_j - (y\_i)\_j \mid
+$$
+
+where the sum \\(\sum\_j\\) is a sum over all dimensions of the desired prediction, if there is more than one quantity being predicted. Looking at only the j-th dimension of the i-th example and denoting the difference between the true and the predicted value by \\(\delta\_{ij}\\), the gradient for this dimension (i.e. \\(\partial{L\_i} / \partial{f\_j}\\)) is easily derived to be either \\(\delta\_{ij}\\) with the L2 norm, or \\(sign(\delta\_{ij})\\). That is, the gradient on the score will either be directly proportional to the difference in the error, or it will be fixed and only inherit the sign of the difference.
+
+*Word of caution*: It is important to note that the L2 loss is much harder to optimize than a more stable loss such as Softmax. When faced with a regression problem, first consider if it is absolutely inadequate to quantize the output into bins. For example, if you are predicting star rating for a product, it might work much better to use 5 independent classifiers for ratings of 1-5 stars instead of a regression loss. If you're certain that classification is not appropriate, use the L2 but be careful: For example, the L2 is more fragile and applying dropout in the network (especially in the layer right before the L2 loss) is not a great idea.
+
+**Structured prediction**. The structured loss refers to a case where the labels can be arbitrary structures such as graphs, trees, or other complex objects. Usually it is also assumed that the space of structures is very large and not easily enumerable. The basic idea behind the structured SVM loss is to demand a margin between the correct structure \\(y\_i\\) and the highest-scoring incorrect structure. It is not common to solve this problem as a simple unconstrained optimization problem with gradient descent. Instead, special solvers are usually devised so that the specific simplifying assumptions of the structure space can be taken advantage of. We mention the problem briefly but consider the specifics to be outside of the scope of the class.
+
+<a name='summary'></a>
+
+## Summary
+
+In summary:
+
+- The recommended preprocessing is to center the data to have mean of zero, and normalize its scale to [-1, 1] along each feature
+- Initialize the weights by drawing them from a gaussian distribution with standard deviation of approximately 0.01. In deeper networks you might want to try normalizing by the square root of the number of incoming connections.
+- Use L2 regularization (or maxnorm) and dropout (the inverted version)
+- We discussed different tasks you might want to perform in practice, and the most common loss functions for each task
+
+We've now preprocessed the data and set up and initialized the model. In the next section we will look at the learning process and its dynamics.
