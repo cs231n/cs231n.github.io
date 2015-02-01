@@ -320,30 +320,6 @@ The reason this works well is that the examples in the training data are correla
 
 The extreme case of this is a setting where the mini-batch contains only a single example. This process is called **Stochastic Gradient Descent (SGD)** (or also sometimes **on-line** gradient descent). This is relatively less common to see because in practice due to vectorized code optimizations it can be computationally much more efficient to evaluate the gradient for 100 examples, than the gradient for one example 100 times. Even though SGD technically refers to using a single example at a time to evaluate the gradient, you will hear people use the term SGD even when referring to mini-batch gradient descent (i.e. mentions of MGD for "Minibatch Gradient Descent", or BGD for "Batch gradient descent" are rare to see), where it is usually assumed that mini-batches are used. The size of the mini-batch is a hyperparameter but it is not very common to cross-validate it. It is usually based on memory contraints (if any), or set to some value around 100.
 
-> In practice, use Mini-batch Gradient Descent. A mini-batch size of about 100 tends to work well.
-
-**Physical intuitions for parameter updates.** If you're coming from a physics background then there is another way to view the optimization problem. In this interpretation the loss function can be thought of as a high-dimensional hilly terrain where the value of the loss is the terrain's height (and therefore also to the potential energy since \\(U = mgh\\) and therefore \\( U \propto h \\) ). Initializing the weight matrix with random numbers is equivalent to setting a particle with zero initial velocity at some location. You can then imagine the optimization process as being equivalent to the process of simulating the particle rolling on this hill.
-
-Since the force on the particle is related to the gradient of potential energy (i.e. \\(F = - \nabla U \\) ), the **force** felt by the particle is precisely the (negative) **gradient** of the loss function. Moreover, \\(F = ma \\) so the (negative) gradient is in this view proportional to the acceleration of the particle. Note that this is different from the SGD update shown above, where the gradient directly integrates the position. Instead, the physics view suggests an update of the form:
-
-```python
-# gradient is the force (and also proportional to acceleration)
-weights_grad = evaluate_gradient(loss_fun, data, weights) 
-vel += - step_size * weights_grad # integrate the velocity of the particle
-weights += vel # perform parameter update
-```
-
-In future sections we will discuss different ways of performing the update once the gradient is computed. Among these, a very commonly used scheme is the **momentum update** which computes:
-
-```python
-weights_grad = evaluate_gradient(loss_fun, data, weights) 
-vel = vel * 0.9 - step_size * weights_grad
-weights += vel
-```
-
-The momentum update agrees with the physical formula above but additionally includes a damping term (0.9) that reduces the particle's velocity (and therefore also its kinetic energy), otherwise the particle would never come to a stop at the bottom of the hill. As we will see later in the class, this update formulation very often accelerates the convergence and is in almost all cases preferrable to the simple *vanilla* SGD update.
-
-
 <a name='summary'></a>
 ### Summary
 
@@ -363,7 +339,7 @@ In this section,
 - We saw that the **gradient** of a function gives the steepest ascent direction and we discussed a simple but inefficient way of computing it numerically using the finite difference approximation (the finite difference being the value of *h* used in computing the numerical gradient).
 - We saw that the parameter update requires a tricky setting of the **step size** (or the **learning rate**) that must be set just right: if it is too low the progress is steady but slow. If it is too high the progress can be faster, but more risky. We will explore this tradeoff in much more detail in future sections.
 - We discussed the tradeoffs between computing the **numerical** and **analytic** gradient. The numerical gradient is simple but it is approximate and expensive to compute. The analytic gradient is exact, fast to compute but more error-prone since it requires the derivation of the gradient with math. Hence, in practice we always use the analytic gradient and then perform a **gradient check**, in which its implementation is compared to to the numerical gradient.
-- We introduced the **Gradient Descent** algorithm which iteratively computes the gradient and performs a parameter update in loop. We also hinted at the existence of different update formulas (e.g. the **momentum** update). We'll see more on this later.
+- We introduced the **Gradient Descent** algorithm which iteratively computes the gradient and performs a parameter update in loop.
 
 **Coming up:** The core takeaway from this section is that the ability to compute the gradient of a loss function with respect to its weights (and have some intuitive understanding of it) is the most important skill needed to design, train and understand neural networks. In the next section we will develop proficiency in computing the gradient analytically using the chain rule, otherwise also refered to as **backpropagation**. This will allow us to efficiently optimize relatively arbitrary loss functions that express all kinds of Neural Networks, including Convolutional Neural Networks.
 
