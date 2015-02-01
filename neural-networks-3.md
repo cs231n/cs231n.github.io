@@ -25,6 +25,8 @@ Table of Contents:
 
 ## Learning
 
+In the previous sections we've seen how we can set up the data, the model, and the loss function. In this section we'll take a look at various methods for performing the optimization. 
+
 <a name='gradcheck'></a>
 ### Gradient Checks
 
@@ -272,22 +274,25 @@ Additional References:
 <a name='hyper'></a>
 ### Hyperparameter optimization
 
-(todo finalize)
+As we've seen, training Neural Networks can involve many hyperparameter settings. The most common hyperparameters in context of Neural Networks include:
 
-Training Neural Networks can involve many hyperparameter settings. Some common hyperparameters to search over are: 
-
-- initial learning rate
+- the inital learning rate
 - learning rate decay schedule (such as the decay constant)
 - regularization strength (L2 penalty, dropout strength)
 
-Tips and tricks:
+But as saw, there are many more relatively less sensitive hyperparameters, for example in per-parameter adaptive learning methods, the setting of momentum and its schedule, etc. In this section we describe some additional tips and tricks for performing the hyperparameter search:
 
-- use log-spaced values in search
-- use random search not grid search (Bergstra and Bengio 2012)
-- careful with best values on border!
-- stage your search coarse to fine
-- try coordinate descent
-- In most cases a single validation set of respectible size substantially simplifies the code base, without the need for cross-validation with multiple folds. You'll hear people say they "cross-validated" a parameter, but many times it is assumed that they still only used a single validation set.
+**Implementation**. Larger Neural Networks typically require a long time to train, so performing hyperparameter search can take many days/weeks. It is important to keep this in mind since it influences the design of your code base. One particular design is to have a **worker** that continuously samples random hyperparameters and performs the optimization. During the training, the worker will keep track of the validation performance after every epoch, and writes a model checkpoint (together with miscellaneous training statistics such as the loss over time) to a file, preferably on a shared file system. It is useful to include the validation performance directly in the filename, so that it is simple to inspect and sort the progress. Then there is a second program which we will call a **master**, which launches or kills workers across a computing cluster, and may additionally inspect the checkpoints written by workers and plot their training statistics, etc.
+
+**Prefer one validation fold to cross-validation**. In most cases a single validation set of respectible size substantially simplifies the code base, without the need for cross-validation with multiple folds. You'll hear people say they "cross-validated" a parameter, but many times it is assumed that they still only used a single validation set.
+
+**Hyperparameter ranges**. Search for hyperparameters on log scale. For example, a typical sampling of the learning rate would look as follows: `learning_rate = 10 ** uniform(-6, 1)`. That is, we are generating a random random with a uniform distribution, but then raising it to the power of 10. The same strategy should be used for the regularization strength. As mentioned, for some parameters such as momentum, it is more common to search over a fixed set of values such as [0.5, 0.9, 0.95, 0.99] .
+
+**Prefer random search to grid search**. As argued by Bergstra and Bengio in [Random Search for Hypr-Parameter Optimization](http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf), "randomly chosen trials are more efficient for hyper-parameter optimization than trials on a grid". As it turns out, this is also usually easier to implement.
+
+**Careful with best values on border**. Sometimes it can happen that you're searching for a hyperparameter (e.g. learning rate) in a bad range. For example, suppose we use `learning_rate = 10 ** uniform(-6, 1)`. Once we receive the results, it is important to double check that the final learning rate is not at the edge of this interval, or otherwise you may be missing more optimal hyperparameter setting beyond the interval.
+
+**Stage your search from coarse to fine**. In practice, it can be helpful to first search in coarse ranges (e.g. 10 ** [-6, 1]), and then depending on where the best results are turning up, narrow the range. Also, it can be helpful to perform the initial coarse search while only training for 1 epoch or even less, because many hyperparameter settings can lead the model to not learn at all, or immediately explode with infinite cost. The second stage could then perform a narrower search with 5 epochs, and the last stage could perform a detailed search in the final range for many more epochs (for example).
 
 <a name='eval'></a>
 ## Evaluation
