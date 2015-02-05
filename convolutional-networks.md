@@ -57,9 +57,27 @@ The Conv layer is the core building block of a Convolutional Network. It is made
 
 We can compute the spatial size of the output volume as a function of the input volume size (\\(W\\)), the receptive field size of the neurons (\\(F\\)), the stride with which they are applied (\\(S\\)), and the amount of zero padding used (\\(P\\)) on the border. You can convince yourself that the correct formula for calculating how many neurons "fit" is given by \\((W - F + 2P)/S + 1\\). If this number is not an integer, then the strides are set incorrectly and the neurons cannot be tiled so that they "fit" across the volume neatly, in a symmetric way.
 
-**Parameter Sharing.** We can dramatically reduce the number of parameters used in a Conv Layer by assuming that every neuron in a single depth slice should use the same weights. This is motivated by the fact that if some particular feature (e.g. an oriented edge in a first convolutional layer) is useful at some position (x,y), then it should also be useful at some other position (x2,y2). Hence, there is no need to re-learn these features from scratch at all different locations in the output volume. In practice during backpropagation, every neuron in the volume will compute the gradient for its weights, but these gradients will be added up across each depth slice and only update a single set of weights. 
+**Parameter Sharing.** We can dramatically reduce the number of parameters used in a Conv Layer by assuming that every neuron in a single depth slice should use the same weights. We use the term **depth slice** as synonymous to an activation map; That is, it is the slice of the activation volume at a single depth, but for all spatial locations. The parameter sharing is motivated by the fact that if some particular feature (e.g. an oriented edge in a first convolutional layer) is useful at some position (x,y), then it should also be useful at some other position (x2,y2). Hence, there is no need to re-learn these features from scratch at all different locations in the output volume. In practice during backpropagation, every neuron in the volume will compute the gradient for its weights, but these gradients will be added up across each depth slice and only update a single set of weights. 
 
 Additionally, if all neurons in a single depth slice are using the same weight vector, then the forward pass of the conv layer can in each depth slice be computed as a convolution of the neuron's weights (i.e. the filter), with the input volume. The result of this convolution is an *activation map*, and the set of activation maps for each different filter are stacked together along the depth dimension to produce the output volume.
+
+*Example*. Suppose the input volume is a numpy array `X`. Then a single depth column at position `(x,y)` would be the activations `X[x,y,:]`. A depth slice at depth `d`, or equivalently an activation map at depth `d` would be the activations `X[:,:,d]`. 
+
+*Example 2*. Suppose that the input volume `X` has shape `X.shape: (11,11,4)`. Suppose further that we use no zero padding (\\(P = 0\\)), that the filter size is \\(F = 5\\), and that the stride is \\(S = 2\\). The output volume would therefore have spatial size (11-5)/2+1 = 4, giving a volume with width and height of 4. The activation map in the output volume (call it `V`), would then look as follows (only some of the elements are computed in this example):
+
+- `V[0,0,0] = np.maximum(0, X[:5,:5,:] * W0 + b0)`
+- `V[1,0,0] = np.maximum(0, X[2:7,:5,:] * W0 + b0)`
+- `V[2,0,0] = np.maximum(0, X[4:9,:5,:] * W0 + b0)`
+- `V[3,0,0] = np.maximum(0, X[6:11,:5,:] * W0 + b0)`
+
+notice that the weight vector `W0` is the weight vector of that neuron and `b0` is the bias. Notice that we are stepping along the input volume `X` spatially in steps of 2 (i.e. the stride). Also, we see that we are using the same weight and bias (due to parameter sharing), and where the dimensions along the width are increasing in steps of 2 (i.e. the stride). To construct a second activation map in the output volume, we would have:
+
+- `V[0,0,1] = np.maximum(0, X[:5,:5,:] * W1 + b1)`
+- `V[1,0,1] = np.maximum(0, X[2:7,:5,:] * W1 + b1)`
+- `V[2,0,1] = np.maximum(0, X[4:9,:5,:] * W1 + b1)`
+- `V[3,0,1] = np.maximum(0, X[6:11,:5,:] * W1 + b1)`
+
+where we see that we are indexing into the second depth dimension in `V`, and that a different parameter, bias vector is used. Of course, this example only does the convolution in the x-axis, but the convolution works analogously in the y dimension.
 
 **Summary**. To summarize, the Conv Layer specification is as follows:
 
