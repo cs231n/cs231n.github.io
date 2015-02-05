@@ -57,7 +57,7 @@ Notice that a linear classifier computes the score of a class as a weighted sum 
   <div class="figcaption">An example of mapping an image to class scores. For sake of visualization we assume the image only has 4 pixels and that we have 3 classes (red, blue, green class). We stretch the image pixels into a column and perform matrix multiplication to get the scores for each class. Note that this particular set of weights W is not good at all: the weights assign our cat image a very low cat score. In particular, this set of weights seems convinced that it's looking at a dog.</div>
 </div>
 
-**Analogy of images as high-dimensional points.** Since the images are stretched into high-dimensional column vectors, we can interpret each image as a single point in this space (e.g. each image in CIFAR-10 is a point in 3072-dimensional space of 32x32x3 images). Analogously, the entire dataset is a (labeled) set of points.
+**Analogy of images as high-dimensional points.** Since the images are stretached into high-dimensional column vectors, we can interpret each image as a single point in this space (e.g. each image in CIFAR-10 is a point in 3072-dimensional space of 32x32x3 images). Analogously, the entire dataset is a (labeled) set of points.
 
 Since we defined the score of each class as a weighted sum of all image pixels, each class score is a linear function over this space. We cannot visualize 3072-dimensional spaces, but if we imagine squashing all those dimensions into only two dimensions, then we can try to visualize what the classifier might be doing:
 
@@ -113,7 +113,7 @@ For example, going back to the example image of a cat and its scores for the cla
 <a name='svm'></a>
 #### Multiclass Support Vector Machine loss
 
-There are several ways to define the details of the loss function. As a first example we will first develop a commonly used loss called the **Multiclass Support Vector Machine** (SVM) loss. The SVM loss is set up so that the SVM "wants" the correct class for each image to a have a score higher than the incorrect classes by some fixed margin \\(\Delta\\). Notice that it's sometimes helpful to antropomorphise the loss functions as we did above: The SVM "wants" a certain outcome in the sense that the outcome would yield a lower loss (which is good).
+There are several ways to define the details of the loss function. As a first example we will first develop a commonly used loss called the **Multiclass Support Vector Machine** (SVM) loss. The SVM loss is set up so that the SVM "wants" the correct class for each image to a have a score higher than the incorrect classes by some fixed margin \\(\Delta\\). Notice that it's sometimes helpful to anthropomorphise the loss functions as we did above: The SVM "wants" a certain outcome in the sense that the outcome would yield a lower loss (which is good).
 
 Lets now get more precise. Recall that for the i-th example we are given the pixels \\( x\_i \\) and the label \\( y\_i \\) that specifies the index of the correct class. The score function takes the pixels and computes the vector \\( f(x\_i, W) \\) of class scores.  For example, the score for the j-th class is the j-th element: \\( f(x\_i, W)\_j \\). The Multiclass SVM loss for the i-th example is then formalized as follows:
 
