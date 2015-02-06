@@ -65,17 +65,17 @@ Additionally, if all neurons in a single depth slice are using the same weight v
 
 *Example 2*. Suppose that the input volume `X` has shape `X.shape: (11,11,4)`. Suppose further that we use no zero padding (\\(P = 0\\)), that the filter size is \\(F = 5\\), and that the stride is \\(S = 2\\). The output volume would therefore have spatial size (11-5)/2+1 = 4, giving a volume with width and height of 4. The activation map in the output volume (call it `V`), would then look as follows (only some of the elements are computed in this example):
 
-- `V[0,0,0] = np.sum(X[:5,:5,:] * W0 + b0)`
-- `V[1,0,0] = np.sum(X[2:7,:5,:] * W0 + b0)`
-- `V[2,0,0] = np.sum(X[4:9,:5,:] * W0 + b0)`
-- `V[3,0,0] = np.sum(X[6:11,:5,:] * W0 + b0)`
+- `V[0,0,0] = np.sum(X[:5,:5,:] * W0) + b0`
+- `V[1,0,0] = np.sum(X[2:7,:5,:] * W0) + b0`
+- `V[2,0,0] = np.sum(X[4:9,:5,:] * W0) + b0`
+- `V[3,0,0] = np.sum(X[6:11,:5,:] * W0) + b0`
 
 notice that the weight vector `W0` is the weight vector of that neuron and `b0` is the bias. Here, `W0` is assumed to be of shape `W0.shape: (5,5,4)`, since the filter size is 5 and the depth of the input volume is 4. Notice that at each point, we are computing the dot product as seen before in ordinary neural networks. Notice that we are stepping along the input volume `X` spatially in steps of 2 (i.e. the stride). Also, we see that we are using the same weight and bias (due to parameter sharing), and where the dimensions along the width are increasing in steps of 2 (i.e. the stride). To construct a second activation map in the output volume, we would have:
 
-- `V[0,0,1] = np.sum(X[:5,:5,:] * W1 + b1)`
-- `V[1,0,1] = np.sum(X[2:7,:5,:] * W1 + b1)`
-- `V[2,0,1] = np.sum(X[4:9,:5,:] * W1 + b1)`
-- `V[3,0,1] = np.sum(X[6:11,:5,:] * W1 + b1)`
+- `V[0,0,1] = np.sum(X[:5,:5,:] * W1) + b1`
+- `V[1,0,1] = np.sum(X[2:7,:5,:] * W1) + b1`
+- `V[2,0,1] = np.sum(X[4:9,:5,:] * W1) + b1`
+- `V[3,0,1] = np.sum(X[6:11,:5,:] * W1) + b1`
 
 where we see that we are indexing into the second depth dimension in `V` because we are computing the second activation map, and that a different set of parameters (`W1`) is now used. Of course, this example only does the convolution in the x-axis, but the convolution works analogously in the y dimension. Also, remember that the activation maps should eventually be passed elementwise through an activation function such as ReLU, and this is not shown here.
 
