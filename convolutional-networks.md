@@ -5,7 +5,21 @@ permalink: /convolutional-networks/
 
 (These notes are currently in draft form and under development)
 
-Table of Contents
+Table of Contents:
+
+- [Architecture Overview](#overview)
+- [ConvNet Layers](#layers)
+  - [Convolutional Layer](#conv)
+  - [Pooling Layer](#pool)
+  - [Normalization Layer](#norm)
+  - [Fully-Connected Layer](#fc)
+- [ConvNet Architectures](#architectures)
+- [Visualizing ConvNets](#vis)
+- [Transfer Learning](#transfer) (pre-training, fine-tuning)
+- [Controlling Overfitting](#overfitting) (data augmentations, dropout)
+- [Additional References](#add)
+
+
 
 ## Convolutional Neural Networks (CNNs / ConvNets)
 
@@ -13,6 +27,7 @@ Convolutional Neural Networks are very similar to ordinary Neural Networks: They
 
 So what does change? ConvNet architectures make the explicit assumption that the inputs are images, which allows us to be more efficient about how we arrange the neurons and how we connect them together.
 
+<a name='overview'></a>
 ### Architecture Overview
 
 *Recall: Regular Neural Nets.* As we saw in the previous chapter, Neural Networks receive an input (a single vector), and transform it through a series of *hidden layers*. Each hidden layer is made up of a set of neurons, where each neuron is fully connected to all neurons in the previous layer, and where neurons in a single layer function completely independently and do not share any connections. The last fully-connected layer is called the "output layer" and in classification settings it represents the class scores.
@@ -27,6 +42,7 @@ So what does change? ConvNet architectures make the explicit assumption that the
   <div class="figcaption">Left: A regular 3-layer Neural Network. Right: A ConvNet arranges its neurons in three dimensions (width, height, depth), as visualized in one of the layers. Every layer of a ConvNet transforms the 3D input volume to a 3D output volume of neuron activations. In this example, the red input layer holds the image, so its width and height would be the dimensions of the image, and the depth would be 3 (Red, Green, Blue channels).</div>
 </div>
 
+<a name='layers'></a>
 ### Layers used to build ConvNets 
 
 As we described above, every layer of a ConvNet transforms one volume of activations to another through a differentiable function. We use three main types of layers to build ConvNet architectures: **Convolutional Layer**, **Pooling Layer**, and **Fully-Connected Layer** (exactly as seen in regular Neural Networks). We will stack these layers to form a full ConvNet architecture. 
@@ -41,6 +57,7 @@ As we described above, every layer of a ConvNet transforms one volume of activat
 
 In this way, ConvNets transform the original image layer by layer from the original pixel values to the final class scores. The transformation is a function of a set of parameters (the weights of the neurons along the way), which we will train with gradient descent so that the class scores that the ConvNet computes are consistent with the labels in the training set for each image. We now describe the individual layers and the details of their connectivity in detail.
 
+<a name='conv'></a>
 #### Convolutional Layer
 
 The Conv layer is the core building block of a Convolutional Network, and it made up of neurons arranged in a 3D volume. We now discuss the details of the neuron connectivities, their arrangement in space, and their parameter sharing scheme.
@@ -131,6 +148,7 @@ where we see that we are indexing into the second depth dimension in `V` because
 - With parameter sharing, it introduces \\(F \cdot F \cdot D\_1\\) weights per filter, for a total of \\((F \cdot F \cdot D\_1) \cdot K\\) weights and \\(K\\) biases.
 - In the output volume, the \\(d\\)-th depth slice (of size \\(W\_2 \times H\_2\\)) is the result of performing a valid convolution of the \\(d\\)-th filter over the input volume (and offset by \\(d\\)-th bias).
 
+<a name='pool'></a>
 #### Pooling Layer
 
 It is common to periodically insert a Pooling layer in-between successive Conv layers in a ConvNet architecture. Its function is to progressively reduce the spatial size of the representation to reduce the amount of parameters and computation in the network, and hence to also control overfitting. The Pooling Layer operates independently on every depth slice of the input and resizes it spatially, using the MAX operation. The most common form is a pooling layer with filters of size 2x2 applied with a stride of 2 downsamples every depth slice in the input by 2 along both width and height, discarding 75% of the activations. Every MAX operation would in this case be taking a max over 4 numbers (little 2x2 region in some depth slice). The depth dimension remains unchanged. More generally, the pooling layer:
@@ -153,18 +171,21 @@ It is worth noting that there are only two commonly seen variations of the max p
 <div class="fig figcenter fighighlight">
   <img src="/assets/cnn/pool.jpeg">
   <div class="figcaption">
-    Pooling layer downsamples the volume spatially, independently in each depth slice of the input volume. The most common downsampling operation is max, giving rise to <b>max pooling</b>. In this example, the input volume of size [224x224x64] is max pooled with filter size 2, stride 2 into output volume of size [112x112x64]. Notice that the volume depth is preserved. Other operations you may see is average pooling, or L2 pooling.
+    Pooling layer downsamples the volume spatially, independently in each depth slice of the input volume. The most common downsampling operation is max, giving rise to <b>max pooling</b>. In this example, the input volume of size [224x224x64] is max pooled with filter size 2, stride 2 into output volume of size [112x112x64]. Here, each max would be taken over 4 numbers (little 2x2 square). Notice that the volume depth is preserved. Other operations you may see is average pooling, or L2 pooling.
   </div>
 </div>
 
+<a name='norm'></a>
 #### Normalization Layer
 
 Many types of normalization layers were previously proposed, with the intentions of implementing inhibition schemes seen in the brain. However, these have fallen out of favor because their contribution has been shown to be minimal, if any. For various types of normalizations, see the discussion in Alex Krizhevsky's [cuda-convnet library API](http://code.google.com/p/cuda-convnet/wiki/LayerParams#Local_response_normalization_layer_(same_map)).
 
+<a name='fc'></a>
 #### Fully-connected layer
 
 Neurons in a fully connected layer have full connections to all activations in the previous layer, as seen in regular Neural Networks. Their activations can hence be computed with matrix multiplication followed by a bias offset. See the *Neural Network* section of the notes for more information.
 
+<a name='architectures'></a>
 ### ConvNet Architectures
 
 We have seen that Convolutional Networks are commonly made up of only three layer types: CONV, POOL (we assume Max pool unless stated otherwise) and FC (short for fully-connected). We will also explicitly write the RELU activation function as a layer, which applies elementwise non-linearity. In this section we discuss how these are commonly stacked together to form entire ConvNets. 
@@ -192,17 +213,24 @@ Until now we've omitted mentions of common hyperparameters used in each of the l
 - AlexNet
 - VGGNet
 
-### Computational Considerations
+#### Computational Considerations
 
 - Add up the sizes of all volumes, multiply by 4 to get the number of bytes. Multiply by two because we need storage for forward pass (activations) and backward pass (gradients). 
 - Add the number of bytes to store parameters
 - Dividy number of bytes by 1024 to get number of KB, by 1024 to get number of MB, and 1024 again to get GB.
 - Most GPUs currently have about 4GB of memory, or 6GB or up to 12GB. Use minibatch size that maxes out the memory in your GPU. Remember that smaller batch sizes likely need smaller learning rates.
 
+<a name='vis'></a>
+### Visualizing ConvNets
+
+Deconvnets, backpropping to data
+
+<a name='transfer'></a>
 ### Transfer Learning
 
 It is very common to pretrain a ConvNet on a large dataset (e.g. ImageNet) and then use the weights as an initialzation for a ConvNet we wish to train on a different dataset.
 
+<a name='overfitting'></a>
 ### Addressing Overfitting
 
 #### Data Augmentation
@@ -215,6 +243,7 @@ It is very common to pretrain a ConvNet on a large dataset (e.g. ImageNet) and t
 
 - Dropout is just as effective for Conv layers. Usually people apply less dropout right before early conv layers since there are not that many parameters there compared to later stages of the network (e.g. the fully connected layers).
 
+<a name='add'></a>
 ### Additional Resources
 
 - [DeepLearning.net tutorial](http://deeplearning.net/tutorial/lenet.html)
