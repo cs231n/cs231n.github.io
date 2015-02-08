@@ -106,10 +106,6 @@ print type(x) # Prints "<type 'int'>"
 print x       # Prints "3"
 print x + 1   # Addition; prints "4"
 print x - 1   # Subtraction; prints "2"
-t = (5, 6)       # Create a tuple
-print type(t)    # Prints "<type 'tuple'>"
-print d[t]       # Prints "5"
-print d[(1, 2)]  # Prints "1" prints "2"
 print x * 2   # Multiplication; prints "6"
 print x ** 2  # Exponentiation; prints "9"
 x += 1
