@@ -228,7 +228,13 @@ $$
 
 where the sum is over all categories \\(j\\), and \\(y\_{ij}\\) is either +1 or -1 depending on whether the i-th example is labeled with the j-th attribute, and the score vector \\(f\_j\\) will be positive when the class is predicted to be present and negative otherwise. Notice that loss is accumulated if a positive example has score less than +1, or when a negative example has score greater than -1. 
 
-An alternative to this loss would be to train a logistic regression classifier for every attribute independently:
+An alternative to this loss would be to train a logistic regression classifier for every attribute independently. A binary logistic regression classifier has only two classes (0,1), and calculates the probability of class 1 as:
+
+$$
+P(y = 1 \mid x; w, b) = \frac{1}{1 + e^{-(w^Tx +b)}} = \sigma (w^Tx + b)
+$$
+
+Since the probabilities of class 1 and 0 sum to one, the probability for class 0 is \\(P(y = 0 \mid x; w, b) = 1 - P(y = 1 \mid x; w,b)\\). Hence, an example is classified as a positive example (y = 1) if \\(\sigma (w^Tx + b) > 0.5\\), or equivalently if the score \\(w^Tx +b > 0\\). The loss function then maximizes the log likelihood of this probability. You can convince yourself that this simplifies to:
 
 $$
 L\_i = \sum\_j y\_{ij} \log(\sigma(f\_j)) + (1 - y\_{ij}) \log(1 - \sigma(f\_j))
