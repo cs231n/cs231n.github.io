@@ -133,7 +133,7 @@ where we see that we are indexing into the second depth dimension in `V` because
 
 #### Pooling Layer
 
-It is common to periodically insert a Pooling layer in-between successive Conv layers in a ConvNet architecture. Its function is to reduce the spatial size of the representation. The Pooling Layer operates independently on every depth slice of the input and resizes it spatially, using the MAX operation. For example, a pooling layer with filters of size 2x2 applied with a stride of 2 downsamples every depth slice in the input by 2 along both width and height, discarding 75% of the activations. Every MAX operation would in this case be taking a max over 4 numbers (little 2x2 region in some depth slice). The depth dimension remains unchanged. More specifically:
+It is common to periodically insert a Pooling layer in-between successive Conv layers in a ConvNet architecture. Its function is to progressively reduce the spatial size of the representation to reduce the amount of parameters and computation in the network, and hence to also control overfitting. The Pooling Layer operates independently on every depth slice of the input and resizes it spatially, using the MAX operation. The most common form is a pooling layer with filters of size 2x2 applied with a stride of 2 downsamples every depth slice in the input by 2 along both width and height, discarding 75% of the activations. Every MAX operation would in this case be taking a max over 4 numbers (little 2x2 region in some depth slice). The depth dimension remains unchanged. More generally, the pooling layer:
 
 - It accepts a volume of size \\(W\_1 \times H\_1 \times D\_1\\)
 - It requires three hyperparameters: 
@@ -146,29 +146,51 @@ It is common to periodically insert a Pooling layer in-between successive Conv l
 - It introduces zero parameters since it computes a fixed function of the input
 - Note that it is not common to use zero-padding for Pooling layers
 
+It is worth noting that there are only two commonly seen variations of the max pooling layer found in practice: A pooling layer with \\(F = 3, S = 2\\) (also called overlapping pooling), and more commonly \\(F = 2, S = 2\\). Pooling sizes with larger receptive fields are too destructive.
+
+**Average pooling**. In addition to max pooling, the pooling units can also perform other functions, such as average (or even L2-norm pooling). Average pooling has been used historically but has recently fallen out of favor compared to the max pooling operation, which has been shown to work better in practice.
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/cnn/pool.jpeg">
+  <div class="figcaption">
+    Pooling layer downsamples the volume spatially, independently in each depth slice of the input volume. The most common downsampling operation is max, giving rise to <b>max pooling</b>. In this example, the input volume of size [224x224x64] is max pooled with filter size 2, stride 2 into output volume of size [112x112x64]. Notice that the volume depth is preserved. Other operations you may see is average pooling, or L2 pooling.
+  </div>
+</div>
 
 #### Normalization Layer
 
-Historically, various types of normalization layers were used but more recent work indicates that their contribution is minimal.
+Many types of normalization layers were previously proposed, with the intentions of implementing inhibition schemes seen in the brain. However, these have fallen out of favor because their contribution has been shown to be minimal, if any. For various types of normalizations, see the discussion in Alex Krizhevsky's [cuda-convnet library API](http://code.google.com/p/cuda-convnet/wiki/LayerParams#Local_response_normalization_layer_(same_map)).
 
 #### Fully-connected layer
 
-Neurons in a fully connected layer have full connections to all activations in the previous layer, as seen in regular Neural Networks.
+Neurons in a fully connected layer have full connections to all activations in the previous layer, as seen in regular Neural Networks. Their activations can hence be computed with matrix multiplication followed by a bias offset. See the *Neural Network* section of the notes for more information.
 
 ### ConvNet Architectures
 
-- Common ways of arranging Conv Pool sandwiches
-- Usually there are fewer filters near bottom of a Conv tower since there is less to know
-- Case studies: LeNet, AlexNet, ZF net, VGG Net
-- The product of filters and number of positions kept roughly constant
-- On top: Fully Connected / Averaging
+We have seen that Convolutional Networks are commonly made up of only three layer types: CONV, POOL (we assume Max pool unless stated otherwise) and FC (short for fully-connected). We will also explicitly write the RELU activation function as a layer, which applies elementwise non-linearity. In this section we discuss how these are commonly stacked together to form entire ConvNets. 
 
-### Sizing Convolutional Networks
 
-Case study of VGG network
+**Common architecture pattern**. The most common form of a ConvNet architecture stacks a few CONV-RELU layers, follows them with POOL layers, and repeats this pattern until the image has been merged spatially to a small size. At some point, it is common to transition to fully-connected layers. The last fully-connected layer holds the output, such as the class scores. In other words, the most common ConvNet architecture follows the pattern:
 
-- Most memory and compute is in first convolutional layers
-- Most parameters are in the fully-connected layers at the end of the network
+`INPUT -> [[CONV -> RELU]*N -> POOL?]*M -> [FC -> RELU]*K -> FC`
+
+where the `*` indicates repetition, and the `POOL?` indicates an optional pooling layer. Moreover, `N >= 0` (and usually `N <= 3`), `M >= 0`, `K >= 0` (and usually `K < 3`). For example, here are some common ConvNet architectures you may see that follow this pattern:
+
+- `INPUT -> FC`, implements a linear classifier. Here `N = M = K = 0`.
+- `INPUT -> CONV -> RELU -> FC`
+- `INPUT -> [CONV -> RELU -> POOL]*2 -> FC -> RELU -> FC`
+- `INPUT -> [CONV -> RELU -> CONV -> RELU -> POOL]*3 -> [FC -> RELU]*2 -> FC`
+
+**Sizing patterns**. 
+
+Until now we've omitted mentions of common hyperparameters used in each of the layers in a ConvNet.
+
+- The spatial extent of volumes shrinks while the depth extent becomes larger
+
+**Case study**
+
+- AlexNet
+- VGGNet
 
 ### Computational Considerations
 
@@ -177,6 +199,22 @@ Case study of VGG network
 - Dividy number of bytes by 1024 to get number of KB, by 1024 to get number of MB, and 1024 again to get GB.
 - Most GPUs currently have about 4GB of memory, or 6GB or up to 12GB. Use minibatch size that maxes out the memory in your GPU. Remember that smaller batch sizes likely need smaller learning rates.
 
-### Misc Tips/Tricks
+### Transfer Learning
 
-- Usually people apply less dropout in early conv layers since there are not that many parameters there compared to later stages of the network (e.g. the fully connected layers)
+It is very common to pretrain a ConvNet on a large dataset (e.g. ImageNet) and then use the weights as an initialzation for a ConvNet we wish to train on a different dataset.
+
+### Addressing Overfitting
+
+#### Data Augmentation
+
+- Flip the training images over x-axis
+- Jitter the colors slightly
+- Translate the images around by few pixels when passing them as input
+
+#### Dropout 
+
+- Dropout is just as effective for Conv layers. Usually people apply less dropout right before early conv layers since there are not that many parameters there compared to later stages of the network (e.g. the fully connected layers).
+
+### Additional Resources
+
+- [DeepLearning.net tutorial](http://deeplearning.net/tutorial/lenet.html)
