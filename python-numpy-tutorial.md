@@ -199,7 +199,7 @@ print nums[:2]     # Get a slice from the start to index 2 (exclusive); prints "
 print nums[:]      # Get a slice of the whole list; prints ["0, 1, 2, 3, 4]"
 print nums[:-1]    # Slice indices can be negative; prints ["0, 1, 2, 3]"
 nums[2:4] = [8, 9] # Assign a new sublist to a slice
-print nums         # Prints "[0, 1, 8, 8, 4]"
+print nums         # Prints "[0, 1, 8, 9, 4]"
 ```
 We will see slicing again in the context of numpy arrays.
 
