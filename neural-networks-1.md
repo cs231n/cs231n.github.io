@@ -117,6 +117,8 @@ This concludes our discussion of the most common types of neurons and their acti
 
 **Naming conventions.** Notice that when we say N-layer neural network, we do not count the input layer. Therefore, a single-layer neural network describes a network with no hidden layers (input directly mapped to output). In that sense, you can sometimes hear people say that logistic regression or SVMs are simply a special case of single-layer Neural Networks. You may also hear these networks interchangeably referred to as *"Artificial Neural Networks"* (ANN) or *"Multi-Layer Perceptrons"* (MLP). Many people do not like the analogies between Neural Networks and real brains and prefer to refer to neurons as *units*.
 
+**Output layer.** Unlike all layers in a Neural Network, the output layer neurons most commonly do not have an activation function (or you can think of them as having a linear identity activation function). This is because the last output layer is usually taken to represent the class scores (e.g. in classification), which are arbitrary real-valued numbers, or some kind of real-valued target (e.g. in regression). 
+
 **Sizing neural networks**. The two metrics that people commonly use to measure the size of neural networks are the number of neurons, or more commonly the number of parameters. Working with the two example networks in the above picture:
 
 - The first network (left) has 4 + 2 = 6 neurons (not counting the inputs), [3 x 4] + [4 x 2] = 20 weights and 4 + 2 = 6 biases, for a total of 26 learnable parameters. 
@@ -135,10 +137,10 @@ f = lambda x: 1.0/(1.0 + np.exp(-x)) # activation function (use sigmoid)
 x = np.random.randn(3, 1) # random input vector of three numbers (3x1)
 h1 = f(np.dot(W1, x) + b1) # calculate first hidden layer activations (4x1)
 h2 = f(np.dot(W2, h1) + b2) # calculate second hidden layer activations (4x1)
-out = f(np.dot(W3, h2) + b3) # output neuron (1x1)
+out = np.dot(W3, h2) + b3 # output neuron (1x1)
 ```
 
-In the above code, `W1,W2,W3,b1,b2,b3` are the learnable parameters of the network. Notice also that instead of having a single input column vector, the variable `x` could hold an entire batch of training data (where each input example would be a column of `x`) and then all examples would be efficiently evaluated in parallel.
+In the above code, `W1,W2,W3,b1,b2,b3` are the learnable parameters of the network. Notice also that instead of having a single input column vector, the variable `x` could hold an entire batch of training data (where each input example would be a column of `x`) and then all examples would be efficiently evaluated in parallel. Notice that the final Neural Network layer usually doesn't have an activation function (e.g. it represents a (real-valued) class score in a classification setting).
 
 > The forward pass of a fully-connected layer corresponds to one matrix multiplication followed by a bias offset and an activation function.
 
