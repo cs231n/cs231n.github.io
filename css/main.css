@@ -107,6 +107,16 @@ a:visited { color: #205caa; }
   text-align: justify;
 }
 
+.kw {
+  font-size: 16px;
+  color: #08A;
+  margin-left: 10px;
+}
+
+.notyet {
+  background-color: #FEE !important;
+}
+
 /* Site header */
 
 .title-wrap {
