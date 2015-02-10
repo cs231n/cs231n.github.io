@@ -218,16 +218,16 @@ The **pool layers** are in charge of downsampling the spatial dimensions of the 
 
 *Reducing sizing headaches.* The scheme presented above is pleasing because all the CONV layers preserve the spatial size of their input, while the POOL layers alone are in charge of down-sampling the volumes spatially. In an alternative scheme where we use strides greater than 1 or don't zero-pad the input in CONV layers, we would have to very carefully keep track of the input volumes throughout the CNN architecture and make sure that all strides and filters "work out", and that the ConvNet architecture is nicely and symmetrically wired.
 
-*Why use stride of 1 in CONV?* This choice is motivated by the fact that smaller filter strides give better performance in practice. Additionally, as already mentions it allows us to leave all down-sampling to the POOL layers, with the CONV layers only transforming the input volume depth-wise.
+*Why use stride of 1 in CONV?* Smaller strides work better in practice. Additionally, as already mentioned stride 1 allows us to leave all spatial down-sampling to the POOL layers, with the CONV layers only transforming the input volume depth-wise.
 
-*Why use padding?* In addition to the aforementioned benefit of keeping the spatial sizes constant after CONV, doing this actually improves performance. If the CONV layers were to not zero-pad the inputs and only perform valid convolutions, then the size of the volumes would reduce by a small amount after each CONV, and the information at the borders would too quickly "wash away".
+*Why use padding?* In addition to the aforementioned benefit of keeping the spatial sizes constant after CONV, doing this actually improves performance. If the CONV layers were to not zero-pad the inputs and only perform valid convolutions, then the size of the volumes would reduce by a small amount after each CONV, and the information at the borders would be "washed away" too quickly.
 
-*Representation size becomes too big in early layers!* todo
-
+*Compromising based on memory constraints.* In some cases (especially early in the ConvNet architectures), the amount of memory can build up very quickly with the rules of thumb presented above. For example, filtering a 224x224x3 image with three 3x3 CONV layers with 64 filters each and padding 1 would create three activation volumes of size [224x224x64]. This amounts to a total of about 10 million activations, or 36MB of memory (per image). Since GPUs are often bottlenecked by memory, it may be necessary to compromise. In practice, people prefer to make the compromise at only the first CONV layer of the network. For example, one compromise might be to use a first CONV layer with filter sizes of 7x7 and stride of 2 (as seen in a ZF net). As another example, an AlexNet uses filer sizes of 11x11 and stride of 4.
 
 #### Case studies
 
 - AlexNet
+- Zeiler&Fergus (ZF) Net
 - VGGNet
 
 #### Computational Considerations
@@ -240,12 +240,16 @@ The **pool layers** are in charge of downsampling the spatial dimensions of the 
 <a name='vis'></a>
 ### Visualizing ConvNets
 
-Deconvnets, backpropping to data
+- DeconvNets to visualize source of neuron firings
+- Occluding parts of the image
+- Visualizating the data gradient
+- Reconstructing images based on given ConvNet codes
+- Fooling ConvNets
 
 <a name='transfer'></a>
 ### Transfer Learning
 
-It is very common to pretrain a ConvNet on a large dataset (e.g. ImageNet) and then use the weights as an initialzation for a ConvNet we wish to train on a different dataset.
+It is very common to pretrain a ConvNet on a large dataset (e.g. ImageNet) and then use the weights as an initialization for a ConvNet we wish to train on a different dataset.
 
 <a name='overfitting'></a>
 ### Addressing Overfitting
@@ -253,8 +257,8 @@ It is very common to pretrain a ConvNet on a large dataset (e.g. ImageNet) and t
 #### Data Augmentation
 
 - Flip the training images over x-axis
-- Jitter the colors slightly
-- Translate the images around by few pixels when passing them as input
+- Sample random crops / scales in the original image
+- Jitter the colors
 
 #### Dropout 
 
