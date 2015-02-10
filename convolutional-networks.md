@@ -148,6 +148,8 @@ where we see that we are indexing into the second depth dimension in `V` because
 - With parameter sharing, it introduces \\(F \cdot F \cdot D\_1\\) weights per filter, for a total of \\((F \cdot F \cdot D\_1) \cdot K\\) weights and \\(K\\) biases.
 - In the output volume, the \\(d\\)-th depth slice (of size \\(W\_2 \times H\_2\\)) is the result of performing a valid convolution of the \\(d\\)-th filter over the input volume (and offset by \\(d\\)-th bias).
 
+There are common conventions and rules of thumb for assigning these parameters. See the [ConvNet architectures](#architectures) section below.
+
 <a name='pool'></a>
 #### Pooling Layer
 
@@ -166,7 +168,7 @@ It is common to periodically insert a Pooling layer in-between successive Conv l
 
 It is worth noting that there are only two commonly seen variations of the max pooling layer found in practice: A pooling layer with \\(F = 3, S = 2\\) (also called overlapping pooling), and more commonly \\(F = 2, S = 2\\). Pooling sizes with larger receptive fields are too destructive.
 
-**Average pooling**. In addition to max pooling, the pooling units can also perform other functions, such as average (or even L2-norm pooling). Average pooling has been used historically but has recently fallen out of favor compared to the max pooling operation, which has been shown to work better in practice.
+**General pooling**. In addition to max pooling, the pooling units can also perform other functions, such as *average pooling* or even *L2-norm pooling*. Average pooling was often used historically but has recently fallen out of favor compared to the max pooling operation, which has been shown to work better in practice.
 
 <div class="fig figcenter fighighlight">
   <img src="/assets/cnn/pool.jpeg">
@@ -190,8 +192,8 @@ Neurons in a fully connected layer have full connections to all activations in t
 
 We have seen that Convolutional Networks are commonly made up of only three layer types: CONV, POOL (we assume Max pool unless stated otherwise) and FC (short for fully-connected). We will also explicitly write the RELU activation function as a layer, which applies elementwise non-linearity. In this section we discuss how these are commonly stacked together to form entire ConvNets. 
 
-
-**Common architecture pattern**. The most common form of a ConvNet architecture stacks a few CONV-RELU layers, follows them with POOL layers, and repeats this pattern until the image has been merged spatially to a small size. At some point, it is common to transition to fully-connected layers. The last fully-connected layer holds the output, such as the class scores. In other words, the most common ConvNet architecture follows the pattern:
+#### Layer Patterns
+The most common form of a ConvNet architecture stacks a few CONV-RELU layers, follows them with POOL layers, and repeats this pattern until the image has been merged spatially to a small size. At some point, it is common to transition to fully-connected layers. The last fully-connected layer holds the output, such as the class scores. In other words, the most common ConvNet architecture follows the pattern:
 
 `INPUT -> [[CONV -> RELU]*N -> POOL?]*M -> [FC -> RELU]*K -> FC`
 
@@ -199,16 +201,31 @@ where the `*` indicates repetition, and the `POOL?` indicates an optional poolin
 
 - `INPUT -> FC`, implements a linear classifier. Here `N = M = K = 0`.
 - `INPUT -> CONV -> RELU -> FC`
-- `INPUT -> [CONV -> RELU -> POOL]*2 -> FC -> RELU -> FC`
-- `INPUT -> [CONV -> RELU -> CONV -> RELU -> POOL]*3 -> [FC -> RELU]*2 -> FC`
+- `INPUT -> [CONV -> RELU -> POOL]*2 -> FC -> RELU -> FC`. Here we see that there is a single CONV layer between every POOL layer.
+- `INPUT -> [CONV -> RELU -> CONV -> RELU -> POOL]*3 -> [FC -> RELU]*2 -> FC` Here we see two CONV layers stacked before every POOL layer. This is generally a good idea for larger and deeper networks, because multiple stacked CONV layers can develop more complex features of the input volume before the destructive pooling operation.
 
-**Sizing patterns**. 
+*Prefer a stack of small filter CONV to one large receptive field CONV layer*. Suppose that you stack three 3x3 CONV layers on top of each other (with non-linearities in between, of course). In this arrangement, each neuron on the first CONV layer has a 3x3 view of the input volume. A neuron on the second CONV layer has a 3x3 view of the first CONV layer, and hence by extension a 5x5 view of the input volume. Similarly, a neuron on the third CONV layer has a 3x3 view of the 2nd CONV layer, and hence a 7x7 view of the input volume. Suppose that instead of these three layers of 3x3 CONV, we only wanted to use a single CONV layer with 7x7 receptive fields. These neurons would have a receptive field size of the input volume that is identical in spatial extent (7x7), but with several disadvantages. First, the neurons would be computing a linear function over the input, while the three stacks of CONV layers contain non-linearities that make their features more expressive. Second, if we suppose that all the volumes have \\(C\\) channels, then it can be seen that the single 7x7 CONV layer would contain \\(C \times (7 \times 7 \times C) = 49 C^2\\) parameters, while the three 3x3 CONV layers would only contain \\(3 \times (C \times (3 \times 3 \times C)) = 27 C^2\\) parameters. Intuitively, stacking CONV layers with tiny filters as opposed to having one CONV layer with big filters allows us to express more powerful features of the input, and with fewer parameters. As a practical disadvantage, we might need more memory to hold all the intermediate CONV layer results if we plan to do backpropagation.
 
-Until now we've omitted mentions of common hyperparameters used in each of the layers in a ConvNet.
+#### Layer Sizing Patterns
 
-- The spatial extent of volumes shrinks while the depth extent becomes larger
+Until now we've omitted mentions of common hyperparameters used in each of the layers in a ConvNet. We will first state the common rules of thumb for sizing the architectures and then follow the rules with a discussion of the motation:
 
-**Case study**
+The **input layer** (that contains the image) should be divisible by 2 many times. Common numbers include 32 (e.g. CIFAR-10), 64, 96 (e.g. STL-10), or 224 (e.g. common ImageNet ConvNets), 384, and 512.
+
+The **conv layers** should be using small filters (e.g. 3x3 or at most 5x5), using a stride of \\(S = 1\\), and crucially, padding the input volume with zeros in such way that the conv layer does not alter the spatial dimensions of the input. That is, when \\(F = 3\\), then using \\(P = 1\\) will retain the original size of the input. When \\(F = 5\\), \\(P = 2\\). For a general \\(F\\), it can be seen that \\(P = (F - 1) / 2\\) preserves the input size. If you must use bigger filter sizes (such as 7x7 or so), it is only common to see this on the very first conv layer that is looking at the input image.
+
+The **pool layers** are in charge of downsampling the spatial dimensions of the input. The most common setting is to use max-pooling with 2x2 receptive fields (i.e. \\(F = 2\\)), and with a stride of 2 (i.e. \\(S = 2\\)). Note that this discards exactly 75% of the activations in an input volume (due to downsampling by 2 in both width and height). Another sligthly less common setting is to use 3x3 receptive fields with a stride of 2, but this makes. It is very uncommon to see receptive field sizes for max pooling that are larger than 3 because the pooling is then too lossy and agressive. This usually leads to worse performance.
+
+*Reducing sizing headaches.* The scheme presented above is pleasing because all the CONV layers preserve the spatial size of their input, while the POOL layers alone are in charge of down-sampling the volumes spatially. In an alternative scheme where we use strides greater than 1 or don't zero-pad the input in CONV layers, we would have to very carefully keep track of the input volumes throughout the CNN architecture and make sure that all strides and filters "work out", and that the ConvNet architecture is nicely and symmetrically wired.
+
+*Why use stride of 1 in CONV?* This choice is motivated by the fact that smaller filter strides give better performance in practice. Additionally, as already mentions it allows us to leave all down-sampling to the POOL layers, with the CONV layers only transforming the input volume depth-wise.
+
+*Why use padding?* In addition to the aforementioned benefit of keeping the spatial sizes constant after CONV, doing this actually improves performance. If the CONV layers were to not zero-pad the inputs and only perform valid convolutions, then the size of the volumes would reduce by a small amount after each CONV, and the information at the borders would too quickly "wash away".
+
+*Representation size becomes too big in early layers!* todo
+
+
+#### Case studies
 
 - AlexNet
 - VGGNet
