@@ -18,7 +18,7 @@ You can work on the assignment in one of two ways: locally on your own machine, 
 
 ### Working locally
 **Get the code:**
-Download the starter code here: [COMING SOON]
+Download the starter code [here](http://cs231n.stanford.edu/assignment3.zip).
 
 
 **[Optional] virtual environment:**
@@ -73,7 +73,7 @@ you should start the IPython notebook server from the
 
 ### Working on Terminal
 We have created a Terminal snapshot that is preconfigured for this assignment;
-you can find it here [COMING SOON]. Terminal allows you to work on the assignment from your browser. You can find a tutorial on how to use it [here](/terminal-tutorial).
+you can [find it here](https://www.terminal.com/snapshot/f8e4a56cfde0d0baa519c501dfe24b3394a3124b8b84356d2cd033a229a59bff). Terminal allows you to work on the assignment from your browser. You can find a tutorial on how to use it [here](/terminal-tutorial).
 
 ### Submitting your work:
 Whether you work on the assignment locally or using Terminal, once you are done
