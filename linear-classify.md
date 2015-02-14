@@ -36,7 +36,7 @@ $$
 f(x\_i, W, b) =  W x\_i + b
 $$
 
-In the above equation, we are assuming that the image \\(x\_i\\) has all of its pixels flattened out to a single column vector of shape [D x 1]. The matrix **W** (of size [K x D]), and the vector **b** (of size [K x 1]) are the **parameters** of the function. In CIFAR-10, \\(x\_i\\) contains all pixels in the i-th image flattened into a single [3072 x 1] column, **W** is [10 x 3072] and **b** is [10 x 1], so 3072 numbers come into the function (the raw pixel values) and 10 numbers come out (the class scores). The parameters in **W** are often called the **weights**, and **b** is called the **bias vector** because it influences the output scores, but without interacting with the actual data \\(x\_i\\). However, you will often hear people use the terms *weights* and *parameters* interchangably. 
+In the above equation, we are assuming that the image \\(x\_i\\) has all of its pixels flattened out to a single column vector of shape [D x 1]. The matrix **W** (of size [K x D]), and the vector **b** (of size [K x 1]) are the **parameters** of the function. In CIFAR-10, \\(x\_i\\) contains all pixels in the i-th image flattened into a single [3072 x 1] column, **W** is [10 x 3072] and **b** is [10 x 1], so 3072 numbers come into the function (the raw pixel values) and 10 numbers come out (the class scores). The parameters in **W** are often called the **weights**, and **b** is called the **bias vector** because it influences the output scores, but without interacting with the actual data \\(x\_i\\). However, you will often hear people use the terms *weights* and *parameters* interchangeably. 
 
 There are a few things to note:
 
@@ -57,7 +57,7 @@ Notice that a linear classifier computes the score of a class as a weighted sum 
   <div class="figcaption">An example of mapping an image to class scores. For sake of visualization we assume the image only has 4 pixels and that we have 3 classes (red, blue, green class). We stretch the image pixels into a column and perform matrix multiplication to get the scores for each class. Note that this particular set of weights W is not good at all: the weights assign our cat image a very low cat score. In particular, this set of weights seems convinced that it's looking at a dog.</div>
 </div>
 
-**Analogy of images as high-dimensional points.** Since the images are stretached into high-dimensional column vectors, we can interpret each image as a single point in this space (e.g. each image in CIFAR-10 is a point in 3072-dimensional space of 32x32x3 images). Analogously, the entire dataset is a (labeled) set of points.
+**Analogy of images as high-dimensional points.** Since the images are stretched into high-dimensional column vectors, we can interpret each image as a single point in this space (e.g. each image in CIFAR-10 is a point in 3072-dimensional space of 32x32x3 images). Analogously, the entire dataset is a (labeled) set of points.
 
 Since we defined the score of each class as a weighted sum of all image pixels, each class score is a linear function over this space. We cannot visualize 3072-dimensional spaces, but if we imagine squashing all those dimensions into only two dimensions, then we can try to visualize what the classifier might be doing:
 
@@ -223,7 +223,7 @@ def L(X, y, W):
   """ 
   fully-vectorized implementation :
   - X holds all the training examples as columns (e.g. 3073 x 50,000 in CIFAR-10)
-  - y is array of integers specifing correct class (e.g. 50,000-D array)
+  - y is array of integers specifying correct class (e.g. 50,000-D array)
   - W are weights (e.g. 10 x 3073)
   """
   # evaluate loss over all examples in X without using any for loops
@@ -244,7 +244,7 @@ $$
 L\_i = C \max(0, 1 - y\_i w^Tx\_i) + R(W)
 $$
 
-where \\(C\\) is a hyperparameter, and \\(y\_i \in \{ -1,1 \} \\). You can convince yourself that the formulation we presented in this section contains the binary SVM as a special case when there are only two classes. That is, if we only had two classes then the loss reduces to the binary SVM shown above. Also, \\(C\\) in this formulation and \\(\lambda\\) in our formulation control the same tradeoff and are related through recipical relation \\(C \propto \frac{1}{\lambda}\\).
+where \\(C\\) is a hyperparameter, and \\(y\_i \in \{ -1,1 \} \\). You can convince yourself that the formulation we presented in this section contains the binary SVM as a special case when there are only two classes. That is, if we only had two classes then the loss reduces to the binary SVM shown above. Also, \\(C\\) in this formulation and \\(\lambda\\) in our formulation control the same tradeoff and are related through reciprocal relation \\(C \propto \frac{1}{\lambda}\\).
 
 **Aside: Optimization in primal**. If you're coming to this class with previous knowledge of SVMs, you may have also heard of kernels, duals, the SMO algorithm, etc. In this class (as is the case with Neural Networks in general) we will always work with the optimization objectives in their unconstrained primal form. Many of these objectives are technically not differentiable (e.g. the max function isn't), but in practice this is not a problem and it is common to simply use the subgradients.
 
@@ -321,7 +321,7 @@ $$
 [0.5, -1, 0] \rightarrow [e^{0.5}, e^{-1}, e^0] = [1.65, 0.37, 1] \rightarrow [0.55, 0.12, 0.33]
 $$
 
-where the probabilites are now more diffuse. Moreover, in the limit where the weights go towards tiny numbers due to very strong regularization strength \\(\lambda\\), the output probabilities would be near uniform. Hence, the probabilities computed by the Softmax classifier are better thought of as confidences where, similar to the SVM, the ordering of the scores is interpretible, but the absolute numbers (or their differences) technically are not.
+where the probabilites are now more diffuse. Moreover, in the limit where the weights go towards tiny numbers due to very strong regularization strength \\(\lambda\\), the output probabilities would be near uniform. Hence, the probabilities computed by the Softmax classifier are better thought of as confidences where, similar to the SVM, the ordering of the scores is interpretable, but the absolute numbers (or their differences) technically are not.
 
 **In practice, SVM and Softmax are usually comparable.** The performance difference between the SVM and Softmax are usually very small, and different people will have different opinions on which classifier works better. Compared to the Softmax classifier, the SVM is a more *local* objective, which could be thought of either as a bug or a feature. Consider an example that achieves the scores [10, -2, 3] and where the first class is correct. An SVM (e.g. with desired margin of \\(\Delta = 1\\)) will see that the correct class already has a score higher than the margin compared to the other classes and it will compute loss of zero. The SVM does not care about the details of the individual scores: if they were instead [10, -100, -100] or [10, 9, 9] the SVM would be indifferent since the margin of 1 is satisfied and hence the loss is zero. However, these scenarios are not equivalent to a Softmax classifier, which would accumulate a much higher loss for the scores [10, 9, 9] than for [10, -100, -100]. In other words, the Softmax classifier is never fully happy with the scores it produces: the correct class could always have a higher probability and the incorrect classes always a lower probability and the loss would always get better. However, the SVM is happy once the margins are satisfied and it does not micromanage the exact scores beyond this constraint. This can intuitively be thought of as a feature: For example, a car classifier which is likely spending most of its "effort" on the difficult problem of separating cars from trucks should not be influenced by the frog examples, which it already assigns very low scores to, and which likely cluster around a completely different side of the data cloud.
 
@@ -343,7 +343,7 @@ where the probabilites are now more diffuse. Moreover, in the limit where the we
 In summary,
 
 - We defined a **score function** from image pixels to class scores (in this section, a linear function that depends on weights **W** and biases **b**).
-- Unlike kNN classifier, the advantage of this **parameteric approach** is that once we learn the parameters we can discard the training data. Additionally, the prediction for a new test image is fast since it requires a single matrix multiplication with **W**, not an exhaustive comparison to every single training example.
+- Unlike kNN classifier, the advantage of this **parametric approach** is that once we learn the parameters we can discard the training data. Additionally, the prediction for a new test image is fast since it requires a single matrix multiplication with **W**, not an exhaustive comparison to every single training example.
 - We introduced the **bias trick**, which allows us to fold the bias vector into the weight matrix for convenience of only having to keep track of one parameter matrix.
 - We defined a **loss function** (we introduced two commonly used losses for linear classifiers: the **SVM** and the **Softmax**) that measures how compatible a given set of parameters is with respect to the ground truth labels in the training dataset. We also saw that the loss function was defined in such way that making good predictions on the training data is equivalent to having a small loss.
 
