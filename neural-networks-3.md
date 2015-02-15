@@ -208,6 +208,7 @@ We recommend this further reading to understand the source of these equations an
 - [Advances in optimizing Recurrent Networks](http://arxiv.org/pdf/1212.0901v2.pdf) by Yoshua Bengio, Section 3.5.
 - [Ilya Sutskever's thesis](http://www.cs.utoronto.ca/~ilya/pubs/ilya_sutskever_phd_thesis.pdf) (pdf) contains a longer exposition of the topic in section 7.2
 
+
 <a name='anneal'></a>
 #### Annealing the learning rate
 
@@ -270,6 +271,15 @@ Additional References:
 
 - [Adadelta](http://arxiv.org/abs/1212.5701) by Matthew Zeiler is another relatively common adaptive learning rate method
 - [Unit Tests for Stochastic Optimization](http://arxiv.org/abs/1312.6055) proposes a series of tests as a standardized benchmark for stochastic optimization.
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/nn3/opt2.gif" width="49%" style="margin-right:10px;">
+  <img src="/assets/nn3/opt1.gif" width="49%">
+  <div class="figcaption">
+    Animations that may help your intuitions about the learning process dynamics. <b>Left:</b> Contours of a loss surface and time evolution of different optimization algorithms. Notice the "overshooting" behavior of momentum-based methods, which make the optimization look like a ball rolling down the hill. <b>Right:</b> A visualization of a saddle point in the optimization landscape, where the curvature along different dimension has different signs (one dimension curves up and another down). Notice that SGD has a very hard time breaking symetry and gets stuck on the top. Conversely, algorithms such as RMSprop will see very low gradients in the saddle direction. Tue to the denominator term in the RMSprop update, this will increase the effective learning rate along this direction, helping RMSProp proceed.<br>
+    Image credits for these visualizations are unknown :( If a reader has a pointer please contact us.
+  </div>
+</div>
 
 <a name='hyper'></a>
 ### Hyperparameter optimization
