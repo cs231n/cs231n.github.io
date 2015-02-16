@@ -270,14 +270,14 @@ Here, `decay_rate` is a hyperparameter and typical values are [0.9, 0.99, 0.999]
 Additional References:
 
 - [Adadelta](http://arxiv.org/abs/1212.5701) by Matthew Zeiler is another relatively common adaptive learning rate method
+- [Adam: A Method for Stochastic Optimization](http://arxiv.org/abs/1412.6980)
 - [Unit Tests for Stochastic Optimization](http://arxiv.org/abs/1312.6055) proposes a series of tests as a standardized benchmark for stochastic optimization.
 
 <div class="fig figcenter fighighlight">
   <img src="/assets/nn3/opt2.gif" width="49%" style="margin-right:10px;">
   <img src="/assets/nn3/opt1.gif" width="49%">
   <div class="figcaption">
-    Animations that may help your intuitions about the learning process dynamics. <b>Left:</b> Contours of a loss surface and time evolution of different optimization algorithms. Notice the "overshooting" behavior of momentum-based methods, which make the optimization look like a ball rolling down the hill. <b>Right:</b> A visualization of a saddle point in the optimization landscape, where the curvature along different dimension has different signs (one dimension curves up and another down). Notice that SGD has a very hard time breaking symetry and gets stuck on the top. Conversely, algorithms such as RMSprop will see very low gradients in the saddle direction. Tue to the denominator term in the RMSprop update, this will increase the effective learning rate along this direction, helping RMSProp proceed.<br>
-    Image credits for these visualizations are unknown :( If a reader has a pointer please contact us.
+    Animations that may help your intuitions about the learning process dynamics. <b>Left:</b> Contours of a loss surface and time evolution of different optimization algorithms. Notice the "overshooting" behavior of momentum-based methods, which make the optimization look like a ball rolling down the hill. <b>Right:</b> A visualization of a saddle point in the optimization landscape, where the curvature along different dimension has different signs (one dimension curves up and another down). Notice that SGD has a very hard time breaking symetry and gets stuck on the top. Conversely, algorithms such as RMSprop will see very low gradients in the saddle direction. Tue to the denominator term in the RMSprop update, this will increase the effective learning rate along this direction, helping RMSProp proceed. Images credit: <a href="https://twitter.com/alecrad">Alec Radford</a>.
   </div>
 </div>
 
