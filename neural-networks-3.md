@@ -21,11 +21,11 @@ Table of Contents:
 - [Evaluation](#eval)
   - [Model Ensembles](#ensemble)
 - [Summary](#summary)
-- [Additional References](#summary)
+- [Additional References](#add)
 
 ## Learning
 
-In the previous sections we've seen how we can set up the data, the model, and the loss function. In this section we'll take a look at various methods for performing the optimization. 
+In the previous sections we've discussed the static parts of a Neural Networks: how we can set up the network connectivity, the data, and the loss function. This section is devoted to the dynamics, or in other words, the process of learning the parameters and finding good hyperparameters.
 
 <a name='gradcheck'></a>
 ### Gradient Checks
@@ -322,6 +322,13 @@ One disadvantage of model ensembles is that they take longer to evaluate on test
 
 <a name='summary'></a>
 ## Summary
+
+To train a Neural Network:
+
+- Gradient check your implementation with a small batch of data and be aware of the pitfalls.
+- As a sanity check, make sure your initial loss is reasonable, and that you can achieve 100% training accuracy on a very small portion of the data
+- During training, monitor the loss, the training/validation accuracy, and if you're feeling fancier, the magnitude of gradient updates in relation to their values, and when dealing with ConvNets, the first-layer weights.
+- The most common update is to use SGD+Momentum, but a strong recommendation is to use RMSProp per-parameter adaptive learning rate. 
 
 <a name='add'></a>
 ## Additional References
