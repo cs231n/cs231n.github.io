@@ -327,8 +327,11 @@ To train a Neural Network:
 
 - Gradient check your implementation with a small batch of data and be aware of the pitfalls.
 - As a sanity check, make sure your initial loss is reasonable, and that you can achieve 100% training accuracy on a very small portion of the data
-- During training, monitor the loss, the training/validation accuracy, and if you're feeling fancier, the magnitude of gradient updates in relation to their values, and when dealing with ConvNets, the first-layer weights.
-- The most common update is to use SGD+Momentum, but a strong recommendation is to use RMSProp per-parameter adaptive learning rate. 
+- During training, monitor the loss, the training/validation accuracy, and if you're feeling fancier, the magnitude of gradient updates in relation to their values (it should be ~1e-3), and when dealing with ConvNets, the first-layer weights.
+- The most common update is to use SGD+Momentum, but a good recommendation is to use RMSProp per-parameter adaptive learning rate.
+- Decay your learning rate over the period of the training. For example, halve the learning rate after a fixed number of epochs, or whenever the validation accuracy tops off.
+- Search for good hyperparameters with random search (not grid search). Stage your search from coarse (wide hyperparameter ranges, training only for 1-5 epochs), to fine (narrower rangers, training for many more epochs)
+- Form model ensembles for extra performance
 
 <a name='add'></a>
 ## Additional References
