@@ -96,34 +96,46 @@ var conv_forward = function(V, Ws, bs, stride) {
 function renderVol(svg, V, xoff, yoff, col, title, vid) {
 
   var pad = 3;
-  var dpad = 10;
+  var dpad = 20;
 
-  var gyoff = 7;
+  var gyoff = 20;
 
   var txt = title + ' (' + V.sx + 'x' + V.sy + 'x' + V.depth + ')';
   // 1 padding exception
-  if(vid === 'x') { txt = title + ' (' + (V.sx-2) + 'x' + (V.sy-2) + 'x' + V.depth + ')'; }
+  //if(vid === 'x') { txt = title + ' (' + (V.sx-2) + 'x' + (V.sy-2) + 'x' + V.depth + ')'; }
 
   svg.append('text')
     .attr('x', xoff)
-    .attr('y', yoff)
+    .attr('y', yoff - 5)
     .attr('font-size', 16)
     .attr('fill', 'black')
     .text(txt);
 
   for(var d = 0; d < V.depth; d++) {
+
+    svg.append('text')
+      .attr('x', xoff)
+      .attr('y', yoff + d * (V.sy * (cs + pad) + dpad) + gyoff - 5)
+      .attr('font-size', 16)
+      .attr('fill', 'black')
+      .attr('style', 'font-family: courier;')
+      .text(vid + '[:,:,'+d+']');
+
     for(var x = 0; x < V.sx; x++) {
       for(var y = 0; y < V.sy; y++) {
 
         var xcoord = xoff + x * (cs + pad);
         var ycoord = yoff + y * (cs + pad) + d * (V.sy * (cs + pad) + dpad) + gyoff;
 
+        var thecol = col;
+        if(vid === 'x' && (x === 0 || y === 0 || x === V.sx - 1 || y === V.sy - 1)) {thecol = '#DDD';}
+
         svg.append('rect')
           .attr('x', xcoord)
           .attr('y', ycoord)
           .attr('height', cs)
           .attr('width', cs)
-          .attr('fill', col)
+          .attr('fill', thecol)
           .attr('stroke', 'none')
           .attr('stroke-width', '2')
           .attr('id', vid+'_'+x+'_'+y+'_'+d)
@@ -148,11 +160,11 @@ function draw() {
 
   var yoff = 20;
   // render input volume
-  renderVol(svg, X, 10, yoff, '#DDF', 'Input Volume X', 'x');
+  renderVol(svg, X, 10, yoff, '#DDF', 'Input Volume (+pad 1)', 'x');
 
   for(var i=0;i<Ws.length;i++) {
     // render weights
-    renderVol(svg, Ws[i], 270 + i*170, yoff, '#FDD', 'Weight W'+i, 'w'+i);
+    renderVol(svg, Ws[i], 270 + i*170, yoff, '#FDD', 'Filter W'+i, 'w'+i);
     // render biases
     renderVol(svg, bs[i], 270 + i*170, 350 + yoff, '#FDD', 'Bias b'+i, 'b'+i);
   }
