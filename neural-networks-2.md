@@ -97,11 +97,25 @@ We have seen how to construct a Neural Network architecture, and how to preproce
 
 *Warning*: It's not necessarily the case that smaller numbers will work strictly better. For example, a Neural Network layer that has very small weights will during backpropagation compute very small gradients on its data (since this gradient is proportional to the value of the weights). This could greatly diminish the "gradient signal" flowing backward through a network, and could become a concern for deep networks.
 
-**Calibrating the variances with 1/sqrt(n)**. One problem with the above suggestion is that the distribution of the outputs from a randomly initialized neuron has a variance that depends on the number of inputs: As the number of inputs grows, the expected output from the neuron will remain zero-centered but the variance will grow approximately as \\(\propto \sqrt{n}\\), where \\(n\\) is the number of inputs to the neuron. It is therefore common to normalize the random initialization of a neuron by the *fan-in* of the neuron (i.e. its number of inputs). This initialization heuristic takes the form: `W = 0.001 * np.random.randn(D,H) / sqrt(D)`, where it is assumed that `D` is the dimensionality of the input. This initialization ensures that all neurons have an approximately equal output variance distribution. This makes the properties of the neurons more homogeneous across the network and can lead to faster convergence.
+**Calibrating the variances with 1/sqrt(n)**. One problem with the above suggestion is that the distribution of the outputs from a randomly initialized neuron has a variance that grows with the number of inputs. It turns out that we can normalize the variance of each neuron's output to 1 by scaling its weight vector by the square root of its *fan-in* (i.e. its number of inputs). That is, the recommended heuristic is to initialize each neuron's weight vector as: `w = np.random.randn(n) / sqrt(n)`, where `n` is the number of its inputs. This ensures that all neurons in the network initially have approximately the same output distribution and empirically improves the rate of convergence.
+
+The sketch of the derivation is as follows: Consider the inner product \\(s = \sum\_i^n w\_i x\_i\\) between the weights \\(w\\) and input \\(x\\), which gives the raw activation of a neuron before the non-linearity. We can examine the variance of \\(s\\):
+
+$$
+\begin{align}
+\text{Var}(s) &= \text{Var}(\sum\_i^n w\_ix\_i) \\\\
+&= \sum\_i^n \text{Var}(w\_ix\_i) \\\\
+&= \sum\_i^n [E(w\_i)]^2\text{Var}(x\_i) + E[(x\_i)]^2\text{Var}(w\_i) + \text{Var}(x\_i)\text{Var}(w\_i) \\\\
+&= \sum\_i^n \text{Var}(x\_i)\text{Var}(w\_i) \\\\
+&= \left( n \text{Var}(w) \right) \text{Var}(x)
+\end{align}
+$$
+
+where in the first 2 steps we have used [properties of variance](http://en.wikipedia.org/wiki/Variance). In third step we assumed zero mean inputs and weights, so \\(E[x\_i] = E[w\_i] = 0\\). Note that this is not generally the case: For example ReLU units will have a positive mean. In the last step we assumed that all \\(w\_i, x\_i\\) are identically distributed. From this derivation we can see that if we want \\(s\\) to have the same variance as all of its inputs \\(x\\), then during initialization we should make sure that the variance of every weight \\(w\\) is \\(1/n\\). And since \\(\text{Var}(aX) = a^2\text{Var}(X)\\) for a random variable \\(X\\) and a scalar \\(a\\), this implies that we should draw from unit gaussian and then scale it by \\(a = \sqrt{1/n}\\), to make its variance \\(1/n\\). This gives the initialization `w = np.random.randn(n) / sqrt(n)`.
+
+A similar analysis is carried out in [Understanding the difficulty of training deep feedforward neural networks](http://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf) by Glorot et al. In this paper, the authors end up recommending an initialization of the form \\( \text{Var}(w) = 2/(n\_{in} + n \_{out}) \\) where \\(n\_{in}, n\_{out}\\) are the number of units in the previous layer and the next layer. This is motivated by based on a compromise and an equivalent analysis of the backpropagated gradients. A more recent paper on this topic, [Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification](http://arxiv-web3.library.cornell.edu/abs/1502.01852) by He et al., derives an initialization specifically for ReLU neurons, reaching the conclusion that the variance of neurons in the network should be \\(2/n\\). This gives the initialization `w = np.random.randn(n) * sqrt(2/n)`, and is the current recommendation for use in practice.
 
 **Sparse initialization**. Another way to address the uncalibrated variances problem is to set all weight matrices to zero, but to break symmetry every neuron is randomly connected (with weights sampled from a small gaussian as above) to a fixed number of neurons below it. A typical number of neurons to connect to may be as small as 10.
-
-**Initializing sigmoids / tanhs**. There have been some studies of the flow of gradients in sigmoid/tanh networks. An often cited paper is [Glorot and Bengio 2010](http://www.iro.umontreal.ca/~lisa/publications2/index.php/publications/show/447), which recommends the use of tanh nonlinearities over sigmoids, and recommends the *normalized initialization* \\( W \sim U [- \frac{\sqrt{6}}{\sqrt{n\_{in} + n\_{out}}}, \frac{\sqrt{6}}{\sqrt{n\_{in} + n\_{out}}}] \\). where \\(U\\) is the uniform distribution. However, the ReLU units have been found to be much less susceptible to the problems discussed in the paper, which stem mostly from the saturating properties of sigmoid/tanh units.
 
 **Initializing the biases**. It is possible and common to initialize the biases to be zero, since the asymmetry breaking is provided by the small random numbers in the weights. For ReLU non-linearities, some people like to use small constant value such as 0.01 for all biases because this ensures that all ReLU units fire in the beginning and therefore obtain and propagate some gradient. However, it is not clear if this provides a consistent improvement and it is more common to simply use 0 bias initialization.
 
@@ -269,7 +283,7 @@ where the sum \\(\sum\_j\\) is a sum over all dimensions of the desired predicti
 In summary:
 
 - The recommended preprocessing is to center the data to have mean of zero, and normalize its scale to [-1, 1] along each feature
-- Initialize the weights by drawing them from a gaussian distribution with standard deviation of approximately 0.01. In deeper networks you might want to try normalizing by the square root of the number of incoming connections.
+- Initialize the weights by drawing them from a gaussian distribution with standard deviation of \\(\sqrt(2/n)\\), where \\(n\\) is the number of inputs to the neuron. E.g. in numpy: `w = np.random.randn(n) * sqrt(2/n)`.
 - Use L2 regularization (or maxnorm) and dropout (the inverted version)
 - We discussed different tasks you might want to perform in practice, and the most common loss functions for each task
 
