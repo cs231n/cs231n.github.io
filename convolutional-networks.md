@@ -13,6 +13,7 @@ Table of Contents:
   - [Pooling Layer](#pool)
   - [Normalization Layer](#norm)
   - [Fully-Connected Layer](#fc)
+  - [Converting Fully-Connected Layers to Convolutional Layers](#convert)
 - [ConvNet Architectures](#architectures)
   - [Layer Patterns](#layerpat)
   - [Layer Sizing Patterns](#layersizepat)
@@ -211,12 +212,29 @@ Many types of normalization layers have been proposed for use in ConvNet archite
 
 Neurons in a fully connected layer have full connections to all activations in the previous layer, as seen in regular Neural Networks. Their activations can hence be computed with a matrix multiplication followed by a bias offset. See the *Neural Network* section of the notes for more information.
 
-**CONV vs. FC layers**. It is worth noting that the only difference between FC and CONV layers is that the neurons in the CONV layer are connected only to a local region in the input, and that many of the neurons in a CONV volume share neurons. However, the neurons in both layers still compute dot products. Therefore, it's possible to convert between FC and CONV layers:
+<a name='convert'></a>
+#### Converting FC layers to CONV layers 
 
-- For any CONV layer there is a FC layer that implements the same forward function. The weight matrix would be a large block-diagonal matrix (due to local connectivity) where the weights in each block are equal (due to parameter sharing).
-- Conversely, any FC layer can be converted to a CONV layer. For example, an FC layer with \\(K = 4096\\) that is looking at some input volume of size \\(7 \times 7 \times 512\\) can be equivalently expressed as a CONV layer with \\(F = 7, P = 0, S = 1, K = 4096\\). In other words, we are expanding the filter size to be exactly of the size of the input volume, and hence the output will simply be \\(1 \times 1 \times 4096\\) since only a single depth column "fits" across the input volume, giving identical result as the initial FC layer. If the original architecture contains multiple FC layers in sequence, the later FC layers can be expressed as convolutions with 1x1 filters.
+It is worth noting that the only difference between FC and CONV layers is that the neurons in the CONV layer are connected only to a local region in the input, and that many of the neurons in a CONV volume share neurons. However, the neurons in both layers still compute dot products, so their functional form is identical. Therefore, it turns out that it's possible to convert between FC and CONV layers:
 
-The ability to convert an FC layer to a CONV layer is very useful in practice. In particular, it allows us to "slide" a ConvNet very efficiently across many spatial positions in a larger image. For example, suppose that we have a ConvNet architecture that takes a 224x224 image and returns 1000 class scores on the last FC layer. If we convert all FC layers to CONV layers (by appropriately reshaping the weight matrix into 3D filters), then we can for example, get an entire volume of 6x6x1000 class scores for a 384x384 image in a single, efficient forward pass. The 36 evaluations of the original ConvNet share computations. This trick is often used in practice to get better performance, where for example, it is common to resize an image to make it bigger, forward the ConvNet at many spatial positions with this trick and then average the class scores.
+- For any CONV layer there is an FC layer that implements the same forward function. The weight matrix would be a large matrix that is mostly zero except for at certian blocks (due to local connectivity) where the weights in many of the blocks are equal (due to parameter sharing).
+- Conversely, any FC layer can be converted to a CONV layer. For example, an FC layer with \\(K = 4096\\) that is looking at some input volume of size \\(7 \times 7 \times 512\\) can be equivalently expressed as a CONV layer with \\(F = 7, P = 0, S = 1, K = 4096\\). In other words, we are setting the filter size to be exactly the size of the input volume, and hence the output will simply be \\(1 \times 1 \times 4096\\) since only a single depth column "fits" across the input volume, giving identical result as the initial FC layer.
+
+**FC->CONV conversion**. Of these two conversions, the ability to convert an FC layer to a CONV layer is particularly useful in practice. Consider a ConvNet architecture that takes a 224x224x3 image, and then uses a series of CONV layers and POOL layers to reduce the image to an activations volume of size 7x7x512 (in an *AlexNet* architecture that we'll see later, this is done by use of 5 pooling layers that downsample the input spatially by a factor of two each time, making the final spatial size 224/2/2/2/2/2 = 7). From there, an AlexNet uses two FC layers of size 4096 and finally the last FC layers with 1000 neurons that compute the class scores. We can convert each of these three FC layers to CONV layers as described above:
+
+- Replace the first FC layer that looks at [7x7x512] volume with a CONV layer that uses filter size \\(F = 7\\), giving output volume [1x1x4096].
+- Replace the second FC layer with a CONV layer that uses filter size \\(F = 1\\), giving output volume [1x1x4096]
+- Replace the last FC layer similarly, with \\(F=1\\), giving final output [1x1x1000]
+
+Each of these conversions could in practice involve manipulating (e.g. reshaping) the weight matrix \\(W\\) in each FC layer into CONV layer filters. It turns out that this conversion allows us to "slide" the original ConvNet very efficiently across many spatial positions in a larger image, in a single forward pass. 
+
+For example, if 224x224 image gives a volume of size [7x7x512] - i.e. a reduction by 32, then forwarding an image of size 384x384 through the converted architecture would give the equivalent volume in size [12x12x512], since 384/32 = 12. Following through with the next 3 CONV layers that we just converted from FC layers would now give the final volume of size [6x6x1000], since (12 - 7)/1 + 1 = 6. Note that instead of a single vector of class scores of size [1x1x1000], we're now getting and entire 6x6 array of class scores across the 384x384 image.
+
+> Evaluating the original ConvNet (with FC layers) independently across 224x224 crops of the 384x384 image in strides of 32 pixels gives an identical result to forwarding the converted ConvNet one time.
+
+Naturally, forwarding the converted ConvNet a single time is much more efficient than iterating the original ConvNet over all those 36 locations, since the 36 evaluations share computation. This trick is often used in practice to get better performance, where for example, it is common to resize an image to make it bigger, use a converted ConvNet to evaluate the class scores at many spatial positions and then average the class scores.
+
+Lastly, what if we wanted to efficiently apply the original ConvNet over the image but at a stride smaller than 32 pixels? We could achieve this with multiple forward passes. For example, note that if we wanted to use a stride of 16 pixels we could do so by combining the volumes received by forwarding the converted ConvNet twice: First over the original image and second over the image but with the image shifted spatiallby by 16 pixels along both width and height.
 
 <a name='architectures'></a>
 ### ConvNet Architectures
