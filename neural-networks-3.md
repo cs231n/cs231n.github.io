@@ -11,6 +11,7 @@ Table of Contents:
   - [Loss function](#loss)
   - [Train/val accuracy](#accuracy)
   - [Weights:Updates ratio](#ratio)
+  - [Activation/Gradient distributions per layer](#distr)
   - [Visualization](#vis)
 - [Parameter updates](#update)
   - [First-order (SGD), momentum, Nesterov momentum](#sgd)
@@ -137,6 +138,40 @@ The last quantity you might want to track is the ratio of the update magnitudes 
 </div>
 
 Instead of tracking the min or the max, some people prefer to compute and track the norm of the gradients and their updates instead. These metrics are usually correlated and often give approximately the same results.
+
+<a name='distr'></a>
+#### Activation / Gradient distributions per layer
+
+An incorrect initialization can slow down or even completely stall the learning process. Luckily, this issue can be diagnosed relatively easily. The most important statistic to keep track of is the variance of the activations and their gradients on each layer. For example, with an improper initialization the variance of the activations may looks like:
+
+```python
+# Incorrectly initializing weights with zero mean gaussian with variance 0.01
+Layer 0: Variance: 1.005315e+00
+Layer 1: Variance: 3.123429e-04
+Layer 2: Variance: 1.159213e-06
+Layer 3: Variance: 5.467721e-10
+Layer 4: Variance: 2.757210e-13
+Layer 5: Variance: 3.316570e-16
+Layer 6: Variance: 3.123025e-19
+Layer 7: Variance: 6.199031e-22
+Layer 8: Variance: 6.623673e-25
+```
+Where we can see that the activations vanish extremely quickly in the higher layers of the network. This will in turn lead to weight gradients near zero, since during backprop they are dependent multiplicatively on the activations. The 8-layer Neural Network above was incorrectly initialized by drawing the weights from a gaussian with a standard deviation of 0.01. By correctly normalizing the weights, the variances look much more uniform:
+
+```python
+# Appropriately scaling the initialized weights:
+Layer 0: Variance: 1.002860e+00
+Layer 1: Variance: 7.015103e-01
+Layer 2: Variance: 6.048625e-01
+Layer 3: Variance: 8.517882e-01
+Layer 4: Variance: 6.362898e-01
+Layer 5: Variance: 4.329555e-01
+Layer 6: Variance: 3.539950e-01
+Layer 7: Variance: 3.809120e-01
+Layer 8: Variance: 2.497737e-01
+```
+
+In the second case, the layers were initialized so that the variance of each unit through the network is preserved (see the initialization section of Neural Networks for more details). It can also be helpful to keep track of these quantities as the learning progresses. If the variances display vastly different magnitudes it can be a sign of a problem.
 
 <a name='vis'></a>
 #### First-layer Visualizations
