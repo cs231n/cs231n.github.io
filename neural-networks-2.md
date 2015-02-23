@@ -119,7 +119,7 @@ A similar analysis is carried out in [Understanding the difficulty of training d
 
 **Initializing the biases**. It is possible and common to initialize the biases to be zero, since the asymmetry breaking is provided by the small random numbers in the weights. For ReLU non-linearities, some people like to use small constant value such as 0.01 for all biases because this ensures that all ReLU units fire in the beginning and therefore obtain and propagate some gradient. However, it is not clear if this provides a consistent improvement and it is more common to simply use 0 bias initialization.
 
-**In practice**, the current recommendation is to use ReLU units, initialize with small random numbers drawn from a gaussian (and normalized by the square of the fan in as discussed above), and set biases to zero. The details of the initialization are less likely to matter for shallower networks, but once multiple layers are stacked on top of each other a bad initialization could easily stall the training. In deeper networks, it is recommended to scale the inputs to each neuron in the network by 1/sqrt(n), where n is its number of inputs.
+**In practice**, the current recommendation is to use ReLU units and use the `w = np.random.randn(n) * sqrt(2.0/n)`, as discussed in [He et al.](http://arxiv-web3.library.cornell.edu/abs/1502.01852). 
 
 <a name='reg'></a>
 ### Regularization
@@ -283,7 +283,7 @@ where the sum \\(\sum\_j\\) is a sum over all dimensions of the desired predicti
 In summary:
 
 - The recommended preprocessing is to center the data to have mean of zero, and normalize its scale to [-1, 1] along each feature
-- Initialize the weights by drawing them from a gaussian distribution with standard deviation of \\(\sqrt(2.0/n)\\), where \\(n\\) is the number of inputs to the neuron. E.g. in numpy: `w = np.random.randn(n) * sqrt(2.0/n)`.
+- Initialize the weights by drawing them from a gaussian distribution with standard deviation of \\(\sqrt{2/n}\\), where \\(n\\) is the number of inputs to the neuron. E.g. in numpy: `w = np.random.randn(n) * sqrt(2.0/n)`.
 - Use L2 regularization (or maxnorm) and dropout (the inverted version)
 - We discussed different tasks you might want to perform in practice, and the most common loss functions for each task
 
