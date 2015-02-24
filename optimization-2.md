@@ -290,3 +290,6 @@ dX = W.T.dot(dD)
 In the next section we will start to define Neural Networks, and backpropagation will allow us to efficiently compute the gradients on the connections of the neural network, with respect to a loss function. In other words, we're now ready to train Neural Nets, and the most conceptually difficult part of this class is behind us! ConvNets will then be a small step away.
 
 
+### References
+
+- [Automatic differentiation in machine learning: a survey](http://arxiv.org/abs/1502.05767)
