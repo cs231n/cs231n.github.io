@@ -183,6 +183,8 @@ A common setting of the hyperparameters is \\(F = 3, S = 1, P = 1\\). However, t
 
 This approach has the downside that it can use a lot of memory, since some values in the input volume are replicated multiple times in `X_col`. However, the benefit is that there are many very efficient implementations of Matrix Multiplication that we can take advantage of (for example, in the commonly used [BLAS](http://www.netlib.org/blas/) API). Morever, the same *im2col* idea can be reused to perform the pooling operation, which we discuss next.
 
+**Backpropagation.** The backward pass for a convolution opteration (for both the data and the weights) is also a convolution (but with spatially-flipped filters). This is easy to derive in the 1-dimensional case with a toy example (not expanded on for now).
+
 <a name='pool'></a>
 #### Pooling Layer
 
@@ -204,11 +206,14 @@ It is worth noting that there are only two commonly seen variations of the max p
 **General pooling**. In addition to max pooling, the pooling units can also perform other functions, such as *average pooling* or even *L2-norm pooling*. Average pooling was often used historically but has recently fallen out of favor compared to the max pooling operation, which has been shown to work better in practice.
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/cnn/pool.jpeg">
+  <img src="/assets/cnn/pool.jpeg" width="36%">
+  <img src="/assets/cnn/maxpool.jpeg" width="59%" style="border-left: 1px solid black;">
   <div class="figcaption">
-    Pooling layer downsamples the volume spatially, independently in each depth slice of the input volume. The most common downsampling operation is max, giving rise to <b>max pooling</b>. In this example, the input volume of size [224x224x64] is max pooled with filter size 2, stride 2 into output volume of size [112x112x64]. Here, each max would be taken over 4 numbers (little 2x2 square). Notice that the volume depth is preserved. Other operations you may see is average pooling, or L2 pooling.
+    Pooling layer downsamples the volume spatially, independently in each depth slice of the input volume. <b>Left:</b> In this example, the input volume of size [224x224x64] is pooled with filter size 2, stride 2 into output volume of size [112x112x64]. Notice that the volume depth is preserved. <b>Right:</b> The most common downsampling operation is max, giving rise to <b>max pooling</b>, here shown with a stride of 2. That is, each max is taken over 4 numbers (little 2x2 square).
   </div>
 </div>
+
+**Backpropagation**. Recall from the backpropagation chapter that the backward pass for a max(x, y) operation has a simple interpretation as only routing the gradient to the input that had the highest value in the forward pass. Hence, during the forward pass of a pooling layer it is common to keep track of the index of the max activation (sometimes also called *the switches*) so that gradient routing is efficient during backpropagation.
 
 <a name='norm'></a>
 #### Normalization Layer
@@ -294,6 +299,40 @@ There are several architectures in the field of Convolutional Networks that have
 - **GoogLeNet**. The ILSVRC 2014 winner was a Convolutional Network from [Szegedy et al.](http://arxiv.org/abs/1409.4842) from Google. Its main contribution was the development of an *Inception Module* that dramatically reduced the number of parameters in the network (4M, compared to AlexNet with 60M).
 - **VGGNet**. The runner-up in ILSVRC 2014 was the network from Karen Simonyan and Andrew Zisserman that became known as the [VGGNet](http://www.robots.ox.ac.uk/~vgg/research/very_deep/). Its main contribution was in showing that the depth of the network is a critical component for good performance. Their final best network contains 16 CONV/FC layers and, appealingly, features an extremely homogeneous architecture that only performs 3x3 convolutions and 2x2 pooling from the beginning to the end. It was later found that despite its slightly weaker classification performance, the VGG ConvNet features outperform those of GoogLeNet in multiple transfer learning tasks. Hence, the VGG network is currently the most preferred choice in the community when extracting CNN features from images. In particular, their [pretrained model](http://www.robots.ox.ac.uk/~vgg/research/very_deep/) is available for plug and play use in Caffe. A downside of the VGGNet is that it is more expensive to evaluate and uses a lot more memory and parameters (140M).
 
+**VGGNet in detail**.
+Lets break down the [VGGNet](http://www.robots.ox.ac.uk/~vgg/research/very_deep/) in more detail. The architecture looks as follows:
+
+```
+INPUT: [224x224x3]        memory:  224*224*3=150K   weights: 0
+CONV3-64: [224x224x64]  memory:  224*224*64=3.2M   weights: (3*3*3)*64 = 1,728
+CONV3-64: [224x224x64]  memory:  224*224*64=3.2M   weights: (3*3*64)*64 = 36,864
+POOL2: [112x112x64]  memory:  112*112*64=800K   weights: 0
+CONV3-128: [112x112x128]  memory:  112*112*128=1.6M   weights: (3*3*64)*128 = 73,728
+CONV3-128: [112x112x128]  memory:  112*112*128=1.6M   weights: (3*3*128)*128 = 147,456
+POOL2: [56x56x128]  memory:  56*56*128=400K   weights: 0
+CONV3-256: [56x56x256]  memory:  56*56*256=800K   weights: (3*3*128)*256 = 294,912
+CONV3-256: [56x56x256]  memory:  56*56*256=800K   weights: (3*3*256)*256 = 589,824
+CONV3-256: [56x56x256]  memory:  56*56*256=800K   weights: (3*3*256)*256 = 589,824
+POOL2: [28x28x256]  memory:  28*28*256=200K   weights: 0
+CONV3-512: [28x28x512]  memory:  28*28*512=400K   weights: (3*3*256)*512 = 1,179,648
+CONV3-512: [28x28x512]  memory:  28*28*512=400K   weights: (3*3*512)*512 = 2,359,296
+CONV3-512: [28x28x512]  memory:  28*28*512=400K   weights: (3*3*512)*512 = 2,359,296
+POOL2: [14x14x512]  memory:  14*14*512=100K   weights: 0
+CONV3-512: [14x14x512]  memory:  14*14*512=100K   weights: (3*3*512)*512 = 2,359,296
+CONV3-512: [14x14x512]  memory:  14*14*512=100K   weights: (3*3*512)*512 = 2,359,296
+CONV3-512: [14x14x512]  memory:  14*14*512=100K   weights: (3*3*512)*512 = 2,359,296
+POOL2: [7x7x512]  memory:  7*7*512=25K  weights: 0
+FC: [1x1x4096]  memory:  4096  weights: 7*7*512*4096 = 102,760,448
+FC: [1x1x4096]  memory:  4096  weights: 4096*4096 = 16,777,216
+FC: [1x1x1000]  memory:  1000 weights: 4096*1000 = 4,096,000
+
+TOTAL memory: 24M * 4 bytes ~= 93MB / image (only forward! ~*2 for bwd)
+TOTAL params: 138M parameters
+```
+
+As is common with Convolutional Networks, notice that most of the memory is used in the early CONV layers, and that most of the parameters are in the last FC layers. In particular, the first FC layer contains 100M weights, out of a total of 140M.
+
+
 <a name='comp'></a>
 #### Computational Considerations
 
@@ -309,3 +348,4 @@ Once you have a rough estimate of the total number of values (for activations, g
 ### Additional Resources
 
 - [DeepLearning.net tutorial](http://deeplearning.net/tutorial/lenet.html)
+- [ConvNetJS CIFAR-10 demo](http://cs.stanford.edu/people/karpathy/convnetjs/demo/cifar10.html) allows you to play with ConvNet architectures and see the results and computations in real time, in the browser.
