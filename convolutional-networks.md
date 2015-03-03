@@ -3,8 +3,6 @@ layout: page
 permalink: /convolutional-networks/
 ---
 
-(These notes are currently in draft form and under development)
-
 Table of Contents:
 
 - [Architecture Overview](#overview)
@@ -17,7 +15,7 @@ Table of Contents:
 - [ConvNet Architectures](#architectures)
   - [Layer Patterns](#layerpat)
   - [Layer Sizing Patterns](#layersizepat)
-  - [Case Studies](#case) (AlexNet / ZFNet / VGGNet)
+  - [Case Studies](#case) (LeNet / AlexNet / ZFNet / GoogLeNet / VGGNet)
   - [Computational Considerations](#comp)
 - [Additional References](#add)
 
@@ -300,7 +298,7 @@ There are several architectures in the field of Convolutional Networks that have
 - **VGGNet**. The runner-up in ILSVRC 2014 was the network from Karen Simonyan and Andrew Zisserman that became known as the [VGGNet](http://www.robots.ox.ac.uk/~vgg/research/very_deep/). Its main contribution was in showing that the depth of the network is a critical component for good performance. Their final best network contains 16 CONV/FC layers and, appealingly, features an extremely homogeneous architecture that only performs 3x3 convolutions and 2x2 pooling from the beginning to the end. It was later found that despite its slightly weaker classification performance, the VGG ConvNet features outperform those of GoogLeNet in multiple transfer learning tasks. Hence, the VGG network is currently the most preferred choice in the community when extracting CNN features from images. In particular, their [pretrained model](http://www.robots.ox.ac.uk/~vgg/research/very_deep/) is available for plug and play use in Caffe. A downside of the VGGNet is that it is more expensive to evaluate and uses a lot more memory and parameters (140M).
 
 **VGGNet in detail**.
-Lets break down the [VGGNet](http://www.robots.ox.ac.uk/~vgg/research/very_deep/) in more detail. The architecture looks as follows:
+Lets break down the [VGGNet](http://www.robots.ox.ac.uk/~vgg/research/very_deep/) in more detail. The whole VGGNet is composed of CONV layers that perform 3x3 convolutions with stride 1 and pad 1, and of POOL layers that perform 2x2 max pooling with stride 2 (and no padding). We can write out the size of the representation at each step of the processing and keep track of both the representation size and the total number of weights:
 
 ```
 INPUT: [224x224x3]        memory:  224*224*3=150K   weights: 0
@@ -330,7 +328,7 @@ TOTAL memory: 24M * 4 bytes ~= 93MB / image (only forward! ~*2 for bwd)
 TOTAL params: 138M parameters
 ```
 
-As is common with Convolutional Networks, notice that most of the memory is used in the early CONV layers, and that most of the parameters are in the last FC layers. In particular, the first FC layer contains 100M weights, out of a total of 140M.
+As is common with Convolutional Networks, notice that most of the memory is used in the early CONV layers, and that most of the parameters are in the last FC layers. In this particular case, the first FC layer contains 100M weights, out of a total of 140M.
 
 
 <a name='comp'></a>
