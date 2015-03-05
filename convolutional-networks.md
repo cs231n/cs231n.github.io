@@ -254,6 +254,8 @@ Naturally, forwarding the converted ConvNet a single time is much more efficient
 
 Lastly, what if we wanted to efficiently apply the original ConvNet over the image but at a stride smaller than 32 pixels? We could achieve this with multiple forward passes. For example, note that if we wanted to use a stride of 16 pixels we could do so by combining the volumes received by forwarding the converted ConvNet twice: First over the original image and second over the image but with the image shifted spatiallby by 16 pixels along both width and height.
 
+- An IPython Notebook on [Net Surgery](https://github.com/BVLC/caffe/blob/master/examples/net_surgery.ipynb) shows how to perform the conversion in practice, in code (using Caffe)
+
 <a name='architectures'></a>
 ### ConvNet Architectures
 
