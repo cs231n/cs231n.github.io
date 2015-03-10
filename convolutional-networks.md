@@ -65,6 +65,13 @@ In summary:
 - Each Layer may or may not have parameters (e.g. CONV/FC do, RELU/POOL don't)
 - Each Layer may or may not have additional hyperparameters (e.g. CONV/FC/POOL do, RELU doesn't)
 
+<div class="fig figcenter fighighlight">
+  <img src="/assets/cnn/convnet.jpeg" width="100%">
+  <div class="figcaption">
+    The activations of an example ConvNet architecture. The initial volume stores the raw image pixels and the last volume stores the class scores. Each volume of activations along the processing path is shown as a column. Since it's difficult to visualize 3D volumes, we lay out each volume's slices in rows. The last layer volume holds the scores for each class, but here we only visualize the sorted top 5 scores, and print the labels of each one. The full <a href="http://cs231n.stanford.edu/">web-based demo</a> is shown in the header of our website. The architecture shown here is a tiny VGG Net, which we will discuss later.
+  </div>
+</div>
+
 We now describe the individual layers and the details of their hyperparameters and their connectivities.
 
 <a name='conv'></a>
