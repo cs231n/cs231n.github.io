@@ -9,7 +9,7 @@ permalink: /understanding-cnn/
 
 ## Visualizing what ConvNets learn
 
-Several approaches for understanding and visualizing Convolutional Networks have been developed in the literature, partly as a response the common criticism that the learned features are not interpretable. In this section we briefly survey some of these approaches and related work.
+Several approaches for understanding and visualizing Convolutional Networks have been developed in the literature, partly as a response the common criticism that the learned features in a Neural Network are not interpretable. In this section we briefly survey some of these approaches and related work.
 
 ### Visualizing the activations and first-layer weights
 
@@ -61,14 +61,45 @@ To produce an embedding, we can take a set of images and use the ConvNet to extr
 
 ### Occluding parts of the image
 
-### Visualizing the data gradient
+Suppose that a ConvNet classifies an image as a dog. How can we be certain that it's actually picking up on the dog in the image as opposed to some contextual cues from the background or some other miscellaneous object? One way of investigating which part of the image some classification prediction is coming from is by plotting the probability of the class of interest (e.g. dog class) as a function of the position of an occluder object. That is, we iterate over regions of the image, set a patch of the image to be all zero, and look at the probability of the class. We can visualize the probability as a 2-dimensional heat map. This approach has been used in Matthew Zeiler's [Visualizing and Understanding Convolutional Networks](http://arxiv.org/abs/1311.2901):
 
-### DeconvNets and related
+<div class="fig figcenter fighighlight">
+  <img src="/assets/cnnvis/occlude.jpeg" width="100%">
+  <div class="figcaption">
+    Three input images (top). Notice that the occluder region is shown in grey. As we slide the occluder over the image we record the probability of the correct class and then visualize it as a heatmap (shown below each image). For instance, in the left-most image we see that the probability of Pomeranian plummets when the occluder covers the face of the dog, giving us some level of confidence that the dog's face is primarily responsible for the high classification score. Conversely, zeroing out other parts of the image is seen to have relatively negligible impact.
+  </div>
+</div>
+
+### Visualizing the data gradient and friends
+
+**Data Gradient**.
+
+[Deep Inside Convolutional Networks: Visualising Image Classification Models and Saliency Maps](http://arxiv.org/abs/1312.6034)
+
+**DeconvNet**.
+
+[Visualizing and Understanding Convolutional Networks](http://arxiv.org/abs/1311.2901)
+
+**Guided Backpropagation**.
+
+[Striving for Simplicity: The All Convolutional Net](http://arxiv.org/abs/1412.6806)
 
 ### Reconstructing original images based on CNN Codes
 
+[Understanding Deep Image Representations by Inverting Them](http://arxiv.org/abs/1412.0035)
+
+### How much spatial information is preserved?
+
+[Do ConvNets Learn Correspondence?](http://papers.nips.cc/paper/5420-do-convnets-learn-correspondence.pdf) (tldr: yes)
+
 ### Plotting performance as a function of image attributes
+
+[ImageNet Large Scale Visual Recognition Challenge](http://arxiv.org/abs/1409.0575)
 
 ## Fooling ConvNets
 
+[Explaining and Harnessing Adversarial Examples](http://arxiv.org/abs/1412.6572)
+
 ## Comparing ConvNets to Human labelers
+
+[What I learned from competing against a ConvNet on ImageNet](http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet/)

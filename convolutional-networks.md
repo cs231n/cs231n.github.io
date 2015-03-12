@@ -358,8 +358,18 @@ The largest bottleneck to be aware of when constructing ConvNet architectures is
 
 Once you have a rough estimate of the total number of values (for activations, gradients, and misc), the number should be converted to size in GB. Take the number of values, multiply by 4 to get the raw number of bytes (since every floating point is 4 bytes, or maybe by 8 for double precision), and then divide by 1024 multiple times to get the amount of memory in KB, MB, and finally GB. If your network doesn't fit, a common heuristic to "make it fit" is to decrease the batch size, since most of the memory is usually consumed by the activations.
 
+### Visualizing and Understanding Convolutional Networks
+
+In the [next section](../understanding-cnn/) of these notes we look at visualizing and understanding Convolutional Neural Networks.
+
 <a name='add'></a>
 ### Additional Resources
 
-- [DeepLearning.net tutorial](http://deeplearning.net/tutorial/lenet.html)
+Additional resources related to implementation:
+
+- [DeepLearning.net tutorial](http://deeplearning.net/tutorial/lenet.html) walks through an implementation of a ConvNet in Theano
+- [cuda-convnet2](https://code.google.com/p/cuda-convnet2/) by Alex Krizhevsky is a ConvNet implementation that supports multiple GPUs
 - [ConvNetJS CIFAR-10 demo](http://cs.stanford.edu/people/karpathy/convnetjs/demo/cifar10.html) allows you to play with ConvNet architectures and see the results and computations in real time, in the browser.
+- [Caffe](http://caffe.berkeleyvision.org/), one of the most popular ConvNet libraries.
+- [Example Torch 7 ConvNet](https://github.com/nagadomi/kaggle-cifar10-torch7) that achieves 7% error on CIFAR-10 with a single model
+- [Ben Graham's Sparse ConvNet](https://www.kaggle.com/c/cifar-10/forums/t/10493/train-you-very-own-deep-convolutional-network/56310) package, which Ben Graham used to great success to achieve less than 4% error on CIFAR-10.
