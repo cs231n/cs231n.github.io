@@ -159,7 +159,7 @@ $$
 R(W) = \sum\_k\sum\_l W\_{k,l}^2
 $$
 
-In the expression above, we are summing up all the squared elements of \\(W\\). Notice that the regularization function is not a function of the data, it is only based on the weights. Including the regularization penalty completes the full Multiclass Support Vector Machine loss, which is is made up of two components: the **data loss** (which is the average loss \\(L\_i\\) over all examples) and the **regularization loss**. That is, the full Multiclass SVM loss becomes:
+In the expression above, we are summing up all the squared elements of \\(W\\). Notice that the regularization function is not a function of the data, it is only based on the weights. Including the regularization penalty completes the full Multiclass Support Vector Machine loss, which is made up of two components: the **data loss** (which is the average loss \\(L\_i\\) over all examples) and the **regularization loss**. That is, the full Multiclass SVM loss becomes:
 
 $$
 L =  \underbrace{ \frac{1}{N} \sum\_i L\_i }\_\text{data loss} + \underbrace{ \lambda R(W) }\_\text{regularization loss} \\\\
