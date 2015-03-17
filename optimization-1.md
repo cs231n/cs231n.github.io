@@ -71,7 +71,7 @@ Since these examples are 1-dimensional, the data \\(x\_i\\) and weights \\(w\_j\
 <div class="fig figcenter fighighlight">
   <img src="/assets/svmbowl.png">
   <div class="figcaption">
-    1-dimensional illustration of the data loss. The x-axis is a single weight and the y-axis is the loss. The data loss is a sum multiple terms, each of which is either independent of a particular weight, or a linear function of it that is thresholded at zero. The full SVM data loss is a 30,730-dimensional version of this shape.
+    1-dimensional illustration of the data loss. The x-axis is a single weight and the y-axis is the loss. The data loss is a sum of multiple terms, each of which is either independent of a particular weight, or a linear function of it that is thresholded at zero. The full SVM data loss is a 30,730-dimensional version of this shape.
   </div>
 </div>
 
