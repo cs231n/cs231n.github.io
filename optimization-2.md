@@ -18,7 +18,7 @@ Table of Contents:
 <a name='intro'></a>
 ### Introduction
 
-**Motivation**. In this section we will develop expertise with and intuitive understanding of **backpropagation**, which is a way of computing gradients of expressions through recursive application of **chain rule**. Understanding of this process and its subtleties is critical for you to understand, and effectively develop, design and debug Neural Networks.
+**Motivation**. In this section we will develop expertise with an intuitive understanding of **backpropagation**, which is a way of computing gradients of expressions through recursive application of **chain rule**. Understanding of this process and its subtleties is critical for you to understand, and effectively develop, design and debug Neural Networks.
 
 **Problem statement**. The core problem studied in this section is as follows: We are given some function \\(f(x)\\) where \\(x\\) is a vector of inputs and we are interested in computing the gradient of \\(f\\) at \\(x\\) (i.e. \\(\nabla f(x)\\) ).
 
