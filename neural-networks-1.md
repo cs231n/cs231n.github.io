@@ -198,7 +198,7 @@ In summary,
 - We introduced **Neural Networks** where neurons are connected with **Fully-Connected layers** where neurons in adjacent layers have full pair-wise connections, but neurons within a layer are not connected.
 - We saw that this layered architecture enables very efficient evaluation of Neural Networks based on matrix multiplications interwoven with the application of the activation function.
 - We saw that that Neural Networks are **universal function approximators**, but we also discussed the fact that this property has little to do with their ubiquotous use. They are used because they make certain "right" assumptions about the functional forms of functions that come up in practice.
-- We discussed the fact that larger networks will always work better than smaller networks, but their higher model capacity must be appropriately addressed with stronger regularization (such as higher weight decay), or they might overfit. We will see more forms of regularization (especially dropou) in later sections.
+- We discussed the fact that larger networks will always work better than smaller networks, but their higher model capacity must be appropriately addressed with stronger regularization (such as higher weight decay), or they might overfit. We will see more forms of regularization (especially dropout) in later sections.
 
 <a name='add'></a>
 ## Additional References
