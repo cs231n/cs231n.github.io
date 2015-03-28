@@ -766,7 +766,7 @@ print y
 This works; however when the matrix `x` is very large, computing an explicit loop
 in Python could be slow. Note that adding the vector `v` to each row of the matrix
 `x` is equivalent to forming a matrix `vv` by stacking multiple copies of `v` vertically,
-then performing elementwise multiplication of `x` and `vv`. We could implement this
+then performing elementwise summation of `x` and `vv`. We could implement this
 approach like this:
 
 ```python
