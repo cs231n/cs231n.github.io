@@ -388,7 +388,7 @@ def hello(name, loud=False):
         print 'Hello, %s!' % name
 
 hello('Bob') # Prints "Hello, Bob"
-hello('Fred', loud=True)  # Prints "HELLO, BOB!"
+hello('Fred', loud=True)  # Prints "HELLO, FRED!"
 ```
 There is a lot more information about Python classes
 [in the documentation](https://docs.python.org/2/tutorial/controlflow.html#defining-functions).
