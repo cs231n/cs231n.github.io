@@ -288,7 +288,7 @@ $$
 \nabla\_{w\_j} L\_i = \mathbb{1}(w\_j^Tx\_i - w\_{y\_i}^Tx\_i + \Delta > 0) x\_i
 $$
 
-Once you derive the expression for the gradient it is straight-forward to implement the expressions and use them to perform the gradient update. A proficiency at computing gradients of loss expressions (and understanding what they look like intuitively) is the single most important technical skill needed to understand and efficiently use and develop Neural Networks. The next section will be entirely devoted to getting you to understand and practice the process, and by the end of the class you will become an expert!
+Once you derive the expression for the gradient it is straight-forward to implement the expressions and use them to perform the gradient update. A proficiency at computing gradients of loss expressions (and understanding what they look like intuitively) is the single most important technical skill needed to understand to efficiently use and develop Neural Networks. The next section will be entirely devoted to getting you to understand and practice the process, and by the end of the class you will become an expert!
 
 <a name='gd'></a>
 ### Gradient Descent
