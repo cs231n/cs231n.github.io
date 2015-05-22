@@ -204,5 +204,5 @@ In summary,
 ## Additional References
 
 - [deeplearning.net tutorial](http://www.deeplearning.net/tutorial/mlp.html) with Theano
-- [ConvNetJS]() demos for intuitions
+- [ConvNetJS](http://cs.stanford.edu/people/karpathy/convnetjs/) demos for intuitions
 - [Michael Nielsen's](http://neuralnetworksanddeeplearning.com/chap1.html) tutorials
