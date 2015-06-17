@@ -115,7 +115,7 @@ For example, going back to the example image of a cat and its scores for the cla
 
 There are several ways to define the details of the loss function. As a first example we will first develop a commonly used loss called the **Multiclass Support Vector Machine** (SVM) loss. The SVM loss is set up so that the SVM "wants" the correct class for each image to a have a score higher than the incorrect classes by some fixed margin \\(\Delta\\). Notice that it's sometimes helpful to anthropomorphise the loss functions as we did above: The SVM "wants" a certain outcome in the sense that the outcome would yield a lower loss (which is good).
 
-Let's now get more precise. Recall that for the i-th example we are given the pixels \\( x\_i \\) and the label \\( y\_i \\) that specifies the index of the correct class. The score function takes the pixels and computes the vector \\( f(x\_i, W) \\) of class scores.  For example, the score for the j-th class is the j-th element: \\( f(x\_i, W)\_j \\). The Multiclass SVM loss for the i-th example is then formalized as follows:
+Let's now get more precise. Recall that for the i-th example we are given the pixels of image \\( x\_i \\) and the label \\( y\_i \\) that specifies the index of the correct class. The score function takes the pixels and computes the vector \\( f(x\_i, W) \\) of class scores.  For example, the score for the j-th class is the j-th element: \\( f(x\_i, W)\_j \\). The Multiclass SVM loss for the i-th example is then formalized as follows:
 
 $$
 L\_i = \sum\_{j\neq y\_i} \max(0, f(x\_i, W)\_j - f(x\_i, W)\_{y\_i} + \Delta)
