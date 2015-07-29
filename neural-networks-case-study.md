@@ -96,6 +96,7 @@ $$
 Given the array of `scores` we've computed above, we can compute the loss. First, the way to obtain the probabilities is straight forward:
 
 ```python
+num_examples = X.shape[0]
 # get unnormalized probabilities
 exp_scores = np.exp(scores)
 # normalize them for each example
