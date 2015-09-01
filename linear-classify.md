@@ -121,7 +121,7 @@ $$
 L\_i = \sum\_{j\neq y\_i} \max(0, f(x\_i, W)\_j - f(x\_i, W)\_{y\_i} + \Delta)
 $$
 
-**Example.** This expression may seem daunting if you're seeing it for the first time, so lets unpack it with an example to see how it works. Suppose that we have three classes that receive the scores \\(f(x\_i, W) = [13, -7, 11]\\), and that the first class is the true class (i.e. \\(y\_i = 0\\)). Also assume that \\(\Delta\\) (a hyperparameter we will go into more detail about soon) is 10. The expression above sums over all incorrect classes (\\(j \neq y\_i\\)), so we get two terms:
+**Example.** This expression may seem daunting if you're seeing it for the first time, so let's unpack it with an example to see how it works. Suppose that we have three classes that receive the scores \\(f(x\_i, W) = [13, -7, 11]\\), and that the first class is the true class (i.e. \\(y\_i = 0\\)). Also assume that \\(\Delta\\) (a hyperparameter we will go into more detail about soon) is 10. The expression above sums over all incorrect classes (\\(j \neq y\_i\\)), so we get two terms:
 
 $$
 L\_i = \max(0, -7 - 13 + 10) + \max(0, 11 - 13 + 10)
