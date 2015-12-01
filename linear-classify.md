@@ -18,7 +18,7 @@ Table of Contents:
 <a name='intro'></a>
 ## Linear Classification
 
-In the last section we introduced the problem of Image Classification, which is the task of assigning a single label to an image from a fixed set of categories. Morever, we described the k-Nearest Neighbor (kNN) classifier which labels images by comparing them to (annotated) images from the training set. As we saw, kNN has a number of disadvantages: 
+In the last section we introduced the problem of Image Classification, which is the task of assigning a single label to an image from a fixed set of categories. Morever, we described the k-Nearest Neighbor (kNN) classifier which labels images by comparing them to (annotated) images from the training set. As we saw, kNN has a number of disadvantages:
 
 - The classifier must *remember* all of the training data and store it for future comparisons with the test data. This is space inefficient because datasets may easily be gigabytes in size.
 - Classifying a test image is expensive since it requires a comparison to all training images.
@@ -36,11 +36,11 @@ $$
 f(x\_i, W, b) =  W x\_i + b
 $$
 
-In the above equation, we are assuming that the image \\(x\_i\\) has all of its pixels flattened out to a single column vector of shape [D x 1]. The matrix **W** (of size [K x D]), and the vector **b** (of size [K x 1]) are the **parameters** of the function. In CIFAR-10, \\(x\_i\\) contains all pixels in the i-th image flattened into a single [3072 x 1] column, **W** is [10 x 3072] and **b** is [10 x 1], so 3072 numbers come into the function (the raw pixel values) and 10 numbers come out (the class scores). The parameters in **W** are often called the **weights**, and **b** is called the **bias vector** because it influences the output scores, but without interacting with the actual data \\(x\_i\\). However, you will often hear people use the terms *weights* and *parameters* interchangeably. 
+In the above equation, we are assuming that the image \\(x\_i\\) has all of its pixels flattened out to a single column vector of shape [D x 1]. The matrix **W** (of size [K x D]), and the vector **b** (of size [K x 1]) are the **parameters** of the function. In CIFAR-10, \\(x\_i\\) contains all pixels in the i-th image flattened into a single [3072 x 1] column, **W** is [10 x 3072] and **b** is [10 x 1], so 3072 numbers come into the function (the raw pixel values) and 10 numbers come out (the class scores). The parameters in **W** are often called the **weights**, and **b** is called the **bias vector** because it influences the output scores, but without interacting with the actual data \\(x\_i\\). However, you will often hear people use the terms *weights* and *parameters* interchangeably.
 
 There are a few things to note:
 
-- First, note that the single matrix multiplication \\(W x\_i\\) is effectively evaluating 10 separate classifiers in parallel (one for each class), where each classifier is a row of **W**. 
+- First, note that the single matrix multiplication \\(W x\_i\\) is effectively evaluating 10 separate classifiers in parallel (one for each class), where each classifier is a row of **W**.
 - Notice also that we think of the input data \\( (x\_i, y\_i) \\) as given and fixed, but we have control over the setting of the parameters **W,b**. Our goal will be to set these in such way that the computed scores match the ground truth labels across the whole training set. We will go into much more detail about how this is done, but intuitively we wish that the correct class has a score that is higher than the scores of incorrect classes.
 - An advantage of this approach is that the training data is used to learn the parameters **W,b**, but once the learning is complete we can discard the entire training set and only keep the learned parameters. That is because a new test image can be simply forwarded through the function and classified based on the computed scores.
 - Lastly, note that to classifying the test image involves a single matrix multiplication and addition, which is significantly faster than comparing a test image to all training images.
@@ -57,7 +57,7 @@ Notice that a linear classifier computes the score of a class as a weighted sum 
   <div class="figcaption">An example of mapping an image to class scores. For the sake of visualization, we assume the image only has 4 pixels and that we have 3 classes (red, blue, green class). We stretch the image pixels into a column and perform matrix multiplication to get the scores for each class. Note that this particular set of weights W is not good at all: the weights assign our cat image a very low cat score. In particular, this set of weights seems convinced that it's looking at a dog.</div>
 </div>
 
-**Analogy of images as high-dimensional points.** Since the images are stretched into high-dimensional column vectors, we can interpret each image as a single point in this space (e.g. each image in CIFAR-10 is a point in 3072-dimensional space of 32x32x3 images). Analogously, the entire dataset is a (labeled) set of points.
+**Analogy of images as high-dimensional points.** Since the images are stretched into high-dimensional column vectors, we can interpret each image as a single point in this space (e.g. each image in CIFAR-10 is a point in 3072-dimensional space of 32x32x3 pixels). Analogously, the entire dataset is a (labeled) set of points.
 
 Since we defined the score of each class as a weighted sum of all image pixels, each class score is a linear function over this space. We cannot visualize 3072-dimensional spaces, but if we imagine squashing all those dimensions into only two dimensions, then we can try to visualize what the classifier might be doing:
 
@@ -127,7 +127,7 @@ $$
 L\_i = \max(0, -7 - 13 + 10) + \max(0, 11 - 13 + 10)
 $$
 
-You can see that the first term gives zero since [-7 - 13 + 10] gives a negative number, which is then thresholded to zero with the \\(max(0,-)\\) function. We get zero loss for this pair because the correct class score (13) was greater than the incorrect class score (-7) by at least the margin 10. In fact the difference was 20, which is much greater than 10 but the SVM only cares that the difference is at least 10; Any additional difference above the margin is clamped at zero with the max operation. The second term computes [11 - 13 + 10] which gives 8. That is, even though the correct class had a higher score than the incorrect class (13 > 11), it was not greater by the desired margin of 10. The difference was only 2, which is why the loss comes out to 8 (i.e. how much higher the difference would have to be to meet the margin). In summary, the SVM loss function wants the score of the correct class \\(y\_i\\) to be larger than the incorrect class scores by at least by \\(\Delta\\) (delta). If this is not the case, we will accumulate loss (and that's bad). 
+You can see that the first term gives zero since [-7 - 13 + 10] gives a negative number, which is then thresholded to zero with the \\(max(0,-)\\) function. We get zero loss for this pair because the correct class score (13) was greater than the incorrect class score (-7) by at least the margin 10. In fact the difference was 20, which is much greater than 10 but the SVM only cares that the difference is at least 10; Any additional difference above the margin is clamped at zero with the max operation. The second term computes [11 - 13 + 10] which gives 8. That is, even though the correct class had a higher score than the incorrect class (13 > 11), it was not greater by the desired margin of 10. The difference was only 2, which is why the loss comes out to 8 (i.e. how much higher the difference would have to be to meet the margin). In summary, the SVM loss function wants the score of the correct class \\(y\_i\\) to be larger than the incorrect class scores by at least by \\(\Delta\\) (delta). If this is not the case, we will accumulate loss (and that's bad).
 
 Note that in this particular module we are working with linear score functions ( \\( f(x\_i; W) =  W x\_i \\) ), so we can also rewrite the loss function in this equivalent form:
 
@@ -135,7 +135,7 @@ $$
 L\_i = \sum\_{j\neq y\_i} \max(0, w\_j^T x\_i - w\_{y\_i}^T x\_i + \Delta)
 $$
 
-where \\(w\_j\\) is the j-th row of \\(W\\) reshaped as a column. However, this will not necessarily be the case once we start to consider more complex forms of the score function \\(f\\). 
+where \\(w\_j\\) is the j-th row of \\(W\\) reshaped as a column. However, this will not necessarily be the case once we start to consider more complex forms of the score function \\(f\\).
 
 A last piece of terminology we'll mention before we finish with this section is that the threshold at zero \\(max(0,-)\\) function is often called the **hinge loss**. You'll sometimes hear about people instead using the squared hinge loss SVM (or L2-SVM), which uses the form \\(max(0,-)^2\\) that penalizes violated margins more strongly (quadratically instead of linearly). The unsquared version is more standard, but in some datasets the squared hinge loss can work better. This can be determined during cross-validation.
 
@@ -173,13 +173,13 @@ $$
 
 Where \\(N\\) is the number of training examples. As you can see, we append the regularization penalty to the loss objective, weighted by a hyperparameter \\(\lambda\\). There is no simple way of setting this hyperparameter and it is usually determined by cross-validation.
 
-In addition to the motivation we provided above there are many desirable properties to include the regularization penalty, many of which we will come back to in later sections. For example, it turns out that including the L2 penalty leads to the appealing **max margin** property in SVMs (See [CS229](http://cs229.stanford.edu/notes/cs229-notes3.pdf) lecture notes for full details if you are interested). 
+In addition to the motivation we provided above there are many desirable properties to include the regularization penalty, many of which we will come back to in later sections. For example, it turns out that including the L2 penalty leads to the appealing **max margin** property in SVMs (See [CS229](http://cs229.stanford.edu/notes/cs229-notes3.pdf) lecture notes for full details if you are interested).
 
-The most appealing property is that penalizing large weights tends to improve generalization, because it means that no input dimension can have a very large influence on the scores all by itself. For example, suppose that we have some input vector \\(x = [1,1,1,1] \\) and two weight vectors \\(w\_1 = [1,0,0,0]\\), \\(w\_2 = [0.25,0.25,0.25,0.25] \\). Then \\(w\_1^Tx = w\_2^Tx = 1\\) so both weight vectors lead to the same dot product, but the L2 penalty of \\(w\_1\\) is 1.0 while the L2 penalty of \\(w\_2\\) is only 0.25. Therefore, according to the L2 penalty the weight vector \\(w\_2\\) would be preferred since it achieves a lower regularization loss. Intuitively, this is because the weights in \\(w\_2\\) are smaller and more diffuse. Since the L2 penalty prefers smaller and more diffuse weight vectors, the final classifier is encouraged to take into account all input dimensions to small amounts rather than a few input dimensions and very strongly. As we will see later in the class, this effect can improve the generalization performance of the classifiers on test images and lead to less *overfitting*. 
+The most appealing property is that penalizing large weights tends to improve generalization, because it means that no input dimension can have a very large influence on the scores all by itself. For example, suppose that we have some input vector \\(x = [1,1,1,1] \\) and two weight vectors \\(w\_1 = [1,0,0,0]\\), \\(w\_2 = [0.25,0.25,0.25,0.25] \\). Then \\(w\_1^Tx = w\_2^Tx = 1\\) so both weight vectors lead to the same dot product, but the L2 penalty of \\(w\_1\\) is 1.0 while the L2 penalty of \\(w\_2\\) is only 0.25. Therefore, according to the L2 penalty the weight vector \\(w\_2\\) would be preferred since it achieves a lower regularization loss. Intuitively, this is because the weights in \\(w\_2\\) are smaller and more diffuse. Since the L2 penalty prefers smaller and more diffuse weight vectors, the final classifier is encouraged to take into account all input dimensions to small amounts rather than a few input dimensions and very strongly. As we will see later in the class, this effect can improve the generalization performance of the classifiers on test images and lead to less *overfitting*.
 
 Note that biases do not have the same effect since, unlike the weights, they do not control the strength of influence of an input dimension. Therefore, it is common to only regularize the weights \\(W\\) but not the biases \\(b\\). However, in practice this often turns out to have a negligible effect. Lastly, note that due to the regularization penalty we can never achieve loss of exactly 0.0 on all examples, because this would only be possible in the pathological setting of \\(W = 0\\).
 
-**Code**. Here is the loss function (without regularization) implemented in Python, in both unvectorized and half-vectorized form: 
+**Code**. Here is the loss function (without regularization) implemented in Python, in both unvectorized and half-vectorized form:
 
 ```python
 def L_i(x, y, W):
@@ -204,23 +204,23 @@ def L_i(x, y, W):
   return loss_i
 
 def L_i_vectorized(x, y, W):
-  """ 
+  """
   A faster half-vectorized implementation. half-vectorized
   refers to the fact that for a single example the implementation contains
   no for loops, but there is still one loop over the examples (outside this function)
-  """ 
+  """
   delta = 1.0
   scores = W.dot(x)
   # compute the margins for all classes in one vector operation
   margins = np.maximum(0, scores - scores[y] + delta)
   # on y-th position scores[y] - scores[y] canceled and gave delta. We want
   # to ignore the y-th position and only consider margin on max wrong class
-  margins[y] = 0 
+  margins[y] = 0
   loss_i = np.sum(margins)
   return loss_i
 
 def L(X, y, W):
-  """ 
+  """
   fully-vectorized implementation :
   - X holds all the training examples as columns (e.g. 3073 x 50,000 in CIFAR-10)
   - y is array of integers specifying correct class (e.g. 50,000-D array)
@@ -230,7 +230,7 @@ def L(X, y, W):
   # left as exercise to reader in the assignment
 ```
 
-The takeaway from this section is that the SVM loss takes one particular approach to measuring how consistent the predictions on training data are with the ground truth labels. Additionally, making good predictions on the training set is equivalent to minimizing the loss. 
+The takeaway from this section is that the SVM loss takes one particular approach to measuring how consistent the predictions on training data are with the ground truth labels. Additionally, making good predictions on the training set is equivalent to minimizing the loss.
 
 > All we have to do now is to come up with a way to find the weights that minimize the loss.
 
@@ -259,7 +259,7 @@ $$
 L\_i = -\log\left(\frac{e^{f\_{y\_i}}}{ \sum\_j e^{f\_j} }\right) \hspace{0.5in} \text{or equivalently} \hspace{0.5in} L\_i = -f\_{y\_i} + \log\sum\_j e^{f\_j}
 $$
 
-where we are using the notation \\(f\_j\\) to mean the j-th element of the vector of class scores \\(f\\). As before, the full loss for the dataset is the mean of \\(L\_i\\) over all training examples together with a regularization term \\(R(W)\\). The function \\(f\_j(z) = \frac{e^{z\_j}}{\sum\_k e^{z\_k}} \\) is called the **softmax function**: It takes a vector of arbitrary real-valued scores (in \\(z\\)) and squashes it to a vector of values between zero and one that sum to one. The full cross-entropy loss that involves the softmax function might look scary if you're seeing it for the first time but it is relatively easy to motivate. 
+where we are using the notation \\(f\_j\\) to mean the j-th element of the vector of class scores \\(f\\). As before, the full loss for the dataset is the mean of \\(L\_i\\) over all training examples together with a regularization term \\(R(W)\\). The function \\(f\_j(z) = \frac{e^{z\_j}}{\sum\_k e^{z\_k}} \\) is called the **softmax function**: It takes a vector of arbitrary real-valued scores (in \\(z\\)) and squashes it to a vector of values between zero and one that sum to one. The full cross-entropy loss that involves the softmax function might look scary if you're seeing it for the first time but it is relatively easy to motivate.
 
 **Information theory view**. The *cross-entropy* between a "true" distribution \\(p\\) and an estimated distribution \\(q\\) is defined as:
 
@@ -267,9 +267,9 @@ $$
 H(p,q) = - \sum\_x p(x) \log q(x)
 $$
 
-The Softmax classifier is hence minimizing the cross-entropy between the estimated class probabilities ( \\(q = e^{f\_{y\_i}}  / \sum\_j e^{f\_j} \\) as seen above) and the "true" distribution, which in this interpretation is the distribution where all probability mass is on the correct class (i.e. \\(p = [0, \ldots 1, \ldots, 0]\\) contains a single 1 at the \\(y\_i\\) -th position.). Moreover, since the cross-entropy can be written in terms of entropy and the Kullback-Leibler divergence as \\(H(p,q) = H(p) + D\_{KL}(p\|\|q)\\), and the entropy of the delta function \\(p\\) is zero, this is also equivalent to minimizing the KL divergence between the two distributions (a measure of distance). In other words, the cross-entropy objective *wants* the predicted distribution to have all of its mass on the correct answer. 
+The Softmax classifier is hence minimizing the cross-entropy between the estimated class probabilities ( \\(q = e^{f\_{y\_i}}  / \sum\_j e^{f\_j} \\) as seen above) and the "true" distribution, which in this interpretation is the distribution where all probability mass is on the correct class (i.e. \\(p = [0, \ldots 1, \ldots, 0]\\) contains a single 1 at the \\(y\_i\\) -th position.). Moreover, since the cross-entropy can be written in terms of entropy and the Kullback-Leibler divergence as \\(H(p,q) = H(p) + D\_{KL}(p\|\|q)\\), and the entropy of the delta function \\(p\\) is zero, this is also equivalent to minimizing the KL divergence between the two distributions (a measure of distance). In other words, the cross-entropy objective *wants* the predicted distribution to have all of its mass on the correct answer.
 
-**Probabilistic interpretation**. Looking at the expression, we see that 
+**Probabilistic interpretation**. Looking at the expression, we see that
 
 $$
 P(y\_i \mid x\_i; W) = \frac{e^{f\_{y\_i}}}{\sum\_j e^{f\_j} }
