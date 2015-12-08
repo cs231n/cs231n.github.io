@@ -188,7 +188,7 @@ A common setting of the hyperparameters is \\(F = 3, S = 1, P = 1\\). However, t
 
 This approach has the downside that it can use a lot of memory, since some values in the input volume are replicated multiple times in `X_col`. However, the benefit is that there are many very efficient implementations of Matrix Multiplication that we can take advantage of (for example, in the commonly used [BLAS](http://www.netlib.org/blas/) API). Morever, the same *im2col* idea can be reused to perform the pooling operation, which we discuss next.
 
-**Backpropagation.** The backward pass for a convolution opteration (for both the data and the weights) is also a convolution (but with spatially-flipped filters). This is easy to derive in the 1-dimensional case with a toy example (not expanded on for now).
+**Backpropagation.** The backward pass for a convolution operation (for both the data and the weights) is also a convolution (but with spatially-flipped filters). This is easy to derive in the 1-dimensional case with a toy example (not expanded on for now).
 
 <a name='pool'></a>
 #### Pooling Layer
