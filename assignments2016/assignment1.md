@@ -82,7 +82,7 @@ The IPython Notebook **softmax.ipynb** will walk you through implementing the So
 ### Q4: Two-Layer Neural Network (25 points)
 The IPython Notebook **two\_layer\_net.ipynb** will walk you through the implementation of a two-layer neural network classifier.
 
-### Q4: Higher Level Representations: Image Features (10 points)
+### Q5: Higher Level Representations: Image Features (10 points)
 
 The IPython Notebook **features.ipynb** will walk you through this exercise, in which you will examine the improvements gained by using higher-level representations as opposed to using raw pixel values.
 
