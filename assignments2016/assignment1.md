@@ -21,8 +21,7 @@ You can work on the assignment in one of two ways: locally on your own machine, 
 through [Terminal](https://www.terminal.com/).
 
 ### Working locally
-**Get the code:**
-COMING SOON
+Get the code [here](http://vision.stanford.edu/teaching/cs231n/winter1516_assignment1.zip)
 
 **[Optional] virtual environment:**
 Once you have unzipped the starter code, you might want to create a
@@ -83,14 +82,10 @@ The IPython Notebook **softmax.ipynb** will walk you through implementing the So
 ### Q4: Two-Layer Neural Network (25 points)
 The IPython Notebook **two\_layer\_net.ipynb** will walk you through the implementation of a two-layer neural network classifier.
 
-### Q4: Higher Level Representations: Image Features (10 points)
+### Q5: Higher Level Representations: Image Features (10 points)
 
 The IPython Notebook **features.ipynb** will walk you through this exercise, in which you will examine the improvements gained by using higher-level representations as opposed to using raw pixel values.
 
-### Q5: Bonus: Design your own features! (+10 points)
-
-In this assignment we provide you with Color Histograms and HOG features. To claim these bonus points, implement your own additional features from scratch, and using only numpy or scipy (no external dependencies). You will have to research different feature types to get ideas for what you might want to implement. Your new feature should help you improve the performance beyond what you got in Q4 if you wish to get these bonus points. If you come up with nice features we'll feature them in the lecture.
-
 ### Q6: Cool Bonus: Do something extra! (+10 points)
 
-Implement, investigate or analyze something extra surrounding the topics in this assignment, and using the code you developed. For example, is there some other interesting question we could have asked? Is there any insightful visualization you can plot? Or maybe you can experiment with a spin on the loss function? If you try out something cool we'll give you points and might feature your results in the lecture.
+Implement, investigate or analyze something extra surrounding the topics in this assignment, and using the code you developed. For example, is there some other interesting question we could have asked? Is there any insightful visualization you can plot? Or anything fun to look at? Or maybe you can experiment with a spin on the loss function? If you try out something cool we'll give you up to 10 extra points and may feature your results in the lecture.
