@@ -21,8 +21,7 @@ You can work on the assignment in one of two ways: locally on your own machine, 
 through [Terminal](https://www.terminal.com/).
 
 ### Working locally
-**Get the code:**
-COMING SOON
+Get the code [here](http://vision.stanford.edu/teaching/cs231n/winter1516_assignment1.zip)
 
 **[Optional] virtual environment:**
 Once you have unzipped the starter code, you might want to create a
