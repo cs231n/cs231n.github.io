@@ -35,4 +35,4 @@ We have set up the [IPython Notebook](http://ipython.org/notebook.html) and othe
 
 For more information about [Terminal](https://www.terminal.com/terminals), check out the [FAQ](https://www.terminal.com/faq) page.
 
-**Important Note:** the usage of Terminal is charged on an hourly rate based on the instance type. A medium type instance costs $0.124 per hour. You will be granted $5 for free once the account is created. We are happy to sponsor each student roughly $10 extra fund for the assignments. Please contact [Yuke Zhu](mailto:yukez@cs.stanford.edu) for more information about the fund. It is **your responsibility** to keep the charge in mind and to budget it carefully :)
+**Important Note:** the usage of Terminal is charged on an hourly rate based on the instance type. A medium type instance costs $0.124 per hour. You will be granted $5 for free once the account is created. We are happy to sponsor each student roughly $10 extra fund for the assignments. Please contact [Serena Yeung](mailto:syyeung@cs.stanford.edu) for more information about the fund. It is **your responsibility** to keep the charge in mind and to budget it carefully :)
