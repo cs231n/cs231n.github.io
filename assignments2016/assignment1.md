@@ -17,18 +17,20 @@ In this assignment you will practice putting together a simple image classificat
 - get a basic understanding of performance improvements from using **higher-level representations** than raw pixels (e.g. color histograms, Histogram of Gradient (HOG) features)
 
 ## Setup
-You can work on the assignment in one of two ways: locally on your own machine, or on a virtual machine
-through [Terminal](https://www.terminal.com/).
+You can work on the assignment in one of two ways: locally on your own machine, or on a virtual machine through Terminal.com. 
+
+### Working in the cloud on Terminal
+
+Terminal has created a separate subdomain to serve our class, [www.stanfordterminalcloud.com](https://www.stanfordterminalcloud.com). Register your account there. The Assignment 1 snapshot can then be found [here](https://www.stanfordterminalcloud.com/snapshot/49f5a1ea15dc424aec19155b3398784d57c55045435315ce4f8b96b62819ef65). If you're registered in the class you can contact the TA (see Piazza for more information) to request Terminal credits for use on the assignment. Once you boot up the snapshot everything will be installed for you, and you'll be ready to start on your assignment right away. We've written a small tutorial on Terminal [here](/terminal-tutorial).
 
 ### Working locally
-Get the code [here](http://vision.stanford.edu/teaching/cs231n/winter1516_assignment1.zip)
+Get the code as a zip file [here](http://vision.stanford.edu/teaching/cs231n/winter1516_assignment1.zip). As for the dependencies:
 
-**[Optional] virtual environment:**
-Once you have unzipped the starter code, you might want to create a
-[virtual environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/)
-for the project. If you choose not to use a virtual environment, it is up to you
-to make sure that all dependencies for the code are installed on your machine.
-To set up a virtual environment, run the following:
+**[Option 1] Use Anaconda:**
+The preferred approach for installing all the assignment dependencies is to use [Anaconda](https://www.continuum.io/downloads), which is a Python distribution that includes many of the most popular Python packages for science, math, engineering and data analysis. Once you install it you can skip all mentions of requirements and you're ready to go directly to working on the assignment.
+
+**[Option 2] Manual install, virtual environment:**
+If you'd like to (instead of Anaconda) go with a more manual and risky installation route you will likely want to create a [virtual environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/) for the project. If you choose not to use a virtual environment, it is up to you to make sure that all dependencies for the code are installed globally on your machine. To set up a virtual environment, run the following:
 
 ```bash
 cd assignment1
@@ -57,14 +59,11 @@ After you have the CIFAR-10 data, you should start the IPython notebook server f
 **NOTE:** If you are working in a virtual environment on OSX, you may encounter
 errors with matplotlib due to the [issues described here](http://matplotlib.org/faq/virtualenv_faq.html). You can work around this issue by starting the IPython server using the `start_ipython_osx.sh` script from the `assignment1` directory; the script assumes that your virtual environment is named `.env`.
 
-### Working on Terminal
-We will create a Terminal snapshot that is preconfigured for this assignment. Terminal allows you to work on the assignment from your browser. You can find a tutorial on how to use it [here](/terminal-tutorial).
-
 ### Submitting your work:
 Whether you work on the assignment locally or using Terminal, once you are done
 working run the `collectSubmission.sh` script; this will produce a file called
 `assignment1.zip`. Upload this file to your dropbox on
-[the coursework](https://coursework.stanford.edu/portal/site/W15-CS-231N-01/)
+[the coursework](https://coursework.stanford.edu/portal/site/W16-CS-231N-01/)
 page for the course.
 
 ### Q1: k-Nearest Neighbor classifier (20 points)
