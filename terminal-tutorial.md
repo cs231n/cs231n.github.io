@@ -27,7 +27,7 @@ You are all set! To work on the assignments, click the link (shown in the red bo
   <img src='/assets/terminal-development.jpg'>
 </div>
 
-We have set up the Jupyter Notebook and other dependencies in the terminal. You can find these notebooks and skeleton codes in the folder **assignment1**. You can access the notebooks by clicking on the "Access Jupyter Here" link at the bottom right when you launch a terminal, or by going to <your-terminal-ID>-8888.stanfordterminalcloud.com. Follow the detailed assignment descriptions to complete and submit your work. For submission, go to [Coursework](https://coursework.stanford.edu/portal/) using the browser in terminal (see below). You should be able to upload your work to Coursework.
+We have set up the Jupyter Notebook and other dependencies in the terminal. You can find these notebooks and skeleton codes in the folder **assignment1**. You can access the notebooks by clicking on the "Access Jupyter Here" link at the bottom right when you launch a terminal, or by going to (your-terminal-ID)-8888.stanfordterminalcloud.com. Follow the detailed assignment descriptions to complete and submit your work. For submission, go to [Coursework](https://coursework.stanford.edu/portal/) using the browser in terminal (see below). You should be able to upload your work to Coursework.
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/terminal-coursework.jpg'>
