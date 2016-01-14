@@ -15,7 +15,7 @@ The snapshot of Assignment #1 can be found [here](https://www.stanfordterminalcl
   <img src='/assets/terminal-shared.jpg'>
 </div>
 
-Click the "Start" button on the lower right corner. This will clone the shared snapshot to your own account. Now you should be able to find the terminal (**zyk09021** in my case) under the [My Terminals](https://www.terminal.com/terminals) tab.
+Click the "Start" button on the lower right corner. This will clone the shared snapshot to your own account. Now you should be able to find the terminal (**zyk09021** in my case) under the [My Terminals](https://www.stanfordterminalcloud.com/terminals) tab.
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/terminal-my.jpg'>
