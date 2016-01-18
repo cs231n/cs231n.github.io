@@ -37,6 +37,7 @@ for j in xrange(K):
   y[ix] = j
 # lets visualize the data:
 plt.scatter(X[:, 0], X[:, 1], c=y, s=40, cmap=plt.cm.Spectral)
+plt.show()
 ```
 
 <div class="fig figcenter fighighlight">
