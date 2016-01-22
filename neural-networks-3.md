@@ -115,6 +115,8 @@ The amount of "wiggle" in the loss is related to the batch size. When the batch 
 
 Some people prefer to plot their loss functions in the log domain. Since learning progress generally takes an exponential form shape, the plot appears more as a slightly more interpretable straight line, rather than a hockey stick. Additionally, if multiple cross-validated models are plotted on the same loss graph, the differences between them become more apparent.
 
+Sometimes loss functions can look funny [lossfunctions.tumblr.com](http://lossfunctions.tumblr.com/).
+
 <a name='accuracy'></a>
 #### Train/Val accuracy
 
@@ -131,15 +133,16 @@ The second important quantity to track while training a classifier is the valida
 <a name='ratio'></a>
 #### Ratio of weights:updates
 
-The last quantity you might want to track is the ratio of the update magnitudes to to the value magnitudes. Note: *updates*, not the raw gradients (e.g. in vanilla sgd this would be the gradient multiplied by the learning rate). You might want to evaluate and track this ratio for every set of parameters independently. A rough heuristic is that this ratio should be somewhere around 1e-3. If it is lower than this then the learning rate might be too low. If it is higher then the learning rate is likely too high. Below is an example figure:
+The last quantity you might want to track is the ratio of the update magnitudes to to the value magnitudes. Note: *updates*, not the raw gradients (e.g. in vanilla sgd this would be the gradient multiplied by the learning rate). You might want to evaluate and track this ratio for every set of parameters independently. A rough heuristic is that this ratio should be somewhere around 1e-3. If it is lower than this then the learning rate might be too low. If it is higher then the learning rate is likely too high. Here is a specific example:
 
-<div class="fig figcenter fighighlight">
-  <img src="/assets/nn3/values.jpeg" width="49%">
-  <img src="/assets/nn3/updates.jpeg" width="49%">
-  <div class="figcaption">
-    Example of a cross-validated 2-layer neural network where the learning rate is set relatively well. We are looking at the matrix of weights W1, and plotting the min and the max across all weights on the left. On the right, we plot the min and max of the updates for the weights, during gradient descent. The updates are getting smaller due to learning rate decay used in this example. Note that the approximate range of the updates is roughly 0.0002 and the range of values is about 0.02. This gives us a ratio of 0.0002 / 0.02 = 1e-2, which is within a relatively healthy limit for a smaller network.
-  </div>
-</div>
+```python
+# assume parameter vector W and its gradient vector dW
+param_scale = np.linalg.norm(W.ravel())
+update = -learning_rate*dW # simple SGD update
+update_scale = np.linalg.norm(update.ravel())
+W += update # the actual update
+print update_scale / param_scale # want ~1e-3
+```
 
 Instead of tracking the min or the max, some people prefer to compute and track the norm of the gradients and their updates instead. These metrics are usually correlated and often give approximately the same results.
 
@@ -335,7 +338,7 @@ But as saw, there are many more relatively less sensitive hyperparameters, for e
 
 **Prefer one validation fold to cross-validation**. In most cases a single validation set of respectable size substantially simplifies the code base, without the need for cross-validation with multiple folds. You'll hear people say they "cross-validated" a parameter, but many times it is assumed that they still only used a single validation set.
 
-**Hyperparameter ranges**. Search for hyperparameters on log scale. For example, a typical sampling of the learning rate would look as follows: `learning_rate = 10 ** uniform(-6, 1)`. That is, we are generating a random random with a uniform distribution, but then raising it to the power of 10. The same strategy should be used for the regularization strength. As mentioned, for some parameters such as momentum, it is more common to search over a fixed set of values such as [0.5, 0.9, 0.95, 0.99] .
+**Hyperparameter ranges**. Search for hyperparameters on log scale. For example, a typical sampling of the learning rate would look as follows: `learning_rate = 10 ** uniform(-6, 1)`. That is, we are generating a random random with a uniform distribution, but then raising it to the power of 10. The same strategy should be used for the regularization strength. Intuitively, this is because learning rate and regularization strength have multiplicative effects on the training dynamics. For example, a fixed change of adding 0.01 to a learning rate has huge effects on the dynamics if the learning rate is 0.001, but nearly no effect if the learning rate when it is 10. This is because the learning rate multiplies the computed gradient in the update. Therefore, it is much more natural to consider a range of learning rate multiplied or divided by some value, than a range of learning rate added or subtracted to by some value. Some parameters (e.g. dropout) are instead usually searched in the original scale (e.g. `dropout = uniform(0,1)`).
 
 **Prefer random search to grid search**. As argued by Bergstra and Bengio in [Random Search for Hyper-Parameter Optimization](http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf), "randomly chosen trials are more efficient for hyper-parameter optimization than trials on a grid". As it turns out, this is also usually easier to implement.
 
