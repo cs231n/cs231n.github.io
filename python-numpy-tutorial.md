@@ -401,7 +401,7 @@ There is a lot more information about Python classes
 The syntax for defining classes in Python is straightforward:
 
 ```python
-class Greeter:
+class Greeter(object):
     
     # Constructor
     def __init__(self, name):

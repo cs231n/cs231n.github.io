@@ -36,7 +36,7 @@ The basic computational unit of the brain is a **neuron**. Approximately 86 bill
 An example code for forward-propagating a single neuron might look as follows:
 
 ```python
-class Neuron:
+class Neuron(object):
   # ... 
   def forward(inputs):
     """ assume inputs and weights are 1-D numpy arrays and bias is a number """
