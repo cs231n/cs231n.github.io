@@ -108,7 +108,7 @@ Notice that as an evaluation criterion, it is common to use the **accuracy**, wh
 ```python
 import numpy as np
 
-class NearestNeighbor:
+class NearestNeighbor(object):
   def __init__(self):
     pass
 
