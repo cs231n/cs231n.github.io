@@ -90,7 +90,7 @@ In the IPython Notebook `ConvolutionalNetworks.ipynb` you will implement several
 are commonly used in convolutional networks. You will train a (shallow) convolutional network on
 CIFAR-10, and it will then be up to you to train the best network that you can.
 
-### Q5: Do something extra! (up to +20 points)
+### Q5: Do something extra! (up to +10 points)
 In the process of training your network, you should feel free to implement anything that you want
 to get better performance. You can modify the solver, implement additional layers, use different
 types of regularization, use an ensemble of models, or anything else that comes to mind. If you
