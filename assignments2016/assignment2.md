@@ -27,7 +27,7 @@ or on a virtual machine through Terminal.com.
 
 Terminal has created a separate subdomain to serve our class,
 [www.stanfordterminalcloud.com](https://www.stanfordterminalcloud.com). Register
-your account there. The Assignment 2 snapshot can then be found HERE. If you are
+your account there. The Assignment 2 snapshot can then be found [HERE](https://www.stanfordterminalcloud.com/snapshot/6c95ca2c9866a962964ede3ea5813d4c2410ba48d92cf8d11a93fbb13e08b76a). If you are
 registered in the class you can contact the TA (see Piazza for more information)
 to request Terminal credits for use on the assignment. Once you boot up the
 snapshot everything will be installed for you, and you will be ready to start on
