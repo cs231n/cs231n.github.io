@@ -156,6 +156,12 @@ About how to use these instances:
 model checkpoints, models etc.
 - Remember that the `/mnt` directory won't be persistent across
 reboots/terminations.
+- Stop your instances when are done for the day to avoid incurring charges. GPU
+instances are costly. Use your funds wisely. Terminate them when you are sure
+you are done with your instance (disk storage also costs something, and can be
+significant if you have a large disk footprint).
+- Look into creating custom alarms to automatically stop your instances when
+they are not doing anything.
 - If you need access to a large dataset and don't want to download it every time
 you spin up an instance, the best way to go would be to create an AMI for that
 and attach that AMI to your machine when configuring your instance (before
