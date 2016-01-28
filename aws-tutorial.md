@@ -5,7 +5,9 @@ permalink: /aws-tutorial/
 ---
 For GPU instances, we also have an Amazon Machine Image (AMI) that you can use
 to launch GPU instances on Amazon EC2. This tutorial goes through how to set up
-your own EC2 instance with the provided AMI.
+your own EC2 instance with the provided AMI. **We do not currently 
+distribute AWS credits to CS231N students but you are welcome to use these 
+snapshots on your own budget.**
 
 **TL;DR** for the AWS-savvy: Our image is
 `cs231n_caffe_torch7_keras_lasagne_v2`, AMI ID: `ami-125b2c72` in the us-west-1
