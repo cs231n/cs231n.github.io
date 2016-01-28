@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Terminal.com Tutorial
+title: AWS Tutorial
 permalink: /aws-tutorial/
 ---
 For GPU instances, we also have an Amazon Machine Image (AMI) that you can use
@@ -88,7 +88,7 @@ use AWS and have a key-pair, you can use that, or alternately you can create a
 new one by choosing "Create a new key pair" from the drop-down menu and giving
 it some name of your choice. You should then download the key pair, and keep it
 somewhere that you won't accidentally delete. Remember that there is **NO WAY**
-to get to your instance if you lose your key.
+to get to your instance if you lose your key. 
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/key-pair.png'>
@@ -98,6 +98,14 @@ to get to your instance if you lose your key.
   <img src='/assets/key-pair-create.png'>
 </div>
 
+Once you download your key, you should change the permissions of the key to
+user-only RW, In Linux/OSX you can do it by:
+
+```
+$ chmod 600 PEM_FILENAME
+```
+Here `PEM_FILENAME` is the full file name of the .pem file you just downloaded.
+
 After this is done, click on "Launch Instances", and you should see a screen
 showing that your instances are launching:
 
@@ -105,4 +113,46 @@ showing that your instances are launching:
   <img src='/assets/launching-screen.png'>
 </div>
 
-Click on "View Instances" to see 
+Click on "View Instances" to see your instance state. It should change to
+"Running" and "2/2 status checks passed" as shown below within some time. You
+are now ready to ssh into the instance.
+
+<div class='fig figcenter fighighlight'>
+  <img src='/assets/instances-page.png'>
+</div>
+
+First, note down the Public IP of the instance from the instance listing. Then,
+do:
+
+```
+ssh -i PEM_FILENAME ubuntu@PUBLIC_IP
+```
+
+Now you should be logged in to the instance. You can check that Caffe is working
+by doing:
+
+```
+$ cd caffe
+$ ./build/tools/caffe time --gpu 0 --model examples/mnist/lenet.prototxt
+```
+
+If you encounter any error such as 
+
+```
+Check failed: error == cudaSuccess (77 vs.  0)  an illegal memory access was encountered
+```
+
+you might want to terminate your instance and start over again. I have observed
+this rarely, and I am not sure what causes this.
+
+About how to use these instances:
+
+- The root directory is only 12GB, and only ~ 3GB of that is free.
+- There should be a 60GB `/mnt` directory that you can use to put your data,
+model checkpoints, models etc.
+- Remember that the `/mnt` directory won't be persistent across
+reboots/terminations.
+- If you need access to a large dataset and don't want to download it every time
+you spin up an instance, the best way to go would be to create an AMI for that
+and attach that AMI to your machine when configuring your instance (before
+launching but after you have selected the AMI).
