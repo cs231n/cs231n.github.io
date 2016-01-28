@@ -7,10 +7,11 @@ For GPU instances, we also have an Amazon Machine Image (AMI) that you can use
 to launch GPU instances on Amazon EC2. This tutorial goes through how to set up
 your own EC2 instance with the provided AMI.
 
-TL;DR for the AWS-savvy: Our image is `cs231n_caffe_torch7_keras_lasagne_v2`,
-    AMI ID: `ami-125b2c72` in the us-west-1 region. Use a `g2.2xlarge` instance.
-    Caffe, Torch7, Theano, Keras and Lasagne are pre-installed. Python bindings
-    of caffe are available. It has CUDA v7.5 and CuDNN v3.
+**TL;DR** for the AWS-savvy: Our image is
+`cs231n_caffe_torch7_keras_lasagne_v2`, AMI ID: `ami-125b2c72` in the us-west-1
+region. Use a `g2.2xlarge` instance.  Caffe, Torch7, Theano, Keras and Lasagne
+are pre-installed. Python bindings of caffe are available. It has CUDA 7.5 and
+CuDNN v3.
 
 First, if you don't have an AWS account already, create one by going to the [AWS
 homepage](http://aws.amazon.com/), and clicking on the yellow "Sign In to the
@@ -135,6 +136,9 @@ by doing:
 $ cd caffe
 $ ./build/tools/caffe time --gpu 0 --model examples/mnist/lenet.prototxt
 ```
+
+We have Caffe, Theano, Torch7, Keras and Lasagne pre-installed. Caffe python
+bindings are also available by default. We have CUDA 7.5 and CuDNN v3 installed.
 
 If you encounter any error such as 
 
