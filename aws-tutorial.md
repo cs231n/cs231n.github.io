@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Terminal.com Tutorial
-permalink: /terminal-tutorial/
+permalink: /aws-tutorial/
 ---
 For GPU instances, we also have an Amazon Machine Image (AMI) that you can use
 to launch GPU instances on Amazon EC2. This tutorial goes through how to set up
