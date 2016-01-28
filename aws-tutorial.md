@@ -41,9 +41,9 @@ Once you have signed in, you will be greeted by a page like this:
   <img src='/assets/aws-homepage.png'>
 </div>
 
-Make sure that the region information on the top right is set to N. California
-(For the AWS savvy, our AMI is in the `us-west-1` region). If it is not, change
-it to N. California by selecting from the dropdown menu there.
+Make sure that the region information on the top right is set to N. California.
+If it is not, change it to N. California by selecting from the dropdown menu
+there.
 
 (Note that the subsequent steps requires your account to be "Verified" by
  Amazon. This may take up to 2 hrs, and you may not be able to launch instances
