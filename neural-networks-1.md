@@ -5,6 +5,7 @@ permalink: /neural-networks-1/
 
 Table of Contents:
 
+- [Quick intro without brain analogies](#quick)
 - [Modeling one neuron](#intro)
   - [Biological motivation and connections](#bio)
   - [Single neuron as a linear classifier](#classifier)
@@ -16,6 +17,15 @@ Table of Contents:
   - [Setting number of layers and their sizes](#arch)
 - [Summary](#summary)
 - [Additional references](#add)
+
+<a name='quick'></a>
+## Quick intro
+
+It is possible to introduce neural networks without appealing to brain analogies. In the section on linear classification we computed scores for different visual categories given the image using the formula \\( s = W x \\), where \\(W\\) was a matrix and \\(x\\) was an input column vector containing all pixel data of the image. In the case of CIFAR-10, \\(x\\) is a [3072x1] column vector, and \\(W\\) is a [10x3072] matrix, so that the output scores is a vector of 10 class scores. 
+
+An example neural network would instead compute \\( s = W\_2 \max(0, W\_1 x) \\). Here, \\(W\_1\\) could be, for example, a [100x3072] matrix transforming the image into a 100-dimensional intermediate vector. The function \\(max(0,-) \\) is a non-linearity that is applied elementwise. There are several choices we could make for the non-linearity (which we'll study below), but this one is a common choice and simply thresholds all activations that are below zero to zero. Finally, the matrix \\(W\_2\\) would then be of size [10x100], so that we again get 10 numbers out that we interpret as the class scores. Notice that the non-linearity is critical computationally - if we left it out, the two matrices could be collapsed to a single matrix, and therefore the predicted class scores would again be a linear function of the input. The non-linearity is where we get the *wiggle*. The parameters \\(W\_2, W\_1\\) are learned with stochastic gradient descent, and their gradients are derived with chain rule (and computed with backpropagation).
+
+A three-layer neural network could analogously look like \\( s = W\_3 \max(0, W\_2 \max(0, W\_1 x)) \\), where all of \\(W\_3, W\_2, W\_1\\) are parameters to be learned. The sizes of the intermediate hidden vectors are hyperparameters of the network and we'll see how we can set them later. Lets now look into how we can interpret these computations from the neuron/network perspective.
 
 <a name='intro'></a>
 ## Modeling one neuron
@@ -87,7 +97,7 @@ Every activation function (or *non-linearity*) takes a single number and perform
   <div class="figcaption"><b>Left:</b> Rectified Linear Unit (ReLU) activation function, which is zero when x &lt 0 and then linear with slope 1 when x &gt 0. <b>Right:</b> A plot from <a href="http://www.cs.toronto.edu/~fritz/absps/imagenet.pdf">Krizhevsky et al.</a> (pdf) paper indicating the 6x improvement in convergence with the ReLU unit compared to the tanh unit.</div>
 </div>
 
-**ReLU.** The Rectified Linear Unit has become very popular in the last few years. It computes the function \\(f(x) = max(0, x)\\). In other words, the activation is simply thresholded at zero (see image above on the left). There are several pros and cons to using the ReLUs: 
+**ReLU.** The Rectified Linear Unit has become very popular in the last few years. It computes the function \\(f(x) = \max(0, x)\\). In other words, the activation is simply thresholded at zero (see image above on the left). There are several pros and cons to using the ReLUs: 
 
 - (+) It was found to greatly accelerate (e.g. a factor of 6 in [Krizhevsky et al.](http://www.cs.toronto.edu/~fritz/absps/imagenet.pdf)) the convergence of stochastic gradient descent compared to the sigmoid/tanh functions. It is argued that this is due to its linear, non-saturating form.
 - (+) Compared to tanh/sigmoid neurons that involve expensive operations (exponentials, etc.), the ReLU can be implemented by simply thresholding a matrix of activations at zero.
