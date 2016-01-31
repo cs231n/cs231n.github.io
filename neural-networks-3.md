@@ -149,36 +149,8 @@ Instead of tracking the min or the max, some people prefer to compute and track 
 <a name='distr'></a>
 #### Activation / Gradient distributions per layer
 
-An incorrect initialization can slow down or even completely stall the learning process. Luckily, this issue can be diagnosed relatively easily. The most important statistic to keep track of is the variance of the activations and their gradients on each layer. For example, with an improper initialization the variance of the activations may looks like:
+An incorrect initialization can slow down or even completely stall the learning process. Luckily, this issue can be diagnosed relatively easily. One way to do so is to plot activation/gradient histograms for all layers of the network. Intuitively, it is not a good sign to see any strange distributions - e.g. with tanh neurons we would like to see a distribution of neuron activations between the full range of [-1,1], instead of seeing all neurons outputting zero, or all neurons being completely saturated at either -1 or 1.
 
-```python
-# Incorrectly initializing weights with zero mean gaussian with variance 0.01
-Layer 0: Variance: 1.005315e+00
-Layer 1: Variance: 3.123429e-04
-Layer 2: Variance: 1.159213e-06
-Layer 3: Variance: 5.467721e-10
-Layer 4: Variance: 2.757210e-13
-Layer 5: Variance: 3.316570e-16
-Layer 6: Variance: 3.123025e-19
-Layer 7: Variance: 6.199031e-22
-Layer 8: Variance: 6.623673e-25
-```
-Where we can see that the activations vanish extremely quickly in the higher layers of the network. This will in turn lead to weight gradients near zero, since during backprop they are dependent multiplicatively on the activations. The 8-layer Neural Network above was incorrectly initialized by drawing the weights from a gaussian with a standard deviation of 0.01. By correctly normalizing the weights, the variances look much more uniform:
-
-```python
-# Appropriately scaling the initialized weights:
-Layer 0: Variance: 1.002860e+00
-Layer 1: Variance: 7.015103e-01
-Layer 2: Variance: 6.048625e-01
-Layer 3: Variance: 8.517882e-01
-Layer 4: Variance: 6.362898e-01
-Layer 5: Variance: 4.329555e-01
-Layer 6: Variance: 3.539950e-01
-Layer 7: Variance: 3.809120e-01
-Layer 8: Variance: 2.497737e-01
-```
-
-In the second case, the layers were initialized so that the variance of each unit through the network is preserved (see the initialization section of Neural Networks for more details). It can also be helpful to keep track of these quantities as the learning progresses. If the variances display vastly different magnitudes it can be a sign of a problem.
 
 <a name='vis'></a>
 #### First-layer Visualizations
@@ -226,9 +198,18 @@ Here we see an introduction of a `v` variable that is initialized at zero, and a
 
 > With Momentum update, the parameter vector will build up velocity in any direction that has consistent gradient.
 
-**Nesterov Momentum** is a slightly different version of the momentum update has recently been gaining popularity. It enjoys stronger theoretical converge guarantees for convex functions and also seems to work slightly better in practice than the momentum update described above.
+**Nesterov Momentum** is a slightly different version of the momentum update has recently been gaining popularity. It enjoys stronger theoretical converge guarantees for convex functions and in practice it also consistenly works slightly better than standard momentum.
 
-The core idea behind Nesterov momentum is that when the current parameter vector is at some position `x`, then looking at the momentum update above, we know that the momentum term alone (i.e. ignoring the second term with the gradient) is about to nudge the parameter vector by `mu * v`. Therefore, if we are about to compute the gradient, we can treat the future approximate position `x + mu * v` as a "lookahead" - this is a point in the vicinity of where we are soon going to end up. Hence, it makes sense to compute the gradient at `x + mu * v` instead of at the "old/stale" position `x`. That is, we would like to do the following:
+The core idea behind Nesterov momentum is that when the current parameter vector is at some position `x`, then looking at the momentum update above, we know that the momentum term alone (i.e. ignoring the second term with the gradient) is about to nudge the parameter vector by `mu * v`. Therefore, if we are about to compute the gradient, we can treat the future approximate position `x + mu * v` as a "lookahead" - this is a point in the vicinity of where we are soon going to end up. Hence, it makes sense to compute the gradient at `x + mu * v` instead of at the "old/stale" position `x`. 
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/nn3/nesterov.jpeg">
+  <div class="figcaption">
+    Nesterov momentum. Instead of evaluating gradient at the current position (red circle), we know that our momentum is about to carry us to the tip of the green arrow. With Nesterov momentum we therefore instead evaluate the gradient at this "looked-ahead" position.
+  </div>
+</div>
+
+That is, in a slightly awkward notation, we would like to do the following:
 
 ```python
 x_ahead = x + mu * v
@@ -237,7 +218,7 @@ v = mu * v - learning_rate * dx_ahead
 x += v
 ```
 
-However, in practice people prefer to express the update to look as similar to vanilla SGD or to the previous momentum update as possible. This is possible to achieve by manipulating the update above with a variable transform `x_head = x + mu * v`, and then expressing the update in terms of `x_ahead` instead of `x`. That is, the parameter vector we are actually storing is always the ahead version. The equations in terms of `xahead` (but renaming it back to `x`) then become:
+However, in practice people prefer to express the update to look as similar to vanilla SGD or to the previous momentum update as possible. This is possible to achieve by manipulating the update above with a variable transform `x_head = x + mu * v`, and then expressing the update in terms of `x_ahead` instead of `x`. That is, the parameter vector we are actually storing is always the ahead version. The equations in terms of `x_ahead` (but renaming it back to `x`) then become:
 
 ```python
 v_prev = v # back this up
@@ -281,7 +262,6 @@ However, even after we eliminate the memory concerns, a large downside of a naiv
 
 Additional references:
 
-- [On Optimization Methods for Deep Learning](http://ai.stanford.edu/~ang/papers/icml11-OptimizationForDeepLearning.pdf) from Le et al. is a paper from 2011 comparing SGD vs. L-BFGS. Some of its conclusions have since been challenged.
 - [Large Scale Distributed Deep Networks](http://research.google.com/archive/large_deep_networks_nips2012.html) is a paper from the Google Brain team, comparing L-BFGS and SGD variants in large-scale distributed optimization.
 - [SFO](http://arxiv.org/abs/1311.2115) algorithm strives to combine the advantages of SGD with advantages of L-BFGS.
 
@@ -295,24 +275,32 @@ All previous approaches we've discussed so far manipulated the learning rate glo
 ```python
 # Assume the gradient dx and parameter vector x
 cache += dx**2
-x += - learning_rate * dx / np.sqrt(cache + 1e-8)
+x += - learning_rate * dx / (np.sqrt(cache) + eps)
 ```
 
-Notice that the variable `cache` has size equal to the size of the gradient, and keeps track of per-parameter sum of squared gradients. This is then used to normalize the parameter update step, element-wise. Notice that the weights that receive high gradients will have their effective learning rate reduced, while weights that receive small or infrequent updates will have their effective learning rate increased. Amusingly, the square root operation turns out to be very important and without it the algorithm performs much worse. The smoothing term `1e-8` avoids division by zero. A downside of Adagrad is that in case of Deep Learning, the monotonic learning rate usually proves too aggressive and stops learning too early.
+Notice that the variable `cache` has size equal to the size of the gradient, and keeps track of per-parameter sum of squared gradients. This is then used to normalize the parameter update step, element-wise. Notice that the weights that receive high gradients will have their effective learning rate reduced, while weights that receive small or infrequent updates will have their effective learning rate increased. Amusingly, the square root operation turns out to be very important and without it the algorithm performs much worse. The smoothing term `eps` (usually set somewhere in range from 1e-4 to 1e-8) avoids division by zero. A downside of Adagrad is that in case of Deep Learning, the monotonic learning rate usually proves too aggressive and stops learning too early.
 
 **RMSprop.** RMSprop is a very effective, but currently unpublished adaptive learning rate method. Amusingly, everyone who uses this method in their work currently cites [slide 29 of Lecture 6](http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf) of Geoff Hinton's Coursera class. The RMSProp update adjusts the Adagrad method in a very simple way in an attempt to reduce its aggressive, monotonically decreasing learning rate. In particular, it uses a moving average of squared gradients instead, giving:
 
 ```python
 cache = decay_rate * cache + (1 - decay_rate) * dx**2
-x += - learning_rate * dx / np.sqrt(cache + 1e-8)
+x += - learning_rate * dx / (np.sqrt(cache) + eps)
 ```
 
 Here, `decay_rate` is a hyperparameter and typical values are [0.9, 0.99, 0.999]. Notice that the `x+=` update is identical to Adagrad, but the `cache` variable is a "leaky". Hence, RMSProp still modulates the learning rate of each weight based on the magnitudes of its gradients, which has a beneficial equalizing effect, but unlike Adagrad the updates do not get monotonically smaller.
 
+**Adam.** [Adam](http://arxiv.org/abs/1412.6980) is a recently proposed update that looks a bit like RMSProp with momentum. The (simplified) update looks as follows:
+
+```python
+m = beta1*m + (1-beta1)*dx
+v = beta2*v + (1-beta2)*(dx**2)
+x += - learning_rate * m / (np.sqrt(v) + eps)
+```
+
+Notice that the update looks exactly as RMSProp update, except the "smooth" version of the gradient `m` is used instead of the raw (and perhaps noisy) gradient vector `dx`. Recommended values in the paper are `eps = 1e-8`, `beta1 = 0.9`, `beta2 = 0.999`. In practice Adam is currently recommended as the default algorithm to use, and often works slightly better than RMSProp. However, it is often also worth trying SGD+Nesterov Momentum as an alternative. The full Adam update also includes a *bias correction* mechanism, which compensates for the fact that in the first few time steps the vectors `m,v` are both initialized and therefore biased at zero, before they fully "warm up". We refer the reader to the paper for the details, or the course slides where this is expanded on.
+
 Additional References:
 
-- [Adadelta](http://arxiv.org/abs/1212.5701) by Matthew Zeiler is another relatively common adaptive learning rate method
-- [Adam: A Method for Stochastic Optimization](http://arxiv.org/abs/1412.6980)
 - [Unit Tests for Stochastic Optimization](http://arxiv.org/abs/1312.6055) proposes a series of tests as a standardized benchmark for stochastic optimization.
 
 <div class="fig figcenter fighighlight">
@@ -377,8 +365,8 @@ To train a Neural Network:
 
 - Gradient check your implementation with a small batch of data and be aware of the pitfalls.
 - As a sanity check, make sure your initial loss is reasonable, and that you can achieve 100% training accuracy on a very small portion of the data
-- During training, monitor the loss, the training/validation accuracy, and if you're feeling fancier, the magnitude of gradient updates in relation to their values (it should be ~1e-3), and when dealing with ConvNets, the first-layer weights.
-- The most common update is to use SGD+Momentum, but a good recommendation is to use RMSProp per-parameter adaptive learning rate.
+- During training, monitor the loss, the training/validation accuracy, and if you're feeling fancier, the magnitude of updates in relation to parameter values (it should be ~1e-3), and when dealing with ConvNets, the first-layer weights.
+- The two recommended updates to use are either SGD+Nesterov Momentum or Adam.
 - Decay your learning rate over the period of the training. For example, halve the learning rate after a fixed number of epochs, or whenever the validation accuracy tops off.
 - Search for good hyperparameters with random search (not grid search). Stage your search from coarse (wide hyperparameter ranges, training only for 1-5 epochs), to fine (narrower rangers, training for many more epochs)
 - Form model ensembles for extra performance
