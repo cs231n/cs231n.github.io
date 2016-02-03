@@ -183,7 +183,7 @@ print xs[-1]     # Negative indices count from the end of the list; prints "2"
 xs[2] = 'foo'    # Lists can contain elements of different types
 print xs         # Prints "[3, 1, 'foo']"
 xs.append('bar') # Add a new element to the end of the list
-print xs         # Prints 
+print xs         # Prints "[3, 1, 'foo', 'bar']"
 x = xs.pop()     # Remove and return the last element of the list
 print x, xs      # Prints "bar [3, 1, 'foo']"
 ```
@@ -203,7 +203,7 @@ print nums[:2]     # Get a slice from the start to index 2 (exclusive); prints "
 print nums[:]      # Get a slice of the whole list; prints ["0, 1, 2, 3, 4]"
 print nums[:-1]    # Slice indices can be negative; prints ["0, 1, 2, 3]"
 nums[2:4] = [8, 9] # Assign a new sublist to a slice
-print nums         # Prints "[0, 1, 8, 8, 4]"
+print nums         # Prints "[0, 1, 8, 9, 4]"
 ```
 We will see slicing again in the context of numpy arrays.
 
@@ -385,9 +385,9 @@ We will often define functions to take optional keyword arguments, like this:
 ```python
 def hello(name, loud=False):
     if loud:
-        print 'HELLO, %s' % name.upper()
+        print 'HELLO, %s!' % name.upper()
     else:
-        print 'Hello, %s!' % name
+        print 'Hello, %s' % name
 
 hello('Bob') # Prints "Hello, Bob"
 hello('Fred', loud=True)  # Prints "HELLO, FRED!"
