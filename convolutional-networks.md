@@ -153,7 +153,7 @@ Remember that in numpy, the operation `*` above denotes elementwise multiplicati
 - `V[0,1,1] = np.sum(X[:5,2:7,:] * W1) + b1` (example of going along y)
 - `V[2,3,1] = np.sum(X[4:9,6:11,:] * W1) + b1` (or along both)
 
-where we see that we are indexing into the second depth dimension in `V` (at index 1) because we are computing the second activation map, and that a different set of parameters (`W1`) is now used. In the example above, we are for brevity leaving out some of the other operatations the Conv Layer would perform to fill the other parts of the output array `V`. Additioanlly, recall that these activation maps are often followed elementwise through an activation function such as ReLU, but this is not shown here.
+where we see that we are indexing into the second depth dimension in `V` (at index 1) because we are computing the second activation map, and that a different set of parameters (`W1`) is now used. In the example above, we are for brevity leaving out some of the other operatations the Conv Layer would perform to fill the other parts of the output array `V`. Additionally, recall that these activation maps are often followed elementwise through an activation function such as ReLU, but this is not shown here.
 
 **Summary**. To summarize, the Conv Layer:
 
