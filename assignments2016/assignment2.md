@@ -99,7 +99,7 @@ assumes that your virtual environment is named `.env`.
 ### Submitting your work:
 Whether you work on the assignment locally or using Terminal, once you are done
 working run the `collectSubmission.sh` script; this will produce a file called
-`assignment2.zip`. Upload this file to your dropbox on
+`assignment2.zip`. Upload this file under the Assignments tab on
 [the coursework](https://coursework.stanford.edu/portal/site/W15-CS-231N-01/)
 page for the course.
 
