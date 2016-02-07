@@ -153,7 +153,7 @@ Remember that in numpy, the operation `*` above denotes elementwise multiplicati
 - `V[0,1,1] = np.sum(X[:5,2:7,:] * W1) + b1` (example of going along y)
 - `V[2,3,1] = np.sum(X[4:9,6:11,:] * W1) + b1` (or along both)
 
-where we see that we are indexing into the second depth dimension in `V` (at index 1) because we are computing the second activation map, and that a different set of parameters (`W1`) is now used. In the example above, we are for brevity leaving out some of the other operatations the Conv Layer would perform to fill the other parts of the output array `V`. Additioanlly, recall that these activation maps are often followed elementwise through an activation function such as ReLU, but this is not shown here.
+where we see that we are indexing into the second depth dimension in `V` (at index 1) because we are computing the second activation map, and that a different set of parameters (`W1`) is now used. In the example above, we are for brevity leaving out some of the other operatations the Conv Layer would perform to fill the other parts of the output array `V`. Additionally, recall that these activation maps are often followed elementwise through an activation function such as ReLU, but this is not shown here.
 
 **Summary**. To summarize, the Conv Layer:
 
@@ -240,7 +240,7 @@ Neurons in a fully connected layer have full connections to all activations in t
 <a name='convert'></a>
 #### Converting FC layers to CONV layers 
 
-It is worth noting that the only difference between FC and CONV layers is that the neurons in the CONV layer are connected only to a local region in the input, and that many of the neurons in a CONV volume share neurons. However, the neurons in both layers still compute dot products, so their functional form is identical. Therefore, it turns out that it's possible to convert between FC and CONV layers:
+It is worth noting that the only difference between FC and CONV layers is that the neurons in the CONV layer are connected only to a local region in the input, and that many of the neurons in a CONV volume share parameters. However, the neurons in both layers still compute dot products, so their functional form is identical. Therefore, it turns out that it's possible to convert between FC and CONV layers:
 
 - For any CONV layer there is an FC layer that implements the same forward function. The weight matrix would be a large matrix that is mostly zero except for at certian blocks (due to local connectivity) where the weights in many of the blocks are equal (due to parameter sharing).
 - Conversely, any FC layer can be converted to a CONV layer. For example, an FC layer with \\(K = 4096\\) that is looking at some input volume of size \\(7 \times 7 \times 512\\) can be equivalently expressed as a CONV layer with \\(F = 7, P = 0, S = 1, K = 4096\\). In other words, we are setting the filter size to be exactly the size of the input volume, and hence the output will simply be \\(1 \times 1 \times 4096\\) since only a single depth column "fits" across the input volume, giving identical result as the initial FC layer.
