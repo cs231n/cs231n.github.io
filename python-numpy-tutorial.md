@@ -392,7 +392,7 @@ def hello(name, loud=False):
 hello('Bob') # Prints "Hello, Bob"
 hello('Fred', loud=True)  # Prints "HELLO, FRED!"
 ```
-There is a lot more information about Python classes
+There is a lot more information about Python functions
 [in the documentation](https://docs.python.org/2/tutorial/controlflow.html#defining-functions).
 
 <a name='python-classes'></a>
