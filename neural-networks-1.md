@@ -167,7 +167,7 @@ As an aside, in practice it is often the case that 3-layer neural networks will 
 
 The full story is, of course, much more involved and a topic of much recent research. If you are interested in these topics we recommend for further reading:
 
-- [Deep Learning](http://www.iro.umontreal.ca/~bengioy/dlbook/) book in press by Bengio, Goodfellow, Courville, in practicular [Chapter 6.4](http://www.iro.umontreal.ca/~bengioy/dlbook/mlp.html).
+- [Deep Learning](http://www.deeplearningbook.org/) book in press by Bengio, Goodfellow, Courville, in practicular [Chapter 6.4](http://www.deeplearningbook.org/contents/mlp.html).
 - [Do Deep Nets Really Need to be Deep?](http://arxiv.org/abs/1312.6184)
 - [FitNets: Hints for Thin Deep Nets](http://arxiv.org/abs/1412.6550)
 
