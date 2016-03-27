@@ -1,11 +1,7 @@
 # Site settings
 title: CS231n Convolutional Neural Networks for Visual Recognition
 email: team.aikorea@gmail.com
-<<<<<<< HEAD
 description: "스탠포드 CS231n: Convolutional Neural Networks for Visual Recognition 수업자료 번역사이트"
-=======
-description: "Course materials and notes for Stanford class CS231n: Convolutional Neural Networks for Visual Recognition."
->>>>>>> origin/gh-pages
 baseurl: "/cs231n"
 url: "http://aikorea.org/cs231n"
 twitter_username: kjw6612
