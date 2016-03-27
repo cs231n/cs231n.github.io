@@ -4,23 +4,24 @@ mathjax: true
 permalink: /classification/
 ---
 
-This is an introductory lecture designed to introduce people from outside of Computer Vision to the Image Classification problem, and the data-driven approach. The Table of Contents:
+본 강의노트는 컴퓨터비전 외의 분야를 공부하던 사람들에게 영상 분류 (Image Classification) 문제와, 데이터 기반 방법론(data-driven approach)을 소개하고자 함이다. 목차는 다음과 같다.
 
-- [Intro to Image Classification, data-driven approach, pipeline](#intro)
-- [Nearest Neighbor Classifier](#nn)
-  - [k-Nearest Neighbor](#knn)
-- [Validation sets, Cross-validation, hyperparameter tuning](#val)
-- [Pros/Cons of Nearest Neighbor](#procon)
-- [Summary](#summary)
-- [Summary: Applying kNN in practice](#summaryapply)
-- [Further Reading](#reading)
+- [영상 분류, 데이터 기반 방법론, 파이프라인](#intro)
+- [Nearest Neighbor 분류기](#nn)
+  - [k-Nearest Neighbor 알고리즘](#knn)
+- [Validation sets, Cross-validation, hyperparameter 튜닝](#val)
+- [Nearest Neighbor의 장단점](#procon)
+- [요약](#summary)
+- [요약: 실제 문제에 kNN 적용하기](#summaryapply)
+- [읽을 자료](#reading)
 
 <a name='intro'></a>
-## Image Classification
+## 영상 분류
 
-**Motivation**. In this section we will introduce the Image Classification problem, which is the task of assigning an input image one label from a fixed set of categories. This is one of the core problems in Computer Vision that, despite its simplicity, has a large variety of practical applications. Moreover, as we will see later in the course, many other seemingly distinct Computer Vision tasks (such as object detection, segmentation) can be reduced to image classification.
+**동기**. 이 섹션에서는 영상 분류 문제에 대해 다룰 것이다. 영상 분류 문제란, 입력 이미지를 미리 정해진 카테고리 중 하나로 분류하는 문제로, 문제 정의는 매우 간단하지만 다양한 활용 가능성이 있는 컴퓨터 비전 분야의 핵심적인 문제 중의 하나이다. 강의의 나중 파트에서도 살펴보겠지만, 영상 분류와 멀어보이는 다른 컴퓨터 비전 분야의 여러 문제들 (물체 검출, 영상 분할 등)이 영상 분류 문제를 푸는 것으로 인해 해결될 수 있다.
 
-**Example**. For example, in the image below an image classification model takes a single image and assigns probabilities to 4 labels, *{cat, dog, hat, mug}*. As shown in the image, keep in mind that to a computer an image is represented as one large 3-dimensional array of numbers. In this example, the cat image is 248 pixels wide, 400 pixels tall, and has three color channels Red,Green,Blue (or RGB for short). Therefore, the image consists of 248 x 400 x 3 numbers, or a total of 297,600 numbers. Each number is an integer that ranges from 0 (black) to 255 (white). Our task is to turn this quarter of a million numbers into a single label, such as *"cat"*.
+**예시**. 예를 들어, 아래 이미지
+For example, in the image below an image classification model takes a single image and assigns probabilities to 4 labels, *{cat, dog, hat, mug}*. As shown in the image, keep in mind that to a computer an image is represented as one large 3-dimensional array of numbers. In this example, the cat image is 248 pixels wide, 400 pixels tall, and has three color channels Red,Green,Blue (or RGB for short). Therefore, the image consists of 248 x 400 x 3 numbers, or a total of 297,600 numbers. Each number is an integer that ranges from 0 (black) to 255 (white). Our task is to turn this quarter of a million numbers into a single label, such as *"cat"*.
 
 <div class="fig figcenter fighighlight">
   <img src="/assets/classify.png">
@@ -59,7 +60,7 @@ A good image classification model must be invariant to the cross product of all 
 
 <a name='nn'></a>
 ### Nearest Neighbor Classifier
-As our first approach, we will develop what we call a **Nearest Neighbor Classifier**. This classifier has nothing to do with Convolutional Neural Networks and it is very rarely used in practice, but it will allow us to get an idea about the basic approach to an image classification problem. 
+As our first approach, we will develop what we call a **Nearest Neighbor Classifier**. This classifier has nothing to do with Convolutional Neural Networks and it is very rarely used in practice, but it will allow us to get an idea about the basic approach to an image classification problem.
 
 **Example image classification dataset: CIFAR-10.** One popular toy image classification dataset is the <a href="http://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10 dataset</a>. This dataset consists of 60,000 tiny images that are 32 pixels high and wide. Each image is labeled with one of 10 classes (for example *"airplane, automobile, bird, etc"*). These 60,000 images are partitioned into a training set of 50,000 images and a test set of 10,000 images. In the image below you can see 10 random example images from each one of the 10 classes:
 
@@ -137,7 +138,7 @@ class NearestNeighbor(object):
 
 If you ran this code, you would see that this classifier only achieves **38.6%** on CIFAR-10. That's more impressive than guessing at random (which would give 10% accuracy since there are 10 classes), but nowhere near human performance (which is [estimated at about 94%](http://karpathy.github.io/2011/04/27/manually-classifying-cifar10/)) or near state-of-the-art Convolutional Neural Networks that achieve about 95%, matching human accuracy (see the [leaderboard](http://www.kaggle.com/c/cifar-10/leaderboard) of a recent Kaggle competition on CIFAR-10).
 
-**The choice of distance.** 
+**The choice of distance.**
 There are many other ways of computing distances between vectors. Another common choice could be to instead use the **L2 distance**, which has the geometric interpretation of computing the euclidean distance between two vectors. The distance takes the form:
 
 $$
@@ -190,7 +191,7 @@ Ytr = Ytr[1000:]
 # find hyperparameters that work best on the validation set
 validation_accuracies = []
 for k in [1, 3, 5, 10, 20, 50, 100]:
-  
+
   # use a particular value of k and evaluation on validation data
   nn = NearestNeighbor()
   nn.train(Xtr_rows, Ytr)
@@ -257,7 +258,7 @@ In summary:
 -  We saw that the correct way to set these hyperparameters is to split your training data into two: a training set and a fake test set, which we call **validation set**. We try different hyperparameter values and keep the values that lead to the best performance on the validation set.
 - If the lack of training data is a concern, we discussed a procedure called **cross-validation**, which can help reduce noise in estimating which hyperparameters work best.
 - Once the best hyperparameters are found, we fix them and perform a single **evaluation** on the actual test set.
-- We saw that Nearest Neighbor can get us about 40% accuracy on CIFAR-10. It is simple to implement but requires us to store the entire training set and it is expensive to evaluate on a test image. 
+- We saw that Nearest Neighbor can get us about 40% accuracy on CIFAR-10. It is simple to implement but requires us to store the entire training set and it is expensive to evaluate on a test image.
 - Finally, we saw that the use of L1 or L2 distances on raw pixel values is not adequate since the distances correlate more strongly with backgrounds and color distributions of images than with their semantic content.
 
 In next lectures we will embark on addressing these challenges and eventually arrive at solutions that give 90% accuracies, allow us to completely discard the training set once learning is complete, and they will allow us to evaluate a test image in less than a millisecond.
