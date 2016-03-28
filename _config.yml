@@ -8,5 +8,5 @@ twitter_username: kjw6612
 github_username:  aikorea
 
 # Build settings
-markdown: redcarpet
+markdown: kramdown
 permalink: pretty
