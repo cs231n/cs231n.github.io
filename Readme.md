@@ -12,7 +12,7 @@ English to Korean translation project for the notes and assignments for Stanford
 To view the rendered site in your browser,
 
 1. Install Jekyll - follow the instructions [[here](https://jekyllrb.com/docs/installation/)]
-2. `git clone yourusername@cs231n`
+2. `git clone https://github.com/yourUserName/cs231n.git`
 3. `cd cs231n`
 4. `jekyll serve`
 5. View the website at http://127.0.0.1:4000/cs231n/
