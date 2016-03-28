@@ -53,7 +53,7 @@ There are a few things to note:
 Notice that a linear classifier computes the score of a class as a weighted sum of all of its pixel values across all 3 of its color channels. Depending on precisely what values we set for these weights, the function has the capacity to like or dislike (depending on the sign of each weight) certain colors at certain positions in the image. For instance, you can imagine that the "ship" class might be more likely if there is a lot of blue on the sides of an image (which could likely correspond to water). You might expect that the "ship" classifier would then have a lot of positive weights across its blue channel weights (presence of blue increases score of ship), and negative weights in the red/green channels (presence of red/green descreases the score of ship).
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/imagemap.jpg">
+  <img src="{{site.baseurl}}/assets/imagemap.jpg">
   <div class="figcaption">An example of mapping an image to class scores. For the sake of visualization, we assume the image only has 4 pixels (4 monochrome pixels, we are not considering color channels in this example for brevity), and that we have 3 classes (red (cat), green (dog), blue (ship) class). (Clarification: in particular, the colors here simply indicate 3 classes and are not related to the RGB channels.) We stretch the image pixels into a column and perform matrix multiplication to get the scores for each class. Note that this particular set of weights W is not good at all: the weights assign our cat image a very low cat score. In particular, this set of weights seems convinced that it's looking at a dog.</div>
 </div>
 
@@ -62,7 +62,7 @@ Notice that a linear classifier computes the score of a class as a weighted sum 
 Since we defined the score of each class as a weighted sum of all image pixels, each class score is a linear function over this space. We cannot visualize 3072-dimensional spaces, but if we imagine squashing all those dimensions into only two dimensions, then we can try to visualize what the classifier might be doing:
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/pixelspace.jpeg">
+  <img src="{{site.baseurl}}/assets/pixelspace.jpeg">
   <div class="figcaption">
     Cartoon representation of the image space, where each image is a single point, and three classifiers are visualized. Using the example of the car classifier (in red), the red line shows all points in the space that get a score of zero for the car class. The red arrow shows the direction of increase, so all points to the right of the red line have positive (and linearly increasing) scores, and all points to the left have a negative (and linearly decreasing) scores.
   </div>
@@ -74,7 +74,7 @@ As we saw above, every row of \\(W\\) is a classifier for one of the classes. Th
 Another interpretation for the weights \\(W\\) is that each row of \\(W\\) corresponds to a *template* (or sometimes also called a *prototype*) for one of the classes. The score of each class for an image is then obtained by comparing each template with the image using an *inner product* (or *dot product*) one by one to find the one that "fits" best. With this terminology, the linear classifier is doing template matching, where the templates are learned. Another way to think of it is that we are still effectively doing Nearest Neighbor, but instead of having thousands of training images we are only using a single image per class (although we will learn it, and it does not necessarily have to be one of the images in the training set), and we use the (negative) inner product as the distance instead of the L1 or L2 distance.
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/templates.jpg">
+  <img src="{{site.baseurl}}/assets/templates.jpg">
   <div class="figcaption">
     Skipping ahead a bit: Example learned weights at the end of learning for CIFAR-10. Note that, for example, the ship template contains a lot of blue pixels as expected. This template will therefore give a high score once it is matched against images of ships on the ocean with an inner product.
   </div>
@@ -97,7 +97,7 @@ $$
 With our CIFAR-10 example, \\(x\_i\\) is now [3073 x 1] instead of [3072 x 1] - (with the extra dimension holding the constant 1), and \\(W\\) is now [10 x 3073] instead of [10 x 3072]. The extra column that \\(W\\) now corresponds to the bias \\(b\\). An illustration might help clarify:
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/wb.jpeg">
+  <img src="{{site.baseurl}}/assets/wb.jpeg">
   <div class="figcaption">
     Illustration of the bias trick. Doing a matrix multiplication and then adding a bias vector (left) is equivalent to adding a bias dimension with a constant of 1 to all input vectors and extending the weight matrix by 1 column - a bias column (right). Thus, if we preprocess our data by appending ones to all vectors we only have to learn a single matrix of weights instead of two matrices that hold the weights and the biases.
   </div>
@@ -144,7 +144,7 @@ A last piece of terminology we'll mention before we finish with this section is 
 
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/margin.jpg">
+  <img src="{{site.baseurl}}/assets/margin.jpg">
   <div class="figcaption">
     The Multiclass Support Vector Machine "wants" the score of the correct class to be higher than all other scores by at least a margin of delta. If any class has a score inside the red region (or higher), then there will be accumulated loss. Otherwise the loss will be zero. Our objective will be to find the weights that will simultaneously satisfy this constraint for all examples in the training data and give a total loss that is as low as possible.<br>
   </div>
@@ -306,7 +306,7 @@ p = np.exp(f) / np.sum(np.exp(f)) # safe to do, gives the correct answer
 A picture might help clarify the distinction between the Softmax and SVM classifiers:
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/svmvssoftmax.png">
+  <img src="{{site.baseurl}}/assets/svmvssoftmax.png">
   <div class="figcaption">Example of the difference between the SVM and Softmax classifiers for one datapoint. In both cases we compute the same score vector <b>f</b> (e.g. by matrix multiplication in this section). The difference is in the interpretation of the scores in <b>f</b>: The SVM interprets these as class scores and its loss function encourages the correct class (class 2, in blue) to have a score higher by a margin than the other class scores. The Softmax classifier instead interprets the scores as (unnormalized) log probabilities for each class and then encourages the (normalized) log probability of the correct class to be high (equivalently the negative of it to be low). The final loss for this example is 1.58 for the SVM and 1.04 for the Softmax classifier, but note that these numbers are not comparable; They are only meaningful in relation to loss computed within the same classifier and with the same data.</div>
 </div>
 
@@ -331,7 +331,7 @@ where the probabilites are now more diffuse. Moreover, in the limit where the we
 
 <a href="http://vision.stanford.edu/teaching/cs231n/linear-classify-demo" style="text-decoration:none;">
 <div class="fig figcenter fighighlight">
-  <img src="/assets/classifydemo.jpeg">
+  <img src="{{site.baseurl}}/assets/classifydemo.jpeg">
   <div class="figcaption">We have written an interactive web demo to help your intuitions with linear classifiers. The demo visualizes the loss functions discussed in this section using a toy 3-way classification on 2D data. The demo also jumps ahead a bit and performs the optimization, which we will discuss in full detail in the next section.
   </div>
 </div>

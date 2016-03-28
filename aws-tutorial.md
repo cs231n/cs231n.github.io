@@ -21,7 +21,7 @@ Console" button. It will direct you to a signup page which looks like the
 following.
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/aws-signup.png'>
+  <img src='{{site.baseurl}}/assets/aws-signup.png'>
 </div>
 
 Select the "I am a new user" checkbox, click the "Sign in using our secure
@@ -34,13 +34,13 @@ click on "Sign In to the Console", and this time sign in using your username and
 password.
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/aws-signin.png'>
+  <img src='{{site.baseurl}}/assets/aws-signin.png'>
 </div>
 
 Once you have signed in, you will be greeted by a page like this:
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/aws-homepage.png'>
+  <img src='{{site.baseurl}}/assets/aws-homepage.png'>
 </div>
 
 Make sure that the region information on the top right is set to N. California.
@@ -55,14 +55,14 @@ Next, click on the EC2 link (first link under the Compute category). You will go
 to a dashboard page like this:
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/ec2-dashboard.png'>
+  <img src='{{site.baseurl}}/assets/ec2-dashboard.png'>
 </div>
 
 Click the blue "Launch Instance" button, and you will be redirected to a page
 like the following:
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/ami-selection.png'>
+  <img src='{{site.baseurl}}/assets/ami-selection.png'>
 </div>
 
 Click on the "Community AMIs" link on the left sidebar, and search for "cs231n"
@@ -71,19 +71,19 @@ in the search box. You should be able to see the AMI
 AMI, and continue to the next step to choose your instance type.
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/community-AMIs.png'>
+  <img src='{{site.baseurl}}/assets/community-AMIs.png'>
 </div>
 
 Choose the instance type `g2.2xlarge`, and click on "Review and Launch".
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/instance-selection.png'>
+  <img src='{{site.baseurl}}/assets/instance-selection.png'>
 </div>
 
 In the next page, click on Launch.
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/launch-screen.png'>
+  <img src='{{site.baseurl}}/assets/launch-screen.png'>
 </div>
 
 You will be then prompted to create or use an existing key-pair. If you already
@@ -94,11 +94,11 @@ somewhere that you won't accidentally delete. Remember that there is **NO WAY**
 to get to your instance if you lose your key. 
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/key-pair.png'>
+  <img src='{{site.baseurl}}/assets/key-pair.png'>
 </div>
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/key-pair-create.png'>
+  <img src='{{site.baseurl}}/assets/key-pair-create.png'>
 </div>
 
 Once you download your key, you should change the permissions of the key to
@@ -113,7 +113,7 @@ After this is done, click on "Launch Instances", and you should see a screen
 showing that your instances are launching:
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/launching-screen.png'>
+  <img src='{{site.baseurl}}/assets/launching-screen.png'>
 </div>
 
 Click on "View Instances" to see your instance state. It should change to
@@ -121,7 +121,7 @@ Click on "View Instances" to see your instance state. It should change to
 are now ready to ssh into the instance.
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/instances-page.png'>
+  <img src='{{site.baseurl}}/assets/instances-page.png'>
 </div>
 
 First, note down the Public IP of the instance from the instance listing. Then,

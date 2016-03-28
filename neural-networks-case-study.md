@@ -40,7 +40,7 @@ plt.scatter(X[:, 0], X[:, 1], c=y, s=40, cmap=plt.cm.Spectral)
 ```
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/eg/spiral_raw.png">
+  <img src="{{site.baseurl}}/assets/eg/spiral_raw.png">
   <div class="figcaption">
     The toy spiral data consists of three classes (blue, red, yellow) that are not linearly separable.
   </div>
@@ -253,7 +253,7 @@ print 'training accuracy: %.2f' % (np.mean(predicted_class == y))
 This prints **49%**. Not very good at all, but also not surprising given that the dataset is constructed so it is not linearly separable. We can also plot the learned decision boundaries:
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/eg/spiral_linear.png">
+  <img src="{{site.baseurl}}/assets/eg/spiral_linear.png">
   <div class="figcaption">
     Linear classifier fails to learn the toy spiral dataset.
   </div>
@@ -403,7 +403,7 @@ print 'training accuracy: %.2f' % (np.mean(predicted_class == y))
 Which prints **98%**!. We can also visualize the decision boundaries:
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/eg/spiral_net.png">
+  <img src="{{site.baseurl}}/assets/eg/spiral_net.png">
   <div class="figcaption">
     Neural Network classifier crushes the spiral dataset.
   </div>

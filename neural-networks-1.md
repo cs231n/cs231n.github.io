@@ -38,8 +38,8 @@ The area of Neural Networks has originally been primarily inspired by the goal o
 The basic computational unit of the brain is a **neuron**. Approximately 86 billion neurons can be found in the human nervous system and they are connected with approximately 10^14 - 10^15 **synapses**. The diagram below shows a cartoon drawing of a biological neuron (left) and a common mathematical model (right). Each neuron receives input signals from its **dendrites** and produces output signals along its (single) **axon**. The axon eventually branches out and connects via synapses to dendrites of other neurons. In the computational model of a neuron, the signals that travel along the axons (e.g. \\(x\_0\\)) interact multiplicatively (e.g. \\(w\_0 x\_0\\)) with the dendrites of the other neuron based on the synaptic strength at that synapse (e.g. \\(w\_0\\)). The idea is that the synaptic strengths (the weights \\(w\\)) are learnable and control the strength of influence (and its direction: excitory (positive weight) or inhibitory (negative weight)) of one neuron on another. In the basic model, the dendrites carry the signal to the cell body where they all get summed. If the final sum is above a certain threshold, the neuron can *fire*, sending a spike along its axon. In the computational model, we assume that the precise timings of the spikes do not matter, and that only the frequency of the firing communicates information. Based on this *rate code* interpretation, we model the *firing rate* of the neuron with an **activation function** \\(f\\), which represents the frequency of the spikes along the axon. Historically, a common choice of activation function is the **sigmoid function** \\(\sigma\\), since it takes a real-valued input (the signal strength after the sum) and squashes it to range between 0 and 1. We will see details of these activation functions later in this section.
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/nn1/neuron.png" width="49%">
-  <img src="/assets/nn1/neuron_model.jpeg" width="49%" style="border-left: 1px solid black;">
+  <img src="{{site.baseurl}}/assets/nn1/neuron.png" width="49%">
+  <img src="{{site.baseurl}}/assets/nn1/neuron_model.jpeg" width="49%" style="border-left: 1px solid black;">
   <div class="figcaption">A cartoon drawing of a biological neuron (left) and its mathematical model (right).</div>
 </div>
 
@@ -79,8 +79,8 @@ The mathematical form of the model Neuron's forward computation might look famil
 Every activation function (or *non-linearity*) takes a single number and performs a certain fixed mathematical operation on it. There are several activation functions you may encounter in practice:
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/nn1/sigmoid.jpeg" width="40%">
-  <img src="/assets/nn1/tanh.jpeg" width="40%" style="border-left: 1px solid black;">
+  <img src="{{site.baseurl}}/assets/nn1/sigmoid.jpeg" width="40%">
+  <img src="{{site.baseurl}}/assets/nn1/tanh.jpeg" width="40%" style="border-left: 1px solid black;">
   <div class="figcaption"><b>Left:</b> Sigmoid non-linearity squashes real numbers to range between [0,1] <b>Right:</b> The tanh non-linearity squashes real numbers to range between [-1,1].</div>
 </div>
 
@@ -92,8 +92,8 @@ Every activation function (or *non-linearity*) takes a single number and perform
 **Tanh.** The tanh non-linearity is shown on the image above on the right. It squashes a real-valued number to the range [-1, 1]. Like the sigmoid neuron, its activations saturate, but unlike the sigmoid neuron its output is zero-centered. Therefore, in practice the *tanh non-linearity is always preferred to the sigmoid nonlinearity.* Also note that the tanh neuron is simply a scaled sigmoid neuron, in particular the following holds: \\( \tanh(x) = 2 \sigma(2x) -1  \\).
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/nn1/relu.jpeg" width="40%">
-  <img src="/assets/nn1/alexplot.jpeg" width="40%" style="border-left: 1px solid black;">
+  <img src="{{site.baseurl}}/assets/nn1/relu.jpeg" width="40%">
+  <img src="{{site.baseurl}}/assets/nn1/alexplot.jpeg" width="40%" style="border-left: 1px solid black;">
   <div class="figcaption"><b>Left:</b> Rectified Linear Unit (ReLU) activation function, which is zero when x &lt 0 and then linear with slope 1 when x &gt 0. <b>Right:</b> A plot from <a href="http://www.cs.toronto.edu/~fritz/absps/imagenet.pdf">Krizhevsky et al.</a> (pdf) paper indicating the 6x improvement in convergence with the ReLU unit compared to the tanh unit.</div>
 </div>
 
@@ -120,8 +120,8 @@ This concludes our discussion of the most common types of neurons and their acti
 **Neural Networks as neurons in graphs**. Neural Networks are modeled as collections of neurons that are connected in an acyclic graph. In other words, the outputs of some neurons can become inputs to other neurons. Cycles are not allowed since that would imply an infinite loop in the forward pass of a network. Instead of an amorphous blobs of connected neurons, Neural Network models are often organized into distinct layers of neurons. For regular neural networks, the most common layer type is the **fully-connected layer** in which  neurons between two adjacent layers are fully pairwise connected, but neurons within a single layer share no connections. Below are two example Neural Network topologies that use a stack of fully-connected layers:
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/nn1/neural_net.jpeg" width="40%">
-  <img src="/assets/nn1/neural_net2.jpeg" width="55%" style="border-left: 1px solid black;">
+  <img src="{{site.baseurl}}/assets/nn1/neural_net.jpeg" width="40%">
+  <img src="{{site.baseurl}}/assets/nn1/neural_net2.jpeg" width="55%" style="border-left: 1px solid black;">
   <div class="figcaption"><b>Left:</b> A 2-layer Neural Network (one hidden layer of 4 neurons (or units) and one output layer with 2 neurons), and three inputs. <b>Right:</b> A 3-layer neural network with three inputs, two hidden layers of 4 neurons each and one output layer. Notice that in both cases there are connections (synapses) between neurons across layers, but not within a layer.</div>
 </div>
 
@@ -177,7 +177,7 @@ The full story is, of course, much more involved and a topic of much recent rese
 How do we decide on what architecture to use when faced with a practical problem? Should we use no hidden layers? One hidden layer? Two hidden layers? How large should each layer be? First, note that as we increase the size and number of layers in a Neural Network, the **capacity** of the network increases. That is, the space of representable functions grows since the neurons can collaborate to express many different functions. For example, suppose we had a binary classification problem in two dimensions. We could train three separate neural networks, each with one hidden layer of some size and obtain the following classifiers:
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/nn1/layer_sizes.jpeg">
+  <img src="{{site.baseurl}}/assets/nn1/layer_sizes.jpeg">
   <div class="figcaption">Larger Neural Networks can represent more complicated functions. The data are shown as circles colored by their class, and the decision regions by a trained neural network are shown underneath. You can play with these examples in this <a href="http://cs.stanford.edu/people/karpathy/convnetjs/demo/classify2d.html">ConvNetsJS demo</a>.</div>
 </div>
 
@@ -190,7 +190,7 @@ The subtle reason behind this is that smaller networks are harder to train with 
 To reiterate, the regularization strength is the preferred way to control the overfitting of a neural network. We can look at the results achieved by three different settings:
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/nn1/reg_strengths.jpeg">
+  <img src="{{site.baseurl}}/assets/nn1/reg_strengths.jpeg">
   <div class="figcaption">
     The effects of regularization strength: Each neural network above has 20 hidden neurons, but changing the regularization strength makes its final decision regions smoother with a higher regularization. You can play with these examples in this <a href="http://cs.stanford.edu/people/karpathy/convnetjs/demo/classify2d.html">ConvNetsJS demo</a>.
   </div>

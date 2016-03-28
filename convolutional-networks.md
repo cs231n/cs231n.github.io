@@ -35,8 +35,8 @@ So what does change? ConvNet architectures make the explicit assumption that the
 *3D volumes of neurons*. Convolutional Neural Networks take advantage of the fact that the input consists of images and they constrain the architecture in a more sensible way. In particular, unlike a regular Neural Network, the layers of a ConvNet have neurons arranged in 3 dimensions: **width, height, depth**. (Note that the word *depth* here refers to the third dimension of an activation volume, not to the depth of a full Neural Network, which can refer to the total number of layers in a network.) For example, the input images in CIFAR-10 are an input volume of activations, and the volume has dimensions 32x32x3 (width, height, depth respectively). As we will soon see, the neurons in a layer will only be connected to a small region of the layer before it, instead of all of the neurons in a fully-connected manner. Moreover, the final output layer would for CIFAR-10 have dimensions 1x1x10, because by the end of the ConvNet architecture we will reduce the full image into a single vector of class scores, arranged along the depth dimension. Here is a visualization:
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/nn1/neural_net2.jpeg" width="40%">
-  <img src="/assets/cnn/cnn.jpeg" width="48%" style="border-left: 1px solid black;">
+  <img src="{{site.baseurl}}/assets/nn1/neural_net2.jpeg" width="40%">
+  <img src="{{site.baseurl}}/assets/cnn/cnn.jpeg" width="48%" style="border-left: 1px solid black;">
   <div class="figcaption">Left: A regular 3-layer Neural Network. Right: A ConvNet arranges its neurons in three dimensions (width, height, depth), as visualized in one of the layers. Every layer of a ConvNet transforms the 3D input volume to a 3D output volume of neuron activations. In this example, the red input layer holds the image, so its width and height would be the dimensions of the image, and the depth would be 3 (Red, Green, Blue channels).</div>
 </div>
 
@@ -66,7 +66,7 @@ In summary:
 - Each Layer may or may not have additional hyperparameters (e.g. CONV/FC/POOL do, RELU doesn't)
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/cnn/convnet.jpeg" width="100%">
+  <img src="{{site.baseurl}}/assets/cnn/convnet.jpeg" width="100%">
   <div class="figcaption">
     The activations of an example ConvNet architecture. The initial volume stores the raw image pixels and the last volume stores the class scores. Each volume of activations along the processing path is shown as a column. Since it's difficult to visualize 3D volumes, we lay out each volume's slices in rows. The last layer volume holds the scores for each class, but here we only visualize the sorted top 5 scores, and print the labels of each one. The full <a href="http://cs231n.stanford.edu/">web-based demo</a> is shown in the header of our website. The architecture shown here is a tiny VGG Net, which we will discuss later.
   </div>
@@ -88,8 +88,8 @@ The Conv layer is the core building block of a Convolutional Network, and its ou
 *Example 2*. Suppose an input volume had size [16x16x20]. Then using an example receptive field size of 3x3, every neuron in the Conv Layer would now have a total of 3\*3\*20 = 180 connections to the input volume. Notice that, again, the connectivity is local in space (e.g. 3x3), but full along the input depth (20).
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/cnn/depthcol.jpeg" width="40%">
-  <img src="/assets/nn1/neuron_model.jpeg" width="40%" style="border-left: 1px solid black;">
+  <img src="{{site.baseurl}}/assets/cnn/depthcol.jpeg" width="40%">
+  <img src="{{site.baseurl}}/assets/nn1/neuron_model.jpeg" width="40%" style="border-left: 1px solid black;">
   <div class="figcaption">
     <b>Left:</b> An example input volume in red (e.g. a 32x32x3 CIFAR-10 image), and an example volume of neurons in the first Convolutional layer. Each neuron in the convolutional layer is connected only to a local region in the input volume spatially, but to the full depth (i.e. all color channels). Note, there are multiple neurons (5 in this example) along the depth, all looking at the same region in the input - see discussion of depth columns in text below. <b>Right:</b> The neurons from the Neural Network chapter remain unchanged: They still compute a dot product of their weights with the input followed by a non-linearity, but their connectivity is now restricted to be local spatially.
   </div>
@@ -104,7 +104,7 @@ The Conv layer is the core building block of a Convolutional Network, and its ou
 We can compute the spatial size of the output volume as a function of the input volume size (\\(W\\)), the receptive field size of the Conv Layer neurons (\\(F\\)), the stride with which they are applied (\\(S\\)), and the amount of zero padding used (\\(P\\)) on the border. You can convince yourself that the correct formula for calculating how many neurons "fit" is given by \\((W - F + 2P)/S + 1\\). If this number is not an integer, then the strides are set incorrectly and the neurons cannot be tiled so that they "fit" across the input volume neatly, in a symmetric way. An example might help to get intuitions for this formula:
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/cnn/stride.jpeg">
+  <img src="{{site.baseurl}}/assets/cnn/stride.jpeg">
   <div class="figcaption">
     Illustration of spatial arrangement. In this example there is only one spatial dimension (x-axis), one neuron with a receptive field size of F = 3, the input size is W = 5, and there is zero padding of P = 1. <b>Left:</b> The neuron strided across the input in stride of S = 1, giving output of size (5 - 3 + 2)/1+1 = 5. <b>Right:</b> The neuron uses stride of S = 2, giving output of size (5 - 3 + 2)/2+1 = 3. Notice that stride S = 3 could not be used since it wouldn't fit neatly across the volume. In terms of the equation, this can be determined since (5 - 3 + 2) = 4 is not divisible by 3. 
     <br>The neuron weights are in this example [1,0,-1] (shown on very right), and its bias is zero. These weights are shared across all yellow neurons (see parameter sharing below).
@@ -124,7 +124,7 @@ It turns out that we can dramatically reduce the number of parameters by making 
 Notice that if all neurons in a single depth slice are using the same weight vector, then the forward pass of the CONV layer can in each depth slice be computed as a **convolution** of the neuron's weights with the input volume (Hence the name: Convolutional Layer). Therefore, it is common to refer to the sets of weights as a **filter** (or a **kernel**), which is convolved with the input. The result of this convolution is an *activation map* (e.g. of size [55x55]), and the set of activation maps for each different filter are stacked together along the depth dimension to produce the output volume (e.g. [55x55x96]).
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/cnn/weights.jpeg">
+  <img src="{{site.baseurl}}/assets/cnn/weights.jpeg">
   <div class="figcaption">
     Example filters learned by Krizhevsky et al. Each of the 96 filters shown here is of size [11x11x3], and each one is shared by the 55*55 neurons in one depth slice. Notice that the parameter sharing assumption is relatively reasonable: If detecting a horizontal edge is important at some location in the image, it should intuitively be useful at some other location as well due to the translationally-invariant structure of images. There is therefore no need to relearn to detect a horizontal edge at every one of the 55*55 distinct locations in the Conv layer output volume.
   </div>
@@ -175,7 +175,7 @@ A common setting of the hyperparameters is \\(F = 3, S = 1, P = 1\\). However, t
 **Convolution Demo**. Below is a running demo of a CONV layer. Since 3D volumes are hard to visualize, all the volumes (the input volume (in blue), the weight volumes (in red), the output volume (in green)) are visualized with each depth slice stacked in rows. The input volume is of size \\(W\_1 = 5, H\_1 = 5, D\_1 = 3\\), and the CONV layer parameters are \\(K = 2, F = 3, S = 2, P = 1\\). That is, we have two filters of size \\(3 \times 3\\), and they are applied with a stride of 2. Therefore, the output volume size has spatial size (5 - 3 + 2)/2 + 1 = 3. Moreover, notice that a padding of \\(P = 1\\) is applied to the input volume, making the outer border of the input volume zero. The visualization below iterates over the output activations (green), and shows that each element is computed by elementwise multiplying the highlighted input (blue) with the filter (red), summing it up, and then offsetting the result by the bias.
 
 <div class="fig figcenter fighighlight">
-  <iframe src="/assets/conv-demo/index.html" width="100%" height="700px;" style="border:none;"></iframe>
+  <iframe src="{{site.baseurl}}/assets/conv-demo/index.html" width="100%" height="700px;" style="border:none;"></iframe>
   <div class="figcaption"></div>
 </div>
 
@@ -211,8 +211,8 @@ It is worth noting that there are only two commonly seen variations of the max p
 **General pooling**. In addition to max pooling, the pooling units can also perform other functions, such as *average pooling* or even *L2-norm pooling*. Average pooling was often used historically but has recently fallen out of favor compared to the max pooling operation, which has been shown to work better in practice.
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/cnn/pool.jpeg" width="36%">
-  <img src="/assets/cnn/maxpool.jpeg" width="59%" style="border-left: 1px solid black;">
+  <img src="{{site.baseurl}}/assets/cnn/pool.jpeg" width="36%">
+  <img src="{{site.baseurl}}/assets/cnn/maxpool.jpeg" width="59%" style="border-left: 1px solid black;">
   <div class="figcaption">
     Pooling layer downsamples the volume spatially, independently in each depth slice of the input volume. <b>Left:</b> In this example, the input volume of size [224x224x64] is pooled with filter size 2, stride 2 into output volume of size [112x112x64]. Notice that the volume depth is preserved. <b>Right:</b> The most common downsampling operation is max, giving rise to <b>max pooling</b>, here shown with a stride of 2. That is, each max is taken over 4 numbers (little 2x2 square).
   </div>

@@ -29,7 +29,7 @@ There are three common forms of data preprocessing a data matrix `X`, where we w
 In case of images, the relative scales of pixels are already approximately equal (and in range from 0 to 255), so it is not strictly necessary to perform this additional preprocessing step.
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/nn2/prepro1.jpeg">
+  <img src="{{site.baseurl}}/assets/nn2/prepro1.jpeg">
   <div class="figcaption">Common data preprocessing pipeline. <b>Left</b>: Original toy, 2-dimensional input data. <b>Middle</b>: The data is zero-centered by subtracting the mean in each dimension. The data cloud is now centered around the origin. <b>Right</b>: Each dimension is additionally scaled by its standard deviation. The red lines indicate the extent of the data - they are of unequal length in the middle, but of equal length on the right.</div>
 </div>
 
@@ -72,14 +72,14 @@ Xwhite = Xrot / np.sqrt(S + 1e-5)
 *Warning: Exaggerating noise.* Note that we're adding 1e-5 (or a small constant) to prevent division by zero. One weakness of this transformation is that it can greatly exaggerate the noise in the data, since it stretches all dimensions (including the irrelevant dimensions of tiny variance that are mostly noise) to be of equal size in the input. This can in practice be mitigated by stronger smoothing (i.e. increasing 1e-5 to be a larger number).
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/nn2/prepro2.jpeg">
+  <img src="{{site.baseurl}}/assets/nn2/prepro2.jpeg">
   <div class="figcaption">PCA / Whitening. <b>Left</b>: Original toy, 2-dimensional input data. <b>Middle</b>: After performing PCA. The data is centered at zero and then rotated into the eigenbasis of the data covariance matrix. This decorrelates the data (the covariance matrix becomes diagonal). <b>Right</b>: Each dimension is additionally scaled by the eigenvalues, transforming the data covariance matrix into the identity matrix. Geometrically, this corresponds to stretching and squeezing the data into an isotropic gaussian blob.</div>
 </div>
 
 We can also try to visualize these transformations with CIFAR-10 images. The training set of CIFAR-10 is of size 50,000 x 3072, where every image is stretched out into a 3072-dimensional row vector. We can then compute the [3072 x 3072] covariance matrix and compute its SVD decomposition (which can be relatively expensive). What do the computed eigenvectors look like visually? An image might help:
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/nn2/cifar10pca.jpeg">
+  <img src="{{site.baseurl}}/assets/nn2/cifar10pca.jpeg">
   <div class="figcaption"><b>Left:</b>An example set of 49 images. <b>2nd from Left:</b> The top 144 out of 3072 eigenvectors. The top eigenvectors account for most of the variance in the data, and we can see that they correspond to lower frequencies in the images.  <b>2nd from Right:</b> The 49 images reduced with PCA, using the 144 eigenvectors shown here. That is, instead of expressing every image as a 3072-dimensional vector where each element is the brightness of a particular pixel at some location and channel, every image above is only represented with a 144-dimensional vector, where each element measures how much of each eigenvector adds up to make up the image. In order to visualize what image information has been retained in the 144 numbers, we must rotate back into the "pixel" basis of 3072 numbers. Since U is a rotation, this can be achieved by multiplying by U.transpose()[:144,:], and then visualizing the resulting 3072 numbers as the image. You can see that the images are slightly more blurry, reflecting the fact that the top eigenvectors capture lower frequencies. However, most of the information is still preserved. <b>Right:</b> Visualization of the "white" representation, where the variance along every one of the 144 dimensions is squashed to equal length. Here, the whitened 144 numbers are rotated back to image pixel basis by multiplying by U.transpose()[:144,:]. The lower frequencies (which accounted for most variance) are now negligible, while the higher frequencies (which account for relatively little variance originally) become exaggerated.</div>
 </div>
 
@@ -139,7 +139,7 @@ There are several ways of controlling the capacity of Neural Networks to prevent
 **Dropout** is an extremely effective, simple and recently introduced regularization technique by Srivastava et al. in [Dropout: A Simple Way to Prevent Neural Networks from Overfitting](http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf) (pdf) that complements the other methods (L1, L2, maxnorm). While training, dropout is implemented by only keeping a neuron active with some probability \\(p\\) (a hyperparameter), or setting it to zero otherwise.
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/nn2/dropout.jpeg" width="70%">
+  <img src="{{site.baseurl}}/assets/nn2/dropout.jpeg" width="70%">
   <div class="figcaption">Figure taken from the <a href="http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf">Dropout paper</a> that illustrates the idea. During training, Dropout can be interpreted as sampling a Neural Network within the full Neural Network, and only updating the parameters of the sampled network based on the input data. (However, the exponential number of possible sampled networks are not independent because they share the parameters.) During testing there is no dropout applied, with the interpretation of evaluating an averaged prediction across the exponentially-sized ensemble of all sub-networks (more about ensembles in the next section).</div>
 </div>
 
