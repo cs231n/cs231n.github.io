@@ -72,7 +72,7 @@ to express very powerful ideas in very few lines of code while being very
 readable. As an example, here is an implementation of the classic quicksort
 algorithm in Python:
 
-```python
+~~~python
 def quicksort(arr):
     if len(arr) <= 1:
         return arr
@@ -84,7 +84,7 @@ def quicksort(arr):
     
 print quicksort([3,6,8,10,1,2,1])
 # Prints "[1, 1, 2, 3, 6, 8, 10]"
-```
+~~~
 
 ### Python versions
 There are currently two different supported versions of Python, 2.7 and 3.4.
@@ -104,7 +104,7 @@ familiar from other programming languages.
 
 **Numbers:** Integers and floats work as you would expect from other languages:
 
-```python
+~~~python
 x = 3
 print type(x) # Prints "<type 'int'>"
 print x       # Prints "3"
@@ -119,7 +119,7 @@ print x  # Prints "8"
 y = 2.5
 print type(y) # Prints "<type 'float'>"
 print y, y + 1, y * 2, y ** 2 # Prints "2.5 3.5 5.0 6.25"
-```
+~~~
 Note that unlike many languages, Python does not have unary increment (`x++`)
 or decrement (`x--`) operators.
 
@@ -130,7 +130,7 @@ you can find all of the details
 **Booleans:** Python implements all of the usual operators for Boolean logic,
 but uses English words rather than symbols (`&&`, `||`, etc.):
 
-```python
+~~~python
 t = True
 f = False
 print type(t) # Prints "<type 'bool'>"
@@ -138,11 +138,11 @@ print t and f # Logical AND; prints "False"
 print t or f  # Logical OR; prints "True"
 print not t   # Logical NOT; prints "False"
 print t != f  # Logical XOR; prints "True" 
-```
+~~~
 
 **Strings:** Python has great support for strings:
 
-```python
+~~~python
 hello = 'hello'   # String literals can use single quotes
 world = "world"   # or double quotes; it does not matter.
 print hello       # Prints "hello"
@@ -151,11 +151,11 @@ hw = hello + ' ' + world  # String concatenation
 print hw  # prints "hello world"
 hw12 = '%s %s %d' % (hello, world, 12)  # sprintf style string formatting
 print hw12  # prints "hello world 12"
-```
+~~~
 
 String objects have a bunch of useful methods; for example:
 
-```python
+~~~python
 s = "hello"
 print s.capitalize()  # Capitalize a string; prints "Hello"
 print s.upper()       # Convert a string to uppercase; prints "HELLO"
@@ -164,7 +164,7 @@ print s.center(7)     # Center a string, padding with spaces; prints " hello "
 print s.replace('l', '(ell)')  # Replace all instances of one substring with another;
                                # prints "he(ell)(ell)o"
 print '  world '.strip()  # Strip leading and trailing whitespace; prints "world"
-```
+~~~
 You can find a list of all string methods [in the documentation](https://docs.python.org/2/library/stdtypes.html#string-methods).
 
 <a name='python-containers'></a>
@@ -176,7 +176,7 @@ Python includes several built-in container types: lists, dictionaries, sets, and
 A list is the Python equivalent of an array, but is resizeable
 and can contain elements of different types:
 
-```python
+~~~python
 xs = [3, 1, 2]   # Create a list
 print xs, xs[2]  # Prints "[3, 1, 2] 2"
 print xs[-1]     # Negative indices count from the end of the list; prints "2"
@@ -186,7 +186,7 @@ xs.append('bar') # Add a new element to the end of the list
 print xs         # Prints "[3, 1, 'foo', 'bar']"
 x = xs.pop()     # Remove and return the last element of the list
 print x, xs      # Prints "bar [3, 1, 'foo']"
-```
+~~~
 As usual, you can find all the gory details about lists
 [in the documentation](https://docs.python.org/2/tutorial/datastructures.html#more-on-lists).
 
@@ -194,7 +194,7 @@ As usual, you can find all the gory details about lists
 In addition to accessing list elements one at a time, Python provides
 concise syntax to access sublists; this is known as *slicing*:
 
-```python
+~~~python
 nums = range(5)    # range is a built-in function that creates a list of integers
 print nums         # Prints "[0, 1, 2, 3, 4]"
 print nums[2:4]    # Get a slice from index 2 to 4 (exclusive); prints "[2, 3]"
@@ -204,62 +204,62 @@ print nums[:]      # Get a slice of the whole list; prints ["0, 1, 2, 3, 4]"
 print nums[:-1]    # Slice indices can be negative; prints ["0, 1, 2, 3]"
 nums[2:4] = [8, 9] # Assign a new sublist to a slice
 print nums         # Prints "[0, 1, 8, 9, 4]"
-```
+~~~
 We will see slicing again in the context of numpy arrays.
 
 **Loops:** You can loop over the elements of a list like this:
 
-```python
+~~~python
 animals = ['cat', 'dog', 'monkey']
 for animal in animals:
     print animal
 # Prints "cat", "dog", "monkey", each on its own line.
-```
+~~~
 
 If you want access to the index of each element within the body of a loop,
 use the built-in `enumerate` function:
 
-```python
+~~~python
 animals = ['cat', 'dog', 'monkey']
 for idx, animal in enumerate(animals):
     print '#%d: %s' % (idx + 1, animal)
 # Prints "#1: cat", "#2: dog", "#3: monkey", each on its own line
-```
+~~~
 
 **List comprehensions:**
 When programming, frequently we want to transform one type of data into another.
 As a simple example, consider the following code that computes square numbers:
 
-```python
+~~~python
 nums = [0, 1, 2, 3, 4]
 squares = []
 for x in nums:
     squares.append(x ** 2)
 print squares   # Prints [0, 1, 4, 9, 16]
-```
+~~~
 
 You can make this code simpler using a **list comprehension**:
 
-```python
+~~~python
 nums = [0, 1, 2, 3, 4]
 squares = [x ** 2 for x in nums]
 print squares   # Prints [0, 1, 4, 9, 16]
-```
+~~~
 
 List comprehensions can also contain conditions:
 
-```python
+~~~python
 nums = [0, 1, 2, 3, 4]
 even_squares = [x ** 2 for x in nums if x % 2 == 0]
 print even_squares  # Prints "[0, 4, 16]"
-```
+~~~
 
 <a name='python-dicts'></a>
 #### Dictionaries
 A dictionary stores (key, value) pairs, similar to a `Map` in Java or
 an object in Javascript. You can use it like this:
 
-```python
+~~~python
 d = {'cat': 'cute', 'dog': 'furry'}  # Create a new dictionary with some data
 print d['cat']       # Get an entry from a dictionary; prints "cute"
 print 'cat' in d     # Check if a dictionary has a given key; prints "True"
@@ -270,45 +270,45 @@ print d.get('monkey', 'N/A')  # Get an element with a default; prints "N/A"
 print d.get('fish', 'N/A')    # Get an element with a default; prints "wet"
 del d['fish']        # Remove an element from a dictionary
 print d.get('fish', 'N/A') # "fish" is no longer a key; prints "N/A"
-```
+~~~
 You can find all you need to know about dictionaries
 [in the documentation](https://docs.python.org/2/library/stdtypes.html#dict).
 
 **Loops:** It is easy to iterate over the keys in a dictionary:
 
-```python
+~~~python
 d = {'person': 2, 'cat': 4, 'spider': 8}
 for animal in d:
     legs = d[animal]
     print 'A %s has %d legs' % (animal, legs)
 # Prints "A person has 2 legs", "A spider has 8 legs", "A cat has 4 legs"
-```
+~~~
 
 If you want access to keys and their corresponding values, use the `iteritems` method:
 
-```python
+~~~python
 d = {'person': 2, 'cat': 4, 'spider': 8}
 for animal, legs in d.iteritems():
     print 'A %s has %d legs' % (animal, legs)
 # Prints "A person has 2 legs", "A spider has 8 legs", "A cat has 4 legs"
-```
+~~~
 
 **Dictionary comprehensions:**
 These are similar to list comprehensions, but allow you to easily construct
 dictionaries. For example:
 
-```python
+~~~python
 nums = [0, 1, 2, 3, 4]
 even_num_to_square = {x: x ** 2 for x in nums if x % 2 == 0}
 print even_num_to_square  # Prints "{0: 0, 2: 4, 4: 16}"
-```
+~~~
 
 <a name='python-sets'></a>
 #### Sets
 A set is an unordered collection of distinct elements. As a simple example, consider
 the following:
 
-```python
+~~~python
 animals = {'cat', 'dog'}
 print 'cat' in animals   # Check if an element is in a set; prints "True"
 print 'fish' in animals  # prints "False"
@@ -319,7 +319,7 @@ animals.add('cat')       # Adding an element that is already in the set does not
 print len(animals)       # Prints "3"
 animals.remove('cat')    # Remove an element from a set
 print len(animals)       # Prints "2"
-```
+~~~
 
 As usual, everything you want to know about sets can be found
 [in the documentation](https://docs.python.org/2/library/sets.html#set-objects).
@@ -330,21 +330,21 @@ Iterating over a set has the same syntax as iterating over a list;
 however since sets are unordered, you cannot make assumptions about the order
 in which you visit the elements of the set:
 
-```python
+~~~python
 animals = {'cat', 'dog', 'fish'}
 for idx, animal in enumerate(animals):
     print '#%d: %s' % (idx + 1, animal)
 # Prints "#1: fish", "#2: dog", "#3: cat"
-```
+~~~
 
 **Set comprehensions:**
 Like lists and dictionaries, we can easily construct sets using set comprehensions:
 
-```python
+~~~python
 from math import sqrt
 nums = {int(sqrt(x)) for x in range(30)}
 print nums  # Prints "set([0, 1, 2, 3, 4, 5])"
-```
+~~~
 
 <a name='python-tuples'></a>
 #### Tuples
@@ -353,20 +353,20 @@ A tuple is in many ways similar to a list; one of the most important differences
 tuples can be used as keys in dictionaries and as elements of sets, while lists cannot.
 Here is a trivial example:
 
-```python
+~~~python
 d = {(x, x + 1): x for x in range(10)}  # Create a dictionary with tuple keys
 t = (5, 6)       # Create a tuple
 print type(t)    # Prints "<type 'tuple'>"
 print d[t]       # Prints "5"
 print d[(1, 2)]  # Prints "1"
-```
+~~~
 [The documentation](https://docs.python.org/2/tutorial/datastructures.html#tuples-and-sequences) has more information about tuples.
 
 <a name='python-functions'></a>
 ### Functions
 Python functions are defined using the `def` keyword. For example:
 
-```python
+~~~python
 def sign(x):
     if x > 0:
         return 'positive'
@@ -378,11 +378,11 @@ def sign(x):
 for x in [-1, 0, 1]:
     print sign(x)
 # Prints "negative", "zero", "positive"
-```
+~~~
 
 We will often define functions to take optional keyword arguments, like this:
 
-```python
+~~~python
 def hello(name, loud=False):
     if loud:
         print 'HELLO, %s!' % name.upper()
@@ -391,7 +391,7 @@ def hello(name, loud=False):
 
 hello('Bob') # Prints "Hello, Bob"
 hello('Fred', loud=True)  # Prints "HELLO, FRED!"
-```
+~~~
 There is a lot more information about Python functions
 [in the documentation](https://docs.python.org/2/tutorial/controlflow.html#defining-functions).
 
@@ -400,7 +400,7 @@ There is a lot more information about Python functions
 
 The syntax for defining classes in Python is straightforward:
 
-```python
+~~~python
 class Greeter(object):
     
     # Constructor
@@ -417,7 +417,7 @@ class Greeter(object):
 g = Greeter('Fred')  # Construct an instance of the Greeter class
 g.greet()            # Call an instance method; prints "Hello, Fred"
 g.greet(loud=True)   # Call an instance method; prints "HELLO, FRED!"
-```
+~~~
 You can read a lot more about Python classes
 [in the documentation](https://docs.python.org/2/tutorial/classes.html).
 
@@ -438,7 +438,7 @@ of an array is a tuple of integers giving the size of the array along each dimen
 We can initialize numpy arrays from nested Python lists,
 and access elements using square brackets:
 
-```python
+~~~python
 import numpy as np
 
 a = np.array([1, 2, 3])  # Create a rank 1 array
@@ -451,11 +451,11 @@ print a                  # Prints "[5, 2, 3]"
 b = np.array([[1,2,3],[4,5,6]])   # Create a rank 2 array
 print b.shape                     # Prints "(2, 3)"
 print b[0, 0], b[0, 1], b[1, 0]   # Prints "1 2 4"
-```
+~~~
 
 Numpy also provides many functions to create arrays:
 
-```python
+~~~python
 import numpy as np
 
 a = np.zeros((2,2))  # Create an array of all zeros
@@ -476,7 +476,7 @@ print d              # Prints "[[ 1.  0.]
 e = np.random.random((2,2)) # Create an array filled with random values
 print e                     # Might print "[[ 0.91940167  0.08143941]
                             #               [ 0.68744134  0.87236687]]"
-```
+~~~
 You can read about other methods of array creation
 [in the documentation](http://docs.scipy.org/doc/numpy/user/basics.creation.html#arrays-creation).
 
@@ -489,7 +489,7 @@ Similar to Python lists, numpy arrays can be sliced.
 Since arrays may be multidimensional, you must specify a slice for each dimension
 of the array:
 
-```python
+~~~python
 import numpy as np
 
 # Create the following rank 2 array with shape (3, 4)
@@ -509,14 +509,14 @@ b = a[:2, 1:3]
 print a[0, 1]   # Prints "2"
 b[0, 0] = 77    # b[0, 0] is the same piece of data as a[0, 1]
 print a[0, 1]   # Prints "77"
-```
+~~~
 
 You can also mix integer indexing with slice indexing.
 However, doing so will yield an array of lower rank than the original array.
 Note that this is quite different from the way that MATLAB handles array
 slicing:
 
-```python
+~~~python
 import numpy as np
 
 # Create the following rank 2 array with shape (3, 4)
@@ -541,7 +541,7 @@ print col_r1, col_r1.shape  # Prints "[ 2  6 10] (3,)"
 print col_r2, col_r2.shape  # Prints "[[ 2]
                             #          [ 6]
                             #          [10]] (3, 1)"
-```
+~~~
 
 **Integer array indexing:**
 When you index into numpy arrays using slicing, the resulting array view
@@ -549,7 +549,7 @@ will always be a subarray of the original array. In contrast, integer array
 indexing allows you to construct arbitrary arrays using the data from another
 array. Here is an example:
 
-```python
+~~~python
 import numpy as np
 
 a = np.array([[1,2], [3, 4], [5, 6]])
@@ -567,12 +567,12 @@ print a[[0, 0], [1, 1]]  # Prints "[2 2]"
 
 # Equivalent to the previous integer array indexing example
 print np.array([a[0, 1], a[0, 1]])  # Prints "[2 2]"
-```
+~~~
 
 One useful trick with integer array indexing is selecting or mutating one
 element from each row of a matrix:
 
-```python
+~~~python
 import numpy as np
 
 # Create a new array from which we will select elements
@@ -596,14 +596,14 @@ print a  # prints "array([[11,  2,  3],
          #                [ 4,  5, 16],
          #                [17,  8,  9],
          #                [10, 21, 12]])
-```
+~~~
 
 **Boolean array indexing:**
 Boolean array indexing lets you pick out arbitrary elements of an array.
 Frequently this type of indexing is used to select the elements of an array
 that satisfy some condition. Here is an example:
 
-```python
+~~~python
 import numpy as np
 
 a = np.array([[1,2], [3, 4], [5, 6]])
@@ -624,7 +624,7 @@ print a[bool_idx]  # Prints "[3 4 5 6]"
 
 # We can do all of the above in a single concise statement:
 print a[a > 2]     # Prints "[3 4 5 6]"
-```
+~~~
 
 For brevity we have left out a lot of details about numpy array indexing;
 if you want to know more you should
@@ -638,7 +638,7 @@ Numpy tries to guess a datatype when you create an array, but functions that con
 arrays usually also include an optional argument to explicitly specify the datatype.
 Here is an example:
 
-```python
+~~~python
 import numpy as np
 
 x = np.array([1, 2])  # Let numpy choose the datatype
@@ -649,7 +649,7 @@ print x.dtype             # Prints "float64"
 
 x = np.array([1, 2], dtype=np.int64)  # Force a particular datatype
 print x.dtype                         # Prints "int64"
-```
+~~~
 You can read all about numpy datatypes
 [in the documentation](http://docs.scipy.org/doc/numpy/reference/arrays.dtypes.html).
 
@@ -658,7 +658,7 @@ You can read all about numpy datatypes
 Basic mathematical functions operate elementwise on arrays, and are available
 both as operator overloads and as functions in the numpy module:
 
-```python
+~~~python
 import numpy as np
 
 x = np.array([[1,2],[3,4]], dtype=np.float64)
@@ -692,7 +692,7 @@ print np.divide(x, y)
 # [[ 1.          1.41421356]
 #  [ 1.73205081  2.        ]]
 print np.sqrt(x)
-```
+~~~
 
 Note that unlike MATLAB, `*` is elementwise multiplication, not matrix
 multiplication. We instead use the `dot` function to compute inner
@@ -700,7 +700,7 @@ products of vectors, to multiply a vector by a matrix, and to
 multiply matrices. `dot` is available both as a function in the numpy
 module and as an instance method of array objects:
 
-```python
+~~~python
 import numpy as np
 
 x = np.array([[1,2],[3,4]])
@@ -722,12 +722,12 @@ print np.dot(x, v)
 #  [43 50]]
 print x.dot(y)
 print np.dot(x, y)
-```
+~~~
 
 Numpy provides many useful functions for performing computations on
 arrays; one of the most useful is `sum`:
 
-```python
+~~~python
 import numpy as np
 
 x = np.array([[1,2],[3,4]])
@@ -735,7 +735,7 @@ x = np.array([[1,2],[3,4]])
 print np.sum(x)  # Compute sum of all elements; prints "10"
 print np.sum(x, axis=0)  # Compute sum of each column; prints "[4 6]"
 print np.sum(x, axis=1)  # Compute sum of each row; prints "[3 7]"
-```
+~~~
 You can find the full list of mathematical functions provided by numpy
 [in the documentation](http://docs.scipy.org/doc/numpy/reference/routines.math.html).
 
@@ -744,7 +744,7 @@ need to reshape or otherwise manipulate data in arrays. The simplest example
 of this type of operation is transposing a matrix; to transpose a matrix, 
 simply use the `T` attribute of an array object:
 
-```python
+~~~python
 import numpy as np
 
 x = np.array([[1,2], [3,4]])
@@ -757,7 +757,7 @@ print x.T  # Prints "[[1 3]
 v = np.array([1,2,3])
 print v    # Prints "[1 2 3]"
 print v.T  # Prints "[1 2 3]"
-```
+~~~
 Numpy provides many more functions for manipulating arrays; you can see the full list
 [in the documentation](http://docs.scipy.org/doc/numpy/reference/routines.array-manipulation.html).
 
@@ -772,7 +772,7 @@ on the larger array.
 For example, suppose that we want to add a constant vector to each
 row of a matrix. We could do it like this:
 
-```python
+~~~python
 import numpy as np
 
 # We will add the vector v to each row of the matrix x,
@@ -791,7 +791,7 @@ for i in range(4):
 #  [ 8  8 10]
 #  [11 11 13]]
 print y
-```
+~~~
 
 This works; however when the matrix `x` is very large, computing an explicit loop
 in Python could be slow. Note that adding the vector `v` to each row of the matrix
@@ -799,7 +799,7 @@ in Python could be slow. Note that adding the vector `v` to each row of the matr
 then performing elementwise summation of `x` and `vv`. We could implement this
 approach like this:
 
-```python
+~~~python
 import numpy as np
 
 # We will add the vector v to each row of the matrix x,
@@ -816,12 +816,12 @@ print y  # Prints "[[ 2  2  4
          #          [ 5  5  7]
          #          [ 8  8 10]
          #          [11 11 13]]"
-```
+~~~
 
 Numpy broadcasting allows us to perform this computation without actually
 creating multiple copies of `v`. Consider this version, using broadcasting:
 
-```python
+~~~python
 import numpy as np
 
 # We will add the vector v to each row of the matrix x,
@@ -833,7 +833,7 @@ print y  # Prints "[[ 2  2  4]
          #          [ 5  5  7]
          #          [ 8  8 10]
          #          [11 11 13]]"
-```
+~~~
 
 The line `y = x + v` works even though `x` has shape `(4, 3)` and `v` has shape
 `(3,)` due to broadcasting; this line works as if `v` actually had shape `(4, 3)`,
@@ -861,7 +861,7 @@ the list of all universal functions
 
 Here are some applications of broadcasting:
 
-```python
+~~~python
 import numpy as np
 
 # Compute outer product of vectors
@@ -904,7 +904,7 @@ print x + np.reshape(w, (2, 1))
 # [[ 2  4  6]
 #  [ 8 10 12]]
 print x * 2
-```
+~~~
 
 Broadcasting typically makes your code more concise and faster, so you
 should strive to use it where possible.
@@ -935,7 +935,7 @@ For example, it has functions to read images from disk into numpy arrays,
 to write numpy arrays to disk as images, and to resize images.
 Here is a simple example that showcases these functions:
 
-```python
+~~~python
 from scipy.misc import imread, imsave, imresize
 
 # Read an JPEG image into a numpy array
@@ -955,7 +955,7 @@ img_tinted = imresize(img_tinted, (300, 300))
 
 # Write the tinted image back to disk
 imsave('assets/cat_tinted.jpg', img_tinted)
-```
+~~~
 
 <div class='fig figcenter fighighlight'>
   <img src='{{site.baseurl}}/assets/cat.jpg'>
@@ -979,7 +979,7 @@ SciPy defines some useful functions for computing distances between sets of poin
 The function `scipy.spatial.distance.pdist` computes the distance between all pairs
 of points in a given set:
 
-```python
+~~~python
 import numpy as np
 from scipy.spatial.distance import pdist, squareform
 
@@ -998,7 +998,7 @@ print x
 #  [ 2.23606798  1.          0.        ]]
 d = squareform(pdist(x, 'euclidean'))
 print d
-```
+~~~
 You can read all the details about this function
 [in the documentation](http://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html).
 
@@ -1017,7 +1017,7 @@ which provides a plotting system similar to that of MATLAB.
 The most important function in matplotlib is `plot`,
 which allows you to plot 2D data. Here is a simple example:
 
-```python
+~~~python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -1028,7 +1028,7 @@ y = np.sin(x)
 # Plot the points using matplotlib
 plt.plot(x, y)
 plt.show()  # You must call plt.show() to make graphics appear.
-```
+~~~
 
 Running this code produces the following plot:
 
@@ -1039,7 +1039,7 @@ Running this code produces the following plot:
 With just a little bit of extra work we can easily plot multiple lines
 at once, and add a title, legend, and axis labels:
 
-```python
+~~~python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -1056,7 +1056,7 @@ plt.ylabel('y axis label')
 plt.title('Sine and Cosine')
 plt.legend(['Sine', 'Cosine'])
 plt.show()
-```
+~~~
 <div class='fig figcenter fighighlight'>
   <img src='{{site.baseurl}}/assets/sine_cosine.png'>
 </div>
@@ -1069,7 +1069,7 @@ You can read much more about the `plot` function
 You can plot different things in the same figure using the `subplot` function.
 Here is an example:
 
-```python
+~~~python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -1093,7 +1093,7 @@ plt.title('Cosine')
 
 # Show the figure.
 plt.show()
-```
+~~~
 
 <div class='fig figcenter fighighlight'>
   <img src='{{site.baseurl}}/assets/sine_cosine_subplot.png'>
@@ -1106,7 +1106,7 @@ You can read much more about the `subplot` function
 ### Images
 You can use the `imshow` function to show images. Here is an example:
 
-```python
+~~~python
 import numpy as np
 from scipy.misc import imread, imresize
 import matplotlib.pyplot as plt
@@ -1126,7 +1126,7 @@ plt.subplot(1, 2, 2)
 # explicitly cast the image to uint8 before displaying it.
 plt.imshow(np.uint8(img_tinted))
 plt.show()
-```
+~~~
 
 <div class='fig figcenter fighighlight'>
   <img src='{{site.baseurl}}/assets/cat_tinted_imshow.png'>

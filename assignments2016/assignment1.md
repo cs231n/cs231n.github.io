@@ -17,7 +17,7 @@ In this assignment you will practice putting together a simple image classificat
 - get a basic understanding of performance improvements from using **higher-level representations** than raw pixels (e.g. color histograms, Histogram of Gradient (HOG) features)
 
 ## Setup
-You can work on the assignment in one of two ways: locally on your own machine, or on a virtual machine through Terminal.com. 
+You can work on the assignment in one of two ways: locally on your own machine, or on a virtual machine through Terminal.com.
 
 ### Working in the cloud on Terminal
 
@@ -32,7 +32,7 @@ The preferred approach for installing all the assignment dependencies is to use 
 **[Option 2] Manual install, virtual environment:**
 If you'd like to (instead of Anaconda) go with a more manual and risky installation route you will likely want to create a [virtual environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/) for the project. If you choose not to use a virtual environment, it is up to you to make sure that all dependencies for the code are installed globally on your machine. To set up a virtual environment, run the following:
 
-```bash
+~~~bash
 cd assignment1
 sudo pip install virtualenv      # This may already be installed
 virtualenv .env                  # Create a virtual environment
@@ -40,16 +40,16 @@ source .env/bin/activate         # Activate the virtual environment
 pip install -r requirements.txt  # Install dependencies
 # Work on the assignment for a while ...
 deactivate                       # Exit the virtual environment
-```
+~~~
 
 **Download data:**
 Once you have the starter code, you will need to download the CIFAR-10 dataset.
 Run the following from the `assignment1` directory:
 
-```bash
+~~~bash
 cd cs231n/datasets
 ./get_datasets.sh
-```
+~~~
 
 **Start IPython:**
 After you have the CIFAR-10 data, you should start the IPython notebook server from the
@@ -79,7 +79,7 @@ The IPython Notebook **svm.ipynb** will walk you through implementing the SVM cl
 The IPython Notebook **softmax.ipynb** will walk you through implementing the Softmax classifier.
 
 ### Q4: Two-Layer Neural Network (25 points)
-The IPython Notebook **two\_layer\_net.ipynb** will walk you through the implementation of a two-layer neural network classifier.
+The IPython Notebook **two_layer_net.ipynb** will walk you through the implementation of a two-layer neural network classifier.
 
 ### Q5: Higher Level Representations: Image Features (10 points)
 

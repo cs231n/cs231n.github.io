@@ -26,6 +26,7 @@ Convolutional Neural Networks are very similar to ordinary Neural Networks from 
 So what does change? ConvNet architectures make the explicit assumption that the inputs are images, which allows us to encode certain properties into the architecture. These then make the forward function more efficient to implement and vastly reduces the amount of parameters in the network.
 
 <a name='overview'></a>
+
 ### Architecture Overview
 
 *Recall: Regular Neural Nets.* As we saw in the previous chapter, Neural Networks receive an input (a single vector), and transform it through a series of *hidden layers*. Each hidden layer is made up of a set of neurons, where each neuron is fully connected to all neurons in the previous layer, and where neurons in a single layer function completely independently and do not share any connections. The last fully-connected layer is called the "output layer" and in classification settings it represents the class scores.
@@ -43,19 +44,20 @@ So what does change? ConvNet architectures make the explicit assumption that the
 > A ConvNet is made up of Layers. Every Layer has a simple API: It transforms an input 3D volume to an output 3D volume with some differentiable function that may or may not have parameters.
 
 <a name='layers'></a>
-### Layers used to build ConvNets 
 
-As we described above, every layer of a ConvNet transforms one volume of activations to another through a differentiable function. We use three main types of layers to build ConvNet architectures: **Convolutional Layer**, **Pooling Layer**, and **Fully-Connected Layer** (exactly as seen in regular Neural Networks). We will stack these layers to form a full ConvNet **architecture**. 
+### Layers used to build ConvNets
+
+As we described above, every layer of a ConvNet transforms one volume of activations to another through a differentiable function. We use three main types of layers to build ConvNet architectures: **Convolutional Layer**, **Pooling Layer**, and **Fully-Connected Layer** (exactly as seen in regular Neural Networks). We will stack these layers to form a full ConvNet **architecture**.
 
 *Example Architecture: Overview*. We will go into more details below, but a simple ConvNet for CIFAR-10 classification could have the architecture [INPUT - CONV - RELU - POOL - FC]. In more detail:
 
 - INPUT [32x32x3] will hold the raw pixel values of the image, in this case an image of width 32, height 32, and with three color channels R,G,B.
 - CONV layer will compute the output of neurons that are connected to local regions in the input, each computing a dot product between their weights and the region they are connected to in the input volume. This may result in volume such as [32x32x12].
-- RELU layer will apply an elementwise activation function, such as the \\(max(0,x)\\) thresholding at zero. This leaves the size of the volume unchanged ([32x32x12]).
+- RELU layer will apply an elementwise activation function, such as the $$max(0,x)$$ thresholding at zero. This leaves the size of the volume unchanged ([32x32x12]).
 - POOL layer will perform a downsampling operation along the spatial dimensions (width, height), resulting in volume such as [16x16x12].
 - FC (i.e. fully-connected) layer will compute the class scores, resulting in volume of size [1x1x10], where each of the 10 numbers correspond to a class score, such as among the 10 categories of CIFAR-10. As with ordinary Neural Networks and as the name implies, each neuron in this layer will be connected to all the numbers in the previous volume.
 
-In this way, ConvNets transform the original image layer by layer from the original pixel values to the final class scores. Note that some layers contain parameters and other don't. In particular, the CONV/FC layers perform transformations that are a function of not only the activations in the input volume, but also of the parameters (the weights and biases of the neurons). On the other hand, the RELU/POOL layers will implement a fixed function. The parameters in the CONV/FC layers will be trained with gradient descent so that the class scores that the ConvNet computes are consistent with the labels in the training set for each image. 
+In this way, ConvNets transform the original image layer by layer from the original pixel values to the final class scores. Note that some layers contain parameters and other don't. In particular, the CONV/FC layers perform transformations that are a function of not only the activations in the input volume, but also of the parameters (the weights and biases of the neurons). On the other hand, the RELU/POOL layers will implement a fixed function. The parameters in the CONV/FC layers will be trained with gradient descent so that the class scores that the ConvNet computes are consistent with the labels in the training set for each image.
 
 In summary:
 
@@ -75,6 +77,7 @@ In summary:
 We now describe the individual layers and the details of their hyperparameters and their connectivities.
 
 <a name='conv'></a>
+
 #### Convolutional Layer
 
 The Conv layer is the core building block of a Convolutional Network, and its output volume can be interpreted as holding neurons arranged in a 3D volume. We now discuss the details of the neuron connectivities, their arrangement in space, and their parameter sharing scheme.
@@ -101,25 +104,25 @@ The Conv layer is the core building block of a Convolutional Network, and its ou
 2. Second, we must specify the **stride** with which we allocate depth columns around the spatial dimensions (width and height). When the stride is 1, then we will allocate a new depth column of neurons to spatial positions only 1 spatial unit apart. This will lead to heavily overlapping receptive fields between the columns, and also to large output volumes. Conversely, if we use higher strides then the receptive fields will overlap less and the resulting output volume will have smaller dimensions spatially.
 3. As we will soon see, sometimes it will be convenient to pad the input with zeros spatially on the border of the input volume. The size of this **zero-padding** is a hyperparameter. The nice feature of zero padding is that it will allow us to control the spatial size of the output volumes. In particular, we will sometimes want to exactly preserve the spatial size of the input volume.
 
-We can compute the spatial size of the output volume as a function of the input volume size (\\(W\\)), the receptive field size of the Conv Layer neurons (\\(F\\)), the stride with which they are applied (\\(S\\)), and the amount of zero padding used (\\(P\\)) on the border. You can convince yourself that the correct formula for calculating how many neurons "fit" is given by \\((W - F + 2P)/S + 1\\). If this number is not an integer, then the strides are set incorrectly and the neurons cannot be tiled so that they "fit" across the input volume neatly, in a symmetric way. An example might help to get intuitions for this formula:
+We can compute the spatial size of the output volume as a function of the input volume size ($$W$$), the receptive field size of the Conv Layer neurons ($$F$$), the stride with which they are applied ($$S$$), and the amount of zero padding used ($$P$$) on the border. You can convince yourself that the correct formula for calculating how many neurons "fit" is given by $$(W - F + 2P)/S + 1$$. If this number is not an integer, then the strides are set incorrectly and the neurons cannot be tiled so that they "fit" across the input volume neatly, in a symmetric way. An example might help to get intuitions for this formula:
 
 <div class="fig figcenter fighighlight">
   <img src="{{site.baseurl}}/assets/cnn/stride.jpeg">
   <div class="figcaption">
-    Illustration of spatial arrangement. In this example there is only one spatial dimension (x-axis), one neuron with a receptive field size of F = 3, the input size is W = 5, and there is zero padding of P = 1. <b>Left:</b> The neuron strided across the input in stride of S = 1, giving output of size (5 - 3 + 2)/1+1 = 5. <b>Right:</b> The neuron uses stride of S = 2, giving output of size (5 - 3 + 2)/2+1 = 3. Notice that stride S = 3 could not be used since it wouldn't fit neatly across the volume. In terms of the equation, this can be determined since (5 - 3 + 2) = 4 is not divisible by 3. 
+    Illustration of spatial arrangement. In this example there is only one spatial dimension (x-axis), one neuron with a receptive field size of F = 3, the input size is W = 5, and there is zero padding of P = 1. <b>Left:</b> The neuron strided across the input in stride of S = 1, giving output of size (5 - 3 + 2)/1+1 = 5. <b>Right:</b> The neuron uses stride of S = 2, giving output of size (5 - 3 + 2)/2+1 = 3. Notice that stride S = 3 could not be used since it wouldn't fit neatly across the volume. In terms of the equation, this can be determined since (5 - 3 + 2) = 4 is not divisible by 3.
     <br>The neuron weights are in this example [1,0,-1] (shown on very right), and its bias is zero. These weights are shared across all yellow neurons (see parameter sharing below).
   </div>
 </div>
 
-*Use of zero-padding*. In the example above on left, note that the input dimension was 5 and the output dimension was equal: also 5. This worked out so because our receptive fields were 3 and we used zero padding of 1. If there was no zero-padding used, then the output volume would have had spatial dimension of only 3, because that it is how many neurons would have "fit" across the original input. In general, setting zero padding to be \\(P = (F - 1)/2\\) when the stride is \\(S = 1\\) ensures that the input volume and output volume will have the same size spatially. It is very common to use zero-padding in this way and we will discuss the full reasons when we talk more about ConvNet architectures.
+*Use of zero-padding*. In the example above on left, note that the input dimension was 5 and the output dimension was equal: also 5. This worked out so because our receptive fields were 3 and we used zero padding of 1. If there was no zero-padding used, then the output volume would have had spatial dimension of only 3, because that it is how many neurons would have "fit" across the original input. In general, setting zero padding to be $$P = (F - 1)/2$$ when the stride is $$S = 1$$ ensures that the input volume and output volume will have the same size spatially. It is very common to use zero-padding in this way and we will discuss the full reasons when we talk more about ConvNet architectures.
 
-*Constraints on strides*. Note that the spatial arrangement hyperparameters have mutual constraints. For example, when the input has size \\(W = 10\\), no zero-padding is used \\(P = 0\\), and the filter size is \\(F = 3\\), then it would be impossible to use stride \\(S = 2\\), since \\((W - F + 2P)/S + 1 = (10 - 3 + 0) / 2 + 1 = 4.5\\), i.e. not an integer, indicating that the neurons don't "fit" neatly and symmetrically across the input. Therefore, this setting of the hyperparameters is considered to be invalid, and a ConvNet library would likely throw an exception. As we will see in the ConvNet architectures section, sizing the ConvNets appropriately so that all the dimensions "work out" can be a real headache, which the use of zero-padding and some design guidelines will significantly alleviate.
+*Constraints on strides*. Note that the spatial arrangement hyperparameters have mutual constraints. For example, when the input has size $$W = 10$$, no zero-padding is used $$P = 0$$, and the filter size is $$F = 3$$, then it would be impossible to use stride $$S = 2$$, since $$(W - F + 2P)/S + 1 = (10 - 3 + 0) / 2 + 1 = 4.5$$, i.e. not an integer, indicating that the neurons don't "fit" neatly and symmetrically across the input. Therefore, this setting of the hyperparameters is considered to be invalid, and a ConvNet library would likely throw an exception. As we will see in the ConvNet architectures section, sizing the ConvNets appropriately so that all the dimensions "work out" can be a real headache, which the use of zero-padding and some design guidelines will significantly alleviate.
 
-*Real-world example*. The [Krizhevsky et al.](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks) architecture that won the ImageNet challenge in 2012 accepted images of size [227x227x3]. On the first Convolutional Layer, it used neurons with receptive field size \\(F = 11\\), stride \\(S = 4\\) and no zero padding \\(P = 0\\). Since (227 - 11)/4 + 1 = 55, and since the Conv layer had a depth of \\(K = 96\\), the Conv layer output volume had size [55x55x96]. Each of the 55\*55\*96 neurons in this volume was connected to a region of size [11x11x3] in the input volume. Moreover, all 96 neurons in each depth column are connected to the same [11x11x3] region of the input, but of course with different weights.
+*Real-world example*. The [Krizhevsky et al.](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks) architecture that won the ImageNet challenge in 2012 accepted images of size [227x227x3]. On the first Convolutional Layer, it used neurons with receptive field size $$F = 11$$, stride $$S = 4$$ and no zero padding $$P = 0$$. Since (227 - 11)/4 + 1 = 55, and since the Conv layer had a depth of $$K = 96$$, the Conv layer output volume had size [55x55x96]. Each of the 55\*55\*96 neurons in this volume was connected to a region of size [11x11x3] in the input volume. Moreover, all 96 neurons in each depth column are connected to the same [11x11x3] region of the input, but of course with different weights.
 
 **Parameter Sharing.** Parameter sharing scheme is used in Convolutional Layers to control the number of parameters. Using the real-world example above, we see that there are 55\*55\*96 = 290,400 neurons in the first Conv Layer, and each has 11\*11\*3 = 363 weights and 1 bias. Together, this adds up to 290400 * 364 = 105,705,600 parameters on the first layer of the ConvNet alone. Clearly, this number is very high.
 
-It turns out that we can dramatically reduce the number of parameters by making one reasonable assumption: That if one patch feature is useful to compute at some spatial position (x,y), then it should also be useful to compute at a different position (x2,y2). In other words, denoting a single 2-dimensional slice of depth as a **depth slice** (e.g. a volume of size [55x55x96] has 96 depth slices, each of size [55x55]), we are going to constrain the neurons in each depth slice to use the same weights and bias. With this parameter sharing scheme, the first Conv Layer in our example would now have only 96 unique set of weights (one for each depth slice), for a total of 96\*11\*11\*3 = 34,848 unique weights, or 34,944 parameters (+96 biases). Alternatively, all 55*55 neurons in each depth slice will now be using the same parameters. In practice during backpropagation, every neuron in the volume will compute the gradient for its weights, but these gradients will be added up across each depth slice and only update a single set of weights per slice. 
+It turns out that we can dramatically reduce the number of parameters by making one reasonable assumption: That if one patch feature is useful to compute at some spatial position (x,y), then it should also be useful to compute at a different position (x2,y2). In other words, denoting a single 2-dimensional slice of depth as a **depth slice** (e.g. a volume of size [55x55x96] has 96 depth slices, each of size [55x55]), we are going to constrain the neurons in each depth slice to use the same weights and bias. With this parameter sharing scheme, the first Conv Layer in our example would now have only 96 unique set of weights (one for each depth slice), for a total of 96\*11\*11\*3 = 34,848 unique weights, or 34,944 parameters (+96 biases). Alternatively, all 55*55 neurons in each depth slice will now be using the same parameters. In practice during backpropagation, every neuron in the volume will compute the gradient for its weights, but these gradients will be added up across each depth slice and only update a single set of weights per slice.
 
 Notice that if all neurons in a single depth slice are using the same weight vector, then the forward pass of the CONV layer can in each depth slice be computed as a **convolution** of the neuron's weights with the input volume (Hence the name: Convolutional Layer). Therefore, it is common to refer to the sets of weights as a **filter** (or a **kernel**), which is convolved with the input. The result of this convolution is an *activation map* (e.g. of size [55x55]), and the set of activation maps for each different filter are stacked together along the depth dimension to produce the output volume (e.g. [55x55x96]).
 
@@ -135,9 +138,9 @@ Note that sometimes the parameter sharing assumption may not make sense. This is
 **Numpy examples.** To make the discussion above more concrete, lets express the same ideas but in code and with a specific example. Suppose that the input volume is a numpy array `X`. Then:
 
 - A *depth column* at position `(x,y)` would be the activations `X[x,y,:]`.
-- A *depth slice*, or equivalently an *activation map* at depth `d` would be the activations `X[:,:,d]`. 
+- A *depth slice*, or equivalently an *activation map* at depth `d` would be the activations `X[:,:,d]`.
 
-*Conv Layer Example*. Suppose that the input volume `X` has shape `X.shape: (11,11,4)`. Suppose further that we use no zero padding (\\(P = 0\\)), that the filter size is \\(F = 5\\), and that the stride is \\(S = 2\\). The output volume would therefore have spatial size (11-5)/2+1 = 4, giving a volume with width and height of 4. The activation map in the output volume (call it `V`), would then look as follows (only some of the elements are computed in this example):
+*Conv Layer Example*. Suppose that the input volume `X` has shape `X.shape: (11,11,4)`. Suppose further that we use no zero padding ($$P = 0$$), that the filter size is $$F = 5$$, and that the stride is $$S = 2$$. The output volume would therefore have spatial size (11-5)/2+1 = 4, giving a volume with width and height of 4. The activation map in the output volume (call it `V`), would then look as follows (only some of the elements are computed in this example):
 
 - `V[0,0,0] = np.sum(X[:5,:5,:] * W0) + b0`
 - `V[1,0,0] = np.sum(X[2:7,:5,:] * W0) + b0`
@@ -157,22 +160,22 @@ where we see that we are indexing into the second depth dimension in `V` (at ind
 
 **Summary**. To summarize, the Conv Layer:
 
-- Accepts a volume of size \\(W\_1 \times H\_1 \times D\_1\\)
-- Requires four hyperparameters: 
-  - Number of filters \\(K\\), 
-  - their spatial extent \\(F\\), 
-  - the stride \\(S\\), 
-  - the amount of zero padding \\(P\\).
-- Produces a volume of size \\(W\_2 \times H\_2 \times D\_2\\) where:
-  - \\(W\_2 = (W\_1 - F + 2P)/S + 1\\)
-  - \\(H\_2 = (H\_1 - F + 2P)/S + 1\\) (i.e. width and height are computed equally by symmetry)
-  - \\(D\_2 = K\\)
-- With parameter sharing, it introduces \\(F \cdot F \cdot D\_1\\) weights per filter, for a total of \\((F \cdot F \cdot D\_1) \cdot K\\) weights and \\(K\\) biases.
-- In the output volume, the \\(d\\)-th depth slice (of size \\(W\_2 \times H\_2\\)) is the result of performing a valid convolution of the \\(d\\)-th filter over the input volume with a stride of \\(S\\), and then offset by \\(d\\)-th bias.
+- Accepts a volume of size $$W_1 \times H_1 \times D_1$$
+- Requires four hyperparameters:
+  - Number of filters $$K$$,
+  - their spatial extent $$F$$,
+  - the stride $$S$$,
+  - the amount of zero padding $$P$$.
+- Produces a volume of size $$W_2 \times H_2 \times D_2$$ where:
+  - $$W_2 = (W_1 - F + 2P)/S + 1$$
+  - $$H_2 = (H_1 - F + 2P)/S + 1$$ (i.e. width and height are computed equally by symmetry)
+  - $$D_2 = K$$
+- With parameter sharing, it introduces $$F \cdot F \cdot D_1$$ weights per filter, for a total of $$(F \cdot F \cdot D_1) \cdot K$$ weights and $$K$$ biases.
+- In the output volume, the $$d$$-th depth slice (of size $$W_2 \times H_2$$) is the result of performing a valid convolution of the $$d$$-th filter over the input volume with a stride of $$S$$, and then offset by $$d$$-th bias.
 
-A common setting of the hyperparameters is \\(F = 3, S = 1, P = 1\\). However, there are common conventions and rules of thumb that motivate these hyperparameters. See the [ConvNet architectures](#architectures) section below.
+A common setting of the hyperparameters is $$F = 3, S = 1, P = 1$$. However, there are common conventions and rules of thumb that motivate these hyperparameters. See the [ConvNet architectures](#architectures) section below.
 
-**Convolution Demo**. Below is a running demo of a CONV layer. Since 3D volumes are hard to visualize, all the volumes (the input volume (in blue), the weight volumes (in red), the output volume (in green)) are visualized with each depth slice stacked in rows. The input volume is of size \\(W\_1 = 5, H\_1 = 5, D\_1 = 3\\), and the CONV layer parameters are \\(K = 2, F = 3, S = 2, P = 1\\). That is, we have two filters of size \\(3 \times 3\\), and they are applied with a stride of 2. Therefore, the output volume size has spatial size (5 - 3 + 2)/2 + 1 = 3. Moreover, notice that a padding of \\(P = 1\\) is applied to the input volume, making the outer border of the input volume zero. The visualization below iterates over the output activations (green), and shows that each element is computed by elementwise multiplying the highlighted input (blue) with the filter (red), summing it up, and then offsetting the result by the bias.
+**Convolution Demo**. Below is a running demo of a CONV layer. Since 3D volumes are hard to visualize, all the volumes (the input volume (in blue), the weight volumes (in red), the output volume (in green)) are visualized with each depth slice stacked in rows. The input volume is of size $$W_1 = 5, H_1 = 5, D_1 = 3$$, and the CONV layer parameters are $$K = 2, F = 3, S = 2, P = 1$$. That is, we have two filters of size $$3 \times 3$$, and they are applied with a stride of 2. Therefore, the output volume size has spatial size (5 - 3 + 2)/2 + 1 = 3. Moreover, notice that a padding of $$P = 1$$ is applied to the input volume, making the outer border of the input volume zero. The visualization below iterates over the output activations (green), and shows that each element is computed by elementwise multiplying the highlighted input (blue) with the filter (red), summing it up, and then offsetting the result by the bias.
 
 <div class="fig figcenter fighighlight">
   <iframe src="{{site.baseurl}}/assets/conv-demo/index.html" width="100%" height="700px;" style="border:none;"></iframe>
@@ -183,7 +186,7 @@ A common setting of the hyperparameters is \\(F = 3, S = 1, P = 1\\). However, t
 
 1. The local regions in the input image are stretched out into columns in an operation commonly called **im2col**. For example, if the input is [227x227x3] and it is to be convolved with 11x11x3 filters at stride 4, then we would take [11x11x3] blocks of pixels in the input and stretch each block into a column vector of size 11\*11\*3 = 363. Iterating this process in the input at stride of 4 gives (227-11)/4+1 = 55 locations along both width and height, leading to an output matrix `X_col` of *im2col* of size [363 x 3025], where every column is a stretched out receptive field and there are 55*55 = 3025 of them in total. Note that since the receptive fields overlap, every number in the input volume may be duplicated in multiple distinct columns.
 2. The weights of the CONV layer are similarly stretched out into rows. For example, if there are 96 filters of size [11x11x3] this would give a matrix `W_row` of size [96 x 363].
-3. The result of a convolution is now equivalent to performing one large matrix multiply `np.dot(W_row, X_col)`, which evaluates the dot product between every filter and every receptive field location. In our example, the output of this operation would be [96 x 3025], giving the output of the dot product of each filter at each location. 
+3. The result of a convolution is now equivalent to performing one large matrix multiply `np.dot(W_row, X_col)`, which evaluates the dot product between every filter and every receptive field location. In our example, the output of this operation would be [96 x 3025], giving the output of the dot product of each filter at each location.
 4. The result must finally be reshaped back to its proper output dimension [55x55x96].
 
 This approach has the downside that it can use a lot of memory, since some values in the input volume are replicated multiple times in `X_col`. However, the benefit is that there are many very efficient implementations of Matrix Multiplication that we can take advantage of (for example, in the commonly used [BLAS](http://www.netlib.org/blas/) API). Morever, the same *im2col* idea can be reused to perform the pooling operation, which we discuss next.
@@ -195,18 +198,18 @@ This approach has the downside that it can use a lot of memory, since some value
 
 It is common to periodically insert a Pooling layer in-between successive Conv layers in a ConvNet architecture. Its function is to progressively reduce the spatial size of the representation to reduce the amount of parameters and computation in the network, and hence to also control overfitting. The Pooling Layer operates independently on every depth slice of the input and resizes it spatially, using the MAX operation. The most common form is a pooling layer with filters of size 2x2 applied with a stride of 2 downsamples every depth slice in the input by 2 along both width and height, discarding 75% of the activations. Every MAX operation would in this case be taking a max over 4 numbers (little 2x2 region in some depth slice). The depth dimension remains unchanged. More generally, the pooling layer:
 
-- Accepts a volume of size \\(W\_1 \times H\_1 \times D\_1\\)
-- Requires three hyperparameters: 
-  - their spatial extent \\(F\\), 
-  - the stride \\(S\\), 
-- Produces a volume of size \\(W\_2 \times H\_2 \times D\_2\\) where:
-  - \\(W\_2 = (W\_1 - F)/S + 1\\)
-  - \\(H\_2 = (H\_1 - F)/S + 1\\)
-  - \\(D\_2 = D\_1\\)
+- Accepts a volume of size $$W_1 \times H_1 \times D_1$$
+- Requires three hyperparameters:
+  - their spatial extent $$F$$,
+  - the stride $$S$$,
+- Produces a volume of size $$W_2 \times H_2 \times D_2$$ where:
+  - $$W_2 = (W_1 - F)/S + 1$$
+  - $$H_2 = (H_1 - F)/S + 1$$
+  - $$D_2 = D_1$$
 - Introduces zero parameters since it computes a fixed function of the input
 - Note that it is not common to use zero-padding for Pooling layers
 
-It is worth noting that there are only two commonly seen variations of the max pooling layer found in practice: A pooling layer with \\(F = 3, S = 2\\) (also called overlapping pooling), and more commonly \\(F = 2, S = 2\\). Pooling sizes with larger receptive fields are too destructive.
+It is worth noting that there are only two commonly seen variations of the max pooling layer found in practice: A pooling layer with $$F = 3, S = 2$$ (also called overlapping pooling), and more commonly $$F = 2, S = 2$$. Pooling sizes with larger receptive fields are too destructive.
 
 **General pooling**. In addition to max pooling, the pooling units can also perform other functions, such as *average pooling* or even *L2-norm pooling*. Average pooling was often used historically but has recently fallen out of favor compared to the max pooling operation, which has been shown to work better in practice.
 
@@ -238,20 +241,20 @@ Many types of normalization layers have been proposed for use in ConvNet archite
 Neurons in a fully connected layer have full connections to all activations in the previous layer, as seen in regular Neural Networks. Their activations can hence be computed with a matrix multiplication followed by a bias offset. See the *Neural Network* section of the notes for more information.
 
 <a name='convert'></a>
-#### Converting FC layers to CONV layers 
+#### Converting FC layers to CONV layers
 
 It is worth noting that the only difference between FC and CONV layers is that the neurons in the CONV layer are connected only to a local region in the input, and that many of the neurons in a CONV volume share parameters. However, the neurons in both layers still compute dot products, so their functional form is identical. Therefore, it turns out that it's possible to convert between FC and CONV layers:
 
 - For any CONV layer there is an FC layer that implements the same forward function. The weight matrix would be a large matrix that is mostly zero except for at certian blocks (due to local connectivity) where the weights in many of the blocks are equal (due to parameter sharing).
-- Conversely, any FC layer can be converted to a CONV layer. For example, an FC layer with \\(K = 4096\\) that is looking at some input volume of size \\(7 \times 7 \times 512\\) can be equivalently expressed as a CONV layer with \\(F = 7, P = 0, S = 1, K = 4096\\). In other words, we are setting the filter size to be exactly the size of the input volume, and hence the output will simply be \\(1 \times 1 \times 4096\\) since only a single depth column "fits" across the input volume, giving identical result as the initial FC layer.
+- Conversely, any FC layer can be converted to a CONV layer. For example, an FC layer with $$K = 4096$$ that is looking at some input volume of size $$7 \times 7 \times 512$$ can be equivalently expressed as a CONV layer with $$F = 7, P = 0, S = 1, K = 4096$$. In other words, we are setting the filter size to be exactly the size of the input volume, and hence the output will simply be $$1 \times 1 \times 4096$$ since only a single depth column "fits" across the input volume, giving identical result as the initial FC layer.
 
 **FC->CONV conversion**. Of these two conversions, the ability to convert an FC layer to a CONV layer is particularly useful in practice. Consider a ConvNet architecture that takes a 224x224x3 image, and then uses a series of CONV layers and POOL layers to reduce the image to an activations volume of size 7x7x512 (in an *AlexNet* architecture that we'll see later, this is done by use of 5 pooling layers that downsample the input spatially by a factor of two each time, making the final spatial size 224/2/2/2/2/2 = 7). From there, an AlexNet uses two FC layers of size 4096 and finally the last FC layers with 1000 neurons that compute the class scores. We can convert each of these three FC layers to CONV layers as described above:
 
-- Replace the first FC layer that looks at [7x7x512] volume with a CONV layer that uses filter size \\(F = 7\\), giving output volume [1x1x4096].
-- Replace the second FC layer with a CONV layer that uses filter size \\(F = 1\\), giving output volume [1x1x4096]
-- Replace the last FC layer similarly, with \\(F=1\\), giving final output [1x1x1000]
+- Replace the first FC layer that looks at [7x7x512] volume with a CONV layer that uses filter size $$F = 7$$, giving output volume [1x1x4096].
+- Replace the second FC layer with a CONV layer that uses filter size $$F = 1$$, giving output volume [1x1x4096]
+- Replace the last FC layer similarly, with $$F=1$$, giving final output [1x1x1000]
 
-Each of these conversions could in practice involve manipulating (e.g. reshaping) the weight matrix \\(W\\) in each FC layer into CONV layer filters. It turns out that this conversion allows us to "slide" the original ConvNet very efficiently across many spatial positions in a larger image, in a single forward pass. 
+Each of these conversions could in practice involve manipulating (e.g. reshaping) the weight matrix $$W$$ in each FC layer into CONV layer filters. It turns out that this conversion allows us to "slide" the original ConvNet very efficiently across many spatial positions in a larger image, in a single forward pass.
 
 For example, if 224x224 image gives a volume of size [7x7x512] - i.e. a reduction by 32, then forwarding an image of size 384x384 through the converted architecture would give the equivalent volume in size [12x12x512], since 384/32 = 12. Following through with the next 3 CONV layers that we just converted from FC layers would now give the final volume of size [6x6x1000], since (12 - 7)/1 + 1 = 6. Note that instead of a single vector of class scores of size [1x1x1000], we're now getting and entire 6x6 array of class scores across the 384x384 image.
 
@@ -266,7 +269,7 @@ Lastly, what if we wanted to efficiently apply the original ConvNet over the ima
 <a name='architectures'></a>
 ### ConvNet Architectures
 
-We have seen that Convolutional Networks are commonly made up of only three layer types: CONV, POOL (we assume Max pool unless stated otherwise) and FC (short for fully-connected). We will also explicitly write the RELU activation function as a layer, which applies elementwise non-linearity. In this section we discuss how these are commonly stacked together to form entire ConvNets. 
+We have seen that Convolutional Networks are commonly made up of only three layer types: CONV, POOL (we assume Max pool unless stated otherwise) and FC (short for fully-connected). We will also explicitly write the RELU activation function as a layer, which applies elementwise non-linearity. In this section we discuss how these are commonly stacked together to form entire ConvNets.
 
 <a name='layerpat'></a>
 #### Layer Patterns
@@ -281,7 +284,7 @@ where the `*` indicates repetition, and the `POOL?` indicates an optional poolin
 - `INPUT -> [CONV -> RELU -> POOL]*2 -> FC -> RELU -> FC`. Here we see that there is a single CONV layer between every POOL layer.
 - `INPUT -> [CONV -> RELU -> CONV -> RELU -> POOL]*3 -> [FC -> RELU]*2 -> FC` Here we see two CONV layers stacked before every POOL layer. This is generally a good idea for larger and deeper networks, because multiple stacked CONV layers can develop more complex features of the input volume before the destructive pooling operation.
 
-*Prefer a stack of small filter CONV to one large receptive field CONV layer*. Suppose that you stack three 3x3 CONV layers on top of each other (with non-linearities in between, of course). In this arrangement, each neuron on the first CONV layer has a 3x3 view of the input volume. A neuron on the second CONV layer has a 3x3 view of the first CONV layer, and hence by extension a 5x5 view of the input volume. Similarly, a neuron on the third CONV layer has a 3x3 view of the 2nd CONV layer, and hence a 7x7 view of the input volume. Suppose that instead of these three layers of 3x3 CONV, we only wanted to use a single CONV layer with 7x7 receptive fields. These neurons would have a receptive field size of the input volume that is identical in spatial extent (7x7), but with several disadvantages. First, the neurons would be computing a linear function over the input, while the three stacks of CONV layers contain non-linearities that make their features more expressive. Second, if we suppose that all the volumes have \\(C\\) channels, then it can be seen that the single 7x7 CONV layer would contain \\(C \times (7 \times 7 \times C) = 49 C^2\\) parameters, while the three 3x3 CONV layers would only contain \\(3 \times (C \times (3 \times 3 \times C)) = 27 C^2\\) parameters. Intuitively, stacking CONV layers with tiny filters as opposed to having one CONV layer with big filters allows us to express more powerful features of the input, and with fewer parameters. As a practical disadvantage, we might need more memory to hold all the intermediate CONV layer results if we plan to do backpropagation.
+*Prefer a stack of small filter CONV to one large receptive field CONV layer*. Suppose that you stack three 3x3 CONV layers on top of each other (with non-linearities in between, of course). In this arrangement, each neuron on the first CONV layer has a 3x3 view of the input volume. A neuron on the second CONV layer has a 3x3 view of the first CONV layer, and hence by extension a 5x5 view of the input volume. Similarly, a neuron on the third CONV layer has a 3x3 view of the 2nd CONV layer, and hence a 7x7 view of the input volume. Suppose that instead of these three layers of 3x3 CONV, we only wanted to use a single CONV layer with 7x7 receptive fields. These neurons would have a receptive field size of the input volume that is identical in spatial extent (7x7), but with several disadvantages. First, the neurons would be computing a linear function over the input, while the three stacks of CONV layers contain non-linearities that make their features more expressive. Second, if we suppose that all the volumes have $$C$$ channels, then it can be seen that the single 7x7 CONV layer would contain $$C \times (7 \times 7 \times C) = 49 C^2$$ parameters, while the three 3x3 CONV layers would only contain $$3 \times (C \times (3 \times 3 \times C)) = 27 C^2$$ parameters. Intuitively, stacking CONV layers with tiny filters as opposed to having one CONV layer with big filters allows us to express more powerful features of the input, and with fewer parameters. As a practical disadvantage, we might need more memory to hold all the intermediate CONV layer results if we plan to do backpropagation.
 
 <a name='layersizepat'></a>
 #### Layer Sizing Patterns
@@ -290,9 +293,9 @@ Until now we've omitted mentions of common hyperparameters used in each of the l
 
 The **input layer** (that contains the image) should be divisible by 2 many times. Common numbers include 32 (e.g. CIFAR-10), 64, 96 (e.g. STL-10), or 224 (e.g. common ImageNet ConvNets), 384, and 512.
 
-The **conv layers** should be using small filters (e.g. 3x3 or at most 5x5), using a stride of \\(S = 1\\), and crucially, padding the input volume with zeros in such way that the conv layer does not alter the spatial dimensions of the input. That is, when \\(F = 3\\), then using \\(P = 1\\) will retain the original size of the input. When \\(F = 5\\), \\(P = 2\\). For a general \\(F\\), it can be seen that \\(P = (F - 1) / 2\\) preserves the input size. If you must use bigger filter sizes (such as 7x7 or so), it is only common to see this on the very first conv layer that is looking at the input image.
+The **conv layers** should be using small filters (e.g. 3x3 or at most 5x5), using a stride of $$S = 1$$, and crucially, padding the input volume with zeros in such way that the conv layer does not alter the spatial dimensions of the input. That is, when $$F = 3$$, then using $$P = 1$$ will retain the original size of the input. When $$F = 5$$, $$P = 2$$. For a general $$F$$, it can be seen that $$P = (F - 1) / 2$$ preserves the input size. If you must use bigger filter sizes (such as 7x7 or so), it is only common to see this on the very first conv layer that is looking at the input image.
 
-The **pool layers** are in charge of downsampling the spatial dimensions of the input. The most common setting is to use max-pooling with 2x2 receptive fields (i.e. \\(F = 2\\)), and with a stride of 2 (i.e. \\(S = 2\\)). Note that this discards exactly 75% of the activations in an input volume (due to downsampling by 2 in both width and height). Another sligthly less common setting is to use 3x3 receptive fields with a stride of 2, but this makes. It is very uncommon to see receptive field sizes for max pooling that are larger than 3 because the pooling is then too lossy and agressive. This usually leads to worse performance.
+The **pool layers** are in charge of downsampling the spatial dimensions of the input. The most common setting is to use max-pooling with 2x2 receptive fields (i.e. $$F = 2$$), and with a stride of 2 (i.e. $$S = 2$$). Note that this discards exactly 75% of the activations in an input volume (due to downsampling by 2 in both width and height). Another sligthly less common setting is to use 3x3 receptive fields with a stride of 2, but this makes. It is very uncommon to see receptive field sizes for max pooling that are larger than 3 because the pooling is then too lossy and agressive. This usually leads to worse performance.
 
 *Reducing sizing headaches.* The scheme presented above is pleasing because all the CONV layers preserve the spatial size of their input, while the POOL layers alone are in charge of down-sampling the volumes spatially. In an alternative scheme where we use strides greater than 1 or don't zero-pad the input in CONV layers, we would have to very carefully keep track of the input volumes throughout the CNN architecture and make sure that all strides and filters "work out", and that the ConvNet architecture is nicely and symmetrically wired.
 
@@ -317,7 +320,7 @@ There are several architectures in the field of Convolutional Networks that have
 **VGGNet in detail**.
 Lets break down the [VGGNet](http://www.robots.ox.ac.uk/~vgg/research/very_deep/) in more detail. The whole VGGNet is composed of CONV layers that perform 3x3 convolutions with stride 1 and pad 1, and of POOL layers that perform 2x2 max pooling with stride 2 (and no padding). We can write out the size of the representation at each step of the processing and keep track of both the representation size and the total number of weights:
 
-```
+~~~
 INPUT: [224x224x3]        memory:  224*224*3=150K   weights: 0
 CONV3-64: [224x224x64]  memory:  224*224*64=3.2M   weights: (3*3*3)*64 = 1,728
 CONV3-64: [224x224x64]  memory:  224*224*64=3.2M   weights: (3*3*64)*64 = 36,864
@@ -343,12 +346,13 @@ FC: [1x1x1000]  memory:  1000 weights: 4096*1000 = 4,096,000
 
 TOTAL memory: 24M * 4 bytes ~= 93MB / image (only forward! ~*2 for bwd)
 TOTAL params: 138M parameters
-```
+~~~
 
 As is common with Convolutional Networks, notice that most of the memory is used in the early CONV layers, and that most of the parameters are in the last FC layers. In this particular case, the first FC layer contains 100M weights, out of a total of 140M.
 
 
 <a name='comp'></a>
+
 #### Computational Considerations
 
 The largest bottleneck to be aware of when constructing ConvNet architectures is the memory bottleneck. Many modern GPUs have a limit of 3/4/6GB memory, with the best GPUs having about 12GB of memory. There are three major sources of memory to keep track of:
@@ -364,6 +368,7 @@ Once you have a rough estimate of the total number of values (for activations, g
 In the [next section](../understanding-cnn/) of these notes we look at visualizing and understanding Convolutional Neural Networks.
 
 <a name='add'></a>
+
 ### Additional Resources
 
 Additional resources related to implementation:

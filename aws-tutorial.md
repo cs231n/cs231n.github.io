@@ -104,9 +104,9 @@ to get to your instance if you lose your key.
 Once you download your key, you should change the permissions of the key to
 user-only RW, In Linux/OSX you can do it by:
 
-```
+~~~
 $ chmod 600 PEM_FILENAME
-```
+~~~
 Here `PEM_FILENAME` is the full file name of the .pem file you just downloaded.
 
 After this is done, click on "Launch Instances", and you should see a screen
@@ -127,26 +127,26 @@ are now ready to ssh into the instance.
 First, note down the Public IP of the instance from the instance listing. Then,
 do:
 
-```
+~~~
 ssh -i PEM_FILENAME ubuntu@PUBLIC_IP
-```
+~~~
 
 Now you should be logged in to the instance. You can check that Caffe is working
 by doing:
 
-```
+~~~
 $ cd caffe
 $ ./build/tools/caffe time --gpu 0 --model examples/mnist/lenet.prototxt
-```
+~~~
 
 We have Caffe, Theano, Torch7, Keras and Lasagne pre-installed. Caffe python
 bindings are also available by default. We have CUDA 7.5 and CuDNN v3 installed.
 
 If you encounter any error such as 
 
-```
+~~~
 Check failed: error == cudaSuccess (77 vs.  0)  an illegal memory access was encountered
-```
+~~~
 
 you might want to terminate your instance and start over again. I have observed
 this rarely, and I am not sure what causes this.

@@ -13,15 +13,15 @@ widely used in scientific computing.
 Installing and running IPython is easy. From the command line, the following
 will install IPython:
 
-```
+~~~
 pip install "ipython[notebook]"
-```
+~~~
 
 Once you have IPython installed, start it with this command:
 
-```
+~~~
 ipython notebook
-```
+~~~
 
 Once IPython is running, point your web browser at http://localhost:8888 to
 start using IPython notebooks. If everything worked correctly, you should

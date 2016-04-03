@@ -28,7 +28,7 @@ for the project. If you choose not to use a virtual environment, it is up to you
 to make sure that all dependencies for the code are installed on your machine.
 To set up a virtual environment, run the following:
 
-```bash
+~~~bash
 cd assignment3
 sudo pip install virtualenv      # This may already be installed
 virtualenv .env                  # Create a virtual environment
@@ -36,7 +36,7 @@ source .env/bin/activate         # Activate the virtual environment
 pip install -r requirements.txt  # Install dependencies
 # Work on the assignment for a while ...
 deactivate                       # Exit the virtual environment
-```
+~~~
 
 You can reuse the virtual environment that you created for the first or second 
 assignment, but you will need to run `pip install -r requirements.txt` after
@@ -52,18 +52,18 @@ Run the following from the `assignment3` directory:
 NOTE: After downloading and unpacking, the data and pretrained models will
 take about 900MB of disk space.
 
-```bash
+~~~bash
 cd cs231n/datasets
 ./get_datasets.sh
 ./get_tiny_imagenet_splits.sh
 ./get_pretrained_models.sh
-```
+~~~
 
 **Compile the Cython extension:** Convolutional Neural Networks require a very efficient implementation. We have implemented of the functionality using [Cython](http://cython.org/); you will need to compile the Cython extension before you can run the code. From the `cs231n` directory, run the following command:
 
-```bash
+~~~bash
 python setup.py build_ext --inplace
-```
+~~~
 
 **Start IPython:**
 After you have downloaded the data and compiled the Cython extensions,

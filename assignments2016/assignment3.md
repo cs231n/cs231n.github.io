@@ -48,7 +48,7 @@ for the project. If you choose not to use a virtual environment, it is up to you
 to make sure that all dependencies for the code are installed globally on your
 machine. To set up a virtual environment, run the following:
 
-```bash
+~~~bash
 cd assignment3
 sudo pip install virtualenv      # This may already be installed
 virtualenv .env                  # Create a virtual environment
@@ -56,17 +56,17 @@ source .env/bin/activate         # Activate the virtual environment
 pip install -r requirements.txt  # Install dependencies
 # Work on the assignment for a while ...
 deactivate                       # Exit the virtual environment
-```
+~~~
 
 **Download data:**
 Once you have the starter code, you will need to download the processed MS-COCO dataset, the TinyImageNet dataset, and the pretrained TinyImageNet model. Run the following from the `assignment3` directory:
 
-```bash
+~~~bash
 cd cs231n/datasets
 ./get_coco_captioning.sh
 ./get_tiny_imagenet_a.sh
 ./get_pretrained_model.sh
-```
+~~~
 
 **Compile the Cython extension:** Convolutional Neural Networks require a very
 efficient implementation. We have implemented of the functionality using
@@ -74,9 +74,9 @@ efficient implementation. We have implemented of the functionality using
 before you can run the code. From the `cs231n` directory, run the following
 command:
 
-```bash
+~~~bash
 python setup.py build_ext --inplace
-```
+~~~
 
 **Start IPython:**
 After you have the data, you should start the IPython notebook server

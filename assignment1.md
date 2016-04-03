@@ -30,7 +30,7 @@ for the project. If you choose not to use a virtual environment, it is up to you
 to make sure that all dependencies for the code are installed on your machine.
 To set up a virtual environment, run the following:
 
-```bash
+~~~bash
 cd assignment1
 sudo pip install virtualenv      # This may already be installed
 virtualenv .env                  # Create a virtual environment
@@ -38,16 +38,16 @@ source .env/bin/activate         # Activate the virtual environment
 pip install -r requirements.txt  # Install dependencies
 # Work on the assignment for a while ...
 deactivate                       # Exit the virtual environment
-```
+~~~
 
 **Download data:**
 Once you have the starter code, you will need to download the CIFAR-10 dataset.
 Run the following from the `assignment1` directory:
 
-```bash
+~~~bash
 cd cs231n/datasets
 ./get_datasets.sh
-```
+~~~
 
 **Start IPython:**
 After you have the CIFAR-10 data, you should start the IPython notebook server from the

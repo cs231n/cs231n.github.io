@@ -71,10 +71,10 @@ As our first approach, we will develop what we call a **Nearest Neighbor Classif
 
 Suppose now that we are given the CIFAR-10 training set of 50,000 images (5,000 images for every one of the labels), and we wish to label the remaining 10,000. The nearest neighbor classifier will take a test image, compare it to every single one of the training images, and predict the label of the closest training image. In the image above and on the right you can see an example result of such a procedure for 10 example test images. Notice that in only about 3 out of 10 examples an image of the same class is retrieved, while in the other 7 examples this is not the case. For example, in the 8th row the nearest training image to the horse head is a red car, presumably due to the strong black background. As a result, this image of a horse would in this case be mislabeled as a car.
 
-You may have noticed that we left unspecified the details of exactly how we compare two images, which in this case are just two blocks of 32 x 32 x 3. One of the simplest possibilities is to compare the images pixel by pixel and add up all the differences. In other words, given two images and representing them as vectors \\( I\_1, I\_2 \\) , a reasonable choice for comparing them might be the **L1 distance**:
+You may have noticed that we left unspecified the details of exactly how we compare two images, which in this case are just two blocks of 32 x 32 x 3. One of the simplest possibilities is to compare the images pixel by pixel and add up all the differences. In other words, given two images and representing them as vectors $$ I_1, I_2 $$ , a reasonable choice for comparing them might be the **L1 distance**:
 
 $$
-d\_1 (I\_1, I\_2) = \sum\_{p} \left| I^p\_1 - I^p\_2 \right|
+d_1 (I_1, I_2) = \sum_{p} \left| I^p_1 - I^p_2 \right|
 $$
 
 Where the sum is taken over all pixels. Here is the procedure visualized:
@@ -86,27 +86,27 @@ Where the sum is taken over all pixels. Here is the procedure visualized:
 
 Let's also look at how we might implement the classifier in code. First, let's load the CIFAR-10 data into memory as 4 arrays: the training data/labels and the test data/labels. In the code below, `Xtr` (of size 50,000 x 32 x 32 x 3) holds all the images in the training set, and a corresponding 1-dimensional array `Ytr` (of length 50,000) holds the training labels (from 0 to 9):
 
-```python
+~~~python
 Xtr, Ytr, Xte, Yte = load_CIFAR10('data/cifar10/') # a magic function we provide
 # flatten out all images to be one-dimensional
 Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3) # Xtr_rows becomes 50000 x 3072
 Xte_rows = Xte.reshape(Xte.shape[0], 32 * 32 * 3) # Xte_rows becomes 10000 x 3072
-```
+~~~
 
 Now that we have all images stretched out as rows, here is how we could train and evaluate a classifier:
 
-```python
+~~~python
 nn = NearestNeighbor() # create a Nearest Neighbor classifier class
 nn.train(Xtr_rows, Ytr) # train the classifier on the training images and labels
 Yte_predict = nn.predict(Xte_rows) # predict labels on the test images
 # and now print the classification accuracy, which is the average number
 # of examples that are correctly predicted (i.e. label matches)
 print 'accuracy: %f' % ( np.mean(Yte_predict == Yte) )
-```
+~~~
 
 Notice that as an evaluation criterion, it is common to use the **accuracy**, which measures the fraction of predictions that were correct. Notice that all classifiers we will build satisfy this one common API: they have a `train(X,y)` function that takes the data and the labels to learn from. Internally, the class should build some kind of model of the labels and how they can be predicted from the data. And then there is a `predict(X)` function, which takes new data and predicts the labels. Of course, we've left out the meat of things - the actual classifier itself. Here is an implementation of a simple Nearest Neighbor classifier with the L1 distance that satisfies this template:
 
-```python
+~~~python
 import numpy as np
 
 class NearestNeighbor(object):
@@ -134,7 +134,7 @@ class NearestNeighbor(object):
       Ypred[i] = self.ytr[min_index] # predict the label of the nearest example
 
     return Ypred
-```
+~~~
 
 If you ran this code, you would see that this classifier only achieves **38.6%** on CIFAR-10. That's more impressive than guessing at random (which would give 10% accuracy since there are 10 classes), but nowhere near human performance (which is [estimated at about 94%](http://karpathy.github.io/2011/04/27/manually-classifying-cifar10/)) or near state-of-the-art Convolutional Neural Networks that achieve about 95%, matching human accuracy (see the [leaderboard](http://www.kaggle.com/c/cifar-10/leaderboard) of a recent Kaggle competition on CIFAR-10).
 
@@ -142,14 +142,14 @@ If you ran this code, you would see that this classifier only achieves **38.6%**
 There are many other ways of computing distances between vectors. Another common choice could be to instead use the **L2 distance**, which has the geometric interpretation of computing the euclidean distance between two vectors. The distance takes the form:
 
 $$
-d\_2 (I\_1, I\_2) = \sqrt{\sum\_{p} \left( I^p\_1 - I^p\_2 \right)^2}
+d_2 (I_1, I_2) = \sqrt{\sum_{p} \left( I^p_1 - I^p_2 \right)^2}
 $$
 
 In other words we would be computing the pixelwise difference as before, but this time we square all of them, add them up and finally take the square root. In numpy, using the code from above we would need to only replace a single line of code. The line that computes the distances:
 
-```python
+~~~python
 distances = np.sqrt(np.sum(np.square(self.Xtr - X[i,:]), axis = 1))
-```
+~~~
 
 Note that I included the `np.sqrt` call above, but in a practical nearest neighbor application we could leave out the square root operation because square root is a *monotonic function*. That is, it scales the absolute sizes of the distances but it preserves the ordering, so the nearest neighbors with or without it are identical. If you ran the Nearest Neighbor classifier on CIFAR-10 with this distance, you would obtain **35.4%** accuracy (slightly lower than our L1 distance result).
 
@@ -180,7 +180,7 @@ Luckily, there is a correct way of tuning the hyperparameters and it does not to
 
 Here is what this might look like in the case of CIFAR-10:
 
-```python
+~~~python
 # assume we have Xtr_rows, Ytr, Xte_rows, Yte as before
 # recall Xtr_rows is 50,000 x 3072 matrix
 Xval_rows = Xtr_rows[:1000, :] # take first 1000 for validation
@@ -202,7 +202,7 @@ for k in [1, 3, 5, 10, 20, 50, 100]:
 
   # keep track of what works on the validation set
   validation_accuracies.append((k, acc))
-```
+~~~
 
 By the end of this procedure, we could plot a graph that shows which values of *k* work best. We would then stick with this value and evaluate once on the actual test set.
 
