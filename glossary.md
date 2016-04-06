@@ -33,7 +33,7 @@ Markdown 형식의 table이 제대로 렌더링이 안되네요.. 그래서 우�
     <tr><td>Convolutional neural network</td><td>컨볼루션 신경망</td></tr>
     <tr><td>Covariance</td><td>공분산</td></tr>
     <tr><td>Cross entropy</td><td></td></tr>
-    <tr><td>Cross validation</td><td></td></tr>
+    <tr><td>Cross validation</td><td>교차 검증</td></tr>
     <tr><td>Depth</td><td>깊이</td></tr>
     <tr><td>Derivative</td><td>미분값, 도함수</td></tr>
     <tr><td>Dropout</td><td>(영어 그대로)</td></tr>
@@ -51,10 +51,10 @@ Markdown 형식의 table이 제대로 렌더링이 안되네요.. 그래서 우�
     <tr><td>Initialization</td><td>초기화</td></tr>
     <tr><td>Iteration</td><td>반복</td></tr>
     <tr><td>Label</td><td>라벨</td></tr>
-    <tr><td>Layer</td><td>레이어(?)</td></tr>
+    <tr><td>Layer</td><td>레이어</td></tr>
     <tr><td>Learning</td><td>러닝, 학습</td></tr>
     <tr><td>Loop</td><td>루프</td></tr>
-    <tr><td>Loss</td><td>?</td></tr>
+    <tr><td>Loss (function)</td><td>손실 함수</td></tr>
     <tr><td>LSTM</td><td>(영어 그대로)</td></tr>
     <tr><td>Matrix</td><td>행렬</td></tr>
     <tr><td>Nearest neighbor</td><td>(영어 그대로)</td></tr>
@@ -64,15 +64,15 @@ Markdown 형식의 table이 제대로 렌더링이 안되네요.. 그래서 우�
     <tr><td>Node</td><td>노드</td></tr>
     <tr><td>Non-linearity</td><td>비선형~</td></tr>
     <tr><td>Optimization</td><td>최적화</td></tr>
-    <tr><td>Overfitting</td><td></td></tr>
-    <tr><td>Padding</td><td></td></tr>
+    <tr><td>Overfitting</td><td>(영어 그대로)</td></tr>
+    <tr><td>Padding</td><td>패딩</td></tr>
     <tr><td>Parameter</td><td>파라미터</td></tr>
     <tr><td>Performance</td><td>성능</td></tr>
     <tr><td>Pooling</td><td>풀링</td></tr>
     <tr><td>Preprocessing</td><td>전처리</td></tr>
     <tr><td>Receptive Field</td><td></td></tr>
     <tr><td>Regression</td><td>회귀</td></tr>
-    <tr><td>Regularization</td><td></td></tr>
+    <tr><td>Regularization</td><td>?</td></tr>
     <tr><td>ReLU</td><td></td></tr>
     <tr><td>Representation</td><td>표현</td></tr>
     <tr><td>Recurrent neural network (RNN)</td><td>회귀신경망(?)</td></tr>
@@ -82,7 +82,7 @@ Markdown 형식의 table이 제대로 렌더링이 안되네요.. 그래서 우�
     <tr><td>Softmax</td><td></td></tr>
     <tr><td>Spatial</td><td></td></tr>
     <tr><td>Training</td><td>학습, 트레이닝</td></tr>
-    <tr><td>Validation</td><td></td></tr>
+    <tr><td>Validation</td><td>검증</td></tr>
     <tr><td>Variable</td><td>변수</td></tr>
     <tr><td>Visualization</td><td>시각화</td></tr>
     <tr><td>Weights</td><td>파라미터 값</td></tr>
