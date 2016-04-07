@@ -18,6 +18,7 @@ Table of Contents:
 - [요약](#summary)
 
 <a name='intro'></a>
+
 ### 소개
 
 이전 섹션에서 이미지 분류(image classification)을 할 때에 있어 두 가지의 핵심요쇼를 소개했습니다.
@@ -36,6 +37,7 @@ $$
 **예고:** 이 세 가지 핵심요소가 어떻게 상호작용하는지 이해한 후에는, 첫번째 요소(모수화된 함수)로 다시 돌아가서 선형함수보다 더 복잡한 형태로 확장시켜볼 것이다.  처음엔 신경망(Neural Networks), 다음엔 컨볼루션 신경망(Convolutional Neural Networks). 손실함수(loss function)와 최적화(optimization) 과정은 거의 변화가 없을 것이다..
 
 <a name='vis'></a>
+
 ### Visualizing the loss function
 
 The loss functions we'll look at in this class are usually defined over very high-dimensional spaces (e.g. in CIFAR-10 a linear classifier weight matrix is of size [10 x 3073] for a total of 30,730 parameters), making them difficult to visualize. However, we can still gain some intuitions about one by slicing through the high-dimensional space along rays (1 dimension), or along planes (2 dimensions). For example, we can generate a random weight matrix $W$ (which corresponds to a single point in the space), then march along a ray and record the loss function value along the way. That is, we can generate a random direction $W_1$ and compute the loss along this direction by evaluating $L(W + a W_1)$ for different values of $a$. This process generates a simple plot with the value of $a$ as the x-axis and the value of the loss function as the y-axis. We can also carry out the same procedure with two dimensions by evaluating the loss $ L(W + a W_1 + b W_2) $ as we vary $a, b$. In a plot, $a, b$ could then correspond to the x-axis and the y-axis, and the value of the loss function can be visualized with a color:
@@ -80,11 +82,13 @@ As an aside, you may have guessed from its bowl-shaped appearance that the SVM c
 *Non-differentiable loss functions*. As a technical note, you can also see that the *kinks* in the loss function (due to the max operation) technically make the loss function non-differentiable because at these kinks the gradient is not defined. However, the [subgradient](http://en.wikipedia.org/wiki/Subderivative) still exists and is commonly used instead. In this class will use the terms *subgradient* and *gradient* interchangeably.
 
 <a name='optimization'></a>
+
 ### Optimization
 
 To reiterate, the loss function lets us quantify the quality of any particular set of weights **W**. The goal of optimization is to find **W** that minimizes the loss function. We will now motivate and slowly develop an approach to optimizing the loss function. For those of you coming to this class with previous experience, this section might seem odd since the working example we'll use (the SVM loss) is a convex problem, but keep in mind that our goal is to eventually optimize Neural Networks where we can't easily use any of the tools developed in the Convex Optimization literature.
 
 <a name='opt1'></a>
+
 #### Strategy #1: A first very bad idea solution: Random search
 
 Since it is so simple to check how good a given set of parameters **W** is, the first (very bad) idea that may come to mind is to simply try out many different random weights and keep track of what works best. This procedure might look as follows:
@@ -135,6 +139,7 @@ With the best **W** this gives an accuracy of about **15.5%**. Given that guessi
 **Blindfolded hiker analogy.** One analogy that you may find helpful going forward is to think of yourself as hiking on a hilly terrain with a blindfold on, and trying to reach the bottom. In the example of CIFAR-10, the hills are 30,730-dimensional, since the dimensions of **W** are 3073 x 10. At every point on the hill we achieve a particular loss (the height of the terrain).
 
 <a name='opt2'></a>
+
 #### Strategy #2: Random Local Search
 
 The first strategy you may think of is to to try to extend one foot in a random direction and then take a step only if it leads downhill. Concretely, we will start out with a random $W$, generate random perturbations $ \delta W $ to it and if the loss at the perturbed $W + \delta W$ is lower, we will perform an update. The code for this procedure is as follows:
@@ -155,6 +160,7 @@ for i in xrange(1000):
 Using the same number of loss function evaluations as before (1000), this approach achieves test set classification accuracy of **21.4%**. This is better, but still wasteful and computationally expensive.
 
 <a name='opt3'></a>
+
 #### Strategy #3: Following the Gradient
 
 In the previous section we tried to find a direction in the weight-space that would improve our weight vector (and give us a lower loss). It turns out that there is no need to randomly search for a good direction: we can compute the *best* direction along which we should change our weight vector that is mathematically guaranteed to be the direction of the steepest descend (at least in the limit as the step size goes towards zero). This direction will be related to the **gradient** of the loss function. In our hiking analogy, this approach roughly corresponds to feeling the slope of the hill below our feet and stepping down the direction that feels steepest.
@@ -168,22 +174,24 @@ $$
 When the functions of interest take a vector of numbers instead of a single number, we call the derivatives **partial derivatives**, and the gradient is simply the vector of partial derivatives in each dimension.
 
 <a name='gradcompute'></a>
+
 ### Computing the gradient
 
 There are two ways to compute the gradient: A slow, approximate but easy way (**numerical gradient**), and a fast, exact but more error-prone way that requires calculus (**analytic gradient**). We will now present both.
 
 <a name='numerical'></a>
+
 #### Computing the gradient numerically with finite differences
 
 The formula given above allows us to compute the gradient numerically. Here is a generic function that takes a function `f`, a vector `x` to evaluate the gradient on, and returns the gradient of `f` at `x`:
 
 ~~~python
 def eval_numerical_gradient(f, x):
-  """ 
-  a naive implementation of numerical gradient of f at x 
+  """
+  a naive implementation of numerical gradient of f at x
   - f should be a function that takes a single argument
   - x is the point (numpy array) to evaluate the gradient at
-  """ 
+  """
 
   fx = f(x) # evaluate function value at original point
   grad = np.zeros(x.shape)
@@ -207,7 +215,7 @@ def eval_numerical_gradient(f, x):
   return grad
 ~~~
 
-Following the gradient formula we gave above, the code above iterates over all dimensions one by one, makes a small change `h` along that dimension and calculates the partial derivative of the loss function along that dimension by seeing how much the function changed. The variable `grad` holds the full gradient in the end. 
+Following the gradient formula we gave above, the code above iterates over all dimensions one by one, makes a small change `h` along that dimension and calculates the partial derivative of the loss function along that dimension by seeing how much the function changed. The variable `grad` holds the full gradient in the end.
 
 **Practical considerations**. Note that in the mathematical formulation the gradient is defined in the limit as **h** goes towards zero, but in practice it is often sufficient to use a very small value (such as 1e-5 as seen in the example). Ideally, you want to use the smallest step size that does not lead to numerical issues. Additionally, in practice it often works better to compute the numeric gradient using the **centered difference formula**: $ [f(x+h) - f(x-h)] / 2 h $ . See [wiki](http://en.wikipedia.org/wiki/Numerical_differentiation) for details.
 
@@ -266,6 +274,7 @@ for step_size_log in [-10, -9, -8, -7, -6, -5,-4,-3,-2,-1]:
 **A problem of efficiency**. You may have noticed that evaluating the numerical gradient has complexity linear in the number of parameters. In our example we had 30730 parameters in total and therefore had to perform 30,731 evaluations of the loss function to evaluate the gradient and to perform only a single parameter update. This problem only gets worse, since modern Neural Networks can easily have tens of millions of parameters. Clearly, this strategy is not scalable and we need something better.
 
 <a name='analytic'></a>
+
 #### Computing the gradient analytically with Calculus
 
 The numerical gradient is very simple to compute using the finite difference approximation, but the downside is that it is approximate (since we have to pick a small value of *h*, while the true gradient is defined as the limit as *h* goes to zero), and that it is very computationally expensive to compute. The second way to compute the gradient is analytically using Calculus, which allows us to derive a direct formula for the gradient (no approximations) that is also very fast to compute. However, unlike the numerical gradient it can be more error prone to implement, which is why in practice it is very common to compute the analytic gradient and compare it to the numerical gradient to check the correctnes of your implementation. This is called a **gradient check**.
@@ -288,9 +297,10 @@ $$
 \nabla_{w_j} L_i = \mathbb{1}(w_j^Tx_i - w_{y_i}^Tx_i + \Delta > 0) x_i
 $$
 
-Once you derive the expression for the gradient it is straight-forward to implement the expressions and use them to perform the gradient update. 
+Once you derive the expression for the gradient it is straight-forward to implement the expressions and use them to perform the gradient update.
 
 <a name='gd'></a>
+
 ### Gradient Descent
 
 Now that we can compute the gradient of the loss function, the procedure of repeatedly evaluating the gradient and then performing a parameter update is called *Gradient Descent*. Its **vanilla** version looks as follows:
@@ -321,6 +331,7 @@ The reason this works well is that the examples in the training data are correla
 The extreme case of this is a setting where the mini-batch contains only a single example. This process is called **Stochastic Gradient Descent (SGD)** (or also sometimes **on-line** gradient descent). This is relatively less common to see because in practice due to vectorized code optimizations it can be computationally much more efficient to evaluate the gradient for 100 examples, than the gradient for one example 100 times. Even though SGD technically refers to using a single example at a time to evaluate the gradient, you will hear people use the term SGD even when referring to mini-batch gradient descent (i.e. mentions of MGD for "Minibatch Gradient Descent", or BGD for "Batch gradient descent" are rare to see), where it is usually assumed that mini-batches are used. The size of the mini-batch is a hyperparameter but it is not very common to cross-validate it. It is usually based on memory constraints (if any), or set to some value, e.g. 32, 64 or 128. We use powers of 2 in practice because many vectorized operation implementations work faster when their inputs are sized in powers of 2.
 
 <a name='summary'></a>
+
 ### Summary
 
 <div class="fig figcenter fighighlight">
@@ -335,11 +346,10 @@ In this section,
 
 - We developed the intuition of the loss function as a **high-dimensional optimization landscape** in which we are trying to reach the bottom. The working analogy we developed was that of a blindfolded hiker who wishes to reach the bottom. In particular, we saw that the SVM cost function is piece-wise linear and bowl-shaped.
 - We motivated the idea of optimizing the loss function with
-**iterative refinement**, where we start with a random set of weights and refine them step by step until the loss is minimized. 
+**iterative refinement**, where we start with a random set of weights and refine them step by step until the loss is minimized.
 - We saw that the **gradient** of a function gives the steepest ascent direction and we discussed a simple but inefficient way of computing it numerically using the finite difference approximation (the finite difference being the value of *h* used in computing the numerical gradient).
 - We saw that the parameter update requires a tricky setting of the **step size** (or the **learning rate**) that must be set just right: if it is too low the progress is steady but slow. If it is too high the progress can be faster, but more risky. We will explore this tradeoff in much more detail in future sections.
 - We discussed the tradeoffs between computing the **numerical** and **analytic** gradient. The numerical gradient is simple but it is approximate and expensive to compute. The analytic gradient is exact, fast to compute but more error-prone since it requires the derivation of the gradient with math. Hence, in practice we always use the analytic gradient and then perform a **gradient check**, in which its implementation is compared to the numerical gradient.
 - We introduced the **Gradient Descent** algorithm which iteratively computes the gradient and performs a parameter update in loop.
 
 **Coming up:** The core takeaway from this section is that the ability to compute the gradient of a loss function with respect to its weights (and have some intuitive understanding of it) is the most important skill needed to design, train and understand neural networks. In the next section we will develop proficiency in computing the gradient analytically using the chain rule, otherwise also refered to as **backpropagation**. This will allow us to efficiently optimize relatively arbitrary loss functions that express all kinds of Neural Networks, including Convolutional Neural Networks.
-
