@@ -1,0 +1,5373 @@
+﻿1
+00:00:00,000 --> 00:00:02,990
+today we're going to go over these four
+major software packages that people
+
+2
+00:00:02,990 --> 00:00:10,919
+commonly used as usual a couple
+administrative things the milestones
+
+3
+00:00:10,919 --> 00:00:14,798
+were actually do last week so hopefully
+return the men will try to take a look
+
+4
+00:00:14,798 --> 00:00:19,089
+at those this week also remember that
+assignment 3 the final assignment is
+
+5
+00:00:19,089 --> 00:00:23,160
+gonna be due on Wednesday so and you
+guys done already
+
+6
+00:00:23,160 --> 00:00:30,870
+ok that's that's good then you have late
+days you should be fine
+
+7
+00:00:30,870 --> 00:00:34,230
+another another thing that I should
+point out is that if you're actually
+
+8
+00:00:34,229 --> 00:00:37,619
+planning on using Terminal for your
+projects which i think a lot of you are
+
+9
+00:00:37,619 --> 00:00:42,049
+then make sure you you're backing up
+your code and data and things off of
+
+10
+00:00:42,049 --> 00:00:46,659
+paternal instances every once in a while
+we've had some problems where the
+
+11
+00:00:46,659 --> 00:00:50,529
+instances will crash randomly and in
+most cases the terminal folks have been
+
+12
+00:00:50,530 --> 00:00:53,989
+able to get the data back but it
+sometimes takes a couple days and
+
+13
+00:00:53,988 --> 00:00:57,570
+there's been a couple of cases where
+actually people lost data because it was
+
+14
+00:00:57,570 --> 00:01:01,558
+just on terminal and that crashed so I
+think if you are planning to use
+
+15
+00:01:01,558 --> 00:01:04,569
+terminal then make sure that you have
+some alternative backup strategy for
+
+16
+00:01:04,569 --> 00:01:10,250
+your code and your data like I said
+today we're talking about these poor
+
+17
+00:01:10,250 --> 00:01:16,049
+software packages that are commonly used
+for a deep learning cafe torch piano and
+
+18
+00:01:16,049 --> 00:01:20,269
+tensor flow and as a little bit of
+disclaimer at the beginning I felt like
+
+19
+00:01:20,269 --> 00:01:24,179
+personally I've mostly worked with cafe
+and torch so those the ones that I know
+
+20
+00:01:24,180 --> 00:01:27,710
+the most about I'll do my best to give
+you a good flavor for the others as well
+
+21
+00:01:27,709 --> 00:01:35,939
+but just throwing that disclaimer out
+there so the first one is cafe we saw in
+
+22
+00:01:35,939 --> 00:01:39,509
+the last lecture that really cafe sprung
+out of this paper at berkeley that was
+
+23
+00:01:39,510 --> 00:01:44,040
+trying to a re-employment Alex NAT and
+Alex features for other things and since
+
+24
+00:01:44,040 --> 00:01:47,550
+then kathy has really grown into a
+really really popular widely used
+
+25
+00:01:47,549 --> 00:01:53,759
+package for especially convolutional
+neural networks so Cafe is from Berkeley
+
+26
+00:01:53,760 --> 00:01:56,859
+that I think a lot of you people have no
+no
+
+27
+00:01:56,859 --> 00:02:01,989
+and it's mostly written in C++ and there
+is actually buying things for a cafe so
+
+28
+00:02:01,989 --> 00:02:04,939
+you can access the nets and whatnot in
+Python in Matlab that are super useful
+
+29
+00:02:04,939 --> 00:02:09,969
+and in general cafes really widely used
+and it's really really good if you just
+
+30
+00:02:09,969 --> 00:02:15,289
+want to train sort of standard
+feedforward convolutional networks and
+
+31
+00:02:15,289 --> 00:02:17,489
+actually Cafe is somewhat different than
+the others
+
+32
+00:02:17,490 --> 00:02:21,610
+other frameworks in this respect you can
+actually trained big powerful models and
+
+33
+00:02:21,610 --> 00:02:26,150
+kept a without writing any code yourself
+so for example the ResNet image
+
+34
+00:02:26,150 --> 00:02:29,760
+classification model that one image that
+one everything last year you can
+
+35
+00:02:29,759 --> 00:02:33,189
+actually trained to resonate using cafe
+without writing any code which is pretty
+
+36
+00:02:33,189 --> 00:02:37,579
+amazing so the most but the most
+important tip when you're working with
+
+37
+00:02:37,580 --> 00:02:41,860
+cafe is that the documentation is not as
+sometimes out of date and not always
+
+38
+00:02:41,860 --> 00:02:45,980
+perfect so you need to not be afraid to
+just dive in there and read the source
+
+39
+00:02:45,979 --> 00:02:52,359
+code yourself it's C++ so hopefully you
+can read that and understand it but in
+
+40
+00:02:52,360 --> 00:02:56,080
+general the C++ code that they have
+interface is pretty well structured
+
+41
+00:02:56,080 --> 00:03:00,270
+pretty well organized and pretty easy to
+understand so if you have doubts about
+
+42
+00:03:00,270 --> 00:03:04,459
+how things work in cafe you do your best
+bet is just to go on get up and read the
+
+43
+00:03:04,459 --> 00:03:11,229
+source code so Cafe is this huge big
+project with Mike probably thousands
+
+44
+00:03:11,229 --> 00:03:14,369
+tens of thousands of lines of code and
+it's a little bit scary to understand
+
+45
+00:03:14,370 --> 00:03:18,730
+how everything fits together but there's
+really four major classes in cafe that
+
+46
+00:03:18,729 --> 00:03:24,310
+you need to know about the first one is
+a blob so blobs army store all of your
+
+47
+00:03:24,310 --> 00:03:27,939
+data and your weight and your
+activations in the network so these
+
+48
+00:03:27,939 --> 00:03:34,870
+blobs are things in the network so your
+weights are have blocked are your rates
+
+49
+00:03:34,870 --> 00:03:38,680
+are stored in a blob your data which
+would be like your pixel values are
+
+50
+00:03:38,680 --> 00:03:43,189
+stored in a blob and your labels your
+wife or stored in a blob and also all of
+
+51
+00:03:43,189 --> 00:03:47,319
+your intermediate activations will also
+be stored in blobs so blobs are these
+
+52
+00:03:47,319 --> 00:03:51,069
+and dimensional tensors sort of like
+you've seen an umpire accepted they
+
+53
+00:03:51,069 --> 00:03:56,150
+actually have four copies of a
+non-dimensional tenser inside they have
+
+54
+00:03:56,150 --> 00:03:57,370
+data
+
+55
+00:03:57,370 --> 00:04:02,450
+data version of the tensor which is
+storing the actual raw data and they
+
+56
+00:04:02,449 --> 00:04:07,449
+also have a parallel thing but parallel
+10 circled deaths that cafe uses to
+
+57
+00:04:07,449 --> 00:04:12,459
+store gradients with respect to that
+data and that gives you two and then you
+
+58
+00:04:12,459 --> 00:04:16,280
+actually have four because there's a CPU
+and GPU version of each of those things
+
+59
+00:04:16,279 --> 00:04:21,228
+so you have data types of CPU and GPU
+there's actually four and dimensional
+
+60
+00:04:21,228 --> 00:04:26,159
+tents are superb lob the next important
+class that you need to know about and
+
+61
+00:04:26,160 --> 00:04:30,930
+cafes the lair and a larry is sort of a
+function from similar to the ones who
+
+62
+00:04:30,930 --> 00:04:35,329
+wrote on the hallmarks that receives
+some input blobs catcalls inputs bottoms
+
+63
+00:04:35,329 --> 00:04:41,269
+and then produces output blobs that kept
+a hole stop lobs the idea is that your
+
+64
+00:04:41,269 --> 00:04:45,349
+lair will receive pointers to the bottom
+blobs with the data Rd filled in and
+
+65
+00:04:45,350 --> 00:04:49,229
+then it'll also receive a pointer to the
+top blobs and it'll end in Fort
+
+66
+00:04:49,228 --> 00:04:53,759
+passionately expected to fill in the
+values for the data elements of your top
+
+67
+00:04:53,759 --> 00:04:58,959
+blogs on the back road past the layers
+will compute radiance sable expects to
+
+68
+00:04:58,959 --> 00:05:03,649
+receive a pointer to the top jobs with
+the gradients and the activation spilled
+
+69
+00:05:03,649 --> 00:05:07,359
+an and then they'll also receive a
+pointer to the bottom blobs until
+
+70
+00:05:07,360 --> 00:05:12,650
+ingredients for the bottoms and Blair is
+this a pretty well structured abstract
+
+71
+00:05:12,649 --> 00:05:17,019
+class that you can go and I had to have
+the the links for the source file here
+
+72
+00:05:17,019 --> 00:05:21,139
+and there's a lot of some classes that
+implement different types of theirs and
+
+73
+00:05:21,139 --> 00:05:26,750
+like I said a common cap a problem
+there's no really good list of all the
+
+74
+00:05:26,750 --> 00:05:30,490
+lair types you pretty much just need to
+look at the code and see what types of
+
+75
+00:05:30,490 --> 00:05:36,280
+CPP files there are the next thing you
+need to know about is a natural so and
+
+76
+00:05:36,279 --> 00:05:40,859
+that just combines multiple heirs and
+that is basically directed acyclic graph
+
+77
+00:05:40,860 --> 00:05:44,598
+of layers and is responsible for running
+the forward and backward methods of the
+
+78
+00:05:44,598 --> 00:05:49,519
+layers in the correct order so this is
+you probably don't need to touch this
+
+79
+00:05:49,519 --> 00:05:52,560
+class ever yourself but it's kind of
+nice to look at to get a flavour of how
+
+80
+00:05:52,560 --> 00:05:56,139
+everything fits together in the final
+class that you need to know about a
+
+81
+00:05:56,139 --> 00:06:00,720
+solver so the solver is you know we have
+this thing called solver on the homework
+
+82
+00:06:00,720 --> 00:06:04,710
+that was really inspired by capping a
+somersault or is intended to dip into
+
+83
+00:06:04,709 --> 00:06:05,288
+the net
+
+84
+00:06:05,288 --> 00:06:08,889
+run the next forward and backward on
+data actually update
+
+85
+00:06:08,889 --> 00:06:11,319
+owners of the network and handle
+checkpointing and resuming from
+
+86
+00:06:11,319 --> 00:06:15,520
+checkpoints and all that sort of stuff
+and in cafe solver is this abstract
+
+87
+00:06:15,519 --> 00:06:20,278
+class and different update rules are
+implemented by different subclasses so
+
+88
+00:06:20,278 --> 00:06:24,598
+there is for example stochastic gradient
+descent solver there's an atom bomb ass
+
+89
+00:06:24,598 --> 00:06:28,209
+problem-solver all of that sort of stuff
+and again just to see what kinds of
+
+90
+00:06:28,209 --> 00:06:32,438
+options are available you should look at
+the source code for this kind of gives
+
+91
+00:06:32,439 --> 00:06:35,639
+you a nice overview of how these things
+all fit together that this whole thing
+
+92
+00:06:35,639 --> 00:06:40,069
+on the right would be done at the net
+contains in the green boxes blobs each
+
+93
+00:06:40,069 --> 00:06:44,250
+blog contains data and texts the red
+boxes are layers that are connecting
+
+94
+00:06:44,250 --> 00:06:51,038
+blocks together and the whole thing
+would get optimized for the Psalter so
+
+95
+00:06:51,038 --> 00:06:55,538
+cafe makes heavy use of this funny thing
+called protocol buffers any of you guys
+
+96
+00:06:55,538 --> 00:07:00,938
+ever in turn to Google after numbers you
+guys know about this bomb but protocol
+
+97
+00:07:00,939 --> 00:07:05,099
+poppers are this almost like a binary
+strongly typed JSON I sort of like to
+
+98
+00:07:05,098 --> 00:07:08,550
+think about it that are used very widely
+inside google first utilizing data to
+
+99
+00:07:08,550 --> 00:07:14,750
+death over the network so protocol
+buffers there's this . profile that
+
+100
+00:07:14,750 --> 00:07:18,639
+defines the different kinds of feels
+that different types of objects how so
+
+101
+00:07:18,639 --> 00:07:22,819
+in this example there's a person has a
+name and I D and an email and this lives
+
+102
+00:07:22,819 --> 00:07:26,300
+in a top profile . profiles
+
+103
+00:07:26,300 --> 00:07:31,490
+given to find a type of a class and you
+can actually see realize instances to
+
+104
+00:07:31,490 --> 00:07:37,379
+human readable . total txt files so for
+example this fills in the name it gives
+
+105
+00:07:37,379 --> 00:07:40,968
+you the idea gives you the email and
+this is an instance of a person that can
+
+106
+00:07:40,968 --> 00:07:45,930
+be saved into this text file then
+product includes this compiler that
+
+107
+00:07:45,930 --> 00:07:49,579
+actually lets you generate classes in
+various programming languages to access
+
+108
+00:07:49,579 --> 00:07:55,418
+these data types you can after running
+photobook compiler this profile it
+
+109
+00:07:55,418 --> 00:08:01,038
+produces classes that you can import in
+Java and C C++ and Python and go and
+
+110
+00:08:01,038 --> 00:08:05,300
+just about everything so actually cafe
+makes why do you say these probe of
+
+111
+00:08:05,300 --> 00:08:08,270
+these protocol buffers and they use them
+to store pretty much everything and
+
+112
+00:08:08,269 --> 00:08:16,008
+Kathy so like I said to understand you
+need to read the code understand cafe
+
+113
+00:08:16,009 --> 00:08:20,480
+and cafe has this one giant file called
+cafe dark road
+
+114
+00:08:20,480 --> 00:08:24,470
+though they just defines all of the
+protocol buffer types that are used in
+
+115
+00:08:24,470 --> 00:08:29,170
+cafe this is a gigantic file its I think
+it's a couple thousand lines long but
+
+116
+00:08:29,170 --> 00:08:32,200
+it's actually pretty well documented and
+is I think the most up-to-date
+
+117
+00:08:32,200 --> 00:08:35,890
+documentation of what are the lair types
+are what the options for those layers
+
+118
+00:08:35,889 --> 00:08:39,629
+are how you specify every all the
+options for solvers and layers and
+
+119
+00:08:39,629 --> 00:08:43,100
+that's not all bad so I really encourage
+you to check out this file and read
+
+120
+00:08:43,100 --> 00:08:48,019
+through it if you have any questions
+about how things work in cafe and just
+
+121
+00:08:48,019 --> 00:08:53,120
+give you a flavour on my left ear this
+shows you this defines than a parameter
+
+122
+00:08:53,120 --> 00:08:58,519
+which is the type of protocol buffer
+that cafe uses to represent an axe and
+
+123
+00:08:58,519 --> 00:09:03,970
+on the right is this solver parameter
+which used to represent solvers so that
+
+124
+00:09:03,970 --> 00:09:09,009
+perimeter of the solver promoter for
+example takes a reference to a net and
+
+125
+00:09:09,009 --> 00:09:12,409
+it also includes things like learning
+rate and how often to check point and
+
+126
+00:09:12,409 --> 00:09:19,549
+other things like that right so when
+you're working in cafe actually it's
+
+127
+00:09:19,549 --> 00:09:23,729
+pretty cool you don't need to write any
+code in order to train models so when
+
+128
+00:09:23,730 --> 00:09:27,889
+working with cafe you generally have
+this four-step process so first you will
+
+129
+00:09:27,889 --> 00:09:31,960
+convert your data and especially if you
+just happen image classification problem
+
+130
+00:09:31,960 --> 00:09:34,540
+you don't have to write any code for
+this you just use one of the existing
+
+131
+00:09:34,539 --> 00:09:40,240
+binary Kappa ships with Daniel define
+your your file that you'll do by just
+
+132
+00:09:40,240 --> 00:09:45,230
+writing or editing one of these proteins
+Daniel define your solver which again
+
+133
+00:09:45,230 --> 00:09:49,509
+will just live in Provo txt txt file
+that you can just work within a text
+
+134
+00:09:49,509 --> 00:09:54,200
+editor and then you'll pass all of these
+things to this existing binary to train
+
+135
+00:09:54,200 --> 00:09:57,990
+the model and battle spit out your train
+kept a model to test that you can then
+
+136
+00:09:57,990 --> 00:10:02,820
+use for other things so even if you want
+to train ResNet on image that you could
+
+137
+00:10:02,820 --> 00:10:06,000
+just follow the simple procedure and
+train a giant network without writing
+
+138
+00:10:06,000 --> 00:10:12,110
+any code that's really cool and so step
+one generally only to convert your data
+
+139
+00:10:12,110 --> 00:10:17,259
+so cafe uses I know we've talked a
+little bit about html5 as format for
+
+140
+00:10:17,259 --> 00:10:21,460
+storing pixels on desk continuously and
+then reading from them efficiently but
+
+141
+00:10:21,460 --> 00:10:26,940
+by default Kathy uses this other file
+format called LM TV so there's asked if
+
+142
+00:10:26,940 --> 00:10:30,570
+you if all you have is a bunch of images
+each image with a label then you can
+
+143
+00:10:30,570 --> 00:10:31,480
+call lol
+
+144
+00:10:31,480 --> 00:10:35,370
+cafe just has a script to convert that
+whole dataset into a giant alamoudi be
+
+145
+00:10:35,370 --> 00:10:42,169
+you can use for training so Jen just to
+give you an idea of the way it's this is
+
+146
+00:10:42,169 --> 00:10:46,240
+really easy you just create a text file
+that has the path to your images and
+
+147
+00:10:46,240 --> 00:10:49,959
+separated by the label and you just
+passenger kept a script wait a couple
+
+148
+00:10:49,958 --> 00:10:56,018
+hours if your data sets big giant IMDB
+file on disk and if you're working with
+
+149
+00:10:56,019 --> 00:11:01,860
+something else like HBO five then you'll
+have to create yourself probably so cafe
+
+150
+00:11:01,860 --> 00:11:06,060
+does actually have a couple of options
+to reading data and there's this date on
+
+151
+00:11:06,059 --> 00:11:11,888
+their window dato mayor for protection
+and actually can read from HDL 5 and
+
+152
+00:11:11,889 --> 00:11:14,350
+there's an option for reading stuff
+directly from memory that's especially
+
+153
+00:11:14,350 --> 00:11:18,480
+useful with Python interface but at
+least in my point of view all of these
+
+154
+00:11:18,480 --> 00:11:22,339
+types of other methods of reading and
+data to campaign are a little bit
+
+155
+00:11:22,339 --> 00:11:26,120
+second-class citizens in the cafe
+ecosystem and Ellen DBA is really the
+
+156
+00:11:26,120 --> 00:11:30,669
+easiest thing to work with so if you can
+you should probably try to convert your
+
+157
+00:11:30,669 --> 00:11:40,179
+data into mp3 format with so step 24
+campaign is to define your object so
+
+158
+00:11:40,179 --> 00:11:44,609
+like I said he'll just to write a big
+promo txt to find your not so here this
+
+159
+00:11:44,610 --> 00:11:48,818
+is this just a simple model for logistic
+regression you can see that I did not
+
+160
+00:11:48,818 --> 00:11:53,948
+follow my own advice and I'm reading
+data out of an HDL 5 file here then I
+
+161
+00:11:53,948 --> 00:11:59,278
+have a fully connected layer which is
+called inner product and Cathay than
+
+162
+00:11:59,278 --> 00:12:03,588
+their rights that's fully connected lair
+tells you the number of classes and how
+
+163
+00:12:03,589 --> 00:12:10,399
+to initialize the values and then I have
+a soft max loss function that read the
+
+164
+00:12:10,399 --> 00:12:15,458
+labels and produces loss ingredients
+from the opposite elected leader so a
+
+165
+00:12:15,458 --> 00:12:20,009
+couple things to point out about this
+file are that one every layer typically
+
+166
+00:12:20,009 --> 00:12:23,588
+include some blogs which to store the
+data and the gradients in the weights
+
+167
+00:12:23,589 --> 00:12:28,680
+and the layers blobs and Bellaire itself
+typically have the same name that can be
+
+168
+00:12:28,679 --> 00:12:34,269
+a little bit confusing another thing is
+that a lot of these layers will have two
+
+169
+00:12:34,269 --> 00:12:39,250
+blobs 14 weight and 14 bias and actually
+in this network right in here you'll
+
+170
+00:12:39,250 --> 00:12:43,149
+find the learning rates for those two
+blobs so that's learning rate and
+
+171
+00:12:43,149 --> 00:12:44,769
+regularization for both the way
+
+172
+00:12:44,769 --> 00:12:50,198
+bias of that later another thing to note
+is that to specify the number of output
+
+173
+00:12:50,198 --> 00:12:51,568
+classes is just the number
+
+174
+00:12:51,568 --> 00:12:57,378
+output on this fully connected lair
+perimeter and finally the quick and
+
+175
+00:12:57,379 --> 00:13:01,139
+dirty way to freeze layers and cafe is
+just to set the learning rate 204 that
+
+176
+00:13:01,139 --> 00:13:08,048
+for the blobs associated to that way
+it's our biases another thing to point
+
+177
+00:13:08,048 --> 00:13:12,600
+out is that for ResNet and other large
+models like Google that this can get
+
+178
+00:13:12,600 --> 00:13:17,110
+really out of hand really quickly so
+cafe doesn't really let you define like
+
+179
+00:13:17,110 --> 00:13:20,989
+composition ality so for ResNet they
+just repeat the same pattern over and
+
+180
+00:13:20,989 --> 00:13:26,459
+over and over in the Pro txt file so the
+ResNet proto txt is almost 7,000 lines
+
+181
+00:13:26,458 --> 00:13:31,219
+long so you could write that by hand but
+interim practice people tend to write
+
+182
+00:13:31,220 --> 00:13:35,470
+little python script to generate these
+things automatically so that's that's a
+
+183
+00:13:35,470 --> 00:13:41,879
+little bit gross you out if you want to
+find to a network rather than starting
+
+184
+00:13:41,879 --> 00:13:46,509
+from scratch then you'll typically
+download some existing product ext and
+
+185
+00:13:46,509 --> 00:13:50,230
+some existing weights file and work from
+there so the way you should think about
+
+186
+00:13:50,230 --> 00:13:54,139
+it is that the product txt file that
+we've seen here before it defines the
+
+187
+00:13:54,139 --> 00:13:58,159
+architecture of the network and Mendel
+the preacher and weights live in this
+
+188
+00:13:58,159 --> 00:14:03,230
+cafe model file that's a binary thing
+and you can't really inspected but the
+
+189
+00:14:03,230 --> 00:14:07,869
+way it works that's basically key-value
+pairs where it matches name where the
+
+190
+00:14:07,869 --> 00:14:13,790
+inside the cafe model it matches these
+names that are scoped to Lares so this
+
+191
+00:14:13,789 --> 00:14:19,389
+xc70 weight with the would-be though the
+way its corresponding to this final
+
+192
+00:14:19,389 --> 00:14:24,048
+fully connected layer and Alex not so
+then when you want to find you on your
+
+193
+00:14:24,048 --> 00:14:29,600
+own data when you start up cafe and you
+load a model and a product ext
+
+194
+00:14:29,600 --> 00:14:33,459
+just tries to match the key-value pairs
+of names and waits between the cafe
+
+195
+00:14:33,458 --> 00:14:35,008
+model and the product ext
+
+196
+00:14:35,009 --> 00:14:39,209
+so if the names of the same then your
+new network gets initialized from the
+
+197
+00:14:39,208 --> 00:14:43,008
+values and the proto txt which is really
+really useful and convenient for fine
+
+198
+00:14:43,009 --> 00:14:49,230
+tuning but if the layers if the names
+don't match than those layers actually
+
+199
+00:14:49,230 --> 00:14:52,980
+initialize from scratch so this is how
+for example you can read nationalize the
+
+200
+00:14:52,980 --> 00:14:57,810
+output in cafe so to be a little bit
+more concrete if you've
+
+201
+00:14:57,809 --> 00:15:02,250
+maybe download an image that model then
+this larry is going on this final fully
+
+202
+00:15:02,250 --> 00:15:06,289
+connected layer that's output in class
+course will have a thousand outputs but
+
+203
+00:15:06,289 --> 00:15:09,480
+now maybe for some problem you care
+about you only want have 10 outputs
+
+204
+00:15:09,480 --> 00:15:13,149
+you're gonna need to reindustrialize
+that final layer and realized it
+
+205
+00:15:13,149 --> 00:15:17,309
+randomly and fine-tune the network so
+the way that you do that is you need to
+
+206
+00:15:17,309 --> 00:15:22,088
+change the name of the lair in the Pro
+txt file to make sure that it's actually
+
+207
+00:15:22,089 --> 00:15:26,890
+initialize randomly and not reading from
+the from from the cafe model and if you
+
+208
+00:15:26,889 --> 00:15:30,919
+forget to do this then it'll actually
+crash and it'll give you a weird error
+
+209
+00:15:30,919 --> 00:15:35,419
+message about the shapes not aligning
+cause it'll be trying to store this
+
+210
+00:15:35,419 --> 00:15:39,299
+thousand dimensional weight matrix into
+this ten dimensional thing from your new
+
+211
+00:15:39,299 --> 00:15:46,129
+file and it won't work so the next step
+when working with cafe is to define the
+
+212
+00:15:46,129 --> 00:15:51,100
+solver the solver is also just a pro txt
+file you can see all the options for it
+
+213
+00:15:51,100 --> 00:15:56,620
+in that giant profile that I gave a link
+to a little look something like this for
+
+214
+00:15:56,620 --> 00:16:00,169
+Alex night maybe so that will define
+your learning rate and you're learning
+
+215
+00:16:00,169 --> 00:16:04,809
+way to K and your regularization how
+often to check everything like that but
+
+216
+00:16:04,809 --> 00:16:10,169
+these end up being less much less
+complex than that he's pro txt for the
+
+217
+00:16:10,169 --> 00:16:15,069
+networks this Alex neckties just maybe
+fourteen lines although what you will
+
+218
+00:16:15,070 --> 00:16:18,530
+see some times in practice is that if
+people want to have sort of complex
+
+219
+00:16:18,529 --> 00:16:22,299
+trading pipelines where they first one I
+trained with 11 learning rate in certain
+
+220
+00:16:22,299 --> 00:16:25,039
+parts of the network they want to train
+with another learning rate certain parts
+
+221
+00:16:25,039 --> 00:16:28,389
+of the network that you might end up
+with a cascade of different solver files
+
+222
+00:16:28,389 --> 00:16:31,490
+and actually run the most independent me
+we are sort of fine-tuning your own
+
+223
+00:16:31,490 --> 00:16:38,070
+model in separate stages using different
+solvers so once you've done all that
+
+224
+00:16:38,070 --> 00:16:43,550
+then you just trainer model so if you if
+you followed my advice and just use a
+
+225
+00:16:43,549 --> 00:16:49,208
+MTB and all these things about you just
+call this binary that is it that exists
+
+226
+00:16:49,208 --> 00:16:55,569
+in campaign already so here you just
+passed your solver and your txt and
+
+227
+00:16:55,570 --> 00:16:59,540
+Europe retrain weights file if you're
+fine tuning and it'll run maybe Friday
+
+228
+00:16:59,539 --> 00:17:03,659
+maybe for a long time and just checking
+and savings to desk and you'll be happy
+
+229
+00:17:03,659 --> 00:17:08,549
+one thing to point out here is that you
+specify which GPU it runs on this is
+
+230
+00:17:08,549 --> 00:17:11,209
+your last text but you can actually run
+in CPR
+
+231
+00:17:11,209 --> 00:17:17,288
+by setting this flag to my negative one
+and actually recent sometime in the last
+
+232
+00:17:17,288 --> 00:17:21,048
+year cafe added data parallelism to let
+you split up many batches across
+
+233
+00:17:21,048 --> 00:17:26,318
+multiple GPUs in your system you can
+actually add multiple GPUs on this flag
+
+234
+00:17:26,318 --> 00:17:29,710
+and if you just say all been Cafe will
+automatically split up many batches
+
+235
+00:17:29,710 --> 00:17:33,600
+across all the GPUs on your machine so
+that's really cool you've done multi GPU
+
+236
+00:17:33,599 --> 00:17:51,689
+training without writing a single line
+of code pretty cool cafe oh yeah
+
+237
+00:17:51,690 --> 00:17:57,230
+yeah I think so the question is how
+would you go about doing some more
+
+238
+00:17:57,230 --> 00:18:00,778
+complex initialization strategy for you
+maybe want to initialize the weights
+
+239
+00:18:00,778 --> 00:18:04,019
+from a preacher and model and use those
+same way as in multiple parts of your
+
+240
+00:18:04,019 --> 00:18:07,710
+network and then the answer is that you
+probably can't do that with a simple
+
+241
+00:18:07,710 --> 00:18:11,278
+mechanism you can kind of money on the
+weights and Python and that's probably
+
+242
+00:18:11,278 --> 00:18:17,669
+how you go about doing it right so I
+think we've mentioned this before that
+
+243
+00:18:17,669 --> 00:18:21,710
+cafe has this really great models you
+you can download lots of different types
+
+244
+00:18:21,710 --> 00:18:25,919
+of preteen models on a mission at and
+other datasets so this this model is it
+
+245
+00:18:25,919 --> 00:18:29,659
+was really top-notch you've got Alex
+natin BGG you've got residents up there
+
+246
+00:18:29,659 --> 00:18:33,840
+already pretty much lots and lots of
+really good models are up there so
+
+247
+00:18:33,839 --> 00:18:37,359
+that's that's a really really strong
+point about cafe that it's really easy
+
+248
+00:18:37,359 --> 00:18:40,428
+to download someone else's model and run
+it on your data are pointing to your
+
+249
+00:18:40,429 --> 00:18:42,350
+data
+
+250
+00:18:42,349 --> 00:18:46,298
+Cafe has a pipeline interface like I
+mentioned I
+
+251
+00:18:46,298 --> 00:18:49,069
+since there are so many things to cover
+I don't think I can dive into detail
+
+252
+00:18:49,069 --> 00:18:53,378
+here but as a kind of par for the course
+and cafe there's not really really great
+
+253
+00:18:53,378 --> 00:18:57,980
+documentation about the Python interface
+so you need to read the code and the
+
+254
+00:18:57,980 --> 00:18:58,690
+whole
+
+255
+00:18:58,690 --> 00:19:02,730
+the Python interface Street Cafe is
+mostly defined in these two in these two
+
+256
+00:19:02,730 --> 00:19:08,399
+files this CPP file uses boost Python if
+you've ever used that before talks to
+
+257
+00:19:08,398 --> 00:19:13,369
+wrap up some of the C++ classes and
+expose them to take on and then in this
+
+258
+00:19:13,369 --> 00:19:17,648
+. py file it actually attach additional
+methods and gives you more Python
+
+259
+00:19:17,648 --> 00:19:22,469
+interface so if you wanna know what
+kinds of methods and data types are
+
+260
+00:19:22,470 --> 00:19:27,000
+available in the cafe pipe interface
+your best bet is to just read 3 through
+
+261
+00:19:27,000 --> 00:19:31,339
+these two files and they're not too long
+so it's it's pretty easy to do
+
+262
+00:19:31,339 --> 00:19:37,038
+yes the Python interface in general is
+is pretty useful it lets you do maybe
+
+263
+00:19:37,038 --> 00:19:40,558
+crazy weight initialization strategies
+if you need to do something more complex
+
+264
+00:19:40,558 --> 00:19:44,960
+than just copy from a chain model it
+also makes it really easy to just get a
+
+265
+00:19:44,960 --> 00:19:48,710
+network and then run it forward and
+backward on with numpy from numpy array
+
+266
+00:19:48,710 --> 00:19:53,129
+is so for example you can implement
+things like deep dream and class
+
+267
+00:19:53,128 --> 00:19:56,798
+visualisations similar to that you did
+on the homework you can also do that
+
+268
+00:19:56,798 --> 00:20:01,349
+quite easily using the Python interface
+on cafe where you just need to take data
+
+269
+00:20:01,349 --> 00:20:03,899
+and then run it forward and backward
+through different parts of the network
+
+270
+00:20:03,900 --> 00:20:08,720
+work the Python interface is also quite
+nice if if you just want to extract
+
+271
+00:20:08,720 --> 00:20:12,220
+features like you have some data that
+you have some free trade model and you
+
+272
+00:20:12,220 --> 00:20:15,610
+want to track features from some part of
+the network and then maybe save them to
+
+273
+00:20:15,609 --> 00:20:20,259
+disk maybe 2005 file were some
+downstream processing that's quite easy
+
+274
+00:20:20,259 --> 00:20:25,660
+to do with the Python interface you can
+also actually Cafe has a kind of a new
+
+275
+00:20:25,660 --> 00:20:29,970
+feature where you can actually define
+layers entirely in Python but this is
+
+276
+00:20:29,970 --> 00:20:33,600
+I've never done it myself but it's it
+seems cool it seems nice but the
+
+277
+00:20:33,599 --> 00:20:37,259
+downside is that those layers will be
+CPU on me so we talked about
+
+278
+00:20:37,259 --> 00:20:41,809
+communication bottlenecks between the
+CPU and GPU that if you write letters in
+
+279
+00:20:41,809 --> 00:20:46,460
+Python then every forward and backward
+pass you'll be anchoring overhead I'm
+
+280
+00:20:46,460 --> 00:20:51,289
+not transfer although one nice place
+where pipes and wires could be useful as
+
+281
+00:20:51,289 --> 00:20:58,450
+custom loss functions so that's maybe
+something that you could keep in mind so
+
+282
+00:20:58,450 --> 00:21:02,450
+the quick overview of Catholic pros and
+cons that really from my point of view
+
+283
+00:21:02,450 --> 00:21:06,049
+if all you wanna do is kind of train a
+simple basic feedforward network
+
+284
+00:21:06,049 --> 00:21:09,730
+especially for classification and kathy
+is really really easy to get things up
+
+285
+00:21:09,730 --> 00:21:12,880
+and running you don't have to write any
+code yourself you just use all these are
+
+286
+00:21:12,880 --> 00:21:17,660
+pre-built tools and it's quite easy to
+run it has a Python interface which is
+
+287
+00:21:17,660 --> 00:21:21,259
+quite nice for using a little to work
+for a little bit more complex use cases
+
+288
+00:21:21,259 --> 00:21:25,329
+but it can be cumbersome when things get
+really crazy when you have these really
+
+289
+00:21:25,329 --> 00:21:29,299
+big networks like president especially
+with repeated module patterns they can
+
+290
+00:21:29,299 --> 00:21:33,450
+be tedious and for things like like
+recurrent networks where you want to
+
+291
+00:21:33,450 --> 00:21:37,519
+share waits between different parts of
+the network can be kind of company kind
+
+292
+00:21:37,519 --> 00:21:41,559
+of cumbersome in cafe it is possible but
+it's probably not the best thing to use
+
+293
+00:21:41,559 --> 00:21:46,250
+for that and the other downside the
+other big downside from my point of view
+
+294
+00:21:46,250 --> 00:21:50,220
+is that when you want to find your own
+type of lair in cafe you end up having
+
+295
+00:21:50,220 --> 00:21:55,440
+to write C++ code so that's not doesn't
+give you a very quick development cycle
+
+296
+00:21:55,440 --> 00:22:00,769
+so it's kind of a lot of kind of painful
+to write you letters so that's that's
+
+297
+00:22:00,769 --> 00:22:04,750
+why our world whirlwind tour of cafe so
+if there's any quick questions
+
+298
+00:22:04,750 --> 00:22:06,669
+yeah
+
+299
+00:22:06,669 --> 00:22:14,028
+cross validation and cafe so in the
+train Valparaiso txt you can try to find
+
+300
+00:22:14,028 --> 00:22:19,159
+a training phase and a testing phase so
+generally alright like a train about
+
+301
+00:22:19,159 --> 00:22:20,269
+product ext
+
+302
+00:22:20,269 --> 00:22:24,960
+and apply product ext and deploy will be
+used at on the task at hand but test
+
+303
+00:22:24,960 --> 00:22:33,409
+phase of the trail product ext will be
+used for validation ok that's that's all
+
+304
+00:22:33,409 --> 00:22:39,820
+there is to know about cabinet so the
+next one is torch so torch is really my
+
+305
+00:22:39,819 --> 00:22:42,980
+personal favorite so I have a little bit
+of bias here just to get that out in the
+
+306
+00:22:42,980 --> 00:22:46,259
+open that I've pretty much been using
+torch almost exclusively on my own
+
+307
+00:22:46,259 --> 00:22:51,749
+projects in the last year or so so a
+torch is originally from NYU it's
+
+308
+00:22:51,749 --> 00:22:56,450
+written in C and in lieu up and it's
+used a lot at Facebook indeed mind
+
+309
+00:22:56,450 --> 00:23:02,409
+especially I think also a lot of folks
+at Twitter use torch so one of the big
+
+310
+00:23:02,409 --> 00:23:05,309
+things that freaks people out of course
+is that you have to write in lieu of
+
+311
+00:23:05,308 --> 00:23:11,038
+which I had never had never heard of or
+used before starting to work with torch
+
+312
+00:23:11,038 --> 00:23:16,700
+but it actually isn't too bad that lure
+is best highly this high-level scripting
+
+313
+00:23:16,700 --> 00:23:20,999
+language that is really intended for
+embedded devices so it can run more
+
+314
+00:23:20,999 --> 00:23:24,720
+efficiently and it's a lot of very
+similar to JavaScript in a lot of ways
+
+315
+00:23:24,720 --> 00:23:29,749
+so another cool thing about lou is that
+because it's meant to be run on embedded
+
+316
+00:23:29,749 --> 00:23:33,929
+devices that you can actually do for
+loops are really fast and torch you know
+
+317
+00:23:33,929 --> 00:23:37,149
+how in Python if you're in a for loop
+it's going to be really slow that's
+
+318
+00:23:37,148 --> 00:23:40,798
+actually totally fine to do in in torch
+because it actually uses just-in-time
+
+319
+00:23:40,798 --> 00:23:46,249
+compilation to make these things really
+fast and torch is our newest most
+
+320
+00:23:46,249 --> 00:23:50,200
+important JavaScript in that it is
+functional language functions are
+
+321
+00:23:50,200 --> 00:23:54,058
+first-class citizens it's very common to
+pass pass callbacks around to different
+
+322
+00:23:54,058 --> 00:24:01,200
+parts of your code you also is has this
+idea of protocol inheritance where
+
+323
+00:24:01,200 --> 00:24:05,200
+they're sort of one data structure which
+in Lua is a table which you can think of
+
+324
+00:24:05,200 --> 00:24:09,558
+is being very similar to an object in
+javascript and you can implement things
+
+325
+00:24:09,558 --> 00:24:13,378
+like object oriented programming using
+prototypical inheritance in a similar
+
+326
+00:24:13,378 --> 00:24:18,428
+way as you would in javascript and one
+of the town's one of the downsides
+
+327
+00:24:18,429 --> 00:24:19,929
+actually the standard library
+
+328
+00:24:19,929 --> 00:24:24,820
+is kind of annoying sometimes and things
+like handling strings and whatnot can be
+
+329
+00:24:24,819 --> 00:24:28,999
+kind of cumbersome and maybe most
+annoying is its one indexed so all of
+
+330
+00:24:28,999 --> 00:24:33,058
+your intuition about four loops will be
+a little bit off for a while but other
+
+331
+00:24:33,058 --> 00:24:37,528
+than that it's pretty easy to pick up
+and I gave a link here to this website
+
+332
+00:24:37,528 --> 00:24:41,618
+claiming that you can learn Lua in 15
+minutes it might be a little bit of an
+
+333
+00:24:41,618 --> 00:24:45,209
+over so they might be overselling it a
+little bit but I think it is pretty easy
+
+334
+00:24:45,210 --> 00:24:50,298
+to pick up and start writing code and it
+pretty fast so the main idea behind
+
+335
+00:24:50,298 --> 00:24:55,398
+torch is this tensor class so you guys
+have been working in numpy a lot on your
+
+336
+00:24:55,398 --> 00:24:59,548
+assignments and the way the assignments
+are kind of structured is that the numpy
+
+337
+00:24:59,548 --> 00:25:03,329
+array gives you this really easy way to
+manipulate data in whatever way you want
+
+338
+00:25:03,329 --> 00:25:06,798
+and then you can use that number higher
+rates of buildup other abstractions like
+
+339
+00:25:06,798 --> 00:25:10,720
+known that libraries and whatnot but
+really the numpy array just lets you
+
+340
+00:25:10,720 --> 00:25:16,909
+manipulate data numerically in whatever
+way you want in complete flexibility so
+
+341
+00:25:16,909 --> 00:25:20,580
+if you are a call then maybe here's a
+look here's an example of some numpy
+
+342
+00:25:20,579 --> 00:25:24,918
+code that should be very familiar by now
+we're just computing a simple for a pass
+
+343
+00:25:24,919 --> 00:25:31,990
+of cool air rail network so maybe black
+wasn't the best choice here but we're
+
+344
+00:25:31,990 --> 00:25:36,569
+we're we're doing we're competing some
+some constants were competing some
+
+345
+00:25:36,569 --> 00:25:40,408
+weights are getting some random data and
+we're doing a matrix multiply a rally in
+
+346
+00:25:40,409 --> 00:25:44,789
+another major multiplied so that's
+that's very easy to write an umpire and
+
+347
+00:25:44,788 --> 00:25:49,538
+actually this has almost a 120
+translation into torched answers so now
+
+348
+00:25:49,538 --> 00:25:53,970
+on the right this is the exact same code
+but using torched answers and so here
+
+349
+00:25:53,970 --> 00:25:58,509
+we're defining our backsides input size
+and all that we're defining our weights
+
+350
+00:25:58,509 --> 00:26:02,929
+which are just torched answers were
+getting a random input vector we're
+
+351
+00:26:02,929 --> 00:26:07,929
+doing a forward pass this is doing a
+matrix multiply up to our sponsors this
+
+352
+00:26:07,929 --> 00:26:09,179
+c-max
+
+353
+00:26:09,179 --> 00:26:13,149
+element wise maximum that's a real issue
+and then we can compute cores using
+
+354
+00:26:13,148 --> 00:26:17,089
+another matrix multiply so in general
+pretty much any kind of code used
+
+355
+00:26:17,089 --> 00:26:18,689
+trading an umpire is pretty easy
+
+356
+00:26:18,690 --> 00:26:22,460
+pretty much has almost a one-by-one
+line-by-line translation into using
+
+357
+00:26:22,460 --> 00:26:25,400
+torched answers instead
+
+358
+00:26:25,400 --> 00:26:28,880
+so also remember in umpire that it's
+really easy to swap and use different
+
+359
+00:26:28,880 --> 00:26:33,690
+data types we talked about this ad
+nauseam the last lecture but at least in
+
+360
+00:26:33,690 --> 00:26:38,500
+numpy to switch to maybe a 32 bit
+floating point all you need to do is
+
+361
+00:26:38,500 --> 00:26:43,049
+cast your data to this other data type
+and it turns out that that's very very
+
+362
+00:26:43,049 --> 00:26:47,589
+easy to do in torture as well that our
+data type is now this this strength and
+
+363
+00:26:47,589 --> 00:26:52,990
+then we can easily cast our data to
+another data type but here's where two
+
+364
+00:26:52,990 --> 00:26:56,130
+years though so this next slide as the
+real reason why torture is infinitely
+
+365
+00:26:56,130 --> 00:27:02,020
+better than numpy and that's that the
+GPU is just another data type so when
+
+366
+00:27:02,019 --> 00:27:07,879
+you are right when you wanna run code on
+the GPU in torch you use this you import
+
+367
+00:27:07,880 --> 00:27:11,630
+another package and you have another
+time another data type which is torched
+
+368
+00:27:11,630 --> 00:27:16,810
+a tensor and now you cast your tensors
+to this other data type and now they
+
+369
+00:27:16,809 --> 00:27:21,819
+live on the GPU and running any kind of
+numerical operations on the tensors just
+
+370
+00:27:21,819 --> 00:27:26,500
+runs on the GPU so it's really really
+easy and torch to just write generic
+
+371
+00:27:26,500 --> 00:27:34,220
+tenser scientific computing code to run
+I GPU and be really fast so this like I
+
+372
+00:27:34,220 --> 00:27:37,819
+said these tensors are really you should
+think of them as similar to numpy raised
+
+373
+00:27:37,819 --> 00:27:41,689
+and there's a lot of documentation on
+but different kinds of methods that you
+
+374
+00:27:41,690 --> 00:27:46,250
+can work within 10 service up here and
+get up this documentation isn't super
+
+375
+00:27:46,250 --> 00:27:53,950
+complete but it's it's not bad so you
+should take a look at it so the next but
+
+376
+00:27:53,950 --> 00:27:58,200
+in practice you end up not really using
+the tensors too much in torch instead
+
+377
+00:27:58,200 --> 00:28:02,880
+use this other package called an end for
+neural networks so and and is this
+
+378
+00:28:02,880 --> 00:28:06,800
+pretty thin wrapper that actually
+defines neural network package just in
+
+379
+00:28:06,799 --> 00:28:10,930
+terms of these tents in terms of these
+tents are objects you should think of
+
+380
+00:28:10,930 --> 00:28:15,049
+this as being like a BPR more industrial
+strength version of the homework code
+
+381
+00:28:15,049 --> 00:28:20,240
+base where you have this this tenth this
+and the array this tensor abstraction
+
+382
+00:28:20,240 --> 00:28:24,480
+and then you implement an aromatic
+library on top of that in a nice clean
+
+383
+00:28:24,480 --> 00:28:30,410
+interface so here's the same to larry
+Adler network using the N package so we
+
+384
+00:28:30,410 --> 00:28:33,900
+define our network has a sequential so
+it's gonna be a stack of of sequential
+
+385
+00:28:33,900 --> 00:28:38,360
+operations it's gonna we're gonna first
+have a linear which is a fully connected
+
+386
+00:28:38,359 --> 00:28:41,759
+from our input mentioned marketing to
+mention we're gonna have a railing and
+
+387
+00:28:41,759 --> 00:28:48,420
+another lender now we can actually get
+the weights and gradients in second one
+
+388
+00:28:48,420 --> 00:28:52,070
+to answer for each using this get
+parameters method to now waits will be a
+
+389
+00:28:52,069 --> 00:28:55,750
+single torched answer that will have all
+the way to the network and graduates
+
+390
+00:28:55,750 --> 00:29:00,490
+will be a single torched answer for all
+of the above ingredients we can generate
+
+391
+00:29:00,490 --> 00:29:05,730
+some random data now to a forward pass
+we just call Matt the format on the
+
+392
+00:29:05,730 --> 00:29:11,599
+object using our data this gives us our
+scores to computer loss we have a
+
+393
+00:29:11,599 --> 00:29:16,769
+separate criterion object that is our
+loss function so we computer lost by
+
+394
+00:29:16,769 --> 00:29:21,289
+calling the fourth method of the
+criteria now we've done our forecast
+
+395
+00:29:21,289 --> 00:29:27,279
+easy and backward pass we first set and
+20 call a backward on the loss function
+
+396
+00:29:27,279 --> 00:29:31,609
+and then a backward I'm at work now this
+has updated all of the gradients for the
+
+397
+00:29:31,609 --> 00:29:35,319
+network in the grad params so we can
+just make a gradient stuff very easily
+
+398
+00:29:35,319 --> 00:29:40,419
+so this would be multiplying the
+graduates by the opposite of learning
+
+399
+00:29:40,420 --> 00:29:44,130
+rate and then adding it to the ways
+that's a simple gradient descent update
+
+400
+00:29:44,130 --> 00:29:50,400
+rights that's that's all of the rights
+that would have been maybe a little bit
+
+401
+00:29:50,400 --> 00:29:53,560
+more clear but we have not we have
+weights graduates who have lost function
+
+402
+00:29:53,559 --> 00:30:00,730
+we get random data from forward and
+backward make an update and as as you
+
+403
+00:30:00,730 --> 00:30:03,930
+might expect from looking at that answer
+it's quite easy to make this thing run
+
+404
+00:30:03,930 --> 00:30:09,570
+on GPU so to run on these networks on
+the GPU we import a couple new packages
+
+405
+00:30:09,569 --> 00:30:14,519
+through torture and to an end which are
+two versions of everything and then we
+
+406
+00:30:14,519 --> 00:30:17,930
+just need to cast our network and our
+loss function to this other data type
+
+407
+00:30:17,930 --> 00:30:23,490
+and we also need to cast our data and
+labels and now this whole network will
+
+408
+00:30:23,490 --> 00:30:28,660
+run and trained on the GPU so it's it's
+pretty easy now in what was that like 40
+
+409
+00:30:28,660 --> 00:30:31,320
+lines of code we've written a fully
+connected network and we can train on
+
+410
+00:30:31,319 --> 00:30:37,089
+the GPU but one problem here is that
+we're just using vanilla gradient
+
+411
+00:30:37,089 --> 00:30:41,000
+descent which is not so great and as you
+saw on the assignments other things like
+
+412
+00:30:41,000 --> 00:30:45,329
+out on our mess popped into work much
+better in practice so to solve that
+
+413
+00:30:45,329 --> 00:30:50,319
+torch gives us the opportunity package
+so optimist quite easy to use again we
+
+414
+00:30:50,319 --> 00:30:51,799
+just import a new package up here
+
+415
+00:30:51,799 --> 00:30:57,799
+here and now what changes is that we
+actually need to define this callback
+
+416
+00:30:57,799 --> 00:31:02,569
+function so before we were just calling
+forward and backward exclude explicitly
+
+417
+00:31:02,569 --> 00:31:06,960
+ourself instead we're going to find this
+callback function that will run the
+
+418
+00:31:06,960 --> 00:31:10,750
+network forward and backward on data and
+then return the loss and the gradient
+
+419
+00:31:10,750 --> 00:31:15,400
+and now to make an update stop on our
+network will actually pass this callback
+
+420
+00:31:15,400 --> 00:31:21,259
+function to this Adam method from the
+Optim package so this this is maybe a
+
+421
+00:31:21,259 --> 00:31:26,940
+little bit awkward but you know we can
+use any kind of update rule using just a
+
+422
+00:31:26,940 --> 00:31:31,430
+couple lines of change from what we had
+before and again this is very easy to
+
+423
+00:31:31,430 --> 00:31:38,900
+add to run on the GPU by just casting
+everything to go right so as we saw in
+
+424
+00:31:38,900 --> 00:31:44,220
+cafe cafe sort of implements everything
+in terms of next and layers and cafe has
+
+425
+00:31:44,220 --> 00:31:48,750
+this really hard distinction between
+that and the lair in torch they don't we
+
+426
+00:31:48,750 --> 00:31:52,400
+don't really draw this distinction
+everything is just a model so the entire
+
+427
+00:31:52,400 --> 00:31:59,750
+network is a module and also each
+individual larry is a module so modules
+
+428
+00:31:59,750 --> 00:32:03,650
+are just classes that are defined in
+lieu of that rut that are implemented
+
+429
+00:32:03,650 --> 00:32:08,880
+using that answer API so these modules
+are since the written law they're quite
+
+430
+00:32:08,880 --> 00:32:13,260
+easy to understand so many here is the
+fully connected now is the the fully
+
+431
+00:32:13,259 --> 00:32:17,039
+connected larry and this is the
+constructor you can see it's just
+
+432
+00:32:17,039 --> 00:32:23,210
+setting up tents as for the weight and
+the bias and because this tensor API in
+
+433
+00:32:23,210 --> 00:32:28,100
+torch lets us easily run the same code
+on GPU and CPU than all of these layers
+
+434
+00:32:28,099 --> 00:32:32,359
+will just be written in terms of the
+tensor API and then Heasley run on both
+
+435
+00:32:32,359 --> 00:32:37,529
+devices so these modules need to
+implement a forward and backward so far
+
+436
+00:32:37,529 --> 00:32:42,670
+forward babe decided to call it update
+output so here's the example of the
+
+437
+00:32:42,670 --> 00:32:47,250
+update output for the full text of later
+there's actually a couple cases they
+
+438
+00:32:47,250 --> 00:32:50,480
+need to deal with a couple different
+cases here to be with me back vs non me
+
+439
+00:32:50,480 --> 00:32:55,170
+back in parts but other than that but
+should be quite easy to read before
+
+440
+00:32:55,170 --> 00:33:00,830
+further backward pass there's a pair of
+methods update grad input which receives
+
+441
+00:33:00,829 --> 00:33:03,970
+the upstream gradients and computes the
+gradients respected
+
+442
+00:33:03,970 --> 00:33:09,160
+input and again this is just implemented
+in the tensor API so it's very easy to
+
+443
+00:33:09,160 --> 00:33:14,279
+understand its just a bit just the same
+type of thing you saw on homework and we
+
+444
+00:33:14,279 --> 00:33:17,990
+also implement and accumulate grab
+parameters which computes the gradients
+
+445
+00:33:17,990 --> 00:33:21,480
+with respect to the weights of the
+network as you saw in the constructor
+
+446
+00:33:21,480 --> 00:33:25,610
+the weights on the biases are held in
+instance variables this module and
+
+447
+00:33:25,609 --> 00:33:30,309
+accumulate grad parameters will receive
+gradients from upstream and accumulate
+
+448
+00:33:30,309 --> 00:33:34,940
+gradients of the parameters with respect
+to the upstream radians and again this
+
+449
+00:33:34,940 --> 00:33:39,809
+is very simple just using the tensor API
+
+450
+00:33:39,809 --> 00:33:44,200
+torch actually has a ton of different
+modules available the documentation here
+
+451
+00:33:44,200 --> 00:33:46,980
+can be a little bit out of date but if
+you just go on get up you can see all
+
+452
+00:33:46,980 --> 00:33:51,460
+the files that give you all the goodies
+to play with and he's actually get
+
+453
+00:33:51,460 --> 00:33:55,930
+updated a lot so just a point out a
+couple these these pre-war just added me
+
+454
+00:33:55,930 --> 00:34:00,750
+last week so torches always adding new
+modules that you can add your networks
+
+455
+00:34:00,750 --> 00:34:06,390
+which is pretty fun but when these
+existing modules aren't good enough it's
+
+456
+00:34:06,390 --> 00:34:10,579
+actually very easy to write your own so
+because you can just implement these
+
+457
+00:34:10,579 --> 00:34:13,989
+things using these tenser using the
+tensor API and just implement the
+
+458
+00:34:13,989 --> 00:34:17,259
+forward and backward it's not much
+harder than implementing layers on the
+
+459
+00:34:17,260 --> 00:34:21,890
+homeworks so here's just a small example
+this is a stupid module that just takes
+
+460
+00:34:21,889 --> 00:34:28,210
+its input and multiply it by two and you
+can see we implement the update graph
+
+461
+00:34:28,210 --> 00:34:31,849
+template and now we've implemented a new
+layer and torque just twenty lines of
+
+462
+00:34:31,849 --> 00:34:35,929
+code and then that's really easy and
+then it's very easy to use in other code
+
+463
+00:34:35,929 --> 00:34:40,710
+just import it and I you can add its
+networks and so on and the really cool
+
+464
+00:34:40,710 --> 00:34:44,920
+thing about this is because this is just
+the tensor API you can do whatever kind
+
+465
+00:34:44,920 --> 00:34:48,579
+of arbitrary thing you want inside of
+these forward and backward if you need
+
+466
+00:34:48,579 --> 00:34:52,730
+to do for loops or complicated and
+parent of code or anything or maybe
+
+467
+00:34:52,730 --> 00:34:56,980
+stochastic things for drop out or
+rationalization than any kind of any
+
+468
+00:34:56,980 --> 00:34:59,949
+whatever kind of code you want to look
+forward and backward pass you just
+
+469
+00:34:59,949 --> 00:35:03,500
+implemented yourself inside these
+modules so it's usually very easy very
+
+470
+00:35:03,500 --> 00:35:11,500
+easy to implement your own new types of
+players and torch so torch but of course
+
+471
+00:35:11,500 --> 00:35:14,250
+using individual layers on their own
+isn't so useful
+
+472
+00:35:14,250 --> 00:35:16,960
+we need people to stitch them together
+into larger networks
+
+473
+00:35:16,960 --> 00:35:21,220
+so far this torch uses containers we
+already saw one in the previous example
+
+474
+00:35:21,219 --> 00:35:26,549
+which was this sequential container so
+consequential container is just a stack
+
+475
+00:35:26,550 --> 00:35:29,950
+of modules that all we're one who
+receives the output from the previous
+
+476
+00:35:29,949 --> 00:35:35,639
+one and just go back that's probably the
+most commonly used another one you might
+
+477
+00:35:35,639 --> 00:35:40,799
+see is this parent is this cunt at table
+so maybe if you have an input and you
+
+478
+00:35:40,800 --> 00:35:44,289
+want to apply different to different
+modules to the same input than the
+
+479
+00:35:44,289 --> 00:35:49,099
+content table as you do that and you
+receive the output Celeste another one
+
+480
+00:35:49,099 --> 00:35:53,280
+you might see as a parallel table if you
+have a list of inputs and you want to
+
+481
+00:35:53,280 --> 00:35:57,500
+apply different modules to different
+each element of the list then you can
+
+482
+00:35:57,500 --> 00:36:04,588
+use a parallel tabor table for that sort
+of the construction but when things get
+
+483
+00:36:04,588 --> 00:36:08,980
+really complicated so actually those
+those containers that I just told you
+
+484
+00:36:08,980 --> 00:36:13,480
+should in theory be easy to be possible
+to implement just about aids apology you
+
+485
+00:36:13,480 --> 00:36:16,980
+want but it can be really hairy in
+practice to wire up really complicated
+
+486
+00:36:16,980 --> 00:36:21,480
+things using those containers so torch
+provides another package called pennant
+
+487
+00:36:21,480 --> 00:36:23,230
+graph that lets you hook up
+
+488
+00:36:23,230 --> 00:36:28,210
+container hook up things more
+complicated topologies pretty easily so
+
+489
+00:36:28,210 --> 00:36:32,400
+here's an example if we have maybe if we
+have three inputs we want to produce one
+
+490
+00:36:32,400 --> 00:36:36,930
+outputs and we want to produce them with
+this pretty simple update rule that
+
+491
+00:36:36,929 --> 00:36:40,379
+corresponds to this type of
+computational graph that we've seen many
+
+492
+00:36:40,380 --> 00:36:44,869
+times in lecture for different types of
+problems so you could actually implement
+
+493
+00:36:44,869 --> 00:36:49,430
+this just fine using parallel and
+sequential and cunt at table but it
+
+494
+00:36:49,429 --> 00:36:53,009
+could be kind of a mass so when you
+wanna do things like this it's very
+
+495
+00:36:53,010 --> 00:36:58,470
+common to send a graph instead so this
+graph code is is quite easy so here this
+
+496
+00:36:58,469 --> 00:37:03,179
+function is going to build a module
+using a graph and then return it so here
+
+497
+00:37:03,179 --> 00:37:09,129
+we import the graph package and then
+inside here this is a bit of money
+
+498
+00:37:09,130 --> 00:37:14,329
+syntax so this is actually not a tensor
+this is the finding a symbolic variable
+
+499
+00:37:14,329 --> 00:37:19,480
+so this is saying that our our tents or
+object is going to receive XY and Z as
+
+500
+00:37:19,480 --> 00:37:25,300
+inputs and now share were actually doing
+symbolic operations on those inputs so
+
+501
+00:37:25,300 --> 00:37:26,840
+here we're saying that
+
+502
+00:37:26,840 --> 00:37:32,700
+we wanted to have a pointwise edition of
+X&Y we want to have played twice
+
+503
+00:37:32,699 --> 00:37:38,159
+multiplication of ANZ store that and be
+and now pointwise edition of A&B and
+
+504
+00:37:38,159 --> 00:37:42,159
+store that and see and again these are
+not actual tenser objects these are now
+
+505
+00:37:42,159 --> 00:37:45,109
+sort of symbolic references that are you
+being used to build up this
+
+506
+00:37:45,110 --> 00:37:50,420
+computational graph in the background
+and now we can actually returned a
+
+507
+00:37:50,420 --> 00:37:55,159
+module here where we say that our module
+will have input X Y and Z and outputs
+
+508
+00:37:55,159 --> 00:38:00,920
+see and this end I G module will
+actually give us an object conforming to
+
+509
+00:38:00,920 --> 00:38:05,559
+the module API that implements its
+computation so then after we build the
+
+510
+00:38:05,559 --> 00:38:10,619
+Montreal we can construct concrete court
+torched answers and then feed them into
+
+511
+00:38:10,619 --> 00:38:19,170
+the module that will actually compute
+the function so a torch actually quite
+
+512
+00:38:19,170 --> 00:38:22,670
+good at preteen models there is a
+package called load campaign that lets
+
+513
+00:38:22,670 --> 00:38:27,050
+you load up many different types of
+pre-trial models from cafe and it'll
+
+514
+00:38:27,050 --> 00:38:31,590
+convert them into their torture
+equivalents you can load up the cafe
+
+515
+00:38:31,590 --> 00:38:35,539
+product ext and the cafe model file and
+it'll turn into a giant stack of
+
+516
+00:38:35,539 --> 00:38:39,929
+sequential mayors load Cafe is not super
+General Beau and only works for certain
+
+517
+00:38:39,929 --> 00:38:44,649
+types of networks but in particular load
+Cafe will let you load up Alex not and
+
+518
+00:38:44,650 --> 00:38:49,660
+campaign and PGG so they're probably
+some of the most commonly used there are
+
+519
+00:38:49,659 --> 00:38:54,259
+also a couple different implementations
+you load up Google Matt into into torch
+
+520
+00:38:54,260 --> 00:38:58,520
+to let you load up retrain Google that
+models into torch and actually very
+
+521
+00:38:58,519 --> 00:39:01,869
+recently Facebook went ahead and
+reimplemented the residual networks
+
+522
+00:39:01,869 --> 00:39:07,900
+straight up in torch and they released
+preteen models for that so between Alex
+
+523
+00:39:07,900 --> 00:39:11,849
+not campaign at BG Group and ResNet I
+think that's probably everything you
+
+524
+00:39:11,849 --> 00:39:17,869
+need all the preteen models that most
+people want to use another point is that
+
+525
+00:39:17,869 --> 00:39:21,549
+because torches using lure we can't use
+pip to install packages and there's
+
+526
+00:39:21,550 --> 00:39:24,920
+another very similar idea called
+barracks that's easily install new
+
+527
+00:39:24,920 --> 00:39:26,750
+packages an update packages
+
+528
+00:39:26,750 --> 00:39:29,650
+that's quite very easy to use
+
+529
+00:39:29,650 --> 00:39:34,079
+and this is kind of just a list of some
+packages that I find very useful in
+
+530
+00:39:34,079 --> 00:39:38,349
+torch so there could be undone by names
+you can read and write to HDR 5 files
+
+531
+00:39:38,349 --> 00:39:44,640
+you can read and write JSON there's this
+funny one from Twitter autorad that is a
+
+532
+00:39:44,639 --> 00:39:47,980
+little bit like the animal which will
+talk about it a bit but I haven't used
+
+533
+00:39:47,980 --> 00:39:52,369
+it but it's kind of cool to look at and
+actually Facebook has a pretty useful
+
+534
+00:39:52,369 --> 00:39:57,849
+library for torches while that
+implements a fifty convolutions and also
+
+535
+00:39:57,849 --> 00:40:01,548
+implements data-parallel and model
+parallelism
+
+536
+00:40:01,548 --> 00:40:07,449
+so that's pretty a pretty nice thing to
+have so very typical workflow in torch
+
+537
+00:40:07,449 --> 00:40:11,239
+is that you'll have some preprocessing
+script often and pecan that'll
+
+538
+00:40:11,239 --> 00:40:15,818
+preprocess your data and dump it on to
+some nice format in desk usually HDL 5
+
+539
+00:40:15,818 --> 00:40:20,528
+for big things and Jason little things
+then you will I'll typically write a
+
+540
+00:40:20,528 --> 00:40:25,318
+trained at low up at all read from the
+HDL 5 and train the model and optimize
+
+541
+00:40:25,318 --> 00:40:30,088
+the model and save checkpoints the desk
+and then usually I have some evaluate
+
+542
+00:40:30,088 --> 00:40:35,019
+script that loads up a train model and
+does it for something useful so a case
+
+543
+00:40:35,019 --> 00:40:39,000
+study for this type of workflow is this
+project I put up on github a week ago
+
+544
+00:40:39,000 --> 00:40:43,969
+that implements character level language
+models and torch so here there's a
+
+545
+00:40:43,969 --> 00:40:48,239
+preprocessing script that converts text
+files into HTML 5 files there's a
+
+546
+00:40:48,239 --> 00:40:52,889
+training script that loads for html5 and
+trains these recurrent networks and then
+
+547
+00:40:52,889 --> 00:40:57,190
+there's a sampling script that loads up
+the checkpoints generate tax so that's
+
+548
+00:40:57,190 --> 00:41:03,720
+that's kind of like my typical workflow
+and torch so the quick pros and cons I
+
+549
+00:41:03,719 --> 00:41:07,169
+would say about torture that its lure is
+a big turnoff for people but I don't
+
+550
+00:41:07,170 --> 00:41:11,690
+think it's actually that big a deal it's
+definitely less plug and play in cafe so
+
+551
+00:41:11,690 --> 00:41:15,760
+you'll end up writing a lot of your own
+code typically which maybe is a little
+
+552
+00:41:15,760 --> 00:41:20,028
+bit more overhead but also gives you
+more flexibility it has a lot of modular
+
+553
+00:41:20,028 --> 00:41:24,278
+pieces that are easy to plug and play
+and the like the standard library
+
+554
+00:41:24,278 --> 00:41:26,880
+because it's all written in blue it's
+quite easy to read and quite easy to
+
+555
+00:41:26,880 --> 00:41:31,740
+understand there's a lot of preteen
+models which is quite nice but
+
+556
+00:41:31,739 --> 00:41:34,598
+unfortunately it's it's a little bit
+awkward to use for recurrent networks in
+
+557
+00:41:34,599 --> 00:41:38,640
+general so when you wanna have one month
+when you want to have multiple modules
+
+558
+00:41:38,639 --> 00:41:42,028
+that share weights with each other you
+can actually do this and torch but it's
+
+559
+00:41:42,028 --> 00:41:42,469
+it's kind
+
+560
+00:41:42,469 --> 00:41:47,199
+brittle and you can run into subtle bugs
+there so that's that's probably the
+
+561
+00:41:47,199 --> 00:41:49,649
+biggest caveat is that recurrent
+networks can be tricky
+
+562
+00:41:49,650 --> 00:42:15,800
+any any questions about torch yeah yeah
+yeah but it's not out of the question
+
+563
+00:42:15,800 --> 00:42:21,570
+was about how how bad are four loops and
+pecan is interpreted right so that's
+
+564
+00:42:21,570 --> 00:42:24,359
+that's really why for these are really
+bad in Python because it's interpreted
+
+565
+00:42:24,358 --> 00:42:27,139
+and every for lupus actually doing quite
+a lot of memory allocation and other
+
+566
+00:42:27,139 --> 00:42:31,960
+things behind the scenes but if you've
+ever use JavaScript then loops and
+
+567
+00:42:31,960 --> 00:42:35,059
+JavaScript tend to be pretty fast
+because the runtime actually just
+
+568
+00:42:35,059 --> 00:42:39,759
+compile the code on the fly down to
+native code so loops in JavaScript are
+
+569
+00:42:39,760 --> 00:42:44,520
+really fast and fluid and lou actually
+has a similar mechanism where it'll sort
+
+570
+00:42:44,519 --> 00:42:49,588
+of automatically and magically compiled
+code for human genetic code so your lips
+
+571
+00:42:49,588 --> 00:42:53,608
+can be really fast but that only I'm
+writing custom vectorized code still can
+
+572
+00:42:53,608 --> 00:43:01,619
+give you a lot of speed up all rights
+we've got now maybe half an hour left to
+
+573
+00:43:01,619 --> 00:43:06,420
+cover two more frameworks so we're
+running out of time so next up is no
+
+574
+00:43:06,420 --> 00:43:12,000
+such thing I know is from Joshua banjos
+group at the University of Montreal and
+
+575
+00:43:12,000 --> 00:43:16,250
+it's really all about computational
+graphs so we saw a little bit innn graph
+
+576
+00:43:16,250 --> 00:43:19,559
+from torch that computation crafts are
+this pretty nice way to stitch together
+
+577
+00:43:19,559 --> 00:43:24,139
+big complicated architectures and Fionna
+really takes this idea of computation on
+
+578
+00:43:24,139 --> 00:43:29,409
+graphics and runs with it to the extreme
+and it also has some high-level library
+
+579
+00:43:29,409 --> 00:43:33,940
+is scarce and lasagna that will touch on
+as well so here's the same computation
+
+580
+00:43:33,940 --> 00:43:38,570
+craft we saw in the context of a graph
+before and we can actually walk through
+
+581
+00:43:38,570 --> 00:43:43,400
+implementation of this in 2010 so you
+can see that in here we're importing
+
+582
+00:43:43,400 --> 00:43:49,440
+fiato and the fiato tenser object and
+now here we're defining XY and Z as
+
+583
+00:43:49,440 --> 00:43:53,099
+symbolic as symbolic variables this is
+actually very similar to the end and
+
+584
+00:43:53,099 --> 00:43:55,530
+graph example we saw just a few slides
+ago
+
+585
+00:43:55,530 --> 00:43:59,500
+so that these are actually not numpy
+raise these are sort of symbolic objects
+
+586
+00:43:59,500 --> 00:44:05,690
+in the in the computation grass then we
+can actually computer these outputs
+
+587
+00:44:05,690 --> 00:44:11,679
+symbolically so XY and Z are these
+symbolic things and we can compute ab&c
+
+588
+00:44:11,679 --> 00:44:15,769
+just using these overloaded operators
+and that'll be building up this
+
+589
+00:44:15,769 --> 00:44:19,929
+computational graph in the background
+then once we've built up our
+
+590
+00:44:19,929 --> 00:44:23,839
+computational craft we actually want to
+be able to run certain parts of it on
+
+591
+00:44:23,840 --> 00:44:29,240
+real data so we call this the anode odd
+function thing so this is saying about
+
+592
+00:44:29,239 --> 00:44:33,269
+we want to take our function will take
+inputs XY and Z and it'll produce
+
+593
+00:44:33,269 --> 00:44:38,329
+outputs see this will return an actual
+python function that we can evaluate on
+
+594
+00:44:38,329 --> 00:44:42,239
+real data and I'd like to point out that
+this is really where all the magic and
+
+595
+00:44:42,239 --> 00:44:46,319
+Fionna was happening that when you call
+the function it can be doing crazy crazy
+
+596
+00:44:46,320 --> 00:44:49,580
+things it can simplify your
+computational graph to make it more
+
+597
+00:44:49,579 --> 00:44:54,199
+efficient it can actually symbolically
+divider I pretense and other things and
+
+598
+00:44:54,199 --> 00:44:58,319
+it can actually generate native code so
+when you call function to connect it
+
+599
+00:44:58,320 --> 00:45:02,450
+actually sometimes compiled code on the
+flights are unofficially on the GPU so
+
+600
+00:45:02,449 --> 00:45:06,389
+all the magic and Fiano is really coming
+from this from this little innocent
+
+601
+00:45:06,389 --> 00:45:11,750
+looking statement in Python but there's
+a lot going on under the hood here and
+
+602
+00:45:11,750 --> 00:45:14,710
+now once we've gotten this magic
+function through all this crazy stuff
+
+603
+00:45:14,710 --> 00:45:19,159
+then we can just run it on actual number
+higher raise so here we instantiate
+
+604
+00:45:19,159 --> 00:45:25,440
+xxyyxx easy as actual as actual number
+higher grades and then we can just about
+
+605
+00:45:25,440 --> 00:45:30,639
+our function and passing these actual
+number is to get the values out and this
+
+606
+00:45:30,639 --> 00:45:35,359
+is doing the same thing as doing these
+computations explosively in Python
+
+607
+00:45:35,360 --> 00:45:39,289
+except that the final version could be
+much more efficient due to all the magic
+
+608
+00:45:39,289 --> 00:45:42,840
+under the hood and piano version
+actually could be running on the GPU if
+
+609
+00:45:42,840 --> 00:45:47,289
+you have not configured but
+unfortunately we don't really care about
+
+610
+00:45:47,289 --> 00:45:51,659
+computing things like this we wanted to
+know thats so here's an example of a
+
+611
+00:45:51,659 --> 00:45:57,629
+simple tool air balloon at 10 so the
+idea is the same that we're going to
+
+612
+00:45:57,630 --> 00:46:02,860
+declare our inputs but now instead of
+just XY and Z we have our input syntax
+
+613
+00:46:02,860 --> 00:46:06,490
+our labels and Y which are better
+
+614
+00:46:06,489 --> 00:46:11,009
+are to weight matrices W&W too so we're
+just sort of setting up these symbolic
+
+615
+00:46:11,010 --> 00:46:17,540
+variables that will be elements in our
+computational grass now 44 pass we it
+
+616
+00:46:17,539 --> 00:46:21,179
+looks kinda like numpy but it's not
+bizarre operations on the symbolic
+
+617
+00:46:21,179 --> 00:46:24,669
+objects that are building up the graph
+in the background so here computing
+
+618
+00:46:24,670 --> 00:46:28,909
+activations with this . method that is
+matrix multiply but we need symbolic
+
+619
+00:46:28,909 --> 00:46:33,210
+objects we're doing a real issue using
+this this library function and we're
+
+620
+00:46:33,210 --> 00:46:37,769
+doing another matrix multiply and then
+we can actually compute the loss the
+
+621
+00:46:37,769 --> 00:46:41,210
+probabilities and the Los using a couple
+other library functions and again these
+
+622
+00:46:41,210 --> 00:46:44,349
+are all operations on the symbolic
+objects that are building up the
+
+623
+00:46:44,349 --> 00:46:50,420
+computational grass so that we can just
+compiled this function so our function
+
+624
+00:46:50,420 --> 00:46:54,570
+is going to take our data are labels and
+are 28 factor in our to weight matrices
+
+625
+00:46:54,570 --> 00:46:58,890
+and puts and as outputs I will return
+the loss and a scalar and our
+
+626
+00:46:58,889 --> 00:47:04,109
+classification scores in a vector and
+now we can run this thing on real data
+
+627
+00:47:04,110 --> 00:47:07,559
+just like we saw in the previous slide
+we can instantiate some actual number I
+
+628
+00:47:07,559 --> 00:47:13,759
+raised and then passed to the function
+so this is great but this is only the
+
+629
+00:47:13,760 --> 00:47:17,820
+fourth pass actually to be able to train
+this network and computer radiance so
+
+630
+00:47:17,820 --> 00:47:23,000
+here we just need to add a couple lines
+of code to do that so this is the same
+
+631
+00:47:23,000 --> 00:47:27,170
+as before we're so we're defining are
+symbolic variables for our inputs and
+
+632
+00:47:27,170 --> 00:47:29,510
+our weights and so forth and we're
+combining
+
+633
+00:47:29,510 --> 00:47:33,980
+running the same four passes before to
+compute the loss to the computer law
+
+634
+00:47:33,980 --> 00:47:37,920
+symbolically know the difference is that
+we actually can do
+
+635
+00:47:37,920 --> 00:47:43,680
+symbolic differentiation here so this is
+Dee W one and TW to we're telling the I
+
+636
+00:47:43,679 --> 00:47:47,129
+know that we want those to be the
+gradient of the ingredients of the loss
+
+637
+00:47:47,130 --> 00:47:52,280
+with respect to those other symbolic
+variables W one Min W two so this is
+
+638
+00:47:52,280 --> 00:47:52,930
+really cool
+
+639
+00:47:52,929 --> 00:47:56,549
+fiato just lets you take arbitrary
+gradients of any part of the graph with
+
+640
+00:47:56,550 --> 00:48:00,289
+respect to any other part of the graph
+not introduce introduced those as new
+
+641
+00:48:00,289 --> 00:48:05,190
+symbolic variables in the graph so that
+you can really go crazy with that but
+
+642
+00:48:05,190 --> 00:48:09,470
+here in this case we're just gonna
+return those Canadians as outputs so now
+
+643
+00:48:09,469 --> 00:48:14,049
+we're gonna compile a new function that
+again is going to take our inputs are
+
+644
+00:48:14,050 --> 00:48:19,510
+input input pixel sacks and our labels
+why along with the 28 matrices
+
+645
+00:48:19,510 --> 00:48:23,140
+and now it's going to return our loss
+the classification scores and also these
+
+646
+00:48:23,139 --> 00:48:28,250
+two ingredients so now we can actually
+use this setup to train a very simple
+
+647
+00:48:28,250 --> 00:48:32,809
+neural network so we can actually just
+use gradient descent implement gradient
+
+648
+00:48:32,809 --> 00:48:36,630
+descent in just a couple lines using
+using this this using this computation
+
+649
+00:48:36,630 --> 00:48:38,990
+grass so here we're
+
+650
+00:48:38,989 --> 00:48:43,599
+instantiating actual number higher raise
+for the data set and the factors and
+
+651
+00:48:43,599 --> 00:48:45,489
+some random matrices as again
+
+652
+00:48:45,489 --> 00:48:49,839
+actual number higher raise and now every
+time we make this call to ask when we
+
+653
+00:48:49,840 --> 00:48:50,519
+get back
+
+654
+00:48:50,519 --> 00:48:54,710
+numpy array is containing a loss and the
+scores and the gradients so now that we
+
+655
+00:48:54,710 --> 00:48:57,800
+have the gradients we can just make a
+simple gradient update on our weights
+
+656
+00:48:57,800 --> 00:49:01,970
+and measures promised an alley-oop to
+train our network but there's actually a
+
+657
+00:49:01,969 --> 00:49:06,039
+big of a problem with this especially if
+you're running on a GPU anyone can
+
+658
+00:49:06,039 --> 00:49:15,599
+anyone want totally lost the problem is
+that this is actually incurring a lot of
+
+659
+00:49:15,599 --> 00:49:21,059
+over communication overhead between the
+CPU and GPU because every time we we
+
+660
+00:49:21,059 --> 00:49:24,799
+call this a function and we get back
+these gradients thats copying the
+
+661
+00:49:24,800 --> 00:49:29,720
+gradients from the GPU back to the CPU
+and I can be an expensive operation and
+
+662
+00:49:29,719 --> 00:49:35,000
+now we're actually making our gradient
+stop this is CPU computation in numpy so
+
+663
+00:49:35,000 --> 00:49:38,190
+it would be really nice if we can make
+those gradient updates to our parameters
+
+664
+00:49:38,190 --> 00:49:45,389
+actually directly on the GPU and the way
+that we do that in Fiano is this with
+
+665
+00:49:45,389 --> 00:49:50,619
+with this school thing called a shared
+variable so I shared variable is another
+
+666
+00:49:50,619 --> 00:49:54,230
+part of the network that actually is a
+value that lives inside the computation
+
+667
+00:49:54,230 --> 00:49:59,340
+craft and actually persists from call to
+call so here this is this is actually
+
+668
+00:49:59,340 --> 00:50:04,150
+quite similar to before that now were
+defining our same symbolic variables X&Y
+
+669
+00:50:04,150 --> 00:50:08,769
+for the data and labels and now we're
+defining a couple of these new funky
+
+670
+00:50:08,769 --> 00:50:13,809
+things funky shared variables for our to
+weight matrices and the initializing
+
+671
+00:50:13,809 --> 00:50:19,110
+these weight matrices with numpy raised
+and now this is the same as before this
+
+672
+00:50:19,110 --> 00:50:22,910
+is the exact same code as before where
+computing the forward pass using these
+
+673
+00:50:22,909 --> 00:50:24,980
+library functions are symbolically
+
+674
+00:50:24,980 --> 00:50:30,940
+gradients but now the difference is in
+how we define our function so now this
+
+675
+00:50:30,940 --> 00:50:32,269
+compiled function
+
+676
+00:50:32,269 --> 00:50:36,780
+only receives does not receive the
+weights and puts those actually live
+
+677
+00:50:36,780 --> 00:50:41,320
+inside the computational graph instead
+we just received the data and the data
+
+678
+00:50:41,320 --> 00:50:45,210
+and the labels and now we are going to
+put the loss rather than output
+
+679
+00:50:45,210 --> 00:50:49,639
+ingredients explicitly and instead we
+actually provide these update rules they
+
+680
+00:50:49,639 --> 00:50:53,819
+should be run every time the function is
+called so these update rules notice our
+
+681
+00:50:53,820 --> 00:50:57,920
+little functions that operate on the
+symbolic variables so this is just
+
+682
+00:50:57,920 --> 00:51:02,010
+saying that we should make he's creating
+the Santa stops to update W one Min W
+
+683
+00:51:02,010 --> 00:51:09,290
+two every time we run this computational
+graph so writes weekly update and now to
+
+684
+00:51:09,289 --> 00:51:12,880
+train this network all we need to do is
+call this function repeatedly and every
+
+685
+00:51:12,880 --> 00:51:16,869
+time we call the function those will
+make a gradient stop on the way it's so
+
+686
+00:51:16,869 --> 00:51:21,210
+we can just trying this network by just
+calling this thing repeatedly on in
+
+687
+00:51:21,210 --> 00:51:23,769
+practice when you make when you're doing
+this kind of thing and I know you'll
+
+688
+00:51:23,769 --> 00:51:27,579
+often define our training function call
+that update the weights and then also
+
+689
+00:51:27,579 --> 00:51:31,719
+evaluate function that I'll just put the
+scores and not make any updates you can
+
+690
+00:51:31,719 --> 00:51:34,609
+actually have multiple of these compiled
+functions that about eight different
+
+691
+00:51:34,610 --> 00:51:47,220
+parts of the same graph yeah yeah yeah
+the question is how we compute gradients
+
+692
+00:51:47,219 --> 00:51:51,119
+and it actually does it symbolically
+sort of person out the S well it's not
+
+693
+00:51:51,119 --> 00:51:55,219
+actually person at the St because every
+time you make these calls it's a sort of
+
+694
+00:51:55,219 --> 00:51:58,769
+building up this computation on graphics
+object and then you can compute
+
+695
+00:51:58,769 --> 00:52:06,090
+gradients by just adding nodes onto the
+computation on graphics object so yeah
+
+696
+00:52:06,090 --> 00:52:09,360
+yeah so it needs to know every of these
+basic operators it knows what the
+
+697
+00:52:09,360 --> 00:52:12,500
+derivative with the derivative is and
+it's still the normal normal have a
+
+698
+00:52:12,500 --> 00:52:17,309
+back-propagation that you'll see it
+works but some of it but the pitch with
+
+699
+00:52:17,309 --> 00:52:21,299
+the I know is that it works and he's
+very very low level basic operations
+
+700
+00:52:21,300 --> 00:52:24,920
+like these elements things and matrix
+multiply as and when it is hoping that
+
+701
+00:52:24,920 --> 00:52:27,800
+it can compile efficient code the
+combine those and simplify it
+
+702
+00:52:27,800 --> 00:52:32,210
+symbolically and that I'm not sure how
+well it works but that's at least what
+
+703
+00:52:32,210 --> 00:52:37,110
+they claim to do so there's a lot of a
+lot of other advanced things that you
+
+704
+00:52:37,110 --> 00:52:40,309
+can do anything I know that we just
+don't have time to talk about you can
+
+705
+00:52:40,309 --> 00:52:43,610
+actually include conditionals directly
+inside your competition craft using
+
+706
+00:52:43,610 --> 00:52:44,809
+these files
+
+707
+00:52:44,809 --> 00:52:49,029
+and switch commands you can actually
+include loops insider computational
+
+708
+00:52:49,030 --> 00:52:52,370
+graph using this this funny scan
+function that I don't really understand
+
+709
+00:52:52,369 --> 00:52:57,409
+but it's tough but theoretically it lets
+you implement recurrent networks quite
+
+710
+00:52:57,409 --> 00:53:01,909
+easily as you can imagine for a moment
+are occurring at work in one of these
+
+711
+00:53:01,909 --> 00:53:05,539
+computational crafts all you're doing is
+passing the same weight matrix into
+
+712
+00:53:05,539 --> 00:53:10,110
+multiple nodes and scan actually lets
+you sort of do that in a loop and have
+
+713
+00:53:10,110 --> 00:53:14,680
+the loop be part of an explicit part of
+the graph and we can actually go crazy
+
+714
+00:53:14,679 --> 00:53:17,909
+with derivatives we can compute
+derivatives with respect with out any
+
+715
+00:53:17,909 --> 00:53:21,149
+part of the craft with respect to any
+other part we can also compute jacoby
+
+716
+00:53:21,150 --> 00:53:24,300
+ends by computing derivatives of
+derivatives we can use Allen our
+
+717
+00:53:24,300 --> 00:53:29,140
+operators to officially do made big
+major matrix-vector multiply as actors
+
+718
+00:53:29,139 --> 00:53:32,500
+and Jacoby Jones you can do a lot of
+pretty cool different derivative take
+
+719
+00:53:32,500 --> 00:53:36,610
+stock in piano that's maybe top and
+other frameworks and it also has some
+
+720
+00:53:36,610 --> 00:53:40,180
+support for sparse matrices it tries to
+optimize your code on the fly
+
+721
+00:53:40,179 --> 00:53:45,669
+do some other cool things I know does
+have multi GPU support there's this
+
+722
+00:53:45,670 --> 00:53:50,599
+package that I have not used but that
+claims that you can get data parallelism
+
+723
+00:53:50,599 --> 00:53:54,500
+so distribute I mean about to split up
+over multiple GPUs and there's
+
+724
+00:53:54,500 --> 00:53:57,260
+experimental support for model
+parallelism with this computational
+
+725
+00:53:57,260 --> 00:54:01,320
+graph will be divided among the
+different devices but the documentation
+
+726
+00:54:01,320 --> 00:54:08,030
+says its experimental so it probably
+really experimental so so you saw and
+
+727
+00:54:08,030 --> 00:54:11,730
+when working with the I know that the
+API is little bit low level and we need
+
+728
+00:54:11,730 --> 00:54:15,769
+to sort of implement the update rules
+and everything ourself somos anya is
+
+729
+00:54:15,769 --> 00:54:19,900
+this high-level wrapper around the I
+know that sort of abstract away some of
+
+730
+00:54:19,900 --> 00:54:24,660
+those details for you so again we're
+sort of defining symbolic matrices and
+
+731
+00:54:24,659 --> 00:54:28,659
+lasagna now has these layer functions
+that will automatically set up the
+
+732
+00:54:28,659 --> 00:54:32,489
+shared variables and that sort of thing
+we can compute the probability in the
+
+733
+00:54:32,489 --> 00:54:38,469
+loss using these convenient things from
+the library and lasagna can actually
+
+734
+00:54:38,469 --> 00:54:41,969
+write these update rules for us to
+implement and a strong momentum and
+
+735
+00:54:41,969 --> 00:54:47,109
+other fancy things and now when we
+compile our function we actually just
+
+736
+00:54:47,110 --> 00:54:51,390
+pass on these update rules that were
+written for us by my lasagna and all of
+
+737
+00:54:51,389 --> 00:54:51,839
+the way
+
+738
+00:54:51,840 --> 00:54:56,309
+objects were taken care of taken care of
+for us by lasagna as well
+
+739
+00:54:56,309 --> 00:54:59,579
+and then at the end of the day we just
+end up with one of these compiled piano
+
+740
+00:54:59,579 --> 00:55:04,599
+functions and we use at the same way as
+before there's another there's another
+
+741
+00:55:04,599 --> 00:55:10,480
+rapper 4390 that's pretty popular
+culture us which is a little bit is even
+
+742
+00:55:10,480 --> 00:55:15,730
+more high-level so here we're having
+making a sequential container and adding
+
+743
+00:55:15,730 --> 00:55:20,559
+a stack of layers to it so this is kind
+of like torch and now we're having this
+
+744
+00:55:20,559 --> 00:55:25,789
+making this Sgt object that is going to
+actually updates for us and now we can
+
+745
+00:55:25,789 --> 00:55:29,759
+train our network by just using the
+model that fit method so this is super
+
+746
+00:55:29,760 --> 00:55:36,570
+high level and you can't even tell that
+using piano and in fact carry us well as
+
+747
+00:55:36,570 --> 00:55:40,289
+a background as well so you don't have
+to use the honor with it but there's
+
+748
+00:55:40,289 --> 00:55:44,500
+actually one big problem with this piece
+of code and I don't know if you if you
+
+749
+00:55:44,500 --> 00:55:49,219
+experience with ya know but this could
+actually crashes and it crashes in a
+
+750
+00:55:49,219 --> 00:55:54,750
+really bad way this is the error message
+so we get this giant stack trace none of
+
+751
+00:55:54,750 --> 00:55:58,380
+which is through any of the code that we
+wrote and we get this giant value error
+
+752
+00:55:58,380 --> 00:56:03,440
+that doesn't make any sense to me so I'm
+not really an expert in Fiano so this
+
+753
+00:56:03,440 --> 00:56:07,039
+was really confusing to me so we wrote
+this kind of simple looking coating care
+
+754
+00:56:07,039 --> 00:56:11,259
+us but because it's using fiato as a
+pack and it crapped out and gave us this
+
+755
+00:56:11,260 --> 00:56:15,030
+really confusing error message so that's
+i think one of the common pain points
+
+756
+00:56:15,030 --> 00:56:18,730
+and failure cases with anything that
+uses as a background that debugging can
+
+757
+00:56:18,730 --> 00:56:24,949
+be kinda hard so like any good developer
+I googled the air and I found out that I
+
+758
+00:56:24,949 --> 00:56:28,659
+found out that I was including the width
+of the white variable wrong and I was
+
+759
+00:56:28,659 --> 00:56:32,579
+supposed to use this other other
+function to convert my wife variable and
+
+760
+00:56:32,579 --> 00:56:35,690
+make the problem go away but that was
+not obvious from the error message
+
+761
+00:56:35,690 --> 00:56:41,139
+that's something to be good to be
+worried about when using piano piano
+
+762
+00:56:41,139 --> 00:56:44,699
+actually has preteen models so we talk
+about lasagna
+
+763
+00:56:44,699 --> 00:56:48,539
+actually has a pretty good models you a
+lot of different popular model
+
+764
+00:56:48,539 --> 00:56:52,820
+architecture is that you might want so
+in lasagna you can use Alex and Google
+
+765
+00:56:52,820 --> 00:56:56,190
+Matt and BG I don't think they have
+resident yet but they have quite a lot
+
+766
+00:56:56,190 --> 00:57:00,320
+of useful things there and there are a
+couple other packages I found that the
+
+767
+00:57:00,320 --> 00:57:04,550
+obvious that really seems good except I
+mean this was clearly awesome because it
+
+768
+00:57:04,550 --> 00:57:07,030
+was a cs2 31 and project from last year
+
+769
+00:57:07,030 --> 00:57:10,330
+but if your gonna pick one i think
+probably the lasagna models it was
+
+770
+00:57:10,329 --> 00:57:16,139
+really good so from my one day
+experience of playing with the I know
+
+771
+00:57:16,139 --> 00:57:20,029
+about pros and cons that I could see
+where that its its pipeline an umpire's
+
+772
+00:57:20,030 --> 00:57:20,890
+that's great
+
+773
+00:57:20,889 --> 00:57:23,920
+this computational crap seems like a
+really powerful idea especially around
+
+774
+00:57:23,920 --> 00:57:28,760
+computing gradient symbolically and all
+these optimizations it especially with R
+
+775
+00:57:28,760 --> 00:57:32,070
+and ends I think would be much easier to
+implement using this computational graph
+
+776
+00:57:32,070 --> 00:57:37,570
+Rottino is kind of ugly and gross but
+especially lasagna looks pretty good to
+
+777
+00:57:37,570 --> 00:57:41,470
+me and sort of takes away some of the
+pain the error messages can be pretty
+
+778
+00:57:41,469 --> 00:57:46,279
+painful as we saw and big models from
+what I've heard can have really long
+
+779
+00:57:46,280 --> 00:57:51,190
+compile times so that that when we're
+compiling that function on the fly for
+
+780
+00:57:51,190 --> 00:57:54,579
+all these simple examples that pretty
+much runs instantaneously but we're
+
+781
+00:57:54,579 --> 00:57:58,159
+doing big complicated things like neural
+Turing machines I've heard stories that
+
+782
+00:57:58,159 --> 00:58:01,969
+that could actually take maybe half an
+hour to compile so that's that's not
+
+783
+00:58:01,969 --> 00:58:06,239
+good and that's not good for iterating
+quickly on your models and another sort
+
+784
+00:58:06,239 --> 00:58:10,509
+of pain point is that the API is much
+better than torch that it's doing all
+
+785
+00:58:10,510 --> 00:58:13,470
+this complicated stuff in the background
+so it's kind of hard to understand and
+
+786
+00:58:13,469 --> 00:58:17,969
+debug but actually happening to your
+code and then preteen models are maybe
+
+787
+00:58:17,969 --> 00:58:22,569
+not quite as good as cafe or torch but
+it looks like lasagna is pretty good
+
+788
+00:58:22,570 --> 00:58:30,320
+ok so we've got fifteen minutes now to
+talk about 1000 although first if
+
+789
+00:58:30,320 --> 00:58:38,309
+there's any questions about the I know I
+can try ok that's not so tenser flow
+
+790
+00:58:38,309 --> 00:58:42,809
+sensor flows from Google it's really
+cool and shiny and new and everyone's
+
+791
+00:58:42,809 --> 00:58:47,829
+excited about it and it's actually very
+similar to Fiona in a lot of ways that
+
+792
+00:58:47,829 --> 00:58:51,170
+they're really taking this idea of a
+computational graph and a building on
+
+793
+00:58:51,170 --> 00:58:55,650
+that for everything so tenser flow and
+Fiano actually very very closely linked
+
+794
+00:58:55,650 --> 00:58:59,090
+in my mind and that's sort of like
+harris can get away with using either
+
+795
+00:58:59,090 --> 00:59:04,760
+one is a backhand and also kind of one
+maybe point to make about 1000 is that
+
+796
+00:59:04,760 --> 00:59:07,200
+it's sort of the first one of these
+frameworks that was designed from the
+
+797
+00:59:07,199 --> 00:59:10,750
+ground up by professional engineers
+
+798
+00:59:10,750 --> 00:59:14,000
+so a lot of other frameworks sort of
+spun out of academic research labs and
+
+799
+00:59:14,000 --> 00:59:17,320
+they're really great and they let you do
+things really well but they were sort of
+
+800
+00:59:17,320 --> 00:59:23,120
+maintained by grad students especially
+so torch especially is maintained by
+
+801
+00:59:23,119 --> 00:59:26,500
+some engineers at Twitter and Facebook
+now but it was originally an academic
+
+802
+00:59:26,500 --> 00:59:30,070
+project and for all of these I think
+tenser flow was the first one that was
+
+803
+00:59:30,070 --> 00:59:35,000
+from the ground up from a neck from an
+industrial place so maybe theoretically
+
+804
+00:59:35,000 --> 00:59:37,989
+that could lead to better code quality
+or test coverage or something i dont no
+
+805
+00:59:37,989 --> 01:00:04,519
+I'm not sure seemed pretty scary so
+here's so here's our favorite to lay
+
+806
+01:00:04,519 --> 01:00:07,389
+rabin that we're gonna we did it and all
+other frameworks let's do it intends to
+
+807
+01:00:07,389 --> 01:00:12,769
+flow so this is actually really similar
+to the I know so you can see that we're
+
+808
+01:00:12,769 --> 01:00:17,320
+importing tenser flow and in Fiano
+remember we have these matrix and vector
+
+809
+01:00:17,320 --> 01:00:21,019
+symbolic variables intense workload
+they're called placeholders but it's the
+
+810
+01:00:21,019 --> 01:00:26,380
+same idea these are just creating input
+nodes in our computational graph we're
+
+811
+01:00:26,380 --> 01:00:30,650
+also going to define the weight matrices
+in fiato we have these shared things
+
+812
+01:00:30,650 --> 01:00:34,490
+that lived inside the computation graph
+same idea and tensor flexible called
+
+813
+01:00:34,489 --> 01:00:40,359
+variables we just like just like in
+Ciano be computed are forward pass using
+
+814
+01:00:40,360 --> 01:00:44,610
+these library methods that operate
+operate on symbolically on these things
+
+815
+01:00:44,610 --> 01:00:48,289
+and build up a computational graph so
+that lets you easily compute the
+
+816
+01:00:48,289 --> 01:00:52,210
+probability is on the loss and
+everything like that symbolically this
+
+817
+01:00:52,210 --> 01:00:56,190
+actually I think to me looks more like
+care us rather looks a little bit more
+
+818
+01:00:56,190 --> 01:01:00,740
+like carousel lasagna than rocky I know
+but we're using this gradient descent
+
+819
+01:01:00,739 --> 01:01:04,669
+optimizer and we're telling it to
+minimize the loss so here we're not
+
+820
+01:01:04,670 --> 01:01:08,970
+explicitly but spitting out gradients
+and we're not explicitly writing about
+
+821
+01:01:08,969 --> 01:01:13,489
+trading update rules were instead using
+this people thing but just sort of adds
+
+822
+01:01:13,489 --> 01:01:19,250
+whatever it needs to into the graph in
+order to minimize that loss and now just
+
+823
+01:01:19,250 --> 01:01:23,059
+like in Ciano market we can actually
+instantiate using actual number higher
+
+824
+01:01:23,059 --> 01:01:23,779
+raise
+
+825
+01:01:23,780 --> 01:01:29,470
+some some small datasets and then we can
+run in the loop so intense air flow and
+
+826
+01:01:29,469 --> 01:01:33,750
+you actually want to run your code you
+need to use you need to wrap it in this
+
+827
+01:01:33,750 --> 01:01:39,199
+session code I don't understand what's
+doing but it's you had to do it actually
+
+828
+01:01:39,199 --> 01:01:42,599
+went to do although actually what it's
+doing is that all the stops short of
+
+829
+01:01:42,599 --> 01:01:45,869
+setting up your computational grass and
+the missed session is actually doing
+
+830
+01:01:45,869 --> 01:01:48,440
+whatever optimization it needs to
+actually like to run it
+
+831
+01:01:48,440 --> 01:01:58,110
+yeah yeah so if you're so the question
+is what is one hot so if you remember in
+
+832
+01:01:58,110 --> 01:02:01,840
+your assignments when you did like a
+soft max loss function but why was
+
+833
+01:02:01,840 --> 01:02:06,170
+always an integer telling you which
+thing you wanted but in some of these
+
+834
+01:02:06,170 --> 01:02:11,420
+frameworks instead of an integer it
+should be a factor where everything is
+
+835
+01:02:11,420 --> 01:02:15,090
+zero except for the one that was the
+credit class so that was actually the
+
+836
+01:02:15,090 --> 01:02:20,420
+bug that tripped me up on care us back
+there was the difference between one hot
+
+837
+01:02:20,420 --> 01:02:28,710
+and not one hot and it turns out 10 2011
+hot whatever right so than when we
+
+838
+01:02:28,710 --> 01:02:34,250
+actually want to train this network then
+we call in fiato remember we actually
+
+839
+01:02:34,250 --> 01:02:37,610
+compiled this function object and then
+call the function over and over again
+
+840
+01:02:37,610 --> 01:02:41,940
+the equivalent intense air flow is that
+we used to call the run method on the
+
+841
+01:02:41,940 --> 01:02:46,409
+session object and we tell it what
+switch output we wanted to compute so
+
+842
+01:02:46,409 --> 01:02:50,349
+here we're telling it that we want to
+compute the train stopped out what I'm a
+
+843
+01:02:50,349 --> 01:02:54,769
+la Salle putt and we're gonna feed at
+these numpy raised into these inputs so
+
+844
+01:02:54,769 --> 01:02:57,699
+this is kind of the same idea as Diano
+except we're just calling the run method
+
+845
+01:02:57,699 --> 01:03:02,210
+rather than explicitly compiling
+compiling a function and in the process
+
+846
+01:03:02,210 --> 01:03:06,179
+of evaluating this train stop object
+election make a gradient descent on the
+
+847
+01:03:06,179 --> 01:03:10,690
+weights so then we just run this thing
+in a loop and it'll the Los goes down
+
+848
+01:03:10,690 --> 01:03:16,450
+and everything is beautiful so one of
+the really cool things about tenser flow
+
+849
+01:03:16,449 --> 01:03:20,519
+is this thing called tenser board that
+lets you easily easily visualize what's
+
+850
+01:03:20,519 --> 01:03:24,880
+going on in your network so here is
+pretty much the same code that we had
+
+851
+01:03:24,880 --> 01:03:29,150
+before except we've added these three
+little lines hopefully you can see it if
+
+852
+01:03:29,150 --> 01:03:34,280
+not you'll have to trust me so here
+where computing a scalar summary of the
+
+853
+01:03:34,280 --> 01:03:37,200
+loss and that's giving us a new symbolic
+variables
+
+854
+01:03:37,199 --> 01:03:40,929
+law summary and more computing a
+histogram summary of the weight matrices
+
+855
+01:03:40,929 --> 01:03:46,049
+W on w-2 and also getting us new
+symbolic variables W one pissed and w2
+
+856
+01:03:46,050 --> 01:03:51,390
+hissed now we're getting another
+symbolic variable called emerged that
+
+857
+01:03:51,389 --> 01:03:54,349
+can emerge as all those summaries
+together using some magic I don't
+
+858
+01:03:54,349 --> 01:03:58,929
+understand and we're getting this
+summary writer object that we can use to
+
+859
+01:03:58,929 --> 01:04:03,000
+actually dumped out those summaries to
+desk and now in our loop when we're
+
+860
+01:04:03,000 --> 01:04:06,570
+actually running the network then we
+tell it to evaluate to evaluate the
+
+861
+01:04:06,570 --> 01:04:10,460
+training staff and a loss like before
+her at all so this merge summary object
+
+862
+01:04:10,460 --> 01:04:14,190
+so in the process of evaluating the
+splurge summary object it'll compute
+
+863
+01:04:14,190 --> 01:04:17,690
+gradient it'll compute histograms of the
+weights and dump those summaries to desk
+
+864
+01:04:17,690 --> 01:04:22,019
+and then we tell our writer to actually
+at the summaries I guess that's where
+
+865
+01:04:22,019 --> 01:04:26,610
+the right into this happens so once you
+run this thing then you get the mall
+
+866
+01:04:26,610 --> 01:04:28,890
+this thing is running it sort of
+constantly streaming all this
+
+867
+01:04:28,889 --> 01:04:33,069
+information about what's going on in
+your network to desk and then you just
+
+868
+01:04:33,070 --> 01:04:37,480
+start up this this web server that ships
+with tensor flow sensor board and we get
+
+869
+01:04:37,480 --> 01:04:41,420
+these beautiful beautiful visualisations
+about what's going on in your network so
+
+870
+01:04:41,420 --> 01:04:42,539
+here on the left
+
+871
+01:04:42,539 --> 01:04:46,230
+member we were telling we were getting a
+scalar summary of the loss so this
+
+872
+01:04:46,230 --> 01:04:49,360
+actually shows that loss was going down
+I mean it was a small it was a big
+
+873
+01:04:49,360 --> 01:04:52,760
+network and a small dataset but that
+means everything is working and this
+
+874
+01:04:52,760 --> 01:04:56,860
+over here on the right hand side showing
+you histograms over time showing you the
+
+875
+01:04:56,860 --> 01:05:00,900
+distributions of the values in your
+weight matrices so this is the stuff is
+
+876
+01:05:00,900 --> 01:05:04,579
+really really cool and I think this is a
+really really beautiful debugging tool
+
+877
+01:05:04,579 --> 01:05:09,289
+so when i when I've been working on
+projects and torch I've written this
+
+878
+01:05:09,289 --> 01:05:11,250
+kind of stuff myself by hand
+
+879
+01:05:11,250 --> 01:05:14,900
+just kinda dumping JSON blobs out of
+torture and then writing my own custom
+
+880
+01:05:14,900 --> 01:05:18,369
+visualization visualizer is to view
+these kind of statistics because they're
+
+881
+01:05:18,369 --> 01:05:21,609
+really useful and with tents are you
+don't have to write any about yourself
+
+882
+01:05:21,610 --> 01:05:25,019
+you just a couple lines of code to your
+training script run they're saying and
+
+883
+01:05:25,019 --> 01:05:27,489
+you can get all these beautiful
+visualisations to help your debugging
+
+884
+01:05:27,489 --> 01:05:35,059
+tenser flow sensor board can also help
+you even visualize what your network
+
+885
+01:05:35,059 --> 01:05:39,820
+structure looks like so here we've
+annotated are variables with these names
+
+886
+01:05:39,820 --> 01:05:43,510
+and now when we're doing the forward
+pass we can actually scope some of the
+
+887
+01:05:43,510 --> 01:05:47,450
+complications under a namespace and that
+sort of the slices group together
+
+888
+01:05:47,449 --> 01:05:48,949
+computations that
+
+889
+01:05:48,949 --> 01:05:52,519
+should belong together semantically now
+other than that it's the same with the
+
+890
+01:05:52,519 --> 01:05:56,949
+same thing that we saw before and now if
+we run this network and load up tents or
+
+891
+01:05:56,949 --> 01:06:00,909
+more and we can actually get this
+beautiful visualization for how like
+
+892
+01:06:00,909 --> 01:06:04,789
+what our network actually looks like and
+we can actually click and look and see
+
+893
+01:06:04,789 --> 01:06:07,820
+what the screens on the scores and
+really help debug what's going on inside
+
+894
+01:06:07,820 --> 01:06:12,170
+this network and Egypt you see these
+loss and scores
+
+895
+01:06:12,170 --> 01:06:15,030
+these are the semantic namespaces that
+we defined it during the forward pass
+
+896
+01:06:15,030 --> 01:06:18,940
+and if we click on the scores for
+example it opens up and lets us see all
+
+897
+01:06:18,940 --> 01:06:22,679
+the operations that have that up here
+inside the computation on graphics that
+
+898
+01:06:22,679 --> 01:06:28,108
+node so I thought this was really cool
+if it lets you like really easily debug
+
+899
+01:06:28,108 --> 01:06:31,039
+what's going on inside your networks
+while it's running enough to write any
+
+900
+01:06:31,039 --> 01:06:39,300
+of Apple's Asian code yourself so tender
+flow does have support from multi GPU so
+
+901
+01:06:39,300 --> 01:06:42,750
+has data parallelism like you might
+expect so I'd like to point out that
+
+902
+01:06:42,750 --> 01:06:45,809
+actually this distribute this
+distribution part is probably one of the
+
+903
+01:06:45,809 --> 01:06:50,460
+other major selling point sometimes a
+flow that it can try to actually
+
+904
+01:06:50,460 --> 01:06:53,338
+distributed computation crap in
+different ways across different devices
+
+905
+01:06:53,338 --> 01:06:57,828
+and actually place the distribute that
+crap smartly to minimize communication
+
+906
+01:06:57,829 --> 01:07:02,839
+overhead and so on so one thing that you
+can do is data parallelism where you
+
+907
+01:07:02,838 --> 01:07:05,559
+just put your money back across
+different devices and run each one
+
+908
+01:07:05,559 --> 01:07:08,409
+forward and backward and then either
+some of the gradients to do
+
+909
+01:07:08,409 --> 01:07:12,068
+synchronous distributed training or just
+make a synchronous updates to your
+
+910
+01:07:12,068 --> 01:07:16,730
+parameters and do a synchronous training
+buchanan the white paper claims she can
+
+911
+01:07:16,730 --> 01:07:21,300
+do both of these things and tensor flow
+but I didn't I didn't try it out you can
+
+912
+01:07:21,300 --> 01:07:25,000
+also actually do model parallelism in
+intensive flow as well but lets you
+
+913
+01:07:25,000 --> 01:07:27,829
+split up the same model and compute
+different parts of the same model on
+
+914
+01:07:27,829 --> 01:07:32,190
+different devices so here's an example
+so one place for that might be useful is
+
+915
+01:07:32,190 --> 01:07:36,510
+a multi-layer recurrent network there it
+might actually be a good idea to run
+
+916
+01:07:36,510 --> 01:07:39,900
+different layers of a network on
+different CPUs because those things can
+
+917
+01:07:39,900 --> 01:07:42,838
+actually take a lot of memory so that's
+the type of thing that you can actually
+
+918
+01:07:42,838 --> 01:07:47,599
+do you can do that intense air flow
+without too much pain
+
+919
+01:07:47,599 --> 01:07:51,599
+tenser flow is also the only of the
+frameworks that can run into distributed
+
+920
+01:07:51,599 --> 01:07:56,000
+mode not just a strip across one machine
+and multiple GPUs but actually
+
+921
+01:07:56,000 --> 01:07:58,309
+distribute them training model across
+many machine
+
+922
+01:07:58,309 --> 01:08:04,709
+ads so the caveat here is that that part
+is not open source yet rated as of today
+
+923
+01:08:04,708 --> 01:08:08,328
+the open source release of tensor flow
+can only do single machine multi GPU
+
+924
+01:08:08,329 --> 01:08:13,890
+training but I think but hopefully soon
+that part will be released to be really
+
+925
+01:08:13,889 --> 01:08:16,500
+cool right so here
+
+926
+01:08:16,500 --> 01:08:22,069
+the idea is you can just end reply was
+aware of communication costs both
+
+927
+01:08:22,069 --> 01:08:26,489
+between GPU and CPU but also between
+different machines on the network so
+
+928
+01:08:26,488 --> 01:08:30,118
+that it can try to smartly distribute
+the computation craft across different
+
+929
+01:08:30,118 --> 01:08:33,750
+machines and across different CPUs
+within those machines to compute
+
+930
+01:08:33,750 --> 01:08:37,649
+everything as efficiently as possible so
+that's i think thats really cool and
+
+931
+01:08:37,649 --> 01:08:41,629
+that's something that the other
+frameworks just can't do right now one
+
+932
+01:08:41,630 --> 01:08:46,409
+can point with tens or flow is preteen
+models so I looked I did a thorough
+
+933
+01:08:46,408 --> 01:08:51,448
+Google search and the only thing I could
+come up with was an inception module a
+
+934
+01:08:51,448 --> 01:08:56,028
+pre-trial inception model but it's only
+accessible through this Android explore
+
+935
+01:08:56,029 --> 01:08:59,569
+this and rate them all so that's
+something I would have expected to be
+
+936
+01:08:59,569 --> 01:09:04,219
+more clear documentation but that's at
+least you have that one pitch a model
+
+937
+01:09:04,219 --> 01:09:09,109
+either other than that I'm not I'm not
+really aware of other preteen models
+
+938
+01:09:09,109 --> 01:09:12,109
+intense air flow but maybe maybe there
+are out maybe they're out there and I
+
+939
+01:09:12,109 --> 01:09:13,230
+just don't know about them
+
+940
+01:09:13,229 --> 01:09:19,729
+prob says no so I googled correctly so
+that answer flow pros and cons
+
+941
+01:09:19,729 --> 01:09:23,689
+again my quick one day experiment it's
+really good because its pipeline an
+
+942
+01:09:23,689 --> 01:09:27,928
+umpire that's really cool I know it has
+this idea of computation on graphics
+
+943
+01:09:27,929 --> 01:09:32,289
+which i think is super powerful and
+actually takes this idea of
+
+944
+01:09:32,289 --> 01:09:35,948
+computational graphs even farther than
+than Fiano really and things like
+
+945
+01:09:35,948 --> 01:09:40,000
+checkpointing and distributing across
+devices these all end up as just know
+
+946
+01:09:40,000 --> 01:09:46,380
+it's inside the computation on graphics
+4000 that's really cool it's also claims
+
+947
+01:09:46,380 --> 01:09:49,520
+to have much faster compile time
+something I know I've heard horror
+
+948
+01:09:49,520 --> 01:09:53,670
+stories about neural tree machines
+taking half an hour to compile maybe
+
+949
+01:09:53,670 --> 01:09:59,219
+maybe that should be faster intends or
+flow so I've heard tenser board looks
+
+950
+01:09:59,219 --> 01:10:03,369
+awesome that looks amazing I want to use
+that everywhere
+
+951
+01:10:03,369 --> 01:10:07,340
+it has really cool data and model model
+parallelism I think much more advanced
+
+952
+01:10:07,340 --> 01:10:11,079
+than the other frameworks although the
+distributed stop is still secret sauce
+
+953
+01:10:11,079 --> 01:10:15,689
+that Google but hopefully I'll come out
+to the rest of us eventually but I guess
+
+954
+01:10:15,689 --> 01:10:19,989
+as bob was saying it's even maybe the
+scariest code based actually dig into
+
+955
+01:10:19,989 --> 01:10:24,409
+and understand what's working under the
+hood so at least my my fear about cancer
+
+956
+01:10:24,409 --> 01:10:29,010
+flow is that if you want to do some kind
+of crazy weird imperative code and you
+
+957
+01:10:29,010 --> 01:10:32,690
+cannot easily work it into their
+computational graph abstraction that
+
+958
+01:10:32,689 --> 01:10:38,159
+seems like you could be in a lot of
+trouble we're in may be in in in torture
+
+959
+01:10:38,159 --> 01:10:40,659
+you can just write whatever imperative
+code you want inside the forward and
+
+960
+01:10:40,659 --> 01:10:44,659
+backward passes of your own custom
+theirs but that seems like the biggest a
+
+961
+01:10:44,659 --> 01:10:49,979
+worrying point for me about working with
+tons of law and practice another another
+
+962
+01:10:49,979 --> 01:10:52,959
+kind of awkward thing is the slack
+appreciate models so that's that's kind
+
+963
+01:10:52,960 --> 01:11:12,239
+of gross
+
+964
+01:11:12,239 --> 01:11:22,019
+even installing on a 2002 was a little
+bit painful they claimed to have a
+
+965
+01:11:22,020 --> 01:11:25,680
+python we all that you can just download
+and install with PEP but it broke and I
+
+966
+01:11:25,680 --> 01:11:29,150
+had to change the filename annually to
+get to install and then they had a
+
+967
+01:11:29,149 --> 01:11:32,479
+broken dependency that I had to update
+manually and like download some random
+
+968
+01:11:32,479 --> 01:11:36,759
+zip file and unpack it and copy some
+random files around but it eventually
+
+969
+01:11:36,760 --> 01:11:41,520
+worked but installation was tough even
+on my own machine that I have sudo 2012
+
+970
+01:11:41,520 --> 01:11:47,400
+so they should get their act together on
+that so I put together this quick
+
+971
+01:11:47,399 --> 01:11:51,529
+overview table that kind of covers when
+I think people would care about on major
+
+972
+01:11:51,529 --> 01:11:55,529
+points between the frameworks whitewater
+languages what kinda preteen models are
+
+973
+01:11:55,529 --> 01:11:56,210
+available
+
+974
+01:11:56,210 --> 01:12:05,029
+question
+
+975
+01:12:05,029 --> 01:12:09,988
+the question is is which of these
+support Windows I'm sorry but I don't
+
+976
+01:12:09,988 --> 01:12:11,769
+know
+
+977
+01:12:11,770 --> 01:12:16,830
+I think you're on your own
+
+978
+01:12:16,829 --> 01:12:24,439
+aww you can use AWS from Windows ok
+
+979
+01:12:24,439 --> 01:12:29,359
+ok so I put together this quick come
+quick comparison chart between the
+
+980
+01:12:29,359 --> 01:12:32,198
+frameworks that I think covers some of
+the major bullet points that people care
+
+981
+01:12:32,198 --> 01:12:37,460
+about talking about what language is
+whether they have free trade models what
+
+982
+01:12:37,460 --> 01:12:41,300
+kind of parallelism you have and how
+readable as the source code and whether
+
+983
+01:12:41,300 --> 01:12:47,029
+they get our hands so I had a couple of
+use cases in let's see we've got holy
+
+984
+01:12:47,029 --> 01:12:52,939
+crap we got 250 slides and we still have
+two minutes left so let's let's do let's
+
+985
+01:12:52,939 --> 01:12:56,710
+play a little game suppose that all you
+wanted to do was extracted aleksandr BGG
+
+986
+01:12:56,710 --> 01:12:58,619
+features which framework would you pick
+
+987
+01:12:58,619 --> 01:13:06,969
+yeah me too let's say all we wanted to
+do was find to an Alex net on on some
+
+988
+01:13:06,969 --> 01:13:19,189
+new data yeah let's say we want to do
+image captioning with fine-tuning ok I
+
+989
+01:13:19,189 --> 01:13:22,889
+heard a good distribution so this is my
+thought process I'm not saying this is
+
+990
+01:13:22,890 --> 01:13:26,289
+the right answer but the way I think
+about this is that for this problem we
+
+991
+01:13:26,289 --> 01:13:30,969
+need preteen models preteen models were
+looking at Cafe or torture lasagna we
+
+992
+01:13:30,969 --> 01:13:36,239
+need our hands so kathy is pretty much
+out even though people have done have
+
+993
+01:13:36,238 --> 01:13:39,869
+implemented the stuff there is just kind
+of painful so I'd probably use torture
+
+994
+01:13:39,869 --> 01:13:44,869
+maybe lasagna about semantic
+segmentation we want to classify every
+
+995
+01:13:44,869 --> 01:13:49,880
+pixel right so here we want to read an
+input image and instead of giving a
+
+996
+01:13:49,880 --> 01:13:57,900
+label to the whole output image we want
+to label every pixel independently ok
+
+997
+01:13:57,899 --> 01:14:01,969
+that's good so again my thought process
+was that we need a preteen model here
+
+998
+01:14:01,969 --> 01:14:06,800
+most likely and hear that we're talking
+about kind of a weird use case for you
+
+999
+01:14:06,800 --> 01:14:10,739
+might need to define some of our own
+project so if this layer happens to
+
+1000
+01:14:10,738 --> 01:14:14,738
+exist in cafe they would be a good fit
+otherwise what's the radar self and
+
+1001
+01:14:14,738 --> 01:14:23,109
+writing this thing ourself seems least
+10 points for each object detection no
+
+1002
+01:14:23,109 --> 01:14:24,329
+idea
+
+1003
+01:14:24,329 --> 01:14:30,750
+yes ok kathy is an idea so my thought
+process again we're looking at preteen
+
+1004
+01:14:30,750 --> 01:14:33,149
+models so we need cafe
+
+1005
+01:14:33,149 --> 01:14:38,069
+torch or lasagna we actually could with
+the texting you could need a lot of
+
+1006
+01:14:38,069 --> 01:14:41,609
+funky imperative code that it might be
+possible to put in a computation
+
+1007
+01:14:41,609 --> 01:14:47,799
+aircraft but seems scary to me so cafe +
+python is is 11 choice that some of the
+
+1008
+01:14:47,800 --> 01:14:52,529
+spring we talked about actually went
+this route and I've actually done a
+
+1009
+01:14:52,529 --> 01:14:56,939
+similar project like this and I chose
+torch and it worked out good for me but
+
+1010
+01:14:56,939 --> 01:14:59,809
+if you want to language modeling like
+you wanna do funky are intense and you
+
+1011
+01:14:59,810 --> 01:15:06,270
+want to play with the recurrence role
+torch what do you guys thing yeah I
+
+1012
+01:15:06,270 --> 01:15:09,550
+would actually not used torture this at
+all so here if we just wanted to
+
+1013
+01:15:09,550 --> 01:15:13,650
+language modeling and do funky kind of
+recurrence relationships then we're not
+
+1014
+01:15:13,649 --> 01:15:17,109
+talking about images at all this just
+untaxed so we don't need any pre-trial
+
+1015
+01:15:17,109 --> 01:15:22,309
+models and we really want to play with
+this recurrence relationship and easily
+
+1016
+01:15:22,310 --> 01:15:25,430
+work with our current networks so there
+I think that maybe fee on all returns
+
+1017
+01:15:25,430 --> 01:15:32,570
+are flow might be a good choice if you
+want to implement batch norm
+
+1018
+01:15:32,569 --> 01:15:39,769
+ok ok slides sorry about that right so
+here if you wanna if you want to rely on
+
+1019
+01:15:39,770 --> 01:15:42,230
+if you don't drive the gradient yourself
+and you could rely on these
+
+1020
+01:15:42,229 --> 01:15:46,899
+computational craft things like flow but
+because of the way that those things
+
+1021
+01:15:46,899 --> 01:15:50,089
+work as you saw on homework for passion
+or you can actually simplify the
+
+1022
+01:15:50,090 --> 01:15:54,900
+gradient quite a lot and I'm not sure if
+these computational craft frameworks
+
+1023
+01:15:54,899 --> 01:15:57,589
+would correctly simplify the gradient
+down to this makes efficient form
+
+1024
+01:15:57,590 --> 01:16:09,489
+question
+
+1025
+01:16:09,488 --> 01:16:13,009
+I think I thought the question is how
+easily is at how easy is it to come by
+
+1026
+01:16:13,010 --> 01:16:18,860
+in like a torch model with a piano model
+and I think it seems painful but at
+
+1027
+01:16:18,859 --> 01:16:22,819
+least in fiato you can use lasagna tick
+tick access and preteen models so
+
+1028
+01:16:22,819 --> 01:16:26,498
+fucking together a lasagna model is
+something else I think theoretically
+
+1029
+01:16:26,498 --> 01:16:31,748
+maybe should be easier so here if you
+want if you have some like really really
+
+1030
+01:16:31,748 --> 01:16:35,429
+good knowledge about how how exactly you
+want the backward pass to be computed
+
+1031
+01:16:35,429 --> 01:16:38,179
+and you want to implement it yourself to
+be efficient than you probably won't use
+
+1032
+01:16:38,179 --> 01:16:43,300
+torch you can just implement that backup
+ask yourself so make recommendations on
+
+1033
+01:16:43,300 --> 01:16:46,949
+frameworks are that if you just wanna do
+feature feature extraction or maybe
+
+1034
+01:16:46,948 --> 01:16:51,248
+fine-tuning of existing models or just
+transferred of a vanilla straightforward
+
+1035
+01:16:51,248 --> 01:16:54,929
+task then Cafe is probably the right way
+to go it's really easy to use you don't
+
+1036
+01:16:54,929 --> 01:16:58,649
+have to write any code if you want to
+work around with preteen models but
+
+1037
+01:16:58,649 --> 01:17:02,738
+maybe do weird stuff with preteen models
+and not just fine to Phnom Penh you
+
+1038
+01:17:02,738 --> 01:17:07,209
+might have a better job in lasagna or
+torch is there it's easier to kind of
+
+1039
+01:17:07,210 --> 01:17:11,328
+mess with the structure of preteen
+models if you want to if you really
+
+1040
+01:17:11,328 --> 01:17:14,788
+really want to write your own layers for
+whatever reason and you don't think you
+
+1041
+01:17:14,788 --> 01:17:18,788
+can easily fit into these computational
+crafts then probably should use torch if
+
+1042
+01:17:18,788 --> 01:17:22,948
+you really want to use our intense and
+maybe other types of fancy things that
+
+1043
+01:17:22,948 --> 01:17:26,138
+depend on the computational graph then
+probably talk then maybe fee on all
+
+1044
+01:17:26,139 --> 01:17:30,090
+returns are low also if you have a
+gigantic model and you need to
+
+1045
+01:17:30,090 --> 01:17:33,449
+distribute across an entire cluster and
+you have access to Google's internal
+
+1046
+01:17:33,448 --> 01:17:36,169
+code base then you should use her flow
+
+1047
+01:17:36,170 --> 01:17:39,989
+although hopefully that like I said that
+part will be released for the rest of us
+
+1048
+01:17:39,988 --> 01:17:44,889
+soon so that's also if you wanna use
+tents are bored and you got a slow so
+
+1049
+01:17:44,890 --> 01:17:48,810
+that's that's pretty much my my overview
+my quick whirlwind tour of all the
+
+1050
+01:17:48,810 --> 01:17:58,210
+frameworks so any any last minute
+questions questions questions about
+
+1051
+01:17:58,210 --> 01:18:02,630
+speed so there's actually a really nice
+page that compares some speed
+
+1052
+01:18:02,630 --> 01:18:06,039
+benchmark speed of all the different
+frameworks and right now the one that
+
+1053
+01:18:06,039 --> 01:18:10,488
+wins is none of these The one that wins
+is this thing called me on from Nirvana
+
+1054
+01:18:10,488 --> 01:18:15,049
+systems so these guys have actually
+written these guys are crazy they
+
+1055
+01:18:15,050 --> 01:18:20,119
+actually wrote their own custom
+assembler for g4 and video hardware they
+
+1056
+01:18:20,119 --> 01:18:22,448
+were not happy with like and videos
+
+1057
+01:18:22,448 --> 01:18:26,500
+toolchain they reverse engineer the
+hardware and rotor on a similar and then
+
+1058
+01:18:26,500 --> 01:18:30,948
+implemented all these kernels in
+assembly themselves so these guys are
+
+1059
+01:18:30,948 --> 01:18:35,859
+crazy and their stuff is really really
+fast so they're actually there is there
+
+1060
+01:18:35,859 --> 01:18:39,309
+stuff is actually the fastest right now
+but I've never really used their I've
+
+1061
+01:18:39,310 --> 01:18:42,510
+never really used their framework myself
+and I think it's a little less common
+
+1062
+01:18:42,510 --> 01:18:47,010
+these although for the ones that are
+using CUDA and the speed is roughly the
+
+1063
+01:18:47,010 --> 01:18:52,030
+same right now I think 10 surplus quite
+a bit slower than the others for some
+
+1064
+01:18:52,029 --> 01:18:55,609
+silly reasons that I think will be
+cleaned up in subsequent releases but at
+
+1065
+01:18:55,609 --> 01:18:58,729
+least fundamentally there's no reason
+you should be should should should be
+
+1066
+01:18:58,729 --> 01:19:04,209
+slower than others
+
+1067
+01:19:04,210 --> 01:19:07,319
+you people are picking up rifles
+
+1068
+01:19:07,319 --> 01:19:24,279
+alright
+
+1069
+01:19:24,279 --> 01:19:27,198
+that that's actually not crazy there are
+quite a few for quite a few teams last
+
+1070
+01:19:27,198 --> 01:19:29,738
+year that actually use a sign like Oprah
+projects and it was fine
+
+1071
+01:19:29,738 --> 01:19:34,658
+yeah I should also mention that there
+are other frameworks
+
+1072
+01:19:34,658 --> 01:19:45,359
+I just think these are the peace for the
+most common question
+
+1073
+01:19:45,359 --> 01:19:52,299
+so the question is about grabbing and
+torch so torch actually has and I Python
+
+1074
+01:19:52,300 --> 01:19:56,770
+colonel you can actually use on my torch
+notebooks that's kind of cool and
+
+1075
+01:19:56,770 --> 01:20:00,150
+actually you can actually do some simple
+grabbing a night or two notebooks but in
+
+1076
+01:20:00,149 --> 01:20:04,899
+practice what I usually do is dump my
+data run my torch model dump the data
+
+1077
+01:20:04,899 --> 01:20:09,899
+even to JSON HDL 5 and in visualizing in
+Python which is a little bit little bit
+
+1078
+01:20:09,899 --> 01:20:19,359
+painful but you can just get the job
+done
+
+1079
+01:20:19,359 --> 01:20:23,309
+the question is whether tenser bored
+lets you dump the raw data you can put
+
+1080
+01:20:23,310 --> 01:20:28,300
+yourself there actually they're actually
+dumping all this stuff into some log
+
+1081
+01:20:28,300 --> 01:20:33,050
+files in a temp directory I'm not sure
+how easy those are sparse but you could
+
+1082
+01:20:33,050 --> 01:20:45,900
+try it could be easy or not I'm not sure
+question the question is whether there
+
+1083
+01:20:45,899 --> 01:20:49,899
+are other third party tool some of the
+tensor board for modern networks there
+
+1084
+01:20:49,899 --> 01:20:53,269
+might be some out there but I've never
+really used them I just read my own in
+
+1085
+01:20:53,270 --> 01:20:58,159
+the past any other questions
+
+1086
+01:20:58,158 --> 01:21:00,319
+alright I think I think that's it
+

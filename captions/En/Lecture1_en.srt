@@ -1,0 +1,3523 @@
+﻿1
+00:00:00,000 --> 00:00:03,899
+there's more seats on the side
+
+2
+00:00:03,899 --> 00:00:19,868
+people are walking in late so just to
+make sure you're in cs2 31 and deep
+
+3
+00:00:19,868 --> 00:00:23,969
+learning on your network class for
+visual recognition any money in the
+
+4
+00:00:23,969 --> 00:00:33,549
+wrong class good I so welcome and happy
+new year happy first day of winter break
+
+5
+00:00:33,549 --> 00:00:41,069
+so the classiest 231 and this is the
+second offering of this class when we
+
+6
+00:00:41,070 --> 00:00:48,738
+have literally doubled our enrollment
+from 480 people last time we offered to
+
+7
+00:00:48,738 --> 00:00:55,939
+about 350 of you sign up a couple of
+words to to to make us all legally
+
+8
+00:00:55,939 --> 00:01:02,570
+covered way our video recording this
+class so you know if you're
+
+9
+00:01:02,570 --> 00:01:10,680
+uncomfortable about this for today just
+go behind that camera or go to the
+
+10
+00:01:10,680 --> 00:01:18,280
+cameras litter but we are going to send
+out forms for you to fill out in terms
+
+11
+00:01:18,280 --> 00:01:25,228
+of allowing video recording so that's
+that's just one bit of housekeeping so
+
+12
+00:01:25,228 --> 00:01:32,200
+alright when they fail him a professor
+at the computer science department so
+
+13
+00:01:32,200 --> 00:01:37,960
+this class and co-teaching with through
+senior graduate students and one of them
+
+14
+00:01:37,959 --> 00:01:45,839
+is areas under a profit greatly we have
+what I don't think Andre needs too much
+
+15
+00:01:45,840 --> 00:01:48,659
+introduction all of you know his work
+
+16
+00:01:48,659 --> 00:01:53,960
+follow his blog his Twitter follower
+
+17
+00:01:53,959 --> 00:02:02,509
+under has way more followers than I do
+very popular Justin Johnson is still
+
+18
+00:02:02,510 --> 00:02:08,200
+traveling internationally but will be
+back in a few days so andre land just so
+
+19
+00:02:08,199 --> 00:02:14,509
+we'll be picking up the bulk of the
+lecture teaching today I'll be giving
+
+20
+00:02:14,509 --> 00:02:20,039
+her structure but as you probably can
+see that I'm expecting the newborn ratio
+
+21
+00:02:20,039 --> 00:02:28,239
+speaking of weeks so you'll see more of
+undrained Justin in lecture time we will
+
+22
+00:02:28,239 --> 00:02:34,189
+also introduce a whole team of TACE
+towards the end of this lecture again
+
+23
+00:02:34,189 --> 00:02:38,959
+people who are looking for seats you go
+out of that before and come back there's
+
+24
+00:02:38,959 --> 00:02:47,039
+a whole bunch of seats on the side so so
+this for this lecture we're going to
+
+25
+00:02:47,039 --> 00:02:53,519
+give the introduction of the class what
+kind of problems we work on and the
+
+26
+00:02:53,519 --> 00:03:03,530
+tools will be learning so again welcome
+to see us 231 and this is a vision in
+
+27
+00:03:03,530 --> 00:03:09,140
+class it's based on a very specific
+modeling architecture called your
+
+28
+00:03:09,139 --> 00:03:16,000
+network and the more specifically mostly
+a convolution on your network and a lot
+
+29
+00:03:16,000 --> 00:03:23,799
+of you hear this term maybe through a
+popular Press article we we or or or
+
+30
+00:03:23,799 --> 00:03:34,239
+coverage we've had to call this the deep
+learning network growing field of
+
+31
+00:03:34,239 --> 00:03:40,920
+artificial intelligence in fact the
+school has estimated and and we are
+
+32
+00:03:40,919 --> 00:03:50,018
+underway for of this by 2016 which we
+already have arrived more than 85% of
+
+33
+00:03:50,019 --> 00:03:56,230
+the internet cyberspace data is in the
+form of pixels
+
+34
+00:03:56,229 --> 00:04:05,329
+or what they call multimedia so so we
+basically have entered an age of vision
+
+35
+00:04:05,330 --> 00:04:12,530
+of images and video calls why why is
+this so while partly to a large extent
+
+36
+00:04:12,530 --> 00:04:20,858
+is speakers of the explosion of both the
+Internet as a carrier of data as well as
+
+37
+00:04:20,858 --> 00:04:25,930
+answers we have more sensors that the
+number of people on Thurs these days
+
+38
+00:04:25,930 --> 00:04:32,000
+every one of you is carrying some kind
+of smart phones digital cameras and and
+
+39
+00:04:32,000 --> 00:04:37,879
+and and you know cars around on the
+street with cameras so so the soldiers
+
+40
+00:04:37,879 --> 00:04:46,500
+have really enabled the explosion of
+visual data on the internet but visual
+
+41
+00:04:46,500 --> 00:04:55,209
+data or pixel data is also the hardest
+data to harness so if you have heard my
+
+42
+00:04:55,209 --> 00:05:07,810
+previous talks and and some other parks
+by the dark matter of the Internet
+
+43
+00:05:07,810 --> 00:05:13,879
+why is this the dark matter just like
+the universe is closest to 85% dark
+
+44
+00:05:13,879 --> 00:05:19,409
+matter dark energy is these matters that
+energy that is very hard to observe week
+
+45
+00:05:19,410 --> 00:05:25,919
+and weekend by mathematical models in
+the universe internet these are the
+
+46
+00:05:25,918 --> 00:05:30,649
+matters pixel data the other data that
+we don't know we have a hard time
+
+47
+00:05:30,649 --> 00:05:36,239
+grasping the continent's here's one very
+very simple suspects for you to consider
+
+48
+00:05:36,240 --> 00:05:39,090
+so today
+
+49
+00:05:39,089 --> 00:05:49,560
+YouTube servers every 60 seconds we'll
+have more than $150 of videos uploaded
+
+50
+00:05:49,560 --> 00:05:54,089
+onto YouTube servers for every 60
+seconds
+
+51
+00:05:54,089 --> 00:06:02,739
+think about the amount of data there is
+no way that human eyes can sift through
+
+52
+00:06:02,740 --> 00:06:07,829
+this massive amount of data and make it
+a lot Asians
+
+53
+00:06:07,829 --> 00:06:14,009
+labeling it and and and and described
+the contacts soul singer from the
+
+54
+00:06:14,009 --> 00:06:20,980
+perspective of the YouTube team or or
+Google company if they want to help us
+
+55
+00:06:20,980 --> 00:06:25,640
+to search index managed and of course
+for their purpose
+
+56
+00:06:25,639 --> 00:06:31,529
+advertisement or or whatever manipulate
+the content of the data were at a loss
+
+57
+00:06:31,529 --> 00:06:38,919
+because nobody can take this the only
+hope we can do this is true vision
+
+58
+00:06:38,920 --> 00:06:44,640
+technology to be able to label the
+objects financings vinyl frames
+
+59
+00:06:44,639 --> 00:06:50,349
+you know lo que where basketball video
+were Kobe Bryant's making like that
+
+60
+00:06:50,350 --> 00:06:57,320
+awesome shot and social these are the
+problems we are facing today that the
+
+61
+00:06:57,319 --> 00:07:02,860
+massive amount of data and the the
+challenges of the dark matter so
+
+62
+00:07:02,860 --> 00:07:07,379
+comfortable vision as a field that
+touches upon many other fields of
+
+63
+00:07:07,379 --> 00:07:12,740
+studies so I am sure that even City
+heater sitting here
+
+64
+00:07:12,740 --> 00:07:18,050
+mania vehicle from computer size but
+many of you come from biology psychology
+
+65
+00:07:18,050 --> 00:07:24,389
+are specializing in natural language
+processing or graphics for robotics or
+
+66
+00:07:24,389 --> 00:07:30,680
+or you know medical imaging and so on so
+I love field computer vision is really a
+
+67
+00:07:30,680 --> 00:07:37,329
+truly interdisciplinary field what the
+problems we work on the models we use
+
+68
+00:07:37,329 --> 00:07:43,849
+such as engineering physics biology
+psychology compare size of mathematics
+
+69
+00:07:43,850 --> 00:07:51,030
+so just a little bit of a more personal
+touch I am the director of the division
+
+70
+00:07:51,029 --> 00:07:58,589
+lab stuff in our lab will I work with
+graduate students and postdocs and even
+
+71
+00:07:58,589 --> 00:08:04,669
+under ladders students on the number of
+topics and most dear to our own research
+
+72
+00:08:04,670 --> 00:08:10,540
+who some of them you know the great just
+come from my lab
+
+73
+00:08:10,540 --> 00:08:17,780
+number of two years come from my lab we
+work on machine learning which is part
+
+74
+00:08:17,779 --> 00:08:26,109
+of a superset of deep learning we work a
+lot of science and neuroscience as well
+
+75
+00:08:26,110 --> 00:08:31,270
+as the intersection between an LPN
+speech so that's that's the kind of
+
+76
+00:08:31,269 --> 00:08:40,399
+landscape of computer vision research
+that my lab works so also to put things
+
+77
+00:08:40,399 --> 00:08:45,600
+in a little more perspective what other
+computer vision classes now we offer
+
+78
+00:08:45,600 --> 00:08:51,050
+here at stuff or through the computer
+science department are clearly you're in
+
+79
+00:08:51,049 --> 00:08:59,629
+this class es 21 so you some of you who
+have never taken computer vision
+
+80
+00:08:59,629 --> 00:09:06,220
+probably heard of commuters and for the
+first time probably should have already
+
+81
+00:09:06,220 --> 00:09:14,730
+done vs 131 that's a cool class of
+previous quarter we offer and then and
+
+82
+00:09:14,730 --> 00:09:19,779
+then next quarter which normally is
+offer this quarter but this year as a
+
+83
+00:09:19,779 --> 00:09:25,069
+little shifted there is an important
+graduate-level computer vision class
+
+84
+00:09:25,070 --> 00:09:31,840
+'cause cs2 30180 offered by professors
+so he'll suffer si who works in robotic
+
+85
+00:09:31,840 --> 00:09:47,230
+3d vision and a lot of you ask the
+question that this classiest 231 versus
+
+86
+00:09:47,230 --> 00:09:56,639
+the S two thirty 18 and the other is
+know if you're interested in a broader
+
+87
+00:09:56,639 --> 00:10:03,220
+coverage of tools and topics of computer
+vision as well as some of the
+
+88
+00:10:03,220 --> 00:10:11,009
+fundamental fundamental topics that come
+that relay 223 division robotic vision
+
+89
+00:10:11,009 --> 00:10:17,269
+and visual recognition you should
+consider taking in 23188 that is the
+
+90
+00:10:17,269 --> 00:10:26,039
+more general class 231 end which will go
+into starting today more deeply focuses
+
+91
+00:10:26,039 --> 00:10:33,329
+on a specific Ando of both problem and
+model model is your network and the
+
+92
+00:10:33,330 --> 00:10:38,580
+undertow is visual recognition mostly
+but of course they have a little bit of
+
+93
+00:10:38,580 --> 00:10:47,990
+overlap but that's the major difference
+next next quarter we also have possibly
+
+94
+00:10:47,990 --> 00:10:55,590
+a couple of a couple of advanced seminar
+level class but that's still in the
+
+95
+00:10:55,590 --> 00:11:01,649
+formations so you just have to check the
+syllabus so that's the kind of curcumin
+
+96
+00:11:01,649 --> 00:11:11,409
+division curricula we offer this year at
+Stanford in question so far yes
+
+97
+00:11:11,409 --> 00:11:20,879
+131 is not a strict requirement for this
+class but you also see that if you've
+
+98
+00:11:20,879 --> 00:11:25,570
+never heard of computer vision for the
+first time I suggest you find a way to
+
+99
+00:11:25,570 --> 00:11:33,830
+catch up because this class has shrooms
+a basic level of understanding of of
+
+100
+00:11:33,830 --> 00:11:42,560
+computer vision you can browse the notes
+and so on
+
+101
+00:11:42,559 --> 00:11:49,619
+today is that I will give a very brief
+broad stroke history of computer vision
+
+102
+00:11:49,620 --> 00:11:55,519
+and then we'll talk about 231 and a
+little bit in terms of the organization
+
+103
+00:11:55,519 --> 00:12:01,409
+of the class they really care about in
+with you this brief history of computer
+
+104
+00:12:01,409 --> 00:12:07,480
+vision because you know you might be
+here primarily because of your interest
+
+105
+00:12:07,480 --> 00:12:11,990
+in this really interesting tool called
+deeply and this is the purpose of this
+
+106
+00:12:11,990 --> 00:12:16,370
+class will offer you an in-depth look
+and then
+
+107
+00:12:16,370 --> 00:12:22,470
+and just journey through the of the what
+this deeply model is but without
+
+108
+00:12:22,470 --> 00:12:28,050
+understanding the problem domain without
+thinking deeply about what this problem
+
+109
+00:12:28,049 --> 00:12:37,849
+is it's very hard for you to to go out
+to be an inventor of the next model that
+
+110
+00:12:37,850 --> 00:12:43,320
+really solve the big problems vision or
+to be you know developing developing
+
+111
+00:12:43,320 --> 00:12:52,379
+making impactful work in solving a heart
+problem and also in general problem
+
+112
+00:12:52,379 --> 00:12:58,860
+domain and model the modeling tools
+themselves are never never fully
+
+113
+00:12:58,860 --> 00:13:00,129
+decoupled
+
+114
+00:13:00,129 --> 00:13:05,360
+inform each other and you'll see through
+the history of deep learning a little
+
+115
+00:13:05,360 --> 00:13:13,000
+bit that the coalition on your network
+architecture come from the meat to solve
+
+116
+00:13:13,000 --> 00:13:15,289
+a vision problem
+
+117
+00:13:15,289 --> 00:13:23,449
+vision problem helps the the planning
+algorithm to evolve and I'm back and
+
+118
+00:13:23,450 --> 00:13:29,350
+forth so is really important to to you
+know I want you to finish this course I
+
+119
+00:13:29,350 --> 00:13:34,300
+feel proud that you're still enough
+vision and of deep learning so you you
+
+120
+00:13:34,299 --> 00:13:39,528
+have this bullshit all set and the
+in-depth understanding of how to use the
+
+121
+00:13:39,528 --> 00:13:46,750
+tools to to to to tackle important
+problems so it's a brief history but
+
+122
+00:13:46,750 --> 00:13:54,149
+does it mean so short history so we're
+gonna go all the way back to 200 540
+
+123
+00:13:54,149 --> 00:14:00,110
+million years ago so why why did I
+picked this you know on the other scale
+
+124
+00:14:00,110 --> 00:14:09,240
+of Earth history this is a fairly
+specific range of years while so I don't
+
+125
+00:14:09,240 --> 00:14:14,049
+know if you have heard of this but this
+is a very very curious period of the
+
+126
+00:14:14,049 --> 00:14:23,539
+Earth's history biologists call this the
+big bag of evolution before 503
+
+127
+00:14:23,539 --> 00:14:27,679
+for 540 million years ago
+
+128
+00:14:27,679 --> 00:14:37,989
+a very peaceful of its pretty big pot of
+water so we have very simple organisms
+
+129
+00:14:37,990 --> 00:14:46,049
+these are like animals that just floats
+in the water and the way the eastern and
+
+130
+00:14:46,049 --> 00:14:53,838
+now a daily basis is you know the flow
+to move some kind of food comes by near
+
+131
+00:14:53,839 --> 00:15:01,160
+their house or whatever they just open
+their mouths grabbed it and we don't
+
+132
+00:15:01,159 --> 00:15:09,969
+have too many different types of animals
+but really strange happened around 540
+
+133
+00:15:09,970 --> 00:15:18,430
+million solely from the fossils we study
+there's a huge explosive of species
+
+134
+00:15:18,429 --> 00:15:27,729
+biologist car speciation like suddenly
+for some reason something that animal
+
+135
+00:15:27,730 --> 00:15:35,230
+start to diversify and they got a
+complex the start 2022 you start a
+
+136
+00:15:35,230 --> 00:15:41,039
+predators and praising and they have all
+kind of tools to to to survive what was
+
+137
+00:15:41,039 --> 00:15:46,698
+the triggering force of those was a huge
+question because people received no did
+
+138
+00:15:46,698 --> 00:15:53,269
+you know another SAT whatever meteoroid
+earth or or you know the environment
+
+139
+00:15:53,269 --> 00:16:00,198
+change they talk about one of the most
+convincing theory is by this guy call
+
+140
+00:16:00,198 --> 00:16:03,159
+Andrew Parker
+
+141
+00:16:03,159 --> 00:16:09,490
+largest in Australia from Australia he
+he studied a lot of fun
+
+142
+00:16:09,490 --> 00:16:19,278
+fossils and he's theory is that it was
+the onset of the ice so one of the first
+
+143
+00:16:19,278 --> 00:16:25,688
+trial bites developed and I really
+really simple I it's almost like a
+
+144
+00:16:25,688 --> 00:16:30,779
+pinhole camera that just catches light
+and make some projections in
+
+145
+00:16:30,779 --> 00:16:34,750
+register some information from the
+environment
+
+146
+00:16:34,750 --> 00:16:41,080
+suddenly life is no longer so medal
+because once you have that I the first
+
+147
+00:16:41,080 --> 00:16:44,889
+thing you can do is you could go patch
+for you actually know where food it's
+
+148
+00:16:44,889 --> 00:16:51,809
+not just like blind them floating in the
+water and was you can go cat food
+
+149
+00:16:51,809 --> 00:16:57,399
+guess what the food best better develop
+eyes and to run away from you otherwise
+
+150
+00:16:57,399 --> 00:17:02,590
+they'll be gone you know your your so
+the first of all who had had eyes were
+
+151
+00:17:02,590 --> 00:17:11,380
+like in a limited both Google and so
+just like has the best time you think
+
+152
+00:17:11,380 --> 00:17:18,170
+everything they can but because those
+are all set of lies what we what the
+
+153
+00:17:18,170 --> 00:17:28,400
+college's realize is the biological arms
+race begin every single animal needs to
+
+154
+00:17:28,400 --> 00:17:34,170
+needs to learn to develop things to
+survive or to you know you you you
+
+155
+00:17:34,170 --> 00:17:40,190
+suddenly have praised and predators and
+all this and the speciation so that's
+
+156
+00:17:40,190 --> 00:17:47,870
+one vision begun 540 million years and
+not only religion begun visual was one
+
+157
+00:17:47,869 --> 00:17:53,189
+of the major driving force of the
+speciation or that the big fan of
+
+158
+00:17:53,190 --> 00:17:58,980
+evolution or I so so we're not gonna
+fall evolution for with too much detail
+
+159
+00:17:58,980 --> 00:18:08,710
+another big important work that the
+engineering of vision happened around
+
+160
+00:18:08,710 --> 00:18:19,220
+the Renaissance and of course it's
+attributed to this amazing guy so before
+
+161
+00:18:19,220 --> 00:18:23,740
+other songs you know throughout human
+civilization from Asia to Europe to
+
+162
+00:18:23,740 --> 00:18:30,400
+India to Arabic world we have seen
+models of cameras so Aristotle has
+
+163
+00:18:30,400 --> 00:18:36,360
+proposed the camera through the Leafs
+Chinese philosopher moses have proposed
+
+164
+00:18:36,359 --> 00:18:40,939
+the camera through a box with the whole
+but
+
+165
+00:18:40,940 --> 00:18:47,750
+if you look at the first documentation
+really modern looking camera it's called
+
+166
+00:18:47,750 --> 00:18:49,180
+camera obscura
+
+167
+00:18:49,180 --> 00:18:56,610
+and that is documented by Leonardo da da
+Vinci I'm not gonna get into the details
+
+168
+00:18:56,609 --> 00:19:07,240
+but this is you know you get the idea
+that there is some kind of a whole to
+
+169
+00:19:07,240 --> 00:19:12,240
+capture light reflected from the real
+world and then there is some kind of
+
+170
+00:19:12,240 --> 00:19:20,319
+protection to capture the information of
+the of the of the real-world image so
+
+171
+00:19:20,319 --> 00:19:27,779
+that's the beginning of the modern you
+know engineering
+
+172
+00:19:27,779 --> 00:19:36,170
+vision it started with one team to copy
+the world and wanted to make a copy of
+
+173
+00:19:36,170 --> 00:19:42,350
+the visual world it hasn't gone anywhere
+close to wanting to engineer the
+
+174
+00:19:42,349 --> 00:19:46,879
+understanding of the visual world right
+now we're just talking about duplicating
+
+175
+00:19:46,880 --> 00:19:53,760
+the visual world so that's one important
+work to remember and of course after
+
+176
+00:19:53,759 --> 00:20:01,299
+camera obscura although we we we start
+to see a whole series of successful in
+
+177
+00:20:01,299 --> 00:20:07,539
+all some film gets developed you know
+like kodak was one of the first
+
+178
+00:20:07,539 --> 00:20:12,329
+companies developing commercial cameras
+and then we start to have camcorders and
+
+179
+00:20:12,329 --> 00:20:21,889
+and and all this very important
+important piece of work that I want you
+
+180
+00:20:21,890 --> 00:20:28,050
+to be aware of as vision student is
+absolutely nothing engineering work but
+
+181
+00:20:28,049 --> 00:20:32,710
+do you think science piece of science
+work that's starting to ask the question
+
+182
+00:20:32,710 --> 00:20:38,130
+is how does Visual work in our
+biological bring you know we
+
+183
+00:20:38,130 --> 00:20:45,760
+we now know that it took 540 million
+years of evolution to get to really
+
+184
+00:20:45,759 --> 00:20:54,579
+fantastic visual system in humans but
+what did evolution do during this time
+
+185
+00:20:54,579 --> 00:21:01,759
+what kind of architecture did develop
+from that simple trilobite to today
+
+186
+00:21:01,759 --> 00:21:07,950
+yours and mine while very important
+piece of work happened at Harvard lied
+
+187
+00:21:07,950 --> 00:21:12,690
+to that time too young to very young
+ambitious pulls the occupant in the
+
+188
+00:21:12,690 --> 00:21:21,500
+vehicle what they did is that they used
+awake but anaesthetized cats and then
+
+189
+00:21:21,500 --> 00:21:28,529
+there was not technology to build this
+little needle electrode to push the
+
+190
+00:21:28,529 --> 00:21:35,129
+electrons through to the the the the
+skull is open until the bringing of the
+
+191
+00:21:35,130 --> 00:21:42,180
+cut into an area what we already know
+come primary visual cortex primary
+
+192
+00:21:42,180 --> 00:21:49,490
+visual cortex area do a lot of things
+for for visual processing but before
+
+193
+00:21:49,490 --> 00:21:54,779
+visa we don't really know what primary
+visual cortex is to be winter snow is
+
+194
+00:21:54,779 --> 00:22:02,369
+one of the earliest stage of the UI is
+of course but earliest stage for visual
+
+195
+00:22:02,369 --> 00:22:07,299
+processing then there is tons and tons
+of new orleans working on vision then we
+
+196
+00:22:07,299 --> 00:22:12,419
+really alter our to know what this is
+because that's the beginning of vision
+
+197
+00:22:12,420 --> 00:22:20,300
+visual process in the bring so they they
+put this electrode into the primary
+
+198
+00:22:20,299 --> 00:22:25,930
+visual cortex and an interesting this is
+another interesting fact I don't drop my
+
+199
+00:22:25,930 --> 00:22:34,880
+stuff for sure you probably visual
+cortex the first they come from being
+
+200
+00:22:34,880 --> 00:22:40,910
+very very rough prosecutor first aid of
+your cortical visual processing stage is
+
+201
+00:22:40,910 --> 00:22:47,180
+in the back of your bring not near your
+I know it's very interesting because
+
+202
+00:22:47,180 --> 00:22:51,788
+your own factory in cortical processing
+is right
+
+203
+00:22:51,788 --> 00:22:58,519
+behind her nose your auditory is right
+behind every year but your primary
+
+204
+00:22:58,519 --> 00:23:05,798
+visual cortex is the furthest from your
+eye and another very interesting that in
+
+205
+00:23:05,798 --> 00:23:11,099
+fact not only the primary there's a huge
+area working on vision almost 50% of
+
+206
+00:23:11,099 --> 00:23:17,888
+your brain is a love division this in
+this the hardest and most important
+
+207
+00:23:17,888 --> 00:23:22,608
+sensory perceptual cognitive system in
+the break and I'm not saying anything
+
+208
+00:23:22,608 --> 00:23:29,839
+else does is not useful clearly but it
+take nature of this long to develop this
+
+209
+00:23:29,839 --> 00:23:37,579
+this sensory system and it takes the
+troop this much realist a space to be
+
+210
+00:23:37,579 --> 00:23:43,148
+used for the system why because it's so
+important and it's so damn hard that's
+
+211
+00:23:43,148 --> 00:23:50,959
+why we need to get back to human reason
+they were really ambitious they wanna
+
+212
+00:23:50,960 --> 00:23:56,028
+know what primary visual cortex is doing
+because this is the beginning of our
+
+213
+00:23:56,028 --> 00:24:02,878
+knowledge for deep learning neural
+network cats social then put the cats in
+
+214
+00:24:02,878 --> 00:24:07,709
+this room and they were recording your
+activities when I say recording your
+
+215
+00:24:07,710 --> 00:24:11,659
+activities fair trial there basically
+trying to see you know if I put the
+
+216
+00:24:11,659 --> 00:24:18,059
+electrode here like to the new office to
+the new house fire when they see
+
+217
+00:24:18,058 --> 00:24:25,308
+something so for example if they show if
+they show cat their ideas if I showed
+
+218
+00:24:25,308 --> 00:24:30,519
+this kind of fish you know apparently at
+that time comes to eat fish rather than
+
+219
+00:24:30,519 --> 00:24:42,019
+these beings with the cats no I like
+yellow happy and spikes and here's a
+
+220
+00:24:42,019 --> 00:24:48,128
+story of scientific discovery is
+scientific discovery takes both luck and
+
+221
+00:24:48,128 --> 00:24:52,449
+care and thoughtfulness they were shown
+
+222
+00:24:52,450 --> 00:24:58,740
+whatever mouse flower it just doesn't
+work the cats new are in the primary
+
+223
+00:24:58,740 --> 00:25:02,839
+visual cortex was silent there was no
+spiking
+
+224
+00:25:02,839 --> 00:25:09,079
+very little spike in there were really
+frustrated but the good news is that
+
+225
+00:25:09,079 --> 00:25:14,509
+there was no computer at that time so
+what they have to do when they showed us
+
+226
+00:25:14,509 --> 00:25:21,740
+cats is they have to use a slight
+protector so they put his foot a slide
+
+227
+00:25:21,740 --> 00:25:26,799
+of a fish and then wait till the new on
+Spike if the new imposes bike they take
+
+228
+00:25:26,799 --> 00:25:29,960
+the slide out putting another slight
+
+229
+00:25:29,960 --> 00:25:38,630
+notice I would have liked this like you
+know this film I don't you remember to
+
+230
+00:25:38,630 --> 00:25:46,890
+use glasser film whatever the Douro
+spikes that's weird you know like the
+
+231
+00:25:46,890 --> 00:25:51,940
+actual mouse official flower didn't
+drive the new excite the new role but
+
+232
+00:25:51,940 --> 00:25:59,759
+the the the movement of taking the slide
+out nor could he has sliding did excite
+
+233
+00:25:59,759 --> 00:26:03,140
+the new I can be the catalyst think
+you'll finally they're changing the new
+
+234
+00:26:03,140 --> 00:26:13,410
+you know new objects for me so it turned
+out there is created by this life that
+
+235
+00:26:13,410 --> 00:26:18,240
+they're changing right slide the
+whatever it's a square rectangular plate
+
+236
+00:26:18,240 --> 00:26:28,120
+and that moving edge or excited the
+nuance so they're really taste the after
+
+237
+00:26:28,119 --> 00:26:34,859
+that observations you know if they were
+too frustrated or to have missed that
+
+238
+00:26:34,859 --> 00:26:41,359
+but they're not the they're really taste
+after that and realize new songs in the
+
+239
+00:26:41,359 --> 00:26:48,279
+primary visual cortex are organized in
+columns and for every column of the new
+
+240
+00:26:48,279 --> 00:27:01,309
+Alice they'd like to see a specific
+orientation of the of the bars rather
+
+241
+00:27:01,309 --> 00:27:02,980
+than the Fisher a mouse
+
+242
+00:27:02,980 --> 00:27:07,519
+you know I'm a bit of a simple story
+because there are still numerous in
+
+243
+00:27:07,519 --> 00:27:10,940
+primary visual cortex we don't know what
+they like they don't like simple
+
+244
+00:27:10,940 --> 00:27:17,570
+oriented but by large with a human
+visitor found that the beginning of
+
+245
+00:27:17,569 --> 00:27:23,779
+visual processing is not a holistic fish
+or malice the beginning of visual
+
+246
+00:27:23,779 --> 00:27:29,178
+processing is simple structures of the
+world
+
+247
+00:27:29,179 --> 00:27:40,890
+oriented and this is a very deep deep
+implications are signs as well as
+
+248
+00:27:40,890 --> 00:27:47,870
+engineering modeling it's later when we
+visualize our dealer network features
+
+249
+00:27:47,869 --> 00:27:57,069
+will see that simple like structure in
+emerging from our from our model and
+
+250
+00:27:57,069 --> 00:28:03,298
+even though the discovery was later
+fifties and early sixties they won the
+
+251
+00:28:03,298 --> 00:28:12,039
+nobel medical price for this work in
+1981 so that was another very important
+
+252
+00:28:12,039 --> 00:28:25,928
+piece of work related to vision and
+visual processing so that's another
+
+253
+00:28:25,929 --> 00:28:35,620
+interesting story the precursor of
+computer vision as a modern field was
+
+254
+00:28:35,619 --> 00:28:42,779
+this particular dissipation by Larry
+Roberts in 1963 it's called block world
+
+255
+00:28:42,779 --> 00:28:49,889
+he just as humulin visa we're
+discovering that the visual world in our
+
+256
+00:28:49,890 --> 00:29:00,380
+brain is organized by simple like
+structures Larry Roberts as early as PhD
+
+257
+00:29:00,380 --> 00:29:06,350
+students were trying to extract these
+like structures
+
+258
+00:29:06,349 --> 00:29:08,980
+images
+
+259
+00:29:08,980 --> 00:29:16,210
+as a as a piece of engineering work in
+this particular case his goal is that
+
+260
+00:29:16,210 --> 00:29:22,210
+you know both you and not as humans can
+recognize blocks no matter how it's
+
+261
+00:29:22,210 --> 00:29:28,009
+turned right like we know it's a saint
+block these two are the same block even
+
+262
+00:29:28,009 --> 00:29:33,019
+though the lighting changed and the
+orientation changed and he's conjuncture
+
+263
+00:29:33,019 --> 00:29:40,720
+is that just like we thought told us
+it's the edges that define this the
+
+264
+00:29:40,720 --> 00:29:46,419
+structure that the edges defying the
+laws shape and they don't change
+
+265
+00:29:46,419 --> 00:29:53,290
+relevant all these internal things so
+Larry Roberts Road a PhD dissertation to
+
+266
+00:29:53,289 --> 00:29:59,250
+just extract these edges you know if
+your work as a PhD student computer
+
+267
+00:29:59,250 --> 00:30:03,990
+vision this is like you know this is
+like undergraduate computer vision would
+
+268
+00:30:03,990 --> 00:30:10,210
+have been had PhD theses but that was
+the first precursor computer vision PhD
+
+269
+00:30:10,210 --> 00:30:18,819
+theses like Robert since interest he
+gave up his computer vision afterwards
+
+270
+00:30:18,819 --> 00:30:27,189
+and DARPA I was one of the inventors of
+the internet we didn't do too badly by
+
+271
+00:30:27,190 --> 00:30:34,490
+giving up computer vision but we always
+like to say that the birth of computer
+
+272
+00:30:34,490 --> 00:30:43,960
+vision as a modern field is in the
+summer of 1966 the summer of 1966 MIT
+
+273
+00:30:43,960 --> 00:30:49,548
+artificial intelligence lab was
+established before that actually for one
+
+274
+00:30:49,548 --> 00:30:55,819
+piece of history should feel proud of
+them for student this there are two
+
+275
+00:30:55,819 --> 00:31:02,579
+pioneering artificial intelligence lab
+established in the world in the early
+
+276
+00:31:02,579 --> 00:31:10,329
+1960's one by Marvin Minsky at MIT one
+by John McCarthy at suffered a stone for
+
+277
+00:31:10,329 --> 00:31:15,369
+the artificial intelligence lab was
+established before the computer science
+
+278
+00:31:15,369 --> 00:31:21,479
+department and professor John McCarthy
+who founded and I love is the one who is
+
+279
+00:31:21,480 --> 00:31:22,490
+responsible for
+
+280
+00:31:22,490 --> 00:31:26,450
+the term artificial intelligence so
+that's a little bit of a problem
+
+281
+00:31:26,450 --> 00:31:31,720
+stempler history but anyway we have to
+give us credit for starting the field of
+
+282
+00:31:31,720 --> 00:31:41,380
+computer vision because in the summer of
+1966 a professor at MIT I decided it's
+
+283
+00:31:41,380 --> 00:31:46,630
+time to salvage you know so I was
+established we will start to understand
+
+284
+00:31:46,630 --> 00:31:55,010
+I think this proves probably invented at
+that time but anyway
+
+285
+00:31:55,009 --> 00:32:01,109
+vision is so easy you open your eyes you
+see the world how can this be love one
+
+286
+00:32:01,109 --> 00:32:04,109
+summer so
+
+287
+00:32:04,109 --> 00:32:18,729
+so the summer vision project is an
+attempt to use our visual system this
+
+288
+00:32:18,730 --> 00:32:24,329
+was the proposal from last number and
+maybe they didn't use their summer work
+
+289
+00:32:24,329 --> 00:32:30,490
+effectively but in any case how
+individual was not solved in that silver
+
+290
+00:32:30,490 --> 00:32:35,740
+since then they become the fastest
+growing field of computer vision and I
+
+291
+00:32:35,740 --> 00:32:43,679
+if you go to today's premium computer
+vision conferences cost CPR or ICC we we
+
+292
+00:32:43,679 --> 00:32:52,160
+have like 2000 to 2500 researchers
+worldwide attending this conference and
+
+293
+00:32:52,160 --> 00:33:00,620
+very practical note 44 students if you
+are a good computer vision / machine
+
+294
+00:33:00,619 --> 00:33:05,369
+learning students you will not worry
+about jobs in Silicon Valley or or
+
+295
+00:33:05,369 --> 00:33:11,569
+anywhere else so it's actually one of
+the most exciting field but that was the
+
+296
+00:33:11,569 --> 00:33:19,210
+birth of computer vision which means
+this year is the fiftieth anniversary of
+
+297
+00:33:19,210 --> 00:33:25,829
+computer vision that's a very exciting
+year in computer vision I we have a
+
+298
+00:33:25,829 --> 00:33:28,529
+caller who long long way
+
+299
+00:33:28,529 --> 00:33:31,660
+ok so continued of computer vision
+
+300
+00:33:31,660 --> 00:33:38,169
+this is a person to remember David Mark
+he he was also at MIT at that time
+
+301
+00:33:38,169 --> 00:33:50,240
+working with a number of shimon tommy
+tommy pope Jill and Mark himself died
+
+302
+00:33:50,240 --> 00:33:58,808
+early in the seventies very influential
+book called vision it's a very book
+
+303
+00:33:58,808 --> 00:34:08,148
+smart thinking about vision he took a
+lot of insights from your signs where he
+
+304
+00:34:08,148 --> 00:34:14,868
+said that he want reasonable give us the
+concept of simple structure regions
+
+305
+00:34:14,869 --> 00:34:16,539
+start with
+
+306
+00:34:16,539 --> 00:34:23,259
+simple structure in today and start with
+a holistic fish or holistic not was mark
+
+307
+00:34:23,260 --> 00:34:28,679
+give us the next important insight and
+these two inside together is the
+
+308
+00:34:28,679 --> 00:34:35,740
+beginning of deep learning architecture
+is that vision is hierarchical you know
+
+309
+00:34:35,739 --> 00:34:44,029
+so you will have easily said ok we start
+simple but this major world is extremely
+
+310
+00:34:44,030 --> 00:34:49,540
+complex in fact I take a picture a
+regular picture today with my eiffel
+
+311
+00:34:49,539 --> 00:34:58,309
+there is no my iPhone's resolution let's
+suppose it's like turned up exhaust the
+
+312
+00:34:58,309 --> 00:35:05,059
+potential combination of pixels or
+picture in that is bigger than the total
+
+313
+00:35:05,059 --> 00:35:11,429
+number of atoms in the universe that's
+how complex vision can be is it's it's
+
+314
+00:35:11,429 --> 00:35:18,539
+really really complex human beings are
+told us they are simple David Mark told
+
+315
+00:35:18,539 --> 00:35:25,130
+us build a hierarchical model of course
+there mark didn't tell us to build it in
+
+316
+00:35:25,130 --> 00:35:29,400
+the coalition on your network which will
+cover for the rest of the quarter but
+
+317
+00:35:29,400 --> 00:35:36,990
+his ideas is to represent or to think
+about it image we think about it in
+
+318
+00:35:36,989 --> 00:35:42,129
+several layers the first one he thinks
+we should think about that edge image
+
+319
+00:35:42,130 --> 00:35:49,110
+which is clearly an inspiration noted
+took the inspiration from these oh and
+
+320
+00:35:49,110 --> 00:35:52,579
+he personally called this the primal
+sketch
+
+321
+00:35:52,579 --> 00:35:55,730
+you know the name is Sophie explain it
+
+322
+00:35:55,730 --> 00:36:02,400
+explained every now and then you think
+about one-half the this is work you
+
+323
+00:36:02,400 --> 00:36:08,829
+start to Rick reconcile your 2d image
+with the 3d world you recognize there is
+
+324
+00:36:08,829 --> 00:36:15,679
+layers right I look at you right now I
+don't think half of you only has upheld
+
+325
+00:36:15,679 --> 00:36:17,239
+in the neck
+
+326
+00:36:17,239 --> 00:36:22,799
+even though that's all I see there is I
+know you're all concluded by the row in
+
+327
+00:36:22,800 --> 00:36:29,680
+front of you and this challenge will
+post problem to solve
+
+328
+00:36:29,679 --> 00:36:38,118
+nature had that you oppose prob to solve
+because the broadest 3d imagery 2d
+
+329
+00:36:38,119 --> 00:36:45,210
+nature saw that my first a hard work
+trick we just to ice it did they use one
+
+330
+00:36:45,210 --> 00:36:49,389
+I but there's gonna be a whole bunch of
+hoes software trick to lurch the
+
+331
+00:36:49,389 --> 00:36:53,868
+formation of the two eyes and Aldous so
+the same thing with computer vision we
+
+332
+00:36:53,869 --> 00:36:59,280
+have to solve that too and have tea
+problem and they eventually we have to
+
+333
+00:36:59,280 --> 00:37:03,180
+put everything together so that we
+actually have a good 3d model of the
+
+334
+00:37:03,179 --> 00:37:08,629
+world why do we have to have a 3d model
+of the world as we have to survive
+
+335
+00:37:08,630 --> 00:37:15,309
+navigate manipulate the world when I
+shake your hand I really need to know
+
+336
+00:37:15,309 --> 00:37:16,509
+how do you know
+
+337
+00:37:16,510 --> 00:37:22,320
+external my hand and grab your heading
+the right way that is a 3d modeling of
+
+338
+00:37:22,320 --> 00:37:26,000
+the world otherwise I won't be able to
+grab your head in the right way when I
+
+339
+00:37:26,000 --> 00:37:34,219
+pick up a mug the same thing so so
+that's that's that's David Marr's
+
+340
+00:37:34,219 --> 00:37:39,899
+architecture for vision that's a
+high-level abstract architecture it
+
+341
+00:37:39,900 --> 00:37:45,490
+doesn't really inform us exactly what
+kind of mathematical modeling we should
+
+342
+00:37:45,489 --> 00:37:51,439
+it doesn't inform us of the learning
+procedure and they really does the
+
+343
+00:37:51,440 --> 00:37:55,599
+inference procedure which we will
+getting to through the deep learning
+
+344
+00:37:55,599 --> 00:38:02,759
+that word architecture but that's not
+that's the high-level view of important
+
+345
+00:38:02,760 --> 00:38:06,250
+it's an important concept to learn
+
+346
+00:38:06,250 --> 00:38:08,619
+envisioned and we call this the
+
+347
+00:38:08,619 --> 00:38:16,859
+representation really important work and
+this is a little bit stuff first trip to
+
+348
+00:38:16,860 --> 00:38:25,180
+just show you as soon as they lead out
+this important way of thinking about the
+
+349
+00:38:25,179 --> 00:38:31,879
+first wave of visual recognition
+algorithms went after the 3d model
+
+350
+00:38:31,880 --> 00:38:38,280
+because that's the goal right like no
+matter how you represent the stages the
+
+351
+00:38:38,280 --> 00:38:45,519
+goal here is to reconstruct recognized
+object and this is really sensible
+
+352
+00:38:45,519 --> 00:38:52,380
+because that's when we go to the world
+and do so both of these to your work
+
+353
+00:38:52,380 --> 00:38:58,829
+comes from Palo Alto one of those from
+sum 41 as far as ROI Sao Tome before was
+
+354
+00:38:58,829 --> 00:39:00,440
+a professor at Stanford
+
+355
+00:39:00,440 --> 00:39:05,760
+I love that he and his two directly
+Brooks proposed 11 of the first
+
+356
+00:39:05,760 --> 00:39:10,430
+so-called generalized till salu model
+I'm not gonna get into the details but
+
+357
+00:39:10,429 --> 00:39:17,129
+the idea is that the world is composed
+of simple shapes like
+
+358
+00:39:17,130 --> 00:39:23,150
+wonders blocks and then any real world
+object is just a combination of these
+
+359
+00:39:23,150 --> 00:39:28,340
+simple shapes given the particular
+feeling and go and that was a very
+
+360
+00:39:28,340 --> 00:39:37,970
+influential visual recognition model in
+the seventies and went on to become the
+
+361
+00:39:37,969 --> 00:39:47,239
+Director of MIT lab and he was also a
+founding member of iRobot company rumba
+
+362
+00:39:47,239 --> 00:39:51,379
+and all this so so he continued the very
+influential
+
+363
+00:39:51,380 --> 00:39:56,930
+I work and nobody interesting model
+coming from local
+
+364
+00:39:56,929 --> 00:40:05,009
+Research Institute I think I saw I is
+across the street from El Camino is this
+
+365
+00:40:05,010 --> 00:40:15,260
+pictorial structure model has less of a
+3d flavor but more of a probabilistic
+
+366
+00:40:15,260 --> 00:40:21,570
+flavor is that the objects are made of a
+still simple part
+
+367
+00:40:21,570 --> 00:40:28,059
+like a person's head is made of eyes and
+nose or mouth and the parts were CuMn
+
+368
+00:40:28,059 --> 00:40:34,679
+acted by springs allowing for some
+deformations getting a sense of ok we
+
+369
+00:40:34,679 --> 00:40:40,069
+recognize the world not every one of you
+have exactly the same eyes in the
+
+370
+00:40:40,070 --> 00:40:45,150
+distance between the eyes will allow for
+some kind of rare variability so this
+
+371
+00:40:45,150 --> 00:40:50,450
+concept of variability start to get
+introduced in the model like this and
+
+372
+00:40:50,449 --> 00:40:56,309
+using models like this you know the
+reason I want to show you this is too to
+
+373
+00:40:56,309 --> 00:41:02,710
+see how simple the the worst was a tease
+this was one of the most influential
+
+374
+00:41:02,710 --> 00:41:09,670
+model in the eighties recognizing
+real-world objects and the entire paper
+
+375
+00:41:09,670 --> 00:41:18,900
+of real world is these seemingly users
+but the using the edges and simple
+
+376
+00:41:18,900 --> 00:41:26,010
+shapes warm but edges to to recognize
+this by another and other stuff or
+
+377
+00:41:26,010 --> 00:41:33,980
+graduate so that's that's that's kind of
+the incident world of computer vision
+
+378
+00:41:33,980 --> 00:41:39,699
+will wind up being seen black and white
+or even synthetic images started the
+
+379
+00:41:39,699 --> 00:41:46,529
+nineties we're finally started moving to
+like color images of real world and it
+
+380
+00:41:46,530 --> 00:41:55,210
+was a big change again very very
+influential work here is not
+
+381
+00:41:55,210 --> 00:42:01,150
+particularly about recognizing an object
+is about how do it like carve out an
+
+382
+00:42:01,150 --> 00:42:08,990
+image into sensible parts right so if
+you enter this room there's no way your
+
+383
+00:42:08,989 --> 00:42:15,559
+visual system is tell you of my god I
+see so many pics it was only have group
+
+384
+00:42:15,559 --> 00:42:22,259
+things you see heads heads have
+territory chair a stage platform piece
+
+385
+00:42:22,260 --> 00:42:26,640
+of furniture in the oldest this is
+called perceptual grouping perceptual
+
+386
+00:42:26,639 --> 00:42:28,309
+grouping as one of me
+
+387
+00:42:28,309 --> 00:42:34,779
+most important problem envision
+biological or artificial if we don't
+
+388
+00:42:34,780 --> 00:42:39,420
+know how to solve the perceptual
+grouping problem where they have a
+
+389
+00:42:39,420 --> 00:42:46,690
+really hard time to to deeply understand
+the visual world and you aren't words
+
+390
+00:42:46,690 --> 00:42:53,450
+that end of this class this course a
+problem as fundamental as the still not
+
+391
+00:42:53,449 --> 00:42:57,859
+solved in computer vision even though we
+have made a lot of progress before
+
+392
+00:42:57,860 --> 00:43:04,390
+departing after deplaning we're still
+grasping the final solution to a problem
+
+393
+00:43:04,389 --> 00:43:10,650
+like this so so this is again I why I
+want to give you at this introduction to
+
+394
+00:43:10,650 --> 00:43:16,950
+for you to be aware of the deep problems
+evasion and also the then-current they
+
+395
+00:43:16,949 --> 00:43:22,730
+in the the the the challenges envision
+we cannot solve all the problems despite
+
+396
+00:43:22,730 --> 00:43:29,079
+whatever the noose s you know like we're
+far from developing terminators who can
+
+397
+00:43:29,079 --> 00:43:34,860
+do everything so this piece of work is
+called normalized cut is what is one of
+
+398
+00:43:34,860 --> 00:43:42,390
+the first computer vision work that
+takes real world images and tries to
+
+399
+00:43:42,389 --> 00:43:52,420
+solve the problem is the senior computer
+vision researcher now professor at
+
+400
+00:43:52,420 --> 00:43:56,000
+berkeley also stanford graduate
+
+401
+00:43:56,000 --> 00:44:01,989
+the results are not great I will not
+cover any sedimentation in this class
+
+402
+00:44:01,989 --> 00:44:08,459
+from where you see we are making
+progress but this is the beginning of
+
+403
+00:44:08,460 --> 00:44:15,510
+that another very casual work that I
+want to i want to bring up and pay
+
+404
+00:44:15,510 --> 00:44:22,410
+tribute for even though these work we're
+not covering them in the rest of the
+
+405
+00:44:22,409 --> 00:44:26,679
+course but I think it has a vision
+student pretty important for you to be
+
+406
+00:44:26,679 --> 00:44:31,199
+aware of this because not only
+introduces the important problem we want
+
+407
+00:44:31,199 --> 00:44:36,730
+to solve it also gives you a perspective
+of the development of the field let's
+
+408
+00:44:36,730 --> 00:44:40,480
+work is called villa jones face detector
+
+409
+00:44:40,480 --> 00:44:46,030
+it's very dear to my heart because as a
+graduate student fresh graduate student
+
+410
+00:44:46,030 --> 00:44:51,650
+at cal tech it's the one of the first
+papers I read as a graduate student when
+
+411
+00:44:51,650 --> 00:44:56,150
+I until the lab and I didn't know
+anything about it my advisers with this
+
+412
+00:44:56,150 --> 00:45:02,090
+amazing piece of work that you know
+we're all trying to understand them by
+
+413
+00:45:02,090 --> 00:45:08,690
+the time I graduated from Celtic this
+very work is transferred to the first
+
+414
+00:45:08,690 --> 00:45:16,510
+smart digital camera by Fujifilm in 2006
+as the first digital camera that has a
+
+415
+00:45:16,510 --> 00:45:22,390
+face detector so far my transfer pump
+technology transfer point of view it was
+
+416
+00:45:22,389 --> 00:45:28,789
+extremely fast and there was one of the
+first successful high-level visual
+
+417
+00:45:28,789 --> 00:45:35,849
+recognition algorithm that's being used
+by consumer product so let's work just
+
+418
+00:45:35,849 --> 00:45:41,059
+learns to detect faces and faces in the
+wild with no longer soon you know
+
+419
+00:45:41,059 --> 00:45:47,920
+simulation they are a very contrived a
+these are any pictures and even though
+
+420
+00:45:47,920 --> 00:45:53,329
+he didn't use a deep learning network it
+has a lot of the deep learning flavor
+
+421
+00:45:53,329 --> 00:46:01,179
+the features were learned the algorithm
+learns to find features simple features
+
+422
+00:46:01,179 --> 00:46:06,919
+like these black and white filter
+features that can you give us the best
+
+423
+00:46:06,920 --> 00:46:14,639
+localization of faces so this is a very
+influential piece of work it's also one
+
+424
+00:46:14,639 --> 00:46:24,679
+of the first computer visual work that
+is deployed computer and can roam real
+
+425
+00:46:24,679 --> 00:46:31,019
+time before that comparison algorithms
+were very slow the the paper actually is
+
+426
+00:46:31,019 --> 00:46:36,699
+called real-time face detection it was
+granted send him to tips I don't know if
+
+427
+00:46:36,699 --> 00:46:41,409
+anybody remember that kind of chip but
+it was not a slow chat but nevertheless
+
+428
+00:46:41,409 --> 00:46:48,569
+it run real time that was another very
+important piece of art and also one more
+
+429
+00:46:48,570 --> 00:46:53,380
+thing to point out around this time this
+is not the only work
+
+430
+00:46:53,380 --> 00:46:59,170
+but this is a a really good
+representation Morales time the focus of
+
+431
+00:46:59,170 --> 00:47:06,250
+computer vision is shifting remember
+that they've Mr
+
+432
+00:47:06,250 --> 00:47:14,699
+early for work was trying to model the
+three the shape of the object now we're
+
+433
+00:47:14,699 --> 00:47:23,439
+shifting to recognizing what the object
+is the little bit about can we really
+
+434
+00:47:23,440 --> 00:47:27,400
+reconstruct these phases or not there's
+a whole branch of computer vision
+
+435
+00:47:27,400 --> 00:47:34,200
+graphics step continue to work on that
+but a big part of computer vision is not
+
+436
+00:47:34,199 --> 00:47:38,730
+at this time around the turn of the
+century is focusing on recognition
+
+437
+00:47:38,730 --> 00:47:47,539
+that's bringing computer vision and
+today the most important parts of the
+
+438
+00:47:47,539 --> 00:47:55,480
+computer vision work is focused these
+cognitive questions like recognition and
+
+439
+00:47:55,480 --> 00:47:57,369
+I questions
+
+440
+00:47:57,369 --> 00:48:06,150
+another very important piece of work is
+starting to focus on features so around
+
+441
+00:48:06,150 --> 00:48:12,950
+the time of face recognition people
+start to realize it's really really hard
+
+442
+00:48:12,949 --> 00:48:19,829
+to recognize an object by describing the
+whole thing like I just said you know I
+
+443
+00:48:19,829 --> 00:48:25,960
+see you guys were heavily on concluded I
+don't see the rest of your torso I
+
+444
+00:48:25,960 --> 00:48:31,690
+really don't see any of your legs on it
+in the first row but I recognize you and
+
+445
+00:48:31,690 --> 00:48:39,230
+i ke fir you as an object so some people
+start to realize she is fun this is
+
+446
+00:48:39,230 --> 00:48:44,240
+really a global shape now we have to go
+after in order to recognize an object
+
+447
+00:48:44,239 --> 00:48:50,319
+maybe it's the features if we recognize
+the important features an object we can
+
+448
+00:48:50,320 --> 00:48:53,090
+go a long way and makes a lot of sense
+
+449
+00:48:53,090 --> 00:48:57,930
+think about evolution if you are out
+hunting you don't need to recognize that
+
+450
+00:48:57,929 --> 00:49:03,909
+Tigers full body in shape to decide you
+need to run away you know there's a few
+
+451
+00:49:03,909 --> 00:49:06,588
+patches of the first of the tiger
+through the
+
+452
+00:49:06,588 --> 00:49:12,679
+leaves probably cool arm you enough so
+so we need to listen as quick
+
+453
+00:49:12,679 --> 00:49:16,429
+decision-making baseball's version is
+really quick
+
+454
+00:49:16,429 --> 00:49:22,308
+a lot of this happens online important
+features so this will cost shift by
+
+455
+00:49:22,309 --> 00:49:28,539
+David low again you saw that name again
+is about learning important important
+
+456
+00:49:28,539 --> 00:49:34,009
+features on an object and once you learn
+these important features just a few of
+
+457
+00:49:34,009 --> 00:49:38,400
+them on the object you can actually
+recommends this object in a totally
+
+458
+00:49:38,400 --> 00:49:45,548
+different and go on the tolling
+cluttered scenes so up to keep learnings
+
+459
+00:49:45,548 --> 00:49:54,880
+research election in 2010 or 2012 for
+about 10 years the entire field of
+
+460
+00:49:54,880 --> 00:50:00,229
+computer vision was focusing on using
+these features to build models to
+
+461
+00:50:00,228 --> 00:50:05,538
+recognize objects and scenes and we've
+done a great job we've gone a long way
+
+462
+00:50:05,539 --> 00:50:12,609
+one of the reasons deep learning that
+word was became more more convincing to
+
+463
+00:50:12,608 --> 00:50:17,690
+a lot of people is we will see that the
+features that a deep learning that
+
+464
+00:50:17,690 --> 00:50:22,880
+learners is very similar to these
+engineered features by brilliant
+
+465
+00:50:22,880 --> 00:50:30,229
+engineers so it kind of confirmed even
+know you know if needed we needed them
+
+466
+00:50:30,228 --> 00:50:34,929
+below to first tell us this features
+work and then we start to develop better
+
+467
+00:50:34,929 --> 00:50:38,978
+mathematical models to learn these
+features by itself but they confirmed
+
+468
+00:50:38,978 --> 00:50:46,210
+each other so so the historical you know
+importance of this work should not be
+
+469
+00:50:46,210 --> 00:50:52,028
+diminished this work is the intellectual
+foundation for us one of the
+
+470
+00:50:52,028 --> 00:50:57,858
+intellectual foundation for us to
+realize that how critical or how useful
+
+471
+00:50:57,858 --> 00:51:07,018
+these deep learning features are where
+we learn them just briefly say because
+
+472
+00:51:07,018 --> 00:51:12,379
+of the features that have a low and many
+other researchers told us we can't use
+
+473
+00:51:12,380 --> 00:51:18,239
+that to to learn scene recognition and
+around that time the machine learning
+
+474
+00:51:18,239 --> 00:51:24,719
+tools we use mostly is either graphical
+models or support vector machine and
+
+475
+00:51:24,719 --> 00:51:29,479
+this is one influential work on using
+support vector machine and colonel
+
+476
+00:51:29,478 --> 00:51:43,358
+models 2222 recognizes thing but I'll be
+brief here and last deep learning model
+
+477
+00:51:43,358 --> 00:51:50,578
+is this feature or feature baseball
+called deformable part Waldo is where we
+
+478
+00:51:50,579 --> 00:51:57,420
+learn parts of object like parts of the
+person and we learn how they come figure
+
+479
+00:51:57,420 --> 00:52:08,519
+each other income figure in space used a
+support vector machine kind of model to
+
+480
+00:52:08,518 --> 00:52:16,179
+recognize objects like humans and
+bottles around this time that's 2009
+
+481
+00:52:16,179 --> 00:52:21,419
+2010 the field of computer vision is
+mature enough that we're working on this
+
+482
+00:52:21,420 --> 00:52:25,659
+important on the heart probably
+recognize the pedestrians and
+
+483
+00:52:25,659 --> 00:52:30,828
+recognizing cars they're no longer
+contrived problem something else was
+
+484
+00:52:30,829 --> 00:52:37,219
+needed his bench partly because as a
+field advancing now if we don't have
+
+485
+00:52:37,219 --> 00:52:44,039
+good benchmark then everybody feels set
+of images and it's really hard to really
+
+486
+00:52:44,039 --> 00:52:50,369
+set global standard so one of the most
+important benchmark is called pass goal
+
+487
+00:52:50,369 --> 00:52:57,608
+V oc object recognition bench part its
+bio European it's a european effort that
+
+488
+00:52:57,608 --> 00:53:04,190
+researchers put together by tens of
+thousands of images from 20 classes of
+
+489
+00:53:04,190 --> 00:53:13,019
+optics and these are one example per per
+object like cats cults cows movie no
+
+490
+00:53:13,018 --> 00:53:17,808
+cats dogs cows airplanes bottles
+
+491
+00:53:17,809 --> 00:53:20,048
+horses trained
+
+492
+00:53:20,048 --> 00:53:27,268
+and Aldous and then we used and then
+annually our computer vision researchers
+
+493
+00:53:27,268 --> 00:53:34,948
+and laps come to compete all the object
+recognition task for best girl object
+
+494
+00:53:34,949 --> 00:53:41,188
+recognition challenge and an over the
+past you know like through the years the
+
+495
+00:53:41,188 --> 00:53:47,949
+the performance just keeps increasing
+and that was when we start to feel
+
+496
+00:53:47,949 --> 00:53:52,929
+excited about the progress of the field
+at that time
+
+497
+00:53:52,929 --> 00:53:59,729
+here's a little bit over more closer
+story close to us is that my love of my
+
+498
+00:53:59,728 --> 00:54:05,718
+students were thinking you know the real
+world is not about 20 objects the real
+
+499
+00:54:05,719 --> 00:54:12,489
+world is a little more than 20 optics so
+following the work of Pasco visual
+
+500
+00:54:12,489 --> 00:54:18,239
+object recognition challenge we put
+together this massive massive project
+
+501
+00:54:18,239 --> 00:54:23,889
+image that some of you may have heard of
+image that in this class you will be
+
+502
+00:54:23,889 --> 00:54:30,098
+using the tiny portion of the image that
+in some of your assignment that image
+
+503
+00:54:30,099 --> 00:54:36,759
+that is the data set of 50 million
+images all cleaned my hands and
+
+504
+00:54:36,759 --> 00:54:47,000
+annotated over 20,000 object classes to
+students who cleaned it
+
+505
+00:54:47,000 --> 00:54:54,469
+various areas of my life remove the
+crowdsourcing platform of the habits of
+
+506
+00:54:54,469 --> 00:54:59,969
+that Gladys dunno also suffered from you
+know putting together this this platform
+
+507
+00:54:59,969 --> 00:55:08,599
+but it's a very exciting day does not we
+started we started to put together
+
+508
+00:55:08,599 --> 00:55:15,900
+competitions annually called image that
+competition for object recognition and
+
+509
+00:55:15,900 --> 00:55:22,440
+for example a standard competition of
+image classification by Imogen that is a
+
+510
+00:55:22,440 --> 00:55:28,710
+thousand object classes over almost 1.5
+million images and algorithms compete on
+
+511
+00:55:28,710 --> 00:55:34,220
+the performance so actually I just heard
+somebody who was on the social media was
+
+512
+00:55:34,219 --> 00:55:38,589
+referring image that challenges the
+Olympics of computer vision I was very
+
+513
+00:55:38,590 --> 00:55:40,240
+flattering
+
+514
+00:55:40,239 --> 00:55:55,649
+bringing us close to the history making
+the people are so so that challenge 2010
+
+515
+00:55:55,650 --> 00:56:00,369
+that's actually around the time pass go
+you know where their colleagues they
+
+516
+00:56:00,369 --> 00:56:05,309
+told us they're gonna start to phase out
+their challenge of 20 object so we face
+
+517
+00:56:05,309 --> 00:56:12,039
+in the thousand object images a
+challenge and why accesses error rate
+
+518
+00:56:12,039 --> 00:56:18,199
+and we start to we started with very
+significant error and of course you know
+
+519
+00:56:18,199 --> 00:56:28,029
+every year that decreased but there is a
+particularly years really decreased it
+
+520
+00:56:28,030 --> 00:56:38,960
+was cutting hot almost is 2012 2012 is
+the year that the winning architecture
+
+521
+00:56:38,960 --> 00:56:45,769
+of image that challenge was a
+convolution on your network I will talk
+
+522
+00:56:45,769 --> 00:56:53,250
+about it was not invented in 2012
+despite how all the new speaker's felt
+
+523
+00:56:53,250 --> 00:56:58,190
+like it's the newest thing around the
+block it's not it was invented back in
+
+524
+00:56:58,190 --> 00:56:59,349
+the seventies and eighties
+
+525
+00:56:59,349 --> 00:57:05,279
+he's but having a convergence of things
+will talk about convolution on your
+
+526
+00:57:05,280 --> 00:57:10,519
+network showed its massive power as a
+high capacity and to end training
+
+527
+00:57:10,519 --> 00:57:18,219
+architecture and Wang the image that
+challenged by a huge margin and that was
+
+528
+00:57:18,219 --> 00:57:24,829
+quite a historical moment from a a
+mathematical point of view it wasn't
+
+529
+00:57:24,829 --> 00:57:30,079
+that new before my engineering and and
+solving real-world point of view this
+
+530
+00:57:30,079 --> 00:57:35,090
+was a historical moment that piece of
+work was covered by you know numerous
+
+531
+00:57:35,090 --> 00:57:42,400
+times and all this this is the onset
+this is the beginning of learning
+
+532
+00:57:42,400 --> 00:57:48,869
+revolution if you call it and this is
+the premise of this class so at this
+
+533
+00:57:48,869 --> 00:57:54,609
+point I'm gonna switch so we went
+through a brief history of computer
+
+534
+00:57:54,610 --> 00:57:59,539
+vision for 540 million years
+
+535
+00:57:59,539 --> 00:58:05,869
+overview of this class is there any
+other question
+
+536
+00:58:05,869 --> 00:58:13,969
+alright so we're talking even though it
+was kind of overwhelming we talked a lot
+
+537
+00:58:13,969 --> 00:58:20,559
+about finding different task in computer
+vision seems to 31 and is going to focus
+
+538
+00:58:20,559 --> 00:58:27,849
+on the visual recognition problem also
+enlarged especially through most of the
+
+539
+00:58:27,849 --> 00:58:29,509
+foundation lecture
+
+540
+00:58:29,510 --> 00:58:35,750
+classification but now you know
+everything we talk about is gonna be
+
+541
+00:58:35,750 --> 00:58:41,480
+based on that image that classification
+set up we will we were getting to other
+
+542
+00:58:41,480 --> 00:58:47,900
+visual recognition scenarios but the
+image classification problem is the main
+
+543
+00:58:47,900 --> 00:58:52,780
+problem we will focus on Emma's class
+which means please keep in mind
+
+544
+00:58:52,780 --> 00:58:56,600
+visual recognition is not just image
+classification right there was 3d
+
+545
+00:58:56,599 --> 00:59:01,339
+modeling there was a grouping of
+segmentation and all this but that's
+
+546
+00:59:01,340 --> 00:59:06,250
+that's what we'll focus on and I don't
+need to call miss you that just even
+
+547
+00:59:06,250 --> 00:59:11,000
+application wise image classification is
+extremely useful problem
+
+548
+00:59:11,000 --> 00:59:17,929
+from you know big big commercial
+Internet companies a point of view to
+
+549
+00:59:17,929 --> 00:59:22,449
+startup ideas you know you want to
+recognize objects you want to recognize
+
+550
+00:59:22,449 --> 00:59:29,119
+food do online shop mobile shopping you
+want us torture albums so you move
+
+551
+00:59:29,119 --> 00:59:35,710
+classification news is is can be a
+bread-and-butter task for many many
+
+552
+00:59:35,710 --> 00:59:44,650
+important problems there is a problem
+that's related to two classification and
+
+553
+00:59:44,650 --> 00:59:49,329
+today I don't expect you to understand
+the differences but I wanted to hear
+
+554
+00:59:49,329 --> 00:59:55,659
+that while this class will make sure you
+learn to understand the nuances in the
+
+555
+00:59:55,659 --> 01:00:01,879
+the details of different flavors of
+visual recognition what is image
+
+556
+01:00:01,880 --> 01:00:07,700
+classification what's object detection
+what's image captioning and these have
+
+557
+01:00:07,699 --> 01:00:14,529
+different flavors for example you know
+while he made two classification my
+
+558
+01:00:14,530 --> 01:00:19,740
+focus on the whole big image object
+detection by tell you where things
+
+559
+01:00:19,739 --> 01:00:23,579
+exactly are like where the car is the
+pedestrian
+
+560
+01:00:23,579 --> 01:00:30,159
+the hammer and the word that the
+relationship between objects and so on
+
+561
+01:00:30,159 --> 01:00:35,529
+social their nuances and details that
+you will be learning about in this class
+
+562
+01:00:35,530 --> 01:00:43,840
+and I already said CNN or coalition on
+your network is one type of deeply
+
+563
+01:00:43,840 --> 01:00:50,910
+architecture but it's the overwhelmingly
+successful the planning architecture and
+
+564
+01:00:50,909 --> 01:00:54,909
+this is the architecture we will be
+focusing on and to just go back to the
+
+565
+01:00:54,909 --> 01:01:02,849
+image 9 challenge so I said the
+historical year is 2012 this is the year
+
+566
+01:01:02,849 --> 01:01:14,349
+I'll excursion Jeff Hinton proposed this
+this convolutional I think it's a seven
+
+567
+01:01:14,349 --> 01:01:20,500
+layer convolutional your network to win
+the image that challenge model before
+
+568
+01:01:20,500 --> 01:01:22,318
+this year
+
+569
+01:01:22,318 --> 01:01:30,548
+a SIFT feature plus support vector
+machine architecture it still hierarchy
+
+570
+01:01:30,548 --> 01:01:38,449
+but it doesn't have that flavor of and
+two and learning fast forward to 2015
+
+571
+01:01:38,449 --> 01:01:43,798
+the winning architecture is still a
+conclusion you're not worried it's a
+
+572
+01:01:43,798 --> 01:01:56,599
+hunter 51 layers buy buy microsoft Asia
+research researchers and it's clear
+
+573
+01:01:56,599 --> 01:02:03,048
+reason the residual that the residual
+that so I'm not so sure you for a cover
+
+574
+01:02:03,048 --> 01:02:09,369
+that definitely don't expect to to know
+every single layer what they do actually
+
+575
+01:02:09,369 --> 01:02:17,269
+they repeat itself at heart but every
+year since 2012 the winning architecture
+
+576
+01:02:17,268 --> 01:02:23,548
+of images that challenge is a deep
+learning based architecture so like I
+
+577
+01:02:23,548 --> 01:02:32,369
+said I also want you to respect history
+is not invented overnight there is a lot
+
+578
+01:02:32,369 --> 01:02:37,979
+of influential players today but you
+know there are a lot of people who build
+
+579
+01:02:37,978 --> 01:02:41,879
+a foundation I actually I don't have the
+slides one important thing to remember
+
+580
+01:02:41,880 --> 01:02:50,910
+is Kunihiko Fukushima contigo solution
+was a Japanese scientist who build a
+
+581
+01:02:50,909 --> 01:02:58,798
+model corneil Kong the truck and that
+was the beginning of the newer network
+
+582
+01:02:58,798 --> 01:03:04,318
+architecture and yellow color is also a
+very influential person and he's really
+
+583
+01:03:04,318 --> 01:03:10,248
+the the groundbreaking work in my
+opinion of young coup was published in
+
+584
+01:03:10,248 --> 01:03:16,348
+the nineteen nineties so that's one
+mathematicians which Jeff Hinton
+
+585
+01:03:16,349 --> 01:03:22,479
+all-inclusive adviser was involved
+worked out the back propagation learning
+
+586
+01:03:22,478 --> 01:03:28,088
+strategy which if this were deleting
+anything under will tell you in a couple
+
+587
+01:03:28,088 --> 01:03:34,528
+of weeks but but the the mathematical
+mando was roughed up in the eighties and
+
+588
+01:03:34,528 --> 01:03:34,920
+the
+
+589
+01:03:34,920 --> 01:03:40,869
+undies and this was your local was
+working for Bell Labs it AT&T which is
+
+590
+01:03:40,869 --> 01:03:47,160
+amazing place at that time there's no
+bail UPS today anymore that they were
+
+591
+01:03:47,159 --> 01:03:50,949
+working on really ambitious projects and
+he needed to recognize the digits
+
+592
+01:03:50,949 --> 01:03:57,019
+because even to leave that product was
+shipped to our bags in the USA post
+
+593
+01:03:57,019 --> 01:04:03,380
+office to recognize difficult and checks
+and kinky constructive those coalition
+
+594
+01:04:03,380 --> 01:04:08,068
+on your network and this is where he
+he's inspired by Hubel and Wiesel he
+
+595
+01:04:08,068 --> 01:04:14,500
+starts by looking at some pool edge like
+structures and image it's not like the
+
+596
+01:04:14,500 --> 01:04:20,099
+whole letter eight it's really needs to
+edges and the layer-by-layer
+
+597
+01:04:20,099 --> 01:04:25,539
+filters these edges pull them together
+filters pool and then the field this
+
+598
+01:04:25,539 --> 01:04:36,230
+architecture 20121 Alex kruschev ski and
+Jeff Hinton you almost exactly the thing
+
+599
+01:04:36,230 --> 01:04:40,900
+architecture to participate in the car
+
+600
+01:04:40,900 --> 01:04:47,900
+imagine a challenge there is a few
+changes but that become the winning
+
+601
+01:04:47,900 --> 01:04:54,920
+architecture of this so we'll tell you
+more about the detail changes at the lib
+
+602
+01:04:54,920 --> 01:05:02,380
+capacity model did grow a little bit
+because Moore's Law helped us there's
+
+603
+01:05:02,380 --> 01:05:08,220
+also a very very detailed function that
+change the little bit of a shape for
+
+604
+01:05:08,219 --> 01:05:14,828
+most Signori 224 but to file in their
+shape but whatever there's a couple of
+
+605
+01:05:14,829 --> 01:05:19,130
+small changes but really by large
+nothing had changed
+
+606
+01:05:19,130 --> 01:05:26,490
+mathematically but important things did
+change and that grow deep learning
+
+607
+01:05:26,489 --> 01:05:35,379
+Architektur black ink crew into its
+Renaissance one is like a morsel and
+
+608
+01:05:35,380 --> 01:05:41,180
+hardware hardware made a huge difference
+because these are high extremely high
+
+609
+01:05:41,179 --> 01:05:44,669
+capacity models one dela Cruz
+
+610
+01:05:44,670 --> 01:05:50,720
+this painfully slow because of the the
+bottleneck of computation he couldn't
+
+611
+01:05:50,719 --> 01:05:55,209
+build this model too big a while so you
+cannot be added to big cannot fully
+
+612
+01:05:55,210 --> 01:06:00,670
+realize its potential for machine
+learning standpoint there's over 15 and
+
+613
+01:06:00,670 --> 01:06:07,780
+all these problems you can also but now
+we have much faster bigger transistor
+
+614
+01:06:07,780 --> 01:06:16,410
+transistor microchips and GPUs from
+Nvidia made a huge difference in deep
+
+615
+01:06:16,409 --> 01:06:22,358
+learning history that we can now
+trainees models in a reasonable amount
+
+616
+01:06:22,358 --> 01:06:27,358
+of time even if they're huge and others
+I think we do need to take her out of
+
+617
+01:06:27,358 --> 01:06:37,159
+work is data availability of data that
+was the big data did a self is just you
+
+618
+01:06:37,159 --> 01:06:41,078
+know it doesn't mean anything if you
+don't know how to use it but in this
+
+619
+01:06:41,079 --> 01:06:45,869
+deep learning Architektur data become
+the driving force for high-capacity
+
+620
+01:06:45,869 --> 01:06:52,390
+model to enable the doin training true
+true true help avoid overfitting when
+
+621
+01:06:52,389 --> 01:06:57,608
+you have enough data so you know so you
+if you look at the number of pixels that
+
+622
+01:06:57,608 --> 01:07:05,639
+machine learning people had in 2012
+versus helical having 1998 it's a huge
+
+623
+01:07:05,639 --> 01:07:06,469
+difference
+
+624
+01:07:06,469 --> 01:07:14,469
+orders of magnitude so so that was so
+this is the focus of 231
+
+625
+01:07:14,469 --> 01:07:21,098
+but will also go oh it's also important
+one last time I'm drooling this idea
+
+626
+01:07:21,099 --> 01:07:27,048
+that visual intelligence does go beyond
+object recognition I don't want any of
+
+627
+01:07:27,048 --> 01:07:31,039
+you coming out of this course dinky
+we've done everything you know we've
+
+628
+01:07:31,039 --> 01:07:38,889
+challenged do flying the entire space of
+visual recognition it's not true there
+
+629
+01:07:38,889 --> 01:07:44,460
+are still a lot of cool problems to
+solve for example you know does labeling
+
+630
+01:07:44,460 --> 01:07:51,650
+entire scene with perceptual grouping so
+I know where every single pixel belonged
+
+631
+01:07:51,650 --> 01:07:52,329
+to
+
+632
+01:07:52,329 --> 01:07:56,900
+that's still ongoing problem combining
+
+633
+01:07:56,900 --> 01:08:02,740
+recognition with 3d is a really there's
+a lot of excitement happening at the
+
+634
+01:08:02,739 --> 01:08:09,349
+intersection of vision and robotics this
+is this is definitely one area of that
+
+635
+01:08:09,349 --> 01:08:15,039
+and then anything to do with motion of
+borders and and and and this is another
+
+636
+01:08:15,039 --> 01:08:33,289
+big open area of research work you know
+beyond just gonna sing you actually want
+
+637
+01:08:33,289 --> 01:08:35,689
+deeply understand the victor
+
+638
+01:08:35,689 --> 01:08:39,489
+what people are doing what are the
+relationship between objects in the West
+
+639
+01:08:39,489 --> 01:08:45,029
+Rd into the the the relation between
+objects and this is an ongoing project
+
+640
+01:08:45,029 --> 01:08:49,759
+called visual genome in my lap that just
+in the number of my students are
+
+641
+01:08:49,760 --> 01:08:55,739
+involved and this goes far beyond image
+classification of weed we talked about
+
+642
+01:08:55,739 --> 01:09:03,639
+and what is one of our Holy Grails while
+one of the Holy Grails of community this
+
+643
+01:09:03,640 --> 01:09:09,260
+to be able to tell the story of a scene
+right so I think about you as a human
+
+644
+01:09:09,260 --> 01:09:11,180
+you open your eyes
+
+645
+01:09:11,180 --> 01:09:17,840
+the moment you open your eyes you're
+able to describe what you see in fact in
+
+646
+01:09:17,840 --> 01:09:24,940
+psychology experiments we find that even
+if you show people this picture for only
+
+647
+01:09:24,939 --> 01:09:30,659
+five hundred milliseconds that's
+literally half of the second people who
+
+648
+01:09:30,659 --> 01:09:36,769
+write essays about it we pay them $10 an
+hour so they didn't
+
+649
+01:09:36,770 --> 01:09:42,410
+it wasn't that long but you know I
+figure if we talked more money they
+
+650
+01:09:42,409 --> 01:09:47,970
+probably could write longer ethics but
+the point is that our visual system is
+
+651
+01:09:47,970 --> 01:09:54,390
+extremely powerful we can tell stories
+and I would dream of this is my cell is
+
+652
+01:09:54,390 --> 01:10:02,560
+to undress dissertation that we give you
+give a computer one picture per and
+
+653
+01:10:02,560 --> 01:10:03,960
+outcomes
+
+654
+01:10:03,960 --> 01:10:09,159
+description like this you know I was
+getting there you'll see that give the
+
+655
+01:10:09,159 --> 01:10:15,149
+khmer Olympic tur gives you one sentence
+or you give the number one pick turned
+
+656
+01:10:15,149 --> 01:10:20,319
+into a short sentences but we're not
+here yet but that's one of the holder
+
+657
+01:10:20,319 --> 01:10:26,250
+blue and the other holding growth is
+continuing this continue this i think is
+
+658
+01:10:26,250 --> 01:10:33,659
+is summarized really well by Audrey's
+blog is you know like this right there
+
+659
+01:10:33,659 --> 01:10:42,300
+is refined there so much nuance in this
+picture that you get to enjoy not only
+
+660
+01:10:42,300 --> 01:10:47,890
+you recognize the global seek it will be
+very boring old computer can tell you is
+
+661
+01:10:47,890 --> 01:10:53,650
+that room room scale
+
+662
+01:10:53,649 --> 01:10:58,238
+whatever type in the locker that's it
+you know here you recognize what they
+
+663
+01:10:58,238 --> 01:11:00,569
+are recognized the trick
+
+664
+01:11:00,569 --> 01:11:06,009
+Obama is do you recognize the kind of
+interaction you recognize the humor you
+
+665
+01:11:06,010 --> 01:11:11,250
+recognize there's just so much knew that
+this is one of the world is about we
+
+666
+01:11:11,250 --> 01:11:18,719
+used our ability to visual nurse tending
+to not only survive navigate when they
+
+667
+01:11:18,719 --> 01:11:26,000
+play but we use it to socialize to
+entertain to understand the world and
+
+668
+01:11:26,000 --> 01:11:32,929
+this is where vision in all the book
+read goals of vision that is so and I
+
+669
+01:11:32,929 --> 01:11:39,630
+don't need to convince you that computer
+visual technology will make our world a
+
+670
+01:11:39,630 --> 01:11:46,550
+better place despite some scary talks
+out there you know even though you home
+
+671
+01:11:46,550 --> 01:11:51,029
+today in the industry as well as
+research world we're using computer
+
+672
+01:11:51,029 --> 01:11:58,349
+vision to build better robots to save
+lives to go deep exploring analyst now
+
+673
+01:11:58,350 --> 01:12:02,860
+ok so I have like what two minutes 35
+minutes left
+
+674
+01:12:02,859 --> 01:12:10,839
+great time let me introduce the team and
+justice are the color instructors with
+
+675
+01:12:10,840 --> 01:12:16,989
+me tienes please stand up to say hi to
+him
+
+676
+01:12:16,989 --> 01:12:22,639
+can you like this safe your name quickly
+and you're like what you just don't give
+
+677
+01:12:22,640 --> 01:12:49,180
+a speech but yes
+
+678
+01:12:49,180 --> 01:13:42,240
+because because people class action and
+help us to process I respect a person is
+
+679
+01:13:42,239 --> 01:14:04,739
+confidential personal issues but again
+I'm going on our terms and leave for a
+
+680
+01:14:04,739 --> 01:14:09,939
+few weeks starting the end of January
+social please if you decide you just
+
+681
+01:14:09,939 --> 01:14:15,379
+want to send email to me unless somebody
+like you they will take
+
+682
+01:14:15,380 --> 01:14:20,770
+I'm likely to a reply you promptly sorry
+about that
+
+683
+01:14:20,770 --> 01:14:25,420
+priorities
+
+684
+01:14:25,420 --> 01:14:34,739
+about our philosophy and we're not
+getting to the details we really want
+
+685
+01:14:34,738 --> 01:14:39,448
+this to be a very hands-on project this
+is really I give a lot of credit to
+
+686
+01:14:39,448 --> 01:14:46,419
+Justin and Andre they are extremely good
+at walking through these hands-on
+
+687
+01:14:46,420 --> 01:14:51,840
+details with you so that when you come
+out of this class you not only have I
+
+688
+01:14:51,840 --> 01:14:57,719
+love understanding but you have a you
+have a really good ability to to build
+
+689
+01:14:57,719 --> 01:15:02,010
+your own deep learning code we want you
+to be exposed to state of the art
+
+690
+01:15:02,010 --> 01:15:08,730
+material you're gonna be learning things
+really that's as freshest 2015 and it'll
+
+691
+01:15:08,729 --> 01:15:11,859
+be fun you get to do things like this
+
+692
+01:15:11,859 --> 01:15:18,960
+not not all the time but like time the
+picture into one goal or or this weird
+
+693
+01:15:18,960 --> 01:15:27,489
+thing it'll be a fun class in addition
+to all the important tasks you you you
+
+694
+01:15:27,488 --> 01:15:33,589
+you learn we do have grading policies
+these are all on our website another
+
+695
+01:15:33,590 --> 01:15:44,929
+eatery those again one very clear you
+are grown ups which grew to like
+
+696
+01:15:44,929 --> 01:15:51,989
+grown-ups we do not take anything at the
+end of the course is my professors want
+
+697
+01:15:51,988 --> 01:15:56,359
+me to go to this conference and I have
+to have like three more late they say no
+
+698
+01:15:56,359 --> 01:16:03,630
+you are responsible for using your total
+eight days you have 7 late you can use
+
+699
+01:16:03,630 --> 01:16:11,079
+them in whatever way you all 10 penalty
+be all those you have to take a penalty
+
+700
+01:16:11,079 --> 01:16:18,069
+is like really really exceptional
+medical family emergency
+
+701
+01:16:18,069 --> 01:16:21,799
+talk to us on the individual basis but
+anything else
+
+702
+01:16:21,800 --> 01:16:29,539
+conference that why other finally you
+know like missing cat or whatever is
+
+703
+01:16:29,539 --> 01:16:37,850
+we we we we budgeted that into the seven
+days another his honor cold this is one
+
+704
+01:16:37,850 --> 01:16:43,190
+thing I have to say it with a really
+straight face you are such a privilege
+
+705
+01:16:43,189 --> 01:16:50,710
+institution you are you are grown ups I
+want you to be responsible for honor
+
+706
+01:16:50,710 --> 01:16:55,239
+code every single Stampfer student
+taking this class should know the other
+
+707
+01:16:55,239 --> 01:16:58,619
+co if you don't there's no excuse you
+should go back
+
+708
+01:16:58,619 --> 01:17:04,840
+wait a collaboration extremely seriously
+I almost hate to say that statistically
+
+709
+01:17:04,840 --> 01:17:10,380
+given a classless big word Allah have a
+few cases but I also want you to be an
+
+710
+01:17:10,380 --> 01:17:16,210
+exceptional class even with a size this
+big we do not want to see anything that
+
+711
+01:17:16,210 --> 01:17:22,399
+infringes on Academic Honor Code so read
+the collaboration policies and risk but
+
+712
+01:17:22,399 --> 01:17:31,960
+that this is really respecting yourself
+I think with all these prereq you can
+
+713
+01:17:31,960 --> 01:17:38,149
+you can read it I do with anything I
+want to say is there any burning
+
+714
+01:17:38,149 --> 01:17:47,569
+questions that you feel worth asking yes
+
+715
+01:17:47,569 --> 01:18:06,689
+ok
+

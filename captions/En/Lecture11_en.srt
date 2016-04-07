@@ -1,0 +1,4833 @@
+﻿1
+00:00:00,000 --> 00:00:03,428
+right side we have a lot of stuff to get
+through today so I'd like to get started
+
+2
+00:00:03,428 --> 00:00:08,669
+so today we're going to talk about CNN's
+and practice and talked about a lot of
+
+3
+00:00:08,669 --> 00:00:12,050
+really low level sort of implementation
+details that are really comment to get
+
+4
+00:00:12,050 --> 00:00:15,980
+these things to work when you're
+actually training things but first as
+
+5
+00:00:15,980 --> 00:00:20,189
+usual we have some administrative stuff
+to talk about number one is that through
+
+6
+00:00:20,189 --> 00:00:24,600
+a really heroic effort by all the TA is
+all the midterms are degraded so you
+
+7
+00:00:24,600 --> 00:00:27,740
+guys should definitely thank them for
+that and you can either pick them up
+
+8
+00:00:27,739 --> 00:00:34,920
+after class today or in any of these
+office hours that are up here also keep
+
+9
+00:00:34,920 --> 00:00:38,609
+in mind that your project milestones are
+going to be due tonight at midnight so
+
+10
+00:00:38,609 --> 00:00:41,628
+make sure that I hope you've been
+working on your projects for the last
+
+11
+00:00:41,628 --> 00:00:45,579
+couple for the last week or so and have
+made some really exciting progress so
+
+12
+00:00:45,579 --> 00:00:51,289
+make sure to write that up and put it in
+the assignments tab on Dropbox no no not
+
+13
+00:00:51,289 --> 00:00:55,460
+on Dropbox but on the assignment tab on
+coursework sorry that I know this is
+
+14
+00:00:55,460 --> 00:00:58,910
+really confusing but assignments tab
+just like just like assignment to
+
+15
+00:00:58,909 --> 00:01:04,000
+assignment two were working on grading
+hopefully we'll have that done sometime
+
+16
+00:01:04,000 --> 00:01:10,140
+this week and remember that assignment
+three is out so how's that been going
+
+17
+00:01:10,140 --> 00:01:17,159
+anyone anyone done okay that's good one
+person's done so the rest you should get
+
+18
+00:01:17,159 --> 00:01:22,740
+started because it's due in a week so we
+have some fun stats from the midterm so
+
+19
+00:01:22,739 --> 00:01:26,379
+don't freak out when you see your grade
+cuz we actually had this really nice
+
+20
+00:01:26,379 --> 00:01:30,759
+beautiful Gaussian distribution with a
+beautiful standard deviation we don't
+
+21
+00:01:30,759 --> 00:01:34,549
+need to bash normalize this thing it's
+already perfect I'd also like to point
+
+22
+00:01:34,549 --> 00:01:38,049
+out that someone got up max score a
+hundred and three which means they got
+
+23
+00:01:38,049 --> 00:01:43,470
+everything right in the bonus so that's
+means it wasn't hard enough to maybe
+
+24
+00:01:43,469 --> 00:01:49,500
+we also have some per questions thats my
+percussion breakdown on average score
+
+25
+00:01:49,500 --> 00:01:52,450
+per every single question in the midterm
+so if you want if you got something
+
+26
+00:01:52,450 --> 00:01:55,510
+wrong and you want to see if everyone
+else got it wrong to you can go check on
+
+27
+00:01:55,510 --> 00:01:59,380
+these stats leader at you're on your own
+time we have stats for the true false
+
+28
+00:01:59,379 --> 00:02:00,959
+and the multiple choice
+
+29
+00:02:00,959 --> 00:02:04,729
+keep in mind actually fired for two of
+the true false we decided during grading
+
+30
+00:02:04,730 --> 00:02:07,090
+that they were little bit unfair to
+throw it out and just give you all the
+
+31
+00:02:07,090 --> 00:02:12,960
+points which is why two of those are a
+hundred percent we have these stats for
+
+32
+00:02:12,960 --> 00:02:19,810
+all the individual questions so go ahead
+and have fun with those later
+
+33
+00:02:19,810 --> 00:02:24,379
+last time I know it's been a while but
+we had a midterm and we had a holiday
+
+34
+00:02:24,379 --> 00:02:28,030
+but if you can remember like over a week
+ago we were talking about recurrent
+
+35
+00:02:28,030 --> 00:02:31,509
+networks we talked about how recurrent
+networks can be used for modeling
+
+36
+00:02:31,509 --> 00:02:35,500
+sequences you know normally with these
+feedforward networks they takin it they
+
+37
+00:02:35,500 --> 00:02:39,139
+model this keyboard function but these
+recurrent networks we talked about how
+
+38
+00:02:39,139 --> 00:02:43,208
+they can model different kinds of
+sequence problems we talked about to
+
+39
+00:02:43,209 --> 00:02:48,319
+particular implementations of recurrent
+networks 10 are announced and Alice and
+
+40
+00:02:48,319 --> 00:02:51,539
+implement both of those on the
+assignment so you should know what they
+
+41
+00:02:51,539 --> 00:02:56,079
+are we talked about how these the
+correct recurrent neural networks can be
+
+42
+00:02:56,080 --> 00:03:01,010
+used for language models and had some
+fun showing some sample generated text
+
+43
+00:03:01,009 --> 00:03:06,329
+on what is the Shakespeare and algebraic
+geometry that's one we talked about how
+
+44
+00:03:06,330 --> 00:03:09,590
+we can combine recurrent networks with
+convolutional networks to do image
+
+45
+00:03:09,590 --> 00:03:14,180
+capturing and we played a little bit
+this game of being RNN neuroscientists
+
+46
+00:03:14,180 --> 00:03:17,700
+and diving into the cells of the
+Ardennes and trying to interpret what
+
+47
+00:03:17,699 --> 00:03:21,879
+they're doing and we saw that sometimes
+we have these interminable cells that
+
+48
+00:03:21,879 --> 00:03:27,049
+are for example activating incited
+statements which is pretty cool but
+
+49
+00:03:27,049 --> 00:03:28,890
+today we're going to talk about
+something totally different
+
+50
+00:03:28,889 --> 00:03:33,339
+there are three we're gonna talk about
+really a lot of low-level things that
+
+51
+00:03:33,340 --> 00:03:37,830
+you need to know to get CNN's working in
+practice so there's three major themes
+
+52
+00:03:37,830 --> 00:03:41,600
+it's a little bit of a potpourri but
+we're going to try to tie it together so
+
+53
+00:03:41,599 --> 00:03:45,349
+the first is really squeezing all the
+juice that you cannot of your data so I
+
+54
+00:03:45,349 --> 00:03:48,219
+know a lot of you especially for
+projects you don't have large datasets
+
+55
+00:03:48,219 --> 00:03:51,789
+we're going to talk about data
+augmentation and transfer learning which
+
+56
+00:03:51,789 --> 00:03:55,079
+are two really powerful useful
+techniques especially when you're
+
+57
+00:03:55,080 --> 00:03:56,350
+working with small datasets
+
+58
+00:03:56,349 --> 00:04:00,889
+we're going to really dive deep into
+convolutions and talk a lot more about
+
+59
+00:04:00,889 --> 00:04:05,959
+those both how you can design efficient
+architectures using convolutions and
+
+60
+00:04:05,960 --> 00:04:10,480
+also how contributions are efficiently
+implemented in practice and then finally
+
+61
+00:04:10,479 --> 00:04:13,269
+we gonna talk about something but
+usually gets lumped under implementation
+
+62
+00:04:13,270 --> 00:04:17,480
+details and doesn't even make it into
+papers but that stuff like someone has a
+
+63
+00:04:17,480 --> 00:04:21,750
+CPU and GPU what kind of bottlenecks to
+experience and training how much you
+
+64
+00:04:21,750 --> 00:04:26,069
+distribute raining over multiple over
+multiple devices that's a lot of stuff
+
+65
+00:04:26,069 --> 00:04:31,620
+we should get started so first let's
+talk about data augmentation I think
+
+66
+00:04:31,620 --> 00:04:34,910
+we've sort of mentioned this may be in
+passing so far in the lectures but never
+
+67
+00:04:34,910 --> 00:04:39,780
+really talked about it so normally when
+you're training CNN's you're really
+
+68
+00:04:39,779 --> 00:04:44,179
+familiar with this type of pipeline when
+during training you're gonna load images
+
+69
+00:04:44,180 --> 00:04:48,379
+and labels up off the desk you're gonna
+pay the image through to your CNN then
+
+70
+00:04:48,379 --> 00:04:51,009
+you're going to use the image together
+with the label to compute some loss
+
+71
+00:04:51,009 --> 00:04:55,610
+function and back-propagation update the
+CNN and repeat former so that they
+
+72
+00:04:55,610 --> 00:05:00,970
+should be really familiar with that by
+now the thing about a documentation is
+
+73
+00:05:00,970 --> 00:05:05,960
+we just had one little step to this
+pipeline which is here so after we load
+
+74
+00:05:05,959 --> 00:05:09,849
+the image above desk we're going to
+transform it in some way before passing
+
+75
+00:05:09,850 --> 00:05:13,910
+it to the CNN and this transformation
+should preserve the label
+
+76
+00:05:13,910 --> 00:05:19,090
+gonna come back propagate and the CNN so
+it's really simple and the trick is just
+
+77
+00:05:19,089 --> 00:05:24,089
+what kind of Transformers you should be
+using such data augmentation the idea is
+
+78
+00:05:24,089 --> 00:05:27,679
+really simple it's sort of this way that
+lets you artificially expander training
+
+79
+00:05:27,680 --> 00:05:32,030
+set through clever usage of different
+kinds of transformations so if you
+
+80
+00:05:32,029 --> 00:05:35,409
+remember the computer is really seeing
+these images as these try and get some
+
+81
+00:05:35,410 --> 00:05:39,189
+pixels and there are these different
+kinds of transformations we can make
+
+82
+00:05:39,189 --> 00:05:43,230
+that should preserve the label but which
+will change all the pixels if you
+
+83
+00:05:43,230 --> 00:05:46,770
+imagine like shipping that cat 1 pixel
+to left it's still a cat but all the
+
+84
+00:05:46,769 --> 00:05:50,539
+pixels are going to change that so what
+when you talk about a documentation
+
+85
+00:05:50,540 --> 00:05:54,680
+you're sort of imagine that you're
+expanding your training that these
+
+86
+00:05:54,680 --> 00:05:58,629
+trainings and these new basic training
+samples be correlated but it will still
+
+87
+00:05:58,629 --> 00:06:03,389
+help you train models with with bigger
+models with preventing and this is very
+
+88
+00:06:03,389 --> 00:06:04,959
+very widely used in practice
+
+89
+00:06:04,959 --> 00:06:08,668
+pretty much any CNN you see that's
+winning competitions or doing well on
+
+90
+00:06:08,668 --> 00:06:09,810
+benchmarks is using some
+
+91
+00:06:09,810 --> 00:06:15,889
+station so the easiest from a bit
+augmentation is horizontal flipping if
+
+92
+00:06:15,889 --> 00:06:18,699
+we think this cat when you look at the
+mirror image the mirror images should
+
+93
+00:06:18,699 --> 00:06:22,949
+still be a cat and this is really really
+easy to implement an umpire you can just
+
+94
+00:06:22,949 --> 00:06:27,159
+do it with a single call a single line
+of code similarly easy and torch other
+
+95
+00:06:27,160 --> 00:06:32,040
+frameworks this is really easy vary
+widely used something else that's very
+
+96
+00:06:32,040 --> 00:06:37,120
+widely used to take random crops from
+the training images so a training time
+
+97
+00:06:37,120 --> 00:06:40,949
+we're gonna load up her image and we're
+gonna take a patch about image at a
+
+98
+00:06:40,949 --> 00:06:42,629
+random scale and location
+
+99
+00:06:42,629 --> 00:06:47,189
+resize it to our fixed whatever size are
+CNN's expecting and then use that as our
+
+100
+00:06:47,189 --> 00:06:51,389
+training example and again this is very
+very widely used just give you a flavour
+
+101
+00:06:51,389 --> 00:06:56,610
+of how exactly this is used I looked up
+the details for residents so they
+
+102
+00:06:56,610 --> 00:07:01,639
+actually had training time each training
+image resize paper sticker random number
+
+103
+00:07:01,639 --> 00:07:05,620
+resize the whole image so that the
+shorter side is that number then sample
+
+104
+00:07:05,620 --> 00:07:09,720
+of random 224 by 224 crop from the
+resize dimension and then use that as
+
+105
+00:07:09,720 --> 00:07:13,990
+their training sample so that's pretty
+easy to implement and usually helps
+
+106
+00:07:13,990 --> 00:07:20,560
+quite a bit so when you're using this
+form of data augmentation usually things
+
+107
+00:07:20,560 --> 00:07:25,269
+change a little bit test time so a
+training time when using this form of
+
+108
+00:07:25,269 --> 00:07:29,079
+data augmentation the network is not
+really trained on full images it strain
+
+109
+00:07:29,079 --> 00:07:34,219
+on his crops so it doesn't really make
+sense or seem fair to try to force the
+
+110
+00:07:34,220 --> 00:07:38,900
+network to look at the whole image as a
+test I'm so usually in practice when
+
+111
+00:07:38,899 --> 00:07:42,879
+you're doing this kind of random
+cropping for data augmentation at US
+
+112
+00:07:42,879 --> 00:07:48,379
+time you'll have some fixed set of crops
+and use these for testing so very
+
+113
+00:07:48,379 --> 00:07:52,019
+commonly you'll see that you'll see ten
+crops will take the upper left hand
+
+114
+00:07:52,019 --> 00:07:52,649
+corner
+
+115
+00:07:52,649 --> 00:07:56,189
+the upper right hand corner that you
+bottom corners and the center gives you
+
+116
+00:07:56,189 --> 00:08:00,800
+five together at the horizontal flips
+gives you 10 he'll take those 10 crops a
+
+117
+00:08:00,800 --> 00:08:06,460
+test time passing through the network an
+average scores of those 10 crops so
+
+118
+00:08:06,459 --> 00:08:09,519
+resonant actually takes those little bit
+one step further and actually do
+
+119
+00:08:09,519 --> 00:08:14,759
+multiscale multiple scales attest time
+as well this is something that tends to
+
+120
+00:08:14,759 --> 00:08:20,649
+help performance in practice and again
+very easy to implement vary widely used
+
+121
+00:08:20,649 --> 00:08:26,418
+another thing that we usually do 48
+augmentation is color generating so if
+
+122
+00:08:26,418 --> 00:08:29,529
+you take this picture of a cat maybe
+maybe it was a little bit cloudier that
+
+123
+00:08:29,529 --> 00:08:33,348
+day a little bit funnier that day and if
+we would have taken a picture than a lot
+
+124
+00:08:33,349 --> 00:08:37,070
+of the colors would have been quite
+different so one thing that's very
+
+125
+00:08:37,070 --> 00:08:40,360
+common to do is just change the color a
+little bit of our training images before
+
+126
+00:08:40,360 --> 00:08:45,539
+we get to the CNN so I'm very simple way
+is just a change the contrast this is a
+
+127
+00:08:45,539 --> 00:08:50,469
+very easy to implement a very simple to
+do but actually in practice you'll see
+
+128
+00:08:50,470 --> 00:08:55,759
+that this contract during a little bit
+less common and what instead you see is
+
+129
+00:08:55,759 --> 00:09:01,259
+this slightly more complex pipeline
+using principal component analysis over
+
+130
+00:09:01,259 --> 00:09:06,439
+all the pixels of the training data the
+idea is that we for each pixel in the
+
+131
+00:09:06,440 --> 00:09:11,390
+training data is this vector of length 3
+an RGB and if we collect those pixels
+
+132
+00:09:11,389 --> 00:09:15,129
+over the entire training data that you
+get a sense of what kinds of colors
+
+133
+00:09:15,129 --> 00:09:19,330
+generally exist in the training data
+then using principal component analysis
+
+134
+00:09:19,330 --> 00:09:23,930
+gives us three principal component
+directions in color space that kind of
+
+135
+00:09:23,929 --> 00:09:27,879
+tell us what are the directions along
+which color tends to vary in the dataset
+
+136
+00:09:27,879 --> 00:09:32,429
+so than a test at training time for
+color augmentation
+
+137
+00:09:32,429 --> 00:09:35,889
+we can actually use these principal
+components of the color of the training
+
+138
+00:09:35,889 --> 00:09:41,419
+site to choose exactly how to gender the
+color at training time this is again a
+
+139
+00:09:41,419 --> 00:09:46,719
+little bit more complicated but it is
+pretty widely used so this type of PCA
+
+140
+00:09:46,720 --> 00:09:51,580
+driven data augmentation for color I
+think was introduced with Alex that
+
+141
+00:09:51,580 --> 00:09:58,310
+paper in 2012 and it's also used in
+ResNet for example so data augmentation
+
+142
+00:09:58,309 --> 00:10:02,829
+is israeli this very general thing right
+you just want to think about for your
+
+143
+00:10:02,830 --> 00:10:06,420
+data set what kinds of transformations
+do you want your class fire to be in
+
+144
+00:10:06,419 --> 00:10:11,179
+various too and then you want to
+introduce those types of variations to
+
+145
+00:10:11,179 --> 00:10:15,229
+your training data a training time and
+you can really go crazy here and get
+
+146
+00:10:15,230 --> 00:10:18,740
+creative and really think about your
+data and what types of them variances
+
+147
+00:10:18,740 --> 00:10:23,659
+makes sense for your data so you might
+want to try it like maybe random
+
+148
+00:10:23,659 --> 00:10:27,708
+rotations depending on your data may be
+rotations of a couple degrees make sense
+
+149
+00:10:27,708 --> 00:10:31,399
+you could try it like different kinds of
+stretching and shearing to simulate
+
+150
+00:10:31,399 --> 00:10:33,189
+maybe affine transformations of your
+data
+
+151
+00:10:33,190 --> 00:10:36,990
+and you could really go crazy here and
+try to get creative and think of
+
+152
+00:10:36,990 --> 00:10:43,840
+interesting ways to make your data and
+other thing about I'd like to point out
+
+153
+00:10:43,840 --> 00:10:49,009
+is this idea of data augmentation really
+fits into a larger theme that now we've
+
+154
+00:10:49,009 --> 00:10:54,090
+seen repeated many times throughout the
+course and this team is that one way
+
+155
+00:10:54,090 --> 00:10:58,420
+that's really useful in practice for
+preventing overfitting as a regular
+
+156
+00:10:58,419 --> 00:11:02,209
+rider is that during the fourth pass
+during training when we're training our
+
+157
+00:11:02,210 --> 00:11:05,930
+network we had some kind of weird
+stochastic noise to kind of mess with
+
+158
+00:11:05,929 --> 00:11:10,629
+the network for example with data
+augmentation we're actually modifying
+
+159
+00:11:10,629 --> 00:11:14,210
+the training data that we put into the
+network with things like drop out or
+
+160
+00:11:14,210 --> 00:11:18,860
+drop connect you're taking random parts
+of the network and he they're setting
+
+161
+00:11:18,860 --> 00:11:22,730
+the activations are the weights 20
+randomly
+
+162
+00:11:22,730 --> 00:11:28,450
+this also has this also appears kind of
+with Bosch normalization with patch
+
+163
+00:11:28,450 --> 00:11:31,930
+normalization your normalization
+contents depend on the other things in
+
+164
+00:11:31,929 --> 00:11:35,000
+any batch so your normal and during
+training
+
+165
+00:11:35,000 --> 00:11:39,440
+the same image might end up appearing in
+many batches with different other images
+
+166
+00:11:39,440 --> 00:11:43,840
+that actually introduces this type of
+noise I training time but for all of
+
+167
+00:11:43,840 --> 00:11:47,690
+these examples a test time we averaged
+out this noise so for data augmentation
+
+168
+00:11:47,690 --> 00:11:52,790
+we all take averages over many different
+samples of the training data for dropout
+
+169
+00:11:52,789 --> 00:11:56,870
+and dropped connect you can sort of
+evaluate and marginalized this out in a
+
+170
+00:11:56,870 --> 00:12:01,090
+little more analytically and forecasts
+normalization we keep keep his running
+
+171
+00:12:01,090 --> 00:12:05,269
+means so I just think that's kind of a
+nice way to unify lot of these ideas for
+
+172
+00:12:05,269 --> 00:12:08,960
+regularization is that when you can add
+noise at the forward pass and then
+
+173
+00:12:08,960 --> 00:12:13,540
+marginalized over at a time so keep that
+in mind if you're trying to come up with
+
+174
+00:12:13,539 --> 00:12:20,250
+other creative ways to regularize your
+networks so that's the main takeaways
+
+175
+00:12:20,250 --> 00:12:24,149
+for data augmentation are that one it's
+it's usually really simple to implement
+
+176
+00:12:24,149 --> 00:12:28,329
+so you should almost always be using it
+there's not really any excuse not to
+
+177
+00:12:28,330 --> 00:12:32,730
+it's very very useful especially for
+small datasets which i think many of you
+
+178
+00:12:32,730 --> 00:12:36,850
+are using for your projects and it also
+fits in nicely with this framework of
+
+179
+00:12:36,850 --> 00:12:41,509
+noise at training and marginalization a
+test I'm so I think that's that's pretty
+
+180
+00:12:41,509 --> 00:12:45,360
+much all there is to say about data
+augmentation so there's any questions
+
+181
+00:12:45,360 --> 00:12:45,840
+about that
+
+182
+00:12:45,840 --> 00:13:01,840
+i'm happy to talk about it now yeah a
+lot of time training time it would take
+
+183
+00:13:01,840 --> 00:13:05,790
+a lot of disk space to try to dump these
+things to desk so that I'm so sometimes
+
+184
+00:13:05,789 --> 00:13:08,879
+people get creative and even have like
+background threads their matching data
+
+185
+00:13:08,879 --> 00:13:16,799
+and documentation right so I think
+that's that's clear we can talk about
+
+186
+00:13:16,799 --> 00:13:21,069
+the next idea so there's this myth
+floating around that when you work with
+
+187
+00:13:21,070 --> 00:13:25,770
+CNN's you really need a lot of data but
+it turns out that would transfer
+
+188
+00:13:25,769 --> 00:13:33,029
+learning this myth is busted so there's
+this really simple recipe that you can
+
+189
+00:13:33,029 --> 00:13:37,769
+use for transfer learning and thats
+first you take whatever your favorite
+
+190
+00:13:37,769 --> 00:13:42,879
+CNN architecture is Alex matter BG or
+what have you and you either training on
+
+191
+00:13:42,879 --> 00:13:46,970
+image not yourself or you down for more
+commonly you download free trade bottle
+
+192
+00:13:46,970 --> 00:13:51,360
+from the internet that's easy to do just
+takes 20 minutes to download many hours
+
+193
+00:13:51,360 --> 00:13:56,590
+to train but you probably won't do that
+part next there's sort of two general
+
+194
+00:13:56,590 --> 00:14:00,910
+cases one if your data set is really
+small and you really don't have any
+
+195
+00:14:00,909 --> 00:14:05,019
+images whatsoever then you can just
+treat this classifier as a fixed feature
+
+196
+00:14:05,019 --> 00:14:10,110
+extractor so one way to look at this is
+that you'll take the last layer of the
+
+197
+00:14:10,110 --> 00:14:15,580
+network the soft max hospital asian
+model will take it away and he'll
+
+198
+00:14:15,580 --> 00:14:18,370
+replace it with some kind of linear
+classifier for the task that you
+
+199
+00:14:18,370 --> 00:14:21,810
+actually care about and now you'll
+freeze the rest of the network and
+
+200
+00:14:21,809 --> 00:14:26,969
+retraining only that top layer so this
+is sort of equivalent to just training a
+
+201
+00:14:26,970 --> 00:14:31,230
+linear classifier directly on top of
+features extracted from the network so
+
+202
+00:14:31,230 --> 00:14:35,149
+what you'll see a lot of times in
+practice for this case is that sort of
+
+203
+00:14:35,149 --> 00:14:38,399
+as a preprocessing step you'll just
+dumped features to test for all of your
+
+204
+00:14:38,399 --> 00:14:42,100
+training images and then work entirely
+on top of those cast features so that
+
+205
+00:14:42,100 --> 00:14:48,110
+can help speed things up quite a bit and
+that's quite easy to use its very very
+
+206
+00:14:48,110 --> 00:14:51,250
+common and usually provides a very
+strong baseline for a lot of problems
+
+207
+00:14:51,250 --> 00:14:56,169
+that you might encounter in practice and
+if you have a little bit more data than
+
+208
+00:14:56,169 --> 00:14:58,599
+then you can actually afford to train
+more comfy
+
+209
+00:14:58,600 --> 00:15:03,949
+models so depending on the size of your
+dataset usually you'll freeze some parts
+
+210
+00:15:03,948 --> 00:15:07,669
+some of the lower layers of the network
+and then instead of retraining only the
+
+211
+00:15:07,669 --> 00:15:11,919
+last lair you'll pick some number of the
+last letters to train depending on how
+
+212
+00:15:11,919 --> 00:15:16,349
+larger dataset is and generally when you
+have a larger dataset available for
+
+213
+00:15:16,350 --> 00:15:21,350
+training you can afford to train more of
+these final theirs and again if you're
+
+214
+00:15:21,350 --> 00:15:26,060
+similar to the similar to the trick over
+here what you'll see very commonly is
+
+215
+00:15:26,059 --> 00:15:29,729
+that instead of actually explicitly
+computing this part you'll just dump
+
+216
+00:15:29,730 --> 00:15:35,019
+these last layer features to desk and
+then work on this part in memory so that
+
+217
+00:15:35,019 --> 00:15:47,490
+can speed things up quite a lot and
+sometimes I question that you basically
+
+218
+00:15:47,490 --> 00:15:51,959
+have to try it and see but especially
+for this type of small dataset will work
+
+219
+00:15:51,958 --> 00:15:55,799
+on instances so if you have like if you
+want to just do image retrieval a pretty
+
+220
+00:15:55,799 --> 00:16:01,338
+strong baseline is just use LTE distance
+on CNN features so it may be so this
+
+221
+00:16:01,339 --> 00:16:05,110
+type of approach I mean harmonies how
+many samples you expect to need to train
+
+222
+00:16:05,110 --> 00:16:10,470
+a lot like an FBI or something and for
+these if you have more than if you have
+
+223
+00:16:10,470 --> 00:16:15,310
+more data than you would expect to need
+for a nice p.m. then try that so it's
+
+224
+00:16:15,309 --> 00:16:28,879
+not at all and maybe I'm sorry yeah it
+depends sometimes you you actually will
+
+225
+00:16:28,879 --> 00:16:32,309
+run through the forward pass but
+sometimes you just run the four pass
+
+226
+00:16:32,309 --> 00:16:36,818
+once and dump these two desk that's
+kinda that's that's pretty common
+
+227
+00:16:36,818 --> 00:16:41,458
+actually saves compute
+
+228
+00:16:41,458 --> 00:16:59,729
+from random house you'll probably have
+different classes are you
+
+229
+00:16:59,730 --> 00:17:03,350
+Russian problem or something but then
+these these other intermediate layers
+
+230
+00:17:03,350 --> 00:17:08,750
+you initialize from whatever was in the
+previous model and actually and in
+
+231
+00:17:08,750 --> 00:17:15,068
+practice when you find a nice tip it to
+actually do this is bad there are there
+
+232
+00:17:15,068 --> 00:17:18,588
+only be two types of layers when I guess
+three types of layers when you're fine
+
+233
+00:17:18,588 --> 00:17:22,349
+tuning they'll be the frozen layers
+which you can think up as having a
+
+234
+00:17:22,349 --> 00:17:27,448
+learning rate of zero there are these
+these new larry is that Yuri initialize
+
+235
+00:17:27,449 --> 00:17:32,548
+from scratch and typically those have
+maybe a higher learning rate but not too
+
+236
+00:17:32,548 --> 00:17:36,528
+high maybe one tenth of what their
+network was originally trained west and
+
+237
+00:17:36,528 --> 00:17:40,079
+then we'll have these intermediate
+layers that you are initializing from
+
+238
+00:17:40,079 --> 00:17:43,269
+the pre train network but you're
+planning to modify joint optimization
+
+239
+00:17:43,269 --> 00:17:47,470
+and fine-tuning so these intermediate
+layers you'll tend to be very small
+
+240
+00:17:47,470 --> 00:17:56,589
+learning rate maybe one one-hundredth of
+the original yeah
+
+241
+00:17:56,589 --> 00:18:04,319
+that's some people have tried to
+investigate and found that generally
+
+242
+00:18:04,319 --> 00:18:08,079
+fine tuning this type of transfer
+learning fine-tuning approach works
+
+243
+00:18:08,079 --> 00:18:11,710
+better when the network was originally
+trained with similar types of data
+
+244
+00:18:11,710 --> 00:18:16,610
+whatever that means but in fact these
+these very low-level features are things
+
+245
+00:18:16,609 --> 00:18:20,308
+like edges and colors and Gabor filters
+which are probably gonna be applicable
+
+246
+00:18:20,308 --> 00:18:24,190
+to just about any type of visual data so
+especially these lower level features I
+
+247
+00:18:24,190 --> 00:18:29,009
+think are generally pretty applicable to
+almost anything and by the way I another
+
+248
+00:18:29,009 --> 00:18:33,788
+tip that you said that you sometimes see
+in practice for fine-tuning is that you
+
+249
+00:18:33,788 --> 00:18:37,609
+might actually have a multi-stage
+approach where first you freeze the
+
+250
+00:18:37,609 --> 00:18:42,079
+entire network and then only trained
+this last lair and then after this last
+
+251
+00:18:42,079 --> 00:18:46,939
+layers seems to be converging then go
+back and actually find to indies you can
+
+252
+00:18:46,940 --> 00:18:51,519
+sometimes have this problem that these
+because this last layers initialize
+
+253
+00:18:51,519 --> 00:18:54,690
+randomly you might have very large
+gradients that kind of mess up this
+
+254
+00:18:54,690 --> 00:18:59,070
+initialization so that the two ways to
+get around that are either freezing this
+
+255
+00:18:59,069 --> 00:19:02,788
+at first I'm writing this converge or by
+having this bearing learning rate
+
+256
+00:19:02,788 --> 00:19:08,658
+between the two regimes of the network
+so this idea of transfer learning
+
+257
+00:19:08,659 --> 00:19:14,470
+actually works really well so there was
+a couple pretty early papers from 2013
+
+258
+00:19:14,470 --> 00:19:19,390
+2014 when CNN's per started getting
+popular this one in particular
+
+259
+00:19:19,390 --> 00:19:24,490
+astounding baseline paper was was pretty
+cool what they did is they took the what
+
+260
+00:19:24,490 --> 00:19:26,009
+at the time was one of the best
+
+261
+00:19:26,009 --> 00:19:30,470
+CNN's out there was over feat they just
+extracted features from overseas and
+
+262
+00:19:30,470 --> 00:19:33,640
+apply these features to a bunch of
+different standard datasets and standard
+
+263
+00:19:33,640 --> 00:19:38,679
+problems in computer vision and they
+compared to these rights then the idea
+
+264
+00:19:38,679 --> 00:19:42,210
+is that they compared against what was
+at the time these very specialized
+
+265
+00:19:42,210 --> 00:19:45,298
+pipelines and very specialized
+architectures for each individual
+
+266
+00:19:45,298 --> 00:19:49,408
+problems and datasets and for each
+problem they just replaced this very
+
+267
+00:19:49,409 --> 00:19:54,380
+specialized pipeline with very simple
+linear models on top of features from
+
+268
+00:19:54,380 --> 00:19:58,559
+over feet and they did this for a whole
+bunch of different datasets and found
+
+269
+00:19:58,558 --> 00:20:01,940
+that in general overall these
+over-the-top teachers were a very very
+
+270
+00:20:01,940 --> 00:20:06,080
+strong baseline and for some problems
+they were actually better than existing
+
+271
+00:20:06,079 --> 00:20:08,428
+methods and for some problems they were
+
+272
+00:20:08,429 --> 00:20:12,879
+get worse but still quite competitive so
+this this was a really cool paper that
+
+273
+00:20:12,878 --> 00:20:16,118
+just demonstrated that these are really
+strong features that can be used in a
+
+274
+00:20:16,118 --> 00:20:19,949
+lot of different tasks and tend to work
+quite well and other paper along those
+
+275
+00:20:19,950 --> 00:20:25,419
+lines was from Berkeley the decaf paper
+and decaf later became became
+
+276
+00:20:25,419 --> 00:20:33,610
+caffeinated and became cafe so that's
+that's that's kind of lineage there so
+
+277
+00:20:33,609 --> 00:20:37,388
+kind of the recipe for transfer learning
+is that there is you should think about
+
+278
+00:20:37,388 --> 00:20:43,398
+too little to buy two matrix how similar
+is your data set to what the preteen
+
+279
+00:20:43,398 --> 00:20:47,989
+model was and how much data do you have
+and what should you do in those four
+
+280
+00:20:47,990 --> 00:20:53,240
+different columns so generally if you
+have very similar data set and very
+
+281
+00:20:53,240 --> 00:20:57,538
+little data just using the network has a
+fixed feature extractor and training
+
+282
+00:20:57,538 --> 00:21:02,429
+simple linear models on top of those
+features tends to work very well if you
+
+283
+00:21:02,429 --> 00:21:06,470
+have a little bit more data than you can
+try to try fine-tuning and try actually
+
+284
+00:21:06,470 --> 00:21:10,509
+initializing network from fine tune from
+pre-screened weights and running
+
+285
+00:21:10,509 --> 00:21:15,868
+optimization from there is another
+column is little tricks here in this box
+
+286
+00:21:15,868 --> 00:21:20,099
+you might be in trouble you can try to
+get creative and maybe instead of
+
+287
+00:21:20,099 --> 00:21:23,998
+extracting features from the very last
+layer you might try extracting features
+
+288
+00:21:23,999 --> 00:21:27,470
+from different layers of the continent
+and that can sometimes sometimes help
+
+289
+00:21:27,470 --> 00:21:32,819
+the intuition there is that maybe for
+something like MRI data probably these
+
+290
+00:21:32,819 --> 00:21:37,178
+very top level features are very
+specific image now categories but these
+
+291
+00:21:37,179 --> 00:21:42,059
+very low-level features are things like
+edges and stuff like that that may be
+
+292
+00:21:42,058 --> 00:21:47,980
+more transferable to turn on and turn on
+image net tech data sets and obviously
+
+293
+00:21:47,980 --> 00:21:51,099
+in this box you're in better shape and
+again you can just sort of initializing
+
+294
+00:21:51,099 --> 00:21:57,928
+fine soon so another thing I'd like to
+point out is this idea of initializing
+
+295
+00:21:57,929 --> 00:22:01,590
+with preteen models and fine-tuning is
+actually not the exception this is
+
+296
+00:22:01,589 --> 00:22:05,439
+pretty much standard practice in almost
+any larger system that you'll see in
+
+297
+00:22:05,440 --> 00:22:09,070
+computer vision these days and we've
+actually seen two examples of this
+
+298
+00:22:09,069 --> 00:22:13,220
+already in the quarters so for example
+if you remember from a few lectures ago
+
+299
+00:22:13,220 --> 00:22:17,220
+we talked about object detection where
+we had a CNN looking at the image
+
+300
+00:22:17,220 --> 00:22:21,620
+region proposals and this other call
+this all this crazy stuff but this part
+
+301
+00:22:21,619 --> 00:22:25,529
+was a CNN looking at the image and image
+captioning we had a CNN looking at the
+
+302
+00:22:25,529 --> 00:22:29,399
+image so in both of those cases though
+CNN's were initially is from imagefap
+
+303
+00:22:29,400 --> 00:22:34,080
+models and that really helps to solve
+these other more specialized problems
+
+304
+00:22:34,079 --> 00:22:38,839
+even without a gigantic datasets and
+also for the image captioning model in
+
+305
+00:22:38,839 --> 00:22:42,829
+particular part of this model includes
+these were demanding that you should
+
+306
+00:22:42,829 --> 00:22:47,500
+have seen by now on homework if you
+started on it but those weren't vectors
+
+307
+00:22:47,500 --> 00:22:50,099
+you can actually initialize from
+something else that was maybe
+
+308
+00:22:50,099 --> 00:22:54,019
+pre-training a bunch of taxed and that
+can sometimes help maybe in some search
+
+309
+00:22:54,019 --> 00:22:58,668
+in some situations where you might not
+have a lot of capturing data available
+
+310
+00:22:58,669 --> 00:23:15,490
+yeah I'm here to help sometimes it
+depends on the problem depends on the
+
+311
+00:23:15,490 --> 00:23:18,859
+network but it's definitely something
+you can try and that especially might
+
+312
+00:23:18,859 --> 00:23:27,548
+help when you're in this box but yeah
+that's a good trick to the takeaway
+
+313
+00:23:27,548 --> 00:23:31,210
+about fine-tuning is that you should
+really use it it's a really good idea
+
+314
+00:23:31,210 --> 00:23:35,950
+yeah so that it works really well in
+practice you should probably almost
+
+315
+00:23:35,950 --> 00:23:39,900
+always be using it and to some extent
+you generally don't want to be training
+
+316
+00:23:39,900 --> 00:23:42,519
+these things from scratch unless you
+have really really large data sets
+
+317
+00:23:42,519 --> 00:23:45,970
+available in almost all of the
+circumstances it's much more convenient
+
+318
+00:23:45,970 --> 00:23:52,279
+to find to an existing model and by the
+way Cafe has this existing model of you
+
+319
+00:23:52,279 --> 00:23:58,230
+you can download many exist many famous
+image not models
+
+320
+00:23:58,230 --> 00:24:01,880
+actually the residual networks the
+official model got released recently so
+
+321
+00:24:01,880 --> 00:24:06,130
+you can even download and play with it
+would be pretty cool and these cafe
+
+322
+00:24:06,130 --> 00:24:09,020
+models new models are sort of like a
+little bit of a standard in the
+
+323
+00:24:09,019 --> 00:24:13,759
+community so you can even load cafe
+models into other other frameworks like
+
+324
+00:24:13,759 --> 00:24:17,658
+torch so that's that's something to keep
+in mind that these cafe models are quite
+
+325
+00:24:17,659 --> 00:24:21,030
+useful right
+
+326
+00:24:21,029 --> 00:24:26,889
+any any further questions on fine-tuning
+or transfer learning
+
+327
+00:24:26,890 --> 00:24:46,650
+yeah yeah that's quite large and lower
+dimensions so you might try a highly
+
+328
+00:24:46,650 --> 00:24:50,250
+regularize linear model on top of that
+or you might try putting a small come
+
+329
+00:24:50,250 --> 00:24:53,109
+out on top of that maybe reduce the
+dimensionality you can get creative here
+
+330
+00:24:53,109 --> 00:24:56,399
+but I think that there are there are
+there things you can try that might work
+
+331
+00:24:56,400 --> 00:25:03,640
+for your data depending on it right so I
+think we should talk more about
+
+332
+00:25:03,640 --> 00:25:07,740
+convolutions so for all these networks
+we've talked about it really the
+
+333
+00:25:07,740 --> 00:25:11,920
+convolutions are the computational
+workhorse that's doing a lot of the work
+
+334
+00:25:11,920 --> 00:25:18,090
+and the network so we need to talk about
+two things about convolutions the first
+
+335
+00:25:18,089 --> 00:25:22,809
+is how to stop them so how can we design
+efficient network architectures that
+
+336
+00:25:22,809 --> 00:25:28,789
+combine many layers of convolution to
+achieve some some nice results so here's
+
+337
+00:25:28,789 --> 00:25:33,230
+a question suppose that we have a
+network that has two layers of people i
+
+338
+00:25:33,230 --> 00:25:37,190
+three contributions as this would be the
+input this would be the activation map
+
+339
+00:25:37,190 --> 00:25:40,120
+in the first layer this would be the
+activation nap after two layers of
+
+340
+00:25:40,119 --> 00:25:45,959
+convolution the question is for an Iran
+on this second layer how big of a region
+
+341
+00:25:45,960 --> 00:25:49,640
+on the input doesn't see this was on
+your midterm so I i hope i hope u guys
+
+342
+00:25:49,640 --> 00:25:53,920
+all know the answer to this
+
+343
+00:25:53,920 --> 00:26:01,298
+anyone ok just maybe that was a hard
+exam question
+
+344
+00:26:01,298 --> 00:26:05,230
+but this is this is a five by five and
+it's it's pretty easy to see from this
+
+345
+00:26:05,230 --> 00:26:08,989
+diagram why so that this neuron up to
+the second layer is looking at this
+
+346
+00:26:08,989 --> 00:26:13,619
+entire volume in the intermediate where
+some particular in this pixel in the
+
+347
+00:26:13,618 --> 00:26:18,138
+intermediate we're looking at this three
+by three region in the input so when you
+
+348
+00:26:18,138 --> 00:26:22,738
+average across all when you look at all
+of all three of these than this
+
+349
+00:26:22,739 --> 00:26:26,200
+lair this neuron in the in the second or
+third layer is actually looking at this
+
+350
+00:26:26,200 --> 00:26:32,669
+entire five by five volume in the input
+ok so now the question is if we had
+
+351
+00:26:32,669 --> 00:26:36,820
+three feet by three convolutions stacked
+in a row how big of a region in the
+
+352
+00:26:36,819 --> 00:26:43,700
+input what they see ya so the same kind
+of reason is that he's receptive field
+
+353
+00:26:43,700 --> 00:26:49,739
+just kind of build up with successive
+contributions so the point here to make
+
+354
+00:26:49,739 --> 00:26:53,940
+is that you know 33 by three
+convolutions actually give you a very
+
+355
+00:26:53,940 --> 00:26:57,919
+similar representational power is my
+claim to a single seven by seven
+
+356
+00:26:57,919 --> 00:27:02,619
+convolution so you might debate on the
+exact semantics of this and you could
+
+357
+00:27:02,618 --> 00:27:05,528
+try to prove theorems about it and
+things like that but just from an
+
+358
+00:27:05,528 --> 00:27:09,940
+intuitive sense they can 333
+convolutions can represent similar types
+
+359
+00:27:09,940 --> 00:27:14,100
+of functions as a similar seven by seven
+contribution since it's looking at the
+
+360
+00:27:14,099 --> 00:27:22,189
+same input region in the input so now
+the idea now actually we can dig further
+
+361
+00:27:22,190 --> 00:27:27,399
+into this idea and we can compare more
+concretely between a single 797
+
+362
+00:27:27,398 --> 00:27:32,618
+convolution versus a stack of 33 by
+three contributions so let's suppose
+
+363
+00:27:32,618 --> 00:27:38,638
+that we have input image that's hiw by
+sea and we want to have convolutions
+
+364
+00:27:38,638 --> 00:27:43,329
+that preserve the depth so we have see
+filters and we want to have them
+
+365
+00:27:43,329 --> 00:27:48,019
+preserve heightened with so we just said
+patting appropriately and then we want
+
+366
+00:27:48,019 --> 00:27:51,528
+to compare concretely what is the
+difference between a single seven by
+
+367
+00:27:51,528 --> 00:27:56,648
+seven versus a stack of three by three
+so first how many weeks to each of these
+
+368
+00:27:56,648 --> 00:28:01,748
+two things have anyone have a gas on how
+many weight the single seven by seven
+
+369
+00:28:01,749 --> 00:28:09,519
+convolution house and you can forget
+about biases are confusing
+
+370
+00:28:09,519 --> 00:28:19,869
+I heard I heard some summers but so my
+my answer I hope I got it right
+
+371
+00:28:19,869 --> 00:28:24,319
+was 49 C squared as you've got the seven
+by seven convolution each one is looking
+
+372
+00:28:24,319 --> 00:28:29,809
+at a depth of see you got to see such
+filters so 49 C squared but now for the
+
+373
+00:28:29,809 --> 00:28:34,649
+three by three convolutions we have
+three layers of convolutions each one
+
+374
+00:28:34,650 --> 00:28:38,990
+each filter is three by three by Steve
+and each player has see filters when you
+
+375
+00:28:38,990 --> 00:28:43,980
+multiply that all out we see that 33 by
+free convolutions only has 27 C squared
+
+376
+00:28:43,980 --> 00:28:49,079
+parameters and assuming that we have Ray
+Lewis after between each of these
+
+377
+00:28:49,079 --> 00:28:54,049
+contributions we see that the stack up
+33 by three convolutions actually has
+
+378
+00:28:54,049 --> 00:28:58,649
+fewer parameters which is good and more
+nonlinearity which is good for this kind
+
+379
+00:28:58,650 --> 00:29:02,960
+of gives you some intuition for why a
+stack of three by of multiple three by
+
+380
+00:29:02,960 --> 00:29:06,440
+three convolutions might actually be
+preferable to a single seven by seven
+
+381
+00:29:06,440 --> 00:29:11,559
+competition and we can actually take
+this one step further and think about
+
+382
+00:29:11,559 --> 00:29:14,750
+not just the number below normal
+parameters but actually honey floating
+
+383
+00:29:14,750 --> 00:29:19,099
+point operations to these things take so
+anyone have a gas for how many
+
+384
+00:29:19,099 --> 00:29:29,669
+operations these things to take just now
+sounds hard writes actually this is
+
+385
+00:29:29,670 --> 00:29:33,740
+pretty easy because for each of these
+filters were gonna be using it at every
+
+386
+00:29:33,740 --> 00:29:37,819
+position in the end in the image so
+actually the number of multiply ads is
+
+387
+00:29:37,819 --> 00:29:42,099
+just gonna be Heights times with times
+the number of burnable filters so you
+
+388
+00:29:42,099 --> 00:29:47,789
+can see that actually over here again
+not only do we have some between
+
+389
+00:29:47,789 --> 00:29:52,440
+comparing between these two the seven by
+seven action not only has more learnable
+
+390
+00:29:52,440 --> 00:29:57,460
+parameters but it actually costs a lot
+more to computers well so the stack of
+
+391
+00:29:57,460 --> 00:30:03,140
+33 by frequent allusions again gives us
+more nonlinearity for less compute so
+
+392
+00:30:03,140 --> 00:30:06,170
+that kinda gives you some intuition for
+why actually having multiple layers of
+
+393
+00:30:06,170 --> 00:30:12,300
+three bay three convolutions is actually
+preferable to large filters but then you
+
+394
+00:30:12,299 --> 00:30:15,750
+can think of another question you know
+we've been pushing towards smaller and
+
+395
+00:30:15,750 --> 00:30:20,109
+smaller filters but why stop at three by
+three right we can actually go smaller
+
+396
+00:30:20,109 --> 00:30:21,859
+than that may be the same logic would
+expand
+
+397
+00:30:21,859 --> 00:30:27,798
+shaking your head you don't believe it
+that's true it's true you don't get the
+
+398
+00:30:27,798 --> 00:30:33,539
+receptive field so actually what we're
+going to do here is compared to a single
+
+399
+00:30:33,539 --> 00:30:39,019
+33 convolution versus a slightly fancier
+architecture the bottleneck architecture
+
+400
+00:30:39,019 --> 00:30:45,150
+so here we're gonna assume I can input
+of HW see and hear we can actually do
+
+401
+00:30:45,150 --> 00:30:50,070
+this is a cool trick we do a single
+one-by-one convolution with see over to
+
+402
+00:30:50,069 --> 00:30:54,609
+filters to actually reduce the
+dimensionality of the volume so now this
+
+403
+00:30:54,609 --> 00:30:57,990
+thing is going to have the same spatial
+extent but half the number of features
+
+404
+00:30:57,990 --> 00:31:03,480
+in-depth now after we do this bottleneck
+we're gonna do a three by three
+
+405
+00:31:03,480 --> 00:31:08,929
+convolution at this reduced
+dimensionality so now this this three by
+
+406
+00:31:08,929 --> 00:31:13,610
+three convolution takes over to input
+features and produces over to output
+
+407
+00:31:13,609 --> 00:31:18,000
+features and now we restore the
+dimensionality with another one by one
+
+408
+00:31:18,000 --> 00:31:23,558
+convolution to go from see over to back
+to see this is kind of a kind of a funky
+
+409
+00:31:23,558 --> 00:31:27,910
+architecture this idea of using
+one-by-one convolutions everywhere is
+
+410
+00:31:27,910 --> 00:31:31,669
+sometimes called network and network
+because it has this intuition that
+
+411
+00:31:31,669 --> 00:31:35,730
+you're a one-by-one convolution is kinda
+similar to sliding a fully connected
+
+412
+00:31:35,730 --> 00:31:42,480
+network over each part of your input
+volume and this idea also appears in
+
+413
+00:31:42,480 --> 00:31:46,259
+Google Matt and in ResNet this idea of
+using these one-by-one bottleneck
+
+414
+00:31:46,259 --> 00:31:52,679
+contributions so we can compare this
+this bottleneck sandwich to a single
+
+415
+00:31:52,679 --> 00:31:56,390
+three by three convolution with C
+filters and run through the same logic
+
+416
+00:31:56,390 --> 00:32:01,270
+so I won't I won't force you to
+computers in your heads but you'll have
+
+417
+00:32:01,269 --> 00:32:02,720
+to trust me on this
+
+418
+00:32:02,720 --> 00:32:08,700
+that this bottleneck stack has three and
+a quarter C squared parameters where is
+
+419
+00:32:08,700 --> 00:32:12,360
+this one over here has nine C squared
+parameters and again if we're sticking
+
+420
+00:32:12,359 --> 00:32:15,879
+rallies in between each of these
+contributions than this bottleneck
+
+421
+00:32:15,880 --> 00:32:20,620
+sandwich is giving us more more
+nonlinearity for fewer number of
+
+422
+00:32:20,619 --> 00:32:28,899
+parameters and actually as we similar to
+we saw on the three by three versus
+
+423
+00:32:28,900 --> 00:32:33,200
+seven by seven the number of parameters
+is tied directly to the computation so
+
+424
+00:32:33,200 --> 00:32:35,389
+this bottleneck sandwich is also
+
+425
+00:32:35,388 --> 00:32:39,788
+much faster to compute so this to this
+idea of one-by-one bottlenecks has
+
+426
+00:32:39,788 --> 00:32:52,669
+received quite a lot of usage recently
+in Google Matt and especially yeah so
+
+427
+00:32:52,669 --> 00:32:56,579
+you might think of it as you sometimes
+you think of it as as a projection from
+
+428
+00:32:56,578 --> 00:33:00,308
+like a lower dimensional feature back to
+a higher dimensional space and then if
+
+429
+00:33:00,308 --> 00:33:03,868
+you think about stacking many of these
+things on top of each other as happens
+
+430
+00:33:03,868 --> 00:33:09,499
+and residents than than you have been
+coming immediately after this one is
+
+431
+00:33:09,499 --> 00:33:11,088
+going to be another one by one
+
+432
+00:33:11,088 --> 00:33:14,858
+you're kind of stuck in many many one
+people one by one convolutions on top of
+
+433
+00:33:14,858 --> 00:33:18,918
+each other and one-by-one convolution is
+a little bit like sliding a fully a
+
+434
+00:33:18,919 --> 00:33:23,409
+multi-layer fully connected network over
+each double channel to think maybe think
+
+435
+00:33:23,409 --> 00:33:27,229
+about that when a little bit but it
+turns out that actually you don't really
+
+436
+00:33:27,229 --> 00:33:31,200
+need the spatial extent and even just
+comparing the sandwich to a single three
+
+437
+00:33:31,200 --> 00:33:35,769
+by three Khans you're sort of having the
+same input output volume sizes but
+
+438
+00:33:35,769 --> 00:33:41,429
+what's more nonlinearity and cheaper to
+compute and animal parameters so they're
+
+439
+00:33:41,429 --> 00:33:46,089
+all kind of nice features but there's
+there's one problem with this is that
+
+440
+00:33:46,088 --> 00:33:49,668
+that's we're still using a three by
+three convolution in there somewhere and
+
+441
+00:33:49,669 --> 00:33:54,709
+you might wonder if we if we really need
+this and the answer is No it turns out
+
+442
+00:33:54,709 --> 00:33:59,808
+so one crazy thing that I've seen
+recently is that you can you can factor
+
+443
+00:33:59,808 --> 00:34:05,608
+the street by three convolution in 2003
+by one and won by three and compared to
+
+444
+00:34:05,608 --> 00:34:09,469
+the single three by three convolution
+this ends up saving you some parameters
+
+445
+00:34:09,469 --> 00:34:14,428
+as well so that you might if you really
+go crazy you can come by in this one by
+
+446
+00:34:14,429 --> 00:34:18,019
+three and three by one together with
+this bottleneck an idea and things just
+
+447
+00:34:18,018 --> 00:34:22,358
+get really cheap and that's basically
+what Google has done in their most
+
+448
+00:34:22,358 --> 00:34:27,038
+recent version of Inception so there's
+this kind of crazy paper rethinking the
+
+449
+00:34:27,039 --> 00:34:30,389
+inception architecture for computer
+vision where they play a lot of these
+
+450
+00:34:30,389 --> 00:34:34,169
+crazy tricks about factoring
+convolutions in weird ways and having a
+
+451
+00:34:34,168 --> 00:34:37,138
+lot of one-by-one bottlenecks and then
+projections backup to different
+
+452
+00:34:37,139 --> 00:34:40,608
+dimensions and then if you thought the
+original Google met with with their
+
+453
+00:34:40,608 --> 00:34:42,699
+inception module was was crazy
+
+454
+00:34:42,699 --> 00:34:46,118
+this one's these are the inception
+modules that Google is now using in
+
+455
+00:34:46,119 --> 00:34:47,329
+their newest inception at
+
+456
+00:34:47,329 --> 00:34:50,739
+and the interesting features here are
+that they have these one-by-one
+
+457
+00:34:50,739 --> 00:34:55,819
+bottlenecks everywhere and make sure you
+have these asymmetric filters to against
+
+458
+00:34:55,820 --> 00:35:01,519
+Avon computation so this stuff is not
+super widely used yet but it's it's it's
+
+459
+00:35:01,519 --> 00:35:05,079
+out there and it's a Google Matt
+psychotics it something cool to mention
+
+460
+00:35:05,079 --> 00:35:14,610
+so quickly recap from convolutions and
+how to stack them is that it's usually
+
+461
+00:35:14,610 --> 00:35:18,530
+better instead of having a single large
+convolution with a large filter size
+
+462
+00:35:18,530 --> 00:35:22,740
+it's usually better to break up into
+multiple smaller filters and that even
+
+463
+00:35:22,739 --> 00:35:26,339
+maybe helps explain the difference
+between something like BGG which has
+
+464
+00:35:26,340 --> 00:35:30,059
+many many three by three filters with
+something like Alex net that have fewer
+
+465
+00:35:30,059 --> 00:35:35,119
+smaller filters and other thing that's
+actually become pretty common i think is
+
+466
+00:35:35,119 --> 00:35:38,829
+this idea of one by one bottle necking
+you see that in both versions of Google
+
+467
+00:35:38,829 --> 00:35:42,579
+not and also in ResNet and that actually
+helps you save a lot on parameters I
+
+468
+00:35:42,579 --> 00:35:46,340
+think that's a useful trick to keep in
+mind and this idea of factoring
+
+469
+00:35:46,340 --> 00:35:50,890
+convolutions into these asymmetric
+filters i think is maybe not so widely
+
+470
+00:35:50,889 --> 00:35:54,629
+used right now but it may become more
+commonly used in the future I'm not sure
+
+471
+00:35:54,630 --> 00:36:00,160
+and the basic over overarching theme for
+all of these tracks is that it lets you
+
+472
+00:36:00,159 --> 00:36:04,289
+have fewer learnable parameters and
+fewer and less compute and more
+
+473
+00:36:04,289 --> 00:36:07,739
+nonlinearity which are all sort of nice
+features to having your architectures
+
+474
+00:36:07,739 --> 00:36:18,779
+such as any questions about these these
+convolution architecture designs to
+
+475
+00:36:18,780 --> 00:36:21,300
+bring her too obvious
+
+476
+00:36:21,300 --> 00:36:26,340
+ok so then the next thing is that once
+you've actually decided on how you want
+
+477
+00:36:26,340 --> 00:36:30,760
+to wire up your stack of convolutions
+you actually to compute them and this
+
+478
+00:36:30,760 --> 00:36:33,630
+there's actually been a lot of work on
+different ways to implement
+
+479
+00:36:33,630 --> 00:36:37,950
+contributions we asked you to implement
+of the assignments using for loops and
+
+480
+00:36:37,949 --> 00:36:43,960
+that as you may have guessed doesn't
+scale too well so this a pretty a pretty
+
+481
+00:36:43,960 --> 00:36:47,720
+easy approach that's pretty easy to
+implement is this idea of a name to call
+
+482
+00:36:47,719 --> 00:36:52,269
+method so the intuition here is that we
+know matrix multiplication is really
+
+483
+00:36:52,269 --> 00:36:56,809
+fast and pretty much any computing
+architecture out there someone has
+
+484
+00:36:56,809 --> 00:37:00,949
+written a really really well optimized
+matrix multiplication retainer library
+
+485
+00:37:00,949 --> 00:37:06,230
+so the idea of him to call is stinking
+well given that matrix multiplication is
+
+486
+00:37:06,230 --> 00:37:07,400
+really fast
+
+487
+00:37:07,400 --> 00:37:11,420
+is there some way that we can take this
+convolution operation and recast as a
+
+488
+00:37:11,420 --> 00:37:17,800
+matrix multiply and it turns out that
+this is actually pretty somewhat easy to
+
+489
+00:37:17,800 --> 00:37:22,930
+do once you think about it so the idea
+is that we have an input volume that's
+
+490
+00:37:22,929 --> 00:37:28,549
+hiw by sea and we have a filter bank of
+convolutions of convolutional filters
+
+491
+00:37:28,550 --> 00:37:32,730
+each one of these is going to be a
+case-by-case by see volume so it has a
+
+492
+00:37:32,730 --> 00:37:36,659
+case-by-case receptive field and
+adaptive see two matched to match the
+
+493
+00:37:36,659 --> 00:37:39,989
+input over here and we're gonna have to
+deal with these filters and then we want
+
+494
+00:37:39,989 --> 00:37:44,809
+to turn this into a into a matrix
+multiply problem so the idea is that
+
+495
+00:37:44,809 --> 00:37:48,829
+we're going to take one of their we're
+going to take the first receptive field
+
+496
+00:37:48,829 --> 00:37:54,019
+of the image which is gonna be this kay
+by Kay by CEE region in the region in
+
+497
+00:37:54,019 --> 00:37:58,130
+the end up in football you I'm going to
+reshape it into this column of case
+
+498
+00:37:58,130 --> 00:38:01,910
+whereby see elements and then we're
+going to repeat this for every possible
+
+499
+00:38:01,909 --> 00:38:05,909
+receptive field in the image so we're
+going to take this little guy I'm going
+
+500
+00:38:05,909 --> 00:38:09,359
+to shift him over all possible regions
+in the image and here I'm just saying
+
+501
+00:38:09,360 --> 00:38:12,680
+that there's going to be maybe end
+region and different receptive field
+
+502
+00:38:12,679 --> 00:38:18,389
+locations so now we've taken our image
+and we've taken reshaped into this giant
+
+503
+00:38:18,389 --> 00:38:25,139
+matrix oh and by I mean and in my case
+whereby see anyone see what a potential
+
+504
+00:38:25,139 --> 00:38:28,139
+problem with this maybe
+
+505
+00:38:28,139 --> 00:38:36,829
+yeah that's true so best this tends to
+use a lot of memory right so many
+
+506
+00:38:36,829 --> 00:38:41,380
+elements in this volume if it appears
+and multiple receptive fields then it's
+
+507
+00:38:41,380 --> 00:38:45,010
+going to be duplicated in multiple of
+these columns so and this is going to
+
+508
+00:38:45,010 --> 00:38:49,220
+get worse the more overlap there is
+between your receptive fields but it
+
+509
+00:38:49,219 --> 00:38:52,839
+turns out that in practice that's
+actually not too big of a deal and it
+
+510
+00:38:52,840 --> 00:38:57,910
+works fine then we're gonna run a
+similar check on these convolutional
+
+511
+00:38:57,909 --> 00:39:01,699
+filters so if you remember what a
+convolution is doing we want to take
+
+512
+00:39:01,699 --> 00:39:06,039
+each of these convolutional weights and
+take our products with each
+
+513
+00:39:06,039 --> 00:39:10,889
+convolutional weight against each
+receptive field location in the image so
+
+514
+00:39:10,889 --> 00:39:16,420
+each of these convolutional weights is
+is this kay by Kay buy seats answer so
+
+515
+00:39:16,420 --> 00:39:21,059
+we're going to reshape each of those to
+be a case where by Ciro now we have D
+
+516
+00:39:21,059 --> 00:39:26,420
+filters so we got a deal by case whereby
+seat matrix now this is great
+
+517
+00:39:26,420 --> 00:39:31,750
+now this guide contains all the recep
+each each column as a receptive field we
+
+518
+00:39:31,750 --> 00:39:37,039
+have one column receptive field in the
+image and now this matrix has one has
+
+519
+00:39:37,039 --> 00:39:42,679
+one each row is a different weight so
+now we can easily compute all of these
+
+520
+00:39:42,679 --> 00:39:49,069
+inner products all at once with the
+single matrix multiply and I apologize
+
+521
+00:39:49,070 --> 00:39:52,809
+for these dimensions not working out the
+probably should swap is to make it more
+
+522
+00:39:52,809 --> 00:39:59,219
+obvious but I think you get the idea so
+this this gives und by end result that
+
+523
+00:39:59,219 --> 00:40:03,659
+that D is our number of output filters
+and that n is for all the receptive
+
+524
+00:40:03,659 --> 00:40:07,469
+field locations in the image then you
+play a similar trek to take this and
+
+525
+00:40:07,469 --> 00:40:13,000
+reshape it into your interior 3d
+appetizer you can actually stand this
+
+526
+00:40:13,000 --> 00:40:16,219
+too many batches quite easily if you
+have a mini batch of any of these
+
+527
+00:40:16,219 --> 00:40:24,099
+elements you just add more rows and how
+one set of rows per me back element this
+
+528
+00:40:24,099 --> 00:40:28,589
+actually is pretty easy to implement so
+yeah
+
+529
+00:40:28,590 --> 00:40:35,090
+depends that-that's then it depends on
+your implementation right but then you
+
+530
+00:40:35,090 --> 00:40:39,910
+have to worry about things like memory
+layout and stuff like that but sometimes
+
+531
+00:40:39,909 --> 00:40:45,099
+you even do that reshape operation on
+the GPUs you can do it in parallel but
+
+532
+00:40:45,099 --> 00:40:50,089
+as a as a case study so this is really
+easy to implement so a lot of if if if
+
+533
+00:40:50,090 --> 00:40:53,470
+you don't have a convolution technique
+available and you need to implement one
+
+534
+00:40:53,469 --> 00:40:57,869
+passed this is probably the one to
+choose and if you look at actual cafe in
+
+535
+00:40:57,869 --> 00:41:01,119
+earlier versions of cafe this is the
+method that they used for doing
+
+536
+00:41:01,119 --> 00:41:07,730
+contributions so this is the convolution
+forward code for the GPU conflict the
+
+537
+00:41:07,730 --> 00:41:12,630
+native GPU convolution in you can see in
+this red chunk they're calling into the
+
+538
+00:41:12,630 --> 00:41:18,070
+same to call method is taking their
+input image rights this is taking their
+
+539
+00:41:18,070 --> 00:41:22,900
+input image somewhere this is so this is
+their intention and then they're going
+
+540
+00:41:22,900 --> 00:41:27,050
+to reshape this calling the same to call
+method and then store it in this in this
+
+541
+00:41:27,050 --> 00:41:33,519
+column GPU tenser than they're gonna
+take to a matrix matrix multiply calling
+
+542
+00:41:33,519 --> 00:41:37,980
+it could last through the matrix
+multiply and then a bias so that's
+
+543
+00:41:37,980 --> 00:41:42,840
+that's how that's i mean these things
+tend to work quite well in practice and
+
+544
+00:41:42,840 --> 00:41:45,850
+also has another case study if you
+remember the fast layers we gave you any
+
+545
+00:41:45,849 --> 00:41:51,500
+assignments actually uses this exact
+same strategy so here we actually do nm
+
+546
+00:41:51,500 --> 00:41:55,940
+to call operation was some crazy numpy
+tricks and then now we can actually do
+
+547
+00:41:55,940 --> 00:42:00,230
+the convolution inside The FAST layers
+with a single call to the numpy matrix
+
+548
+00:42:00,230 --> 00:42:03,900
+multiplication and you sign your
+homework this usually gives me a couple
+
+549
+00:42:03,900 --> 00:42:07,740
+hundred times faster than using for
+loops this actually works pretty well
+
+550
+00:42:07,739 --> 00:42:18,209
+and it's it's pretty easy to implement
+any questions about him to call
+
+551
+00:42:18,210 --> 00:42:24,949
+think about it a little bit but if you
+think if you think really hard you'll
+
+552
+00:42:24,949 --> 00:42:28,219
+realize that the backward pass on a
+convolution is actually also a
+
+553
+00:42:28,219 --> 00:42:33,358
+convolution which you may have figured
+out a few if you're thinking about it on
+
+554
+00:42:33,358 --> 00:42:37,269
+your homework but the backward pass a
+convolution is actually also a type of
+
+555
+00:42:37,269 --> 00:42:41,070
+convolution over the over the upstream
+gradients you can actually use a similar
+
+556
+00:42:41,070 --> 00:42:45,789
+type of image to call method for the
+tobacco passes well the only trick there
+
+557
+00:42:45,789 --> 00:42:51,259
+is that one once you do in a backward
+pass you need to some gradients from
+
+558
+00:42:51,260 --> 00:42:54,940
+across overlapping receptive fields in
+the upstream so you need to be careful
+
+559
+00:42:54,940 --> 00:43:02,889
+about the call Tim you need to summon
+the call Tim in the backward pass and
+
+560
+00:43:02,889 --> 00:43:06,150
+you can actually check out in the fast
+lane is on the homework implements that
+
+561
+00:43:06,150 --> 00:43:11,050
+too although actually further in the
+fast layers on the homework the call tim
+
+562
+00:43:11,050 --> 00:43:18,910
+is in sight on I couldn't find a way to
+get it fast enough in there's actually
+
+563
+00:43:18,909 --> 00:43:22,710
+another way that sometimes people use
+for convolutions and that's this idea of
+
+564
+00:43:22,710 --> 00:43:27,400
+a Fast Fourier Transform so if you have
+some memories from like a signal
+
+565
+00:43:27,400 --> 00:43:30,700
+processing class or something like that
+you might remember this thing called the
+
+566
+00:43:30,699 --> 00:43:34,639
+convolution theorem met says that you if
+you have two signals and you want to
+
+567
+00:43:34,639 --> 00:43:38,779
+call them either discreetly are
+continuously with another girl then
+
+568
+00:43:38,780 --> 00:43:44,130
+taking a convolution of these two
+signals is the same as rather the
+
+569
+00:43:44,130 --> 00:43:47,820
+Fourier transform of the convolutions is
+the same as the elements product of the
+
+570
+00:43:47,820 --> 00:43:51,859
+Fourier transforms so if you have you
+unpacked out and stare the symbols I
+
+571
+00:43:51,858 --> 00:43:56,779
+think it'll make sense and if also you
+might remember from again a signal
+
+572
+00:43:56,780 --> 00:44:00,240
+processing class or an algorithm class
+there's this amazing thing called the
+
+573
+00:44:00,239 --> 00:44:04,299
+fast Fourier transform that actually
+likes lets us to compute Fourier
+
+574
+00:44:04,300 --> 00:44:08,080
+transforms an inverse Fourier transforms
+really really fast
+
+575
+00:44:08,079 --> 00:44:11,679
+you may have seen it bears versions of
+this in one day in 2d and they're all
+
+576
+00:44:11,679 --> 00:44:17,129
+really fast so we can actually applied a
+stricter convolutions so the way this
+
+577
+00:44:17,130 --> 00:44:20,660
+works is that first we're going to
+compute use the Fast Fourier Transform
+
+578
+00:44:20,659 --> 00:44:24,899
+to compute the Fourier transform the
+weights also compute the Fourier
+
+579
+00:44:24,900 --> 00:44:30,320
+transform of our activation map and now
+in Fourier space we just do an element
+
+580
+00:44:30,320 --> 00:44:35,050
+multiplication which is really really
+fast and efficient and then we just come
+
+581
+00:44:35,050 --> 00:44:40,269
+again and use the pass for a transformed
+to do the inverse transform the output
+
+582
+00:44:40,269 --> 00:44:44,420
+of that elements product and that
+implements convolutions for us in this
+
+583
+00:44:44,420 --> 00:44:52,550
+kinda cool fancy clever way and this is
+actually been used and face some folks
+
+584
+00:44:52,550 --> 00:44:55,940
+that Facebook had a paper about this
+last year and they actually released a
+
+585
+00:44:55,940 --> 00:44:57,650
+GPU library to do this
+
+586
+00:44:57,650 --> 00:45:03,329
+compute these things but the sad thing
+about these Fourier transforms this that
+
+587
+00:45:03,329 --> 00:45:07,819
+they actually give you really really big
+speedups over other methods but really
+
+588
+00:45:07,820 --> 00:45:11,970
+only four large boulders and when you're
+working on these small three by three
+
+589
+00:45:11,969 --> 00:45:15,829
+filters the overhead of computing the
+Fourier transform just towards the
+
+590
+00:45:15,829 --> 00:45:20,449
+computation of doing the computation
+directly in the in the input pixel space
+
+591
+00:45:20,449 --> 00:45:25,579
+and as we just talked about earlier in
+the lecture small contributions are
+
+592
+00:45:25,579 --> 00:45:30,389
+really really nice and appealing and
+great for lots of reasons so it's a
+
+593
+00:45:30,389 --> 00:45:33,489
+little bit of a shame that this for a
+trick doesn't work out too well impact
+
+594
+00:45:33,489 --> 00:45:38,439
+us but if for some reason you do want to
+compute really large contributions then
+
+595
+00:45:38,440 --> 00:45:46,019
+this is something you can try yeah
+
+596
+00:45:46,019 --> 00:46:02,489
+too involved in stuff but I imagine if
+you think it's a problem is probably a
+
+597
+00:46:02,489 --> 00:46:04,639
+problem
+
+598
+00:46:04,639 --> 00:46:12,900
+ya another thing to point out is that
+one kind of balance out about Fourier
+
+599
+00:46:12,900 --> 00:46:17,430
+transforms conclusions is that they
+don't handle striding too well so far
+
+600
+00:46:17,429 --> 00:46:21,219
+normal computer with your computing
+strident convolutions in sort of normal
+
+601
+00:46:21,219 --> 00:46:25,409
+input space you only compute a small
+subset of those in our products so you
+
+602
+00:46:25,409 --> 00:46:28,489
+actually save a lot of computation when
+you strike the convolutions
+
+603
+00:46:28,489 --> 00:46:32,199
+directly on the input space but the way
+you tend to implement strident
+
+604
+00:46:32,199 --> 00:46:36,649
+convolutions in Fourier transform space
+is you just compute the whole thing and
+
+605
+00:46:36,650 --> 00:46:43,180
+then you throw out part of the data so
+that ends up not being very efficient so
+
+606
+00:46:43,179 --> 00:46:47,969
+there's another trick that has not
+really become too I think too widely
+
+607
+00:46:47,969 --> 00:46:51,989
+known yet but I really liked it so I
+thought I wanted to talk about that so
+
+608
+00:46:51,989 --> 00:46:55,909
+you may remember from algorithms class
+something called stratton's algorithm
+
+609
+00:46:55,909 --> 00:47:00,789
+right there's this idea that when you do
+a naive matrix multiplication of to end
+
+610
+00:47:00,789 --> 00:47:04,869
+by and matrices kind of if you count up
+although although all the modifications
+
+611
+00:47:04,869 --> 00:47:08,630
+and additions that you need to do it's
+going to take about its gonna take any
+
+612
+00:47:08,630 --> 00:47:12,950
+cute operations and stratton's algorithm
+is this like really crazy thing we
+
+613
+00:47:12,949 --> 00:47:16,839
+compute all these crazy intermediates
+and it somehow magically works out to
+
+614
+00:47:16,840 --> 00:47:22,289
+compute the output asymptotically faster
+than the naive method and you know from
+
+615
+00:47:22,289 --> 00:47:26,869
+him to call me know that matrix
+multiplication is this we can implement
+
+616
+00:47:26,869 --> 00:47:31,339
+convolution as matrix multiplication to
+intuitively you might expect that these
+
+617
+00:47:31,340 --> 00:47:35,110
+similar types of tricks might
+theoretically maybe be applicable to
+
+618
+00:47:35,110 --> 00:47:41,320
+convolution and it turns out they are so
+there's this really cool paper that just
+
+619
+00:47:41,320 --> 00:47:46,370
+came out over the summer where these two
+guys worked out very explicitly that
+
+620
+00:47:46,369 --> 00:47:50,670
+something very special cases 43 by
+frequent allusions and it involves this
+
+621
+00:47:50,670 --> 00:47:54,659
+obviously I'm not going to go into
+details here but it's a similar flavor
+
+622
+00:47:54,659 --> 00:47:58,539
+to stress and computing very clever
+intermediate
+
+623
+00:47:58,539 --> 00:48:03,630
+and Henry combining them to actually
+save a lot on the computation and these
+
+624
+00:48:03,630 --> 00:48:08,220
+guys are actually really really intense
+and they're not just mathematicians they
+
+625
+00:48:08,219 --> 00:48:11,959
+actually wrote also highly highly
+optimized CUDA kernels to compute these
+
+626
+00:48:11,960 --> 00:48:17,570
+things and were able to speed up BGG by
+a factor of two so that's really really
+
+627
+00:48:17,570 --> 00:48:21,890
+impressive so I think that these these
+type this type of truck might become
+
+628
+00:48:21,889 --> 00:48:26,019
+pretty popular in the future but for the
+time being I think it's not very widely
+
+629
+00:48:26,019 --> 00:48:30,650
+used but these numbers are crazy
+especially for small batch sizes they're
+
+630
+00:48:30,650 --> 00:48:35,010
+getting a six speed up on BGG that's
+that's really really impressive and I
+
+631
+00:48:35,010 --> 00:48:38,770
+think it's a really cool method the
+downside is that you kinda have to work
+
+632
+00:48:38,769 --> 00:48:43,009
+out these explicit special cases each
+different size of convolution but maybe
+
+633
+00:48:43,010 --> 00:48:45,850
+if we only care about three by three
+convolutions that's not such a big deal
+
+634
+00:48:45,849 --> 00:48:54,719
+so the recap computing convolutions in
+practice is that the sort of the really
+
+635
+00:48:54,719 --> 00:48:58,579
+fast easy quick and dirty way to
+implement these things is in to call
+
+636
+00:48:58,579 --> 00:49:02,869
+matrix multiplication is passed it does
+it's usually not too hard to implement
+
+637
+00:49:02,869 --> 00:49:06,609
+these things so if for some reason you
+really need to implement competitions
+
+638
+00:49:06,610 --> 00:49:11,400
+yourself I'd really recommend into call
+activity is something that coming from
+
+639
+00:49:11,400 --> 00:49:15,230
+signal processing you might think would
+be really cool and really useful but it
+
+640
+00:49:15,230 --> 00:49:19,719
+turns out that it's it does give speed
+ups but only for big filters so it's not
+
+641
+00:49:19,719 --> 00:49:24,000
+as useful as you might have hoped but
+there is hope because these fast
+
+642
+00:49:24,000 --> 00:49:25,440
+algorithms are really good
+
+643
+00:49:25,440 --> 00:49:29,650
+filters and there already exists code
+somewhere in the world to do it so
+
+644
+00:49:29,650 --> 00:49:35,889
+hopefully these these things will catch
+on and become more widely used so if
+
+645
+00:49:35,889 --> 00:49:41,529
+there's any questions about computing
+convolutions
+
+646
+00:49:41,530 --> 00:49:50,940
+ok so next we're gonna talk about some
+implementation details so first question
+
+647
+00:49:50,940 --> 00:49:55,710
+how do you guys ever built your own
+computer
+
+648
+00:49:55,710 --> 00:50:01,710
+ok so you guys are prevented from this
+answer on this next slide so who can
+
+649
+00:50:01,710 --> 00:50:07,869
+spot the CPU anyone on a point out
+
+650
+00:50:07,869 --> 00:50:17,210
+the CPU is this little guy right so
+actually this this thing is actually a
+
+651
+00:50:17,210 --> 00:50:22,179
+lot of it is the cooler so the CPU
+itself is a little tiny part inside of
+
+652
+00:50:22,179 --> 00:50:28,730
+here a lot of this is actually the
+heatsink cooling the next spot the GPU
+
+653
+00:50:28,730 --> 00:50:38,320
+yes it's the thing that says GeForce on
+and so this GPU is is for one thing it's
+
+654
+00:50:38,320 --> 00:50:43,180
+it's much larger and the CPU so you
+might so it may be is is more powerful I
+
+655
+00:50:43,179 --> 00:50:48,679
+know but at least it's taking up more
+space in the case so that's that's kind
+
+656
+00:50:48,679 --> 00:50:54,309
+of an indication that something exciting
+is happening so I'm another question and
+
+657
+00:50:54,309 --> 00:50:57,029
+you gotta play video games
+
+658
+00:50:57,030 --> 00:51:05,390
+ok then you probably have opinions about
+this so turns out a lot of people in
+
+659
+00:51:05,389 --> 00:51:09,809
+machine learning and deep learning have
+really strong opinions too and most
+
+660
+00:51:09,809 --> 00:51:15,639
+people are on the side so Nvidia is
+actually much much more widely used then
+
+661
+00:51:15,639 --> 00:51:21,179
+AMD for you using GPUs and US and the
+reason is that
+
+662
+00:51:21,179 --> 00:51:25,599
+NVIDIA has really done a lot in the last
+couple of years to really dive into deep
+
+663
+00:51:25,599 --> 00:51:30,710
+learning and make it a really core part
+of their focus so as a cool example of
+
+664
+00:51:30,710 --> 00:51:34,769
+that last year at GTC which is an
+
+665
+00:51:34,769 --> 00:51:39,869
+videos sort of yearly big gigantic
+conference for the announce new products
+
+666
+00:51:39,869 --> 00:51:44,230
+Jensen Hong who is the CEO of in video
+and actually also stanford alarm
+
+667
+00:51:44,230 --> 00:51:49,059
+introduced this latest and greatest
+amazing new GPU capitation acts like
+
+668
+00:51:49,059 --> 00:51:53,400
+their flagship thing and the benchmark
+he used to sell it was how fast the
+
+669
+00:51:53,400 --> 00:51:56,800
+country and Alex met so this was crazy
+
+670
+00:51:56,800 --> 00:52:00,140
+this was a gigantic room with like
+hundreds and hundreds of people and
+
+671
+00:52:00,139 --> 00:52:04,279
+journalists and like this gigantic
+highly polished presentation and the CEO
+
+672
+00:52:04,280 --> 00:52:07,890
+of in video was talking about Alex net
+and convolutions and I thought that was
+
+673
+00:52:07,889 --> 00:52:11,690
+really exciting and it kind of shows you
+that Nvidia really cares a lot about
+
+674
+00:52:11,690 --> 00:52:15,300
+getting these things to work and they
+pushed a lot of their efforts into
+
+675
+00:52:15,300 --> 00:52:22,150
+getting into making it work so just to
+give you an idea a CPU as you probably
+
+676
+00:52:22,150 --> 00:52:26,900
+know is really good at fast sequential
+processing and they tend to have a small
+
+677
+00:52:26,900 --> 00:52:31,019
+number of cores your laptop probably
+have like maybe between one and four
+
+678
+00:52:31,019 --> 00:52:36,920
+corners and big things on a server might
+have up to 16 quarters and these things
+
+679
+00:52:36,920 --> 00:52:39,610
+are really good at computing things
+really really fast
+
+680
+00:52:39,610 --> 00:52:45,349
+and in sequence GPU is on the other hand
+tend to have many many many course for a
+
+681
+00:52:45,349 --> 00:52:49,759
+big guy like a tax it can have up to
+thousands of quarters but they tend each
+
+682
+00:52:49,760 --> 00:52:53,500
+core can do last May 10 2010 lower clock
+speed and be able to do less per
+
+683
+00:52:53,500 --> 00:52:59,429
+instruction cycle so these GPUs again we
+actually were originally developed for
+
+684
+00:52:59,429 --> 00:53:05,230
+processing graphics graphics processing
+units so they're really good at doing
+
+685
+00:53:05,230 --> 00:53:09,699
+sort of highly paralyzed operations are
+you wanna do many many things in
+
+686
+00:53:09,699 --> 00:53:15,460
+parallel independently and since they
+were originally designed for computer
+
+687
+00:53:15,460 --> 00:53:19,590
+graphics but since then they've sort of
+evolved as a more general computing
+
+688
+00:53:19,590 --> 00:53:23,100
+platform so there are different
+frameworks that allow you to write
+
+689
+00:53:23,099 --> 00:53:28,929
+generic code to run directly on the GPU
+so from Nvidia we have this framework
+
+690
+00:53:28,929 --> 00:53:33,509
+that lets you write a variant of seats
+actually write code that runs directly
+
+691
+00:53:33,510 --> 00:53:37,990
+on the GPU and there's a similar
+framework called OpenCL that works on
+
+692
+00:53:37,989 --> 00:53:43,569
+pretty much any any computational
+platform but I mean open standards are
+
+693
+00:53:43,570 --> 00:53:48,890
+nice and it's quite nice that OpenCL
+works everywhere but in practice open so
+
+694
+00:53:48,889 --> 00:53:52,559
+that tends to be a lot more performance
+and how a little bit nicer library
+
+695
+00:53:52,559 --> 00:53:57,420
+support so at least four deep learning
+most people use could instead and if
+
+696
+00:53:57,420 --> 00:54:01,309
+you're interested in actually learning
+how to write G Piko G Piko yourself
+
+697
+00:54:01,309 --> 00:54:05,230
+there's a really cool nasty course I
+would it's it's pretty cool have fun
+
+698
+00:54:05,230 --> 00:54:09,409
+assignments all that lets you write code
+to run things on GPU although in
+
+699
+00:54:09,409 --> 00:54:12,730
+practice if all you want to do is train
+come nuts and do research and that sort
+
+700
+00:54:12,730 --> 00:54:16,409
+of thing you end up usually not having
+to write any of this code yourself you
+
+701
+00:54:16,409 --> 00:54:20,139
+just rely on external libraries
+
+702
+00:54:20,139 --> 00:54:33,440
+right so could I is like this this raw
+so cute and higher higher level library
+
+703
+00:54:33,440 --> 00:54:38,599
+kind of like glass right so one thing
+that GPUs are really really good at is
+
+704
+00:54:38,599 --> 00:54:43,420
+matrix multiplication so here's here's a
+benchmark I mean this is from Nvidia's
+
+705
+00:54:43,420 --> 00:54:49,550
+website so it's a little bit biased but
+this is showing matrix multiplication
+
+706
+00:54:49,550 --> 00:54:54,789
+time as a function of matrix eyes on a
+pretty beefy CPU this is a 12 corps guy
+
+707
+00:54:54,789 --> 00:55:00,079
+that would live in a server that's like
+quite a quite a healthy CPU and this is
+
+708
+00:55:00,079 --> 00:55:04,000
+running the same date science matrix
+multiply on a test like a 40 which is a
+
+709
+00:55:04,000 --> 00:55:11,000
+pretty beefy GPU and it's much faster I
+mean that's no big surprise right and
+
+710
+00:55:11,000 --> 00:55:15,119
+GPUs are also really gotta convolutions
+so as you mentioned and video has a
+
+711
+00:55:15,119 --> 00:55:19,909
+library called today announced that is
+specifically optimized optimist CUDA
+
+712
+00:55:19,909 --> 00:55:26,139
+kernels for convolution so compared to
+CPU I mean it's it's WAY faster and this
+
+713
+00:55:26,139 --> 00:55:30,139
+is actually comparing him to call
+contributions from campaign with the
+
+714
+00:55:30,139 --> 00:55:34,920
+crew tienen convolutions I think these
+graphs are actually from the first
+
+715
+00:55:34,920 --> 00:55:41,030
+version of CNN version for just came out
+a few weeks ago and but this is the only
+
+716
+00:55:41,030 --> 00:55:44,600
+version where they actually had a CPU
+benchmark since then the benchmark civil
+
+717
+00:55:44,599 --> 00:55:49,699
+me been against previous versions so
+it's got a lot faster since then since
+
+718
+00:55:49,699 --> 00:55:54,769
+here but the way this witness fits and
+is that something like two blasts or to
+
+719
+00:55:54,769 --> 00:56:00,090
+DNN is a C library so it provides
+functions and see that just sort of
+
+720
+00:56:00,090 --> 00:56:05,309
+abstract away the GPU as a C library so
+if you have a tensor sort of in in
+
+721
+00:56:05,309 --> 00:56:09,429
+memory and see you can just pass a
+pointer to the Korean library and it'll
+
+722
+00:56:09,429 --> 00:56:13,299
+return the conf little running on GPU
+maybe asynchronously and return the
+
+723
+00:56:13,300 --> 00:56:19,440
+result so frameworks like cafe and torch
+all have now integrated the Q tienen
+
+724
+00:56:19,440 --> 00:56:23,750
+stuff into their own frameworks you can
+utilize these efficient solutions in any
+
+725
+00:56:23,750 --> 00:56:30,340
+of these frameworks know but the problem
+is that even when once we have these
+
+726
+00:56:30,340 --> 00:56:33,430
+really powerful GPUs training big models
+is still kind
+
+727
+00:56:33,429 --> 00:56:39,409
+slow so VG nett was famously train for
+something like two to three weeks on for
+
+728
+00:56:39,409 --> 00:56:43,759
+Titan what was a Titan black sandals
+aren't cheap and it was actually a
+
+729
+00:56:43,760 --> 00:56:47,280
+recommendation of ResNet recently
+there's a really cool right up this
+
+730
+00:56:47,280 --> 00:56:51,839
+really cool blog post describing it here
+and they actually retrained the ResNet
+
+731
+00:56:51,838 --> 00:56:56,400
+hundred and one layer model and it also
+took about two weeks to train on for
+
+732
+00:56:56,400 --> 00:57:03,880
+GPUs so that's not good and the one way
+that people the way that the easy way to
+
+733
+00:57:03,880 --> 00:57:08,269
+split up training across multiple GPUs
+is just to split your money back across
+
+734
+00:57:08,269 --> 00:57:14,230
+the GPUs so normally you might have you
+especially for someone like BGG it takes
+
+735
+00:57:14,230 --> 00:57:17,679
+a lot of memory so you can't compete
+with very large me batch sizes on a
+
+736
+00:57:17,679 --> 00:57:23,649
+single GPU so what you'll do you have
+any batch of images may be a 6:00 128 or
+
+737
+00:57:23,650 --> 00:57:24,700
+something like that
+
+738
+00:57:24,699 --> 00:57:30,338
+than any match into four equal chunks
+each GPU compute a forward and backward
+
+739
+00:57:30,338 --> 00:57:35,190
+pass for that many batch in your compute
+pramit gradients on the weights while
+
+740
+00:57:35,190 --> 00:57:39,470
+some of those weights inside your some
+of those weights after all for GPU
+
+741
+00:57:39,469 --> 00:57:44,548
+Spanish and make an update your model so
+this is a really simple way that people
+
+742
+00:57:44,548 --> 00:57:53,599
+tend to implement distribution on GPUs
+yeah yeah
+
+743
+00:57:53,599 --> 00:57:59,089
+yeah yeah so that's why they claim that
+they can automate this process and
+
+744
+00:57:59,090 --> 00:58:03,039
+really really efficiently distribute it
+which is really exciting I think but I
+
+745
+00:58:03,039 --> 00:58:07,820
+haven't played much myself and also at
+least in torch there's a data parallel
+
+746
+00:58:07,820 --> 00:58:11,059
+there that you can just drop in and use
+that all sort of automatically do with
+
+747
+00:58:11,059 --> 00:58:14,070
+this type of parallelism very easily
+
+748
+00:58:14,070 --> 00:58:18,930
+a slightly more complex idea for multi
+GPU training actually comes from Alex
+
+749
+00:58:18,929 --> 00:58:21,279
+Alex not fame
+
+750
+00:58:21,280 --> 00:58:26,670
+guess that's kind of cool kind of a
+funny title but the idea but the idea is
+
+751
+00:58:26,670 --> 00:58:31,409
+that we want to actually do data
+parallelism on the lower layers so on
+
+752
+00:58:31,409 --> 00:58:35,980
+the lower layers will take our image
+many batch split up across two GPUs and
+
+753
+00:58:35,980 --> 00:58:42,059
+eat and GPU one will compute the
+convolutions for the first part first
+
+754
+00:58:42,059 --> 00:58:46,279
+part of the many batch and just released
+just this comp convolution part will be
+
+755
+00:58:46,280 --> 00:58:49,960
+distributed equally across the GPUs but
+once you get to the fully connected
+
+756
+00:58:49,960 --> 00:58:50,760
+layers
+
+757
+00:58:50,760 --> 00:58:54,800
+he found it's actually more efficient if
+you are just really big matrix
+
+758
+00:58:54,800 --> 00:58:58,810
+multiplies then it's more efficient
+actually have the GPS work together to
+
+759
+00:58:58,809 --> 00:59:02,869
+compute this matrix multiply this is
+kind of a cool track it's not very
+
+760
+00:59:02,869 --> 00:59:09,480
+commonly used but I thought it's it's
+fun to mention another idea from Google
+
+761
+00:59:09,480 --> 00:59:13,800
+is before it before there was tenser
+flow they had this thing called
+
+762
+00:59:13,800 --> 00:59:18,380
+disbelief which was their their previous
+system which was entirely CPU based
+
+763
+00:59:18,380 --> 00:59:22,630
+which from the benchmarks a few slides
+ago you can imagine was going to be
+
+764
+00:59:22,630 --> 00:59:26,250
+really slow but actually the first
+version of Google Matt was all trained
+
+765
+00:59:26,250 --> 00:59:30,800
+in disbelief on CPU so they actually so
+they had to do massive amounts of
+
+766
+00:59:30,800 --> 00:59:35,800
+distribution on CPU to get these things
+to train so here there's this cool paper
+
+767
+00:59:35,800 --> 00:59:39,530
+from jap teen a couple years ago that
+describes this and a lot more detail but
+
+768
+00:59:39,530 --> 00:59:43,640
+you use data parallelism or you have
+each machine have an independent copy of
+
+769
+00:59:43,639 --> 00:59:48,710
+the model and each machine as computing
+forward and backward on patches of data
+
+770
+00:59:48,710 --> 00:59:52,659
+but now i text you actually have this
+parameters server that's storing the
+
+771
+00:59:52,659 --> 00:59:55,739
+parameters of the model and these
+independent workers are making
+
+772
+00:59:55,739 --> 01:00:01,209
+communication with the parameters server
+to make updates on the model and they
+
+773
+01:00:01,210 --> 01:00:05,740
+contrast this with model parallelism
+which is where you type 1
+
+774
+01:00:05,739 --> 01:00:09,879
+model and you have different different
+workers computing different parts of the
+
+775
+01:00:09,880 --> 01:00:14,650
+model so and in disbelief they really
+did a really good job
+
+776
+01:00:14,650 --> 01:00:18,110
+optimizing this to work really well
+across many many CPUs and many many
+
+777
+01:00:18,110 --> 01:00:23,170
+machines but now they have cancer flow
+which hopefully should do these things
+
+778
+01:00:23,170 --> 01:00:28,639
+more automatically and once you're doing
+these these these updates there's this
+
+779
+01:00:28,639 --> 01:00:34,949
+idea between asynchronous STD and
+synchronous STD so synchronous STD is
+
+780
+01:00:34,949 --> 01:00:39,299
+one of the things like the naive thing
+you might expect you have any batch you
+
+781
+01:00:39,300 --> 01:00:42,880
+split up across multiple workers each
+worker does forward and backward
+
+782
+01:00:42,880 --> 01:00:46,710
+computes gradients when you add up all
+the gradients and make a single model
+
+783
+01:00:46,710 --> 01:00:51,220
+updates this will this will sort of
+exactly simulate
+
+784
+01:00:51,219 --> 01:00:55,029
+just computing but many batch on a
+larger machine but it could be kind of
+
+785
+01:00:55,030 --> 01:00:59,619
+slow since you to synchronize across
+machines this tends to be too much of a
+
+786
+01:00:59,619 --> 01:01:03,610
+big deal when you're working with
+multiple GPUs on a single note but once
+
+787
+01:01:03,610 --> 01:01:08,430
+you're distributed across many many CPUs
+that district that I'm synchronization
+
+788
+01:01:08,429 --> 01:01:12,569
+can actually be quite expensive so
+instead at least they also have this
+
+789
+01:01:12,570 --> 01:01:17,500
+concept of asynchronous STD where each
+model is just sort of making updates to
+
+790
+01:01:17,500 --> 01:01:21,599
+the to its own copy of the parameters
+and those have some notion of an
+
+791
+01:01:21,599 --> 01:01:25,480
+eventual consistency where they
+sometimes periodically synchronize with
+
+792
+01:01:25,480 --> 01:01:29,530
+each other and it's seems really
+complicated and hard to debug but they
+
+793
+01:01:29,530 --> 01:01:35,619
+got it to work so that's that's pretty
+cool and one of the really cool pictures
+
+794
+01:01:35,619 --> 01:01:39,430
+so these two figures are both in the
+tensor flow paper and one of the
+
+795
+01:01:39,429 --> 01:01:42,549
+pictures of tensor flow is that it
+should really make this type of
+
+796
+01:01:42,550 --> 01:01:46,510
+distribution much more transparent to
+the user that if you do happen to have
+
+797
+01:01:46,510 --> 01:01:51,580
+access to a big cluster of GPUs and CPUs
+and whatnot tenser flow should
+
+798
+01:01:51,579 --> 01:01:54,840
+automatically be able to figure out the
+best way to do these kinds of
+
+799
+01:01:54,840 --> 01:01:58,970
+distributions combining data and model
+parallelism and just do it all for you
+
+800
+01:01:58,969 --> 01:02:03,399
+so that's that's really cool and I think
+that's that's the really exciting part
+
+801
+01:02:03,400 --> 01:02:11,050
+about 1000 any any questions about the
+stupid training yeah
+
+802
+01:02:11,050 --> 01:02:16,120
+and CN TK I haven't even taken a look at
+it yet
+
+803
+01:02:16,119 --> 01:02:22,130
+ok so next time there's a couple
+bottlenecks you should be aware of in
+
+804
+01:02:22,130 --> 01:02:27,500
+practice so expect like usually when
+you're training these things like this
+
+805
+01:02:27,500 --> 01:02:30,769
+distributed stuff is nice and great but
+you can actually go a long way with just
+
+806
+01:02:30,769 --> 01:02:34,840
+a single GPU on a single machine and
+there there's a lot of bottlenecks that
+
+807
+01:02:34,840 --> 01:02:39,160
+can get in the way one is the
+communication between the CPU and GPU
+
+808
+01:02:39,159 --> 01:02:44,759
+actually and a lot of cases especially
+when the data is small the most
+
+809
+01:02:44,760 --> 01:02:48,000
+expensive part of the pipeline is
+copying the data onto the GPU and then
+
+810
+01:02:48,000 --> 01:02:51,579
+copy it back once you get things under
+the GPU you can do
+
+811
+01:02:51,579 --> 01:02:55,719
+computation really really fast and
+efficiently but the copying is the
+
+812
+01:02:55,719 --> 01:03:01,089
+really slow part so 11 idea as you want
+to make sure to avoid the memory copy
+
+813
+01:03:01,090 --> 01:03:06,570
+like one thing that sometimes you see
+you all at each layer of the network is
+
+814
+01:03:06,570 --> 01:03:10,460
+copying back and forth from CPU GPU and
+I'll be really inefficient and slow
+
+815
+01:03:10,460 --> 01:03:14,170
+everything down so ideally you want the
+whole forward and backward pass to run
+
+816
+01:03:14,170 --> 01:03:17,159
+on a GPU at once
+
+817
+01:03:17,159 --> 01:03:21,139
+another thing you'll sometimes see is
+multithreaded approach where you'll have
+
+818
+01:03:21,139 --> 01:03:27,849
+a CPU thread that is prefetching data
+many memory in one thread in the
+
+819
+01:03:27,849 --> 01:03:28,690
+background
+
+820
+01:03:28,690 --> 01:03:34,070
+possibly also appointed augmentations
+online and then this this background CPU
+
+821
+01:03:34,070 --> 01:03:37,470
+throughout will be sort of preparing me
+batches and possibly also shipping them
+
+822
+01:03:37,469 --> 01:03:41,669
+over to GPU you can kind of coordinate
+this loading of data and computing
+
+823
+01:03:41,670 --> 01:03:44,680
+preprocessing and shipping memory
+shipping
+
+824
+01:03:44,679 --> 01:03:48,940
+many batch data to the GPU and actually
+doing the computations and actually you
+
+825
+01:03:48,940 --> 01:03:51,980
+can get pretty involved with some
+courting I'll be all these things in a
+
+826
+01:03:51,980 --> 01:03:57,719
+multithreaded way and I can give you
+some good speedups so cafe in particular
+
+827
+01:03:57,719 --> 01:04:01,059
+I think already implements this
+prefetching date on there for certain
+
+828
+01:04:01,059 --> 01:04:04,199
+types of data storages and other
+frameworks you just have to roll your
+
+829
+01:04:04,199 --> 01:04:11,839
+own another problem is that the CPU disk
+model Mac so these these things are kind
+
+830
+01:04:11,840 --> 01:04:17,820
+of slow they're cheap and they're big
+but they actually are not the best so so
+
+831
+01:04:17,820 --> 01:04:22,220
+these are hard disks that now the solid
+state drives are much more common
+
+832
+01:04:22,219 --> 01:04:25,730
+but the problem is a solid state drives
+are you know smaller and more expensive
+
+833
+01:04:25,730 --> 01:04:30,590
+but they're a lot faster so they get
+used a lot in practice so what's really
+
+834
+01:04:30,590 --> 01:04:35,710
+although one 1 common feature to both
+hard disks and solid-state drives as
+
+835
+01:04:35,710 --> 01:04:39,889
+they work best when you're reading data
+sequentially off the desk so a lot of
+
+836
+01:04:39,889 --> 01:04:44,108
+times what you're right so one thing
+that would be really bad for example is
+
+837
+01:04:44,108 --> 01:04:48,569
+to have a big folder full of JPEG images
+because now each of these images could
+
+838
+01:04:48,570 --> 01:04:52,309
+be located in different parts on the
+desk so it could be really up to a
+
+839
+01:04:52,309 --> 01:04:56,619
+random seek to read any individual JPEG
+image and now also once you read the
+
+840
+01:04:56,619 --> 01:05:01,150
+JPEG you have to decompress it into
+pixels that's quite inefficient so what
+
+841
+01:05:01,150 --> 01:05:05,079
+you'll see a lot of times in practice is
+that you'll actually preprocessor data
+
+842
+01:05:05,079 --> 01:05:10,059
+by decompressing it and just riding out
+the raw pixels entire data sat in one
+
+843
+01:05:10,059 --> 01:05:15,940
+giant contiguous files to desk so that
+that takes a lot of disk space but we do
+
+844
+01:05:15,940 --> 01:05:22,230
+it anyway because it's all for the good
+of a calmness right so this is kinda so
+
+845
+01:05:22,230 --> 01:05:27,400
+in cafe we do this with a coupled with
+like a level d be is one commonly used
+
+846
+01:05:27,400 --> 01:05:33,599
+format I've also used I also use html5
+files a lot for us but the idea is that
+
+847
+01:05:33,599 --> 01:05:39,280
+you want to just get your data all
+sequentially on desk and already turned
+
+848
+01:05:39,280 --> 01:05:43,180
+into pixels Senate training when you're
+training you can store all your data in
+
+849
+01:05:43,179 --> 01:05:46,230
+memory you have to read off desk when
+you wanna make that read as fast as
+
+850
+01:05:46,230 --> 01:05:50,679
+possible and again with clever amounts
+of prefetching and multi-threaded stuff
+
+851
+01:05:50,679 --> 01:05:54,829
+you might have you might have won prized
+pitching a top desk while other
+
+852
+01:05:54,829 --> 01:05:57,460
+competition is happening in the
+background
+
+853
+01:05:57,460 --> 01:06:05,019
+another thing to keep in mind is GPU
+memory bottlenecks so GPUs big ones have
+
+854
+01:06:05,019 --> 01:06:10,559
+big ones have a lot of memory but not
+that much so the biggest GPUs you can
+
+855
+01:06:10,559 --> 01:06:15,539
+buy right now that I tax and the key
+forty have 12 gigs of memory and that's
+
+856
+01:06:15,539 --> 01:06:18,139
+pretty much as big as you're going to
+get right now
+
+857
+01:06:18,139 --> 01:06:22,679
+NextGen should be bigger but you can
+actually bump up against this limit
+
+858
+01:06:22,679 --> 01:06:26,989
+without too much trouble especially if
+you're training something like a BG or
+
+859
+01:06:26,989 --> 01:06:31,608
+if you're having recurrent networks were
+very very very very long time stops it's
+
+860
+01:06:31,608 --> 01:06:34,929
+actually not too hard to bump up against
+this memory limit that's something you
+
+861
+01:06:34,929 --> 01:06:35,598
+need to keep
+
+862
+01:06:35,599 --> 01:06:39,130
+mind when you're training these things
+and some of these planes about you know
+
+863
+01:06:39,130 --> 01:06:43,450
+these efficient convolutions and
+cleverly creating architectures actually
+
+864
+01:06:43,449 --> 01:06:47,068
+helps with this memory as well if you
+can have a bigger more powerful model
+
+865
+01:06:47,068 --> 01:06:52,268
+with smaller amounts of with don't use
+less memory than you'll be able to train
+
+866
+01:06:52,268 --> 01:06:58,129
+things faster and use bigger matches and
+everything is good and even just just a
+
+867
+01:06:58,130 --> 01:07:01,588
+sense of scale Alex Knight is pretty
+small compared to a lot of the models
+
+868
+01:07:01,588 --> 01:07:05,608
+that are state of the art now but Alex
+net with a 256 back sides already takes
+
+869
+01:07:05,608 --> 01:07:09,469
+about 3 gigabytes GB memory so once you
+have to these bigger networks it's
+
+870
+01:07:09,469 --> 01:07:15,738
+actually not too hard to bump up against
+the 12 Dec limits so another thing we
+
+871
+01:07:15,739 --> 01:07:20,978
+should talk about is floating point
+precision so when I'm writing code a lot
+
+872
+01:07:20,978 --> 01:07:24,788
+of times I like to imagine that you know
+these things are just real numbers and
+
+873
+01:07:24,789 --> 01:07:27,960
+they just work but in practice that's
+not true and you need to think about
+
+874
+01:07:27,960 --> 01:07:32,889
+things like how many bits of
+floating-point are using so most types
+
+875
+01:07:32,889 --> 01:07:37,159
+are a lot of types of numeric code that
+you might write sort of is with a double
+
+876
+01:07:37,159 --> 01:07:43,278
+precision by default this is using 64
+bits and a lot of also wrote more
+
+877
+01:07:43,278 --> 01:07:47,449
+commonly used for deep learning is this
+idea of single precision so this is only
+
+878
+01:07:47,449 --> 01:07:52,710
+32 bets so the idea is that if each
+number takes fewer bets then you can
+
+879
+01:07:52,710 --> 01:07:56,469
+store more of those numbers within the
+same amount of memory so that's good and
+
+880
+01:07:56,469 --> 01:08:00,559
+also with fewer bets you need less
+computes operate on those numbers that's
+
+881
+01:08:00,559 --> 01:08:05,210
+also good so in general we would like to
+have smaller data types because they're
+
+882
+01:08:05,210 --> 01:08:11,150
+faster to compute and the useless memory
+and as a as a case study this was
+
+883
+01:08:11,150 --> 01:08:15,489
+actually even an issue on homework so
+you may have noticed that and the
+
+884
+01:08:15,489 --> 01:08:16,960
+default data type is this
+
+885
+01:08:16,960 --> 01:08:21,289
+64 bit double precision but for all of
+these models that we provided you on
+
+886
+01:08:21,289 --> 01:08:25,789
+homework we had this cast or 32 bit
+floating point number and you can
+
+887
+01:08:25,789 --> 01:08:28,670
+actually go back on the homework and try
+switching between these two and you'll
+
+888
+01:08:28,670 --> 01:08:32,908
+see that switching to the 32 bit
+actually gives you some decent some
+
+889
+01:08:32,908 --> 01:08:39,670
+decent speed ups so bad and the obvious
+question is that if 32 bets are better
+
+890
+01:08:39,670 --> 01:08:42,829
+than 64 bet spend maybe we can use less
+than
+
+891
+01:08:42,829 --> 01:08:52,199
+so there's this right
+
+892
+01:08:52,199 --> 01:09:01,010
+16 bets but it was ordered to do these
+great ok so in addition to 32 bit
+
+893
+01:09:01,010 --> 01:09:05,420
+floating point there's also a standard
+for 16 bit floating point which is
+
+894
+01:09:05,420 --> 01:09:09,699
+sometimes called the half precision and
+actually recent versions of cunanan do
+
+895
+01:09:09,699 --> 01:09:17,199
+support computing things in a position
+that's cool and actually there there are
+
+896
+01:09:17,199 --> 01:09:20,050
+some other other existing
+implementations from a company called
+
+897
+01:09:20,050 --> 01:09:23,850
+their bana who also has these
+sixteen-bit implementations so these are
+
+898
+01:09:23,850 --> 01:09:28,350
+the fastest convolutions out there right
+now so these there's this nice get
+
+899
+01:09:28,350 --> 01:09:31,850
+hungry poll that has different kinds of
+comment benchmarks for different types
+
+900
+01:09:31,850 --> 01:09:35,160
+of convolutions and frameworks and
+everything and pretty much everything
+
+901
+01:09:35,159 --> 01:09:38,319
+winning all these benchmarks right now
+are these 16 bit floating point
+
+902
+01:09:38,319 --> 01:09:42,279
+operations from Nirvana which is not
+surprising right because I can you have
+
+903
+01:09:42,279 --> 01:09:47,479
+your bets so it's faster to compete but
+right now there's actually not yet
+
+904
+01:09:47,479 --> 01:09:51,479
+framework support in things like cafe or
+torch for utilizing the sixteen-bit
+
+905
+01:09:51,479 --> 01:09:57,299
+computation but it should be coming very
+soon but the problem is that even if we
+
+906
+01:09:57,300 --> 01:10:01,420
+can compute it's it's it's pretty
+obvious that if you have 16 but numbers
+
+907
+01:10:01,420 --> 01:10:05,880
+you can compete with them very fast but
+once you get to 16 better than you might
+
+908
+01:10:05,880 --> 01:10:10,380
+actually be worried about numeric
+precision because two of the sixteen is
+
+909
+01:10:10,380 --> 01:10:13,550
+not that big of a number anymore it's
+actually not too many real numbers you
+
+910
+01:10:13,550 --> 01:10:20,360
+can even represent so there is this
+paper from a couple years ago that did
+
+911
+01:10:20,359 --> 01:10:25,339
+some experiments low precision floating
+point and they found that actually just
+
+912
+01:10:25,340 --> 01:10:28,710
+using the experiment they actually use a
+fixed with a floating-point
+
+913
+01:10:28,710 --> 01:10:34,819
+implementation and they found that
+actually with these very with with this
+
+914
+01:10:34,819 --> 01:10:38,659
+sort of naive implementation of oslo of
+these low precision methods the networks
+
+915
+01:10:38,659 --> 01:10:43,689
+had a hard time converging probably due
+to these low precision Americare numeric
+
+916
+01:10:43,689 --> 01:10:46,710
+issues that kind of accumulate over
+multiple rounds of multiplication and
+
+917
+01:10:46,710 --> 01:10:50,989
+whatnot but they found a simple trick
+was actually this idea of stochastic
+
+918
+01:10:50,989 --> 01:10:54,559
+rounding so some of their
+multiplications would so all their
+
+919
+01:10:54,560 --> 01:10:55,200
+parameters
+
+920
+01:10:55,199 --> 01:10:59,079
+activations are stored in 16 bet but
+when they perform a multiplication they
+
+921
+01:10:59,079 --> 01:11:03,269
+up converts to a slightly higher
+precision floating-point value and then
+
+922
+01:11:03,270 --> 01:11:07,570
+they still cast a round that back down
+to a lower position and actually doing
+
+923
+01:11:07,569 --> 01:11:11,789
+that rounding in a stochastic way that
+is not rounding to the nearest number
+
+924
+01:11:11,789 --> 01:11:16,479
+but probabilistically rounding two
+different numbers that depending on how
+
+925
+01:11:16,479 --> 01:11:17,549
+close you are
+
+926
+01:11:17,550 --> 01:11:21,860
+tends to work better and practice so
+they found that for example when you're
+
+927
+01:11:21,859 --> 01:11:26,710
+using these were sixteen-bit fixed
+numbers with two beds for integers and
+
+928
+01:11:26,710 --> 01:11:31,170
+stand between 12 and 14 this for the
+floating point for the for the
+
+929
+01:11:31,170 --> 01:11:35,239
+fractional part that when you use this
+idea of always rounding to the nearest
+
+930
+01:11:35,239 --> 01:11:40,359
+number these networks and to diverge but
+when you use these stochastic grounding
+
+931
+01:11:40,359 --> 01:11:43,599
+techniques that you can actually get
+these networks to converge quite nicely
+
+932
+01:11:43,600 --> 01:11:47,170
+even with these very low precision
+floating-point technique low precision
+
+933
+01:11:47,170 --> 01:11:52,859
+floating-point numbers but you might
+want to ask will sixteen-bit is great
+
+934
+01:11:52,859 --> 01:11:59,089
+but can we go even lower than that there
+was another paper in 2015 that got down
+
+935
+01:11:59,090 --> 01:12:04,560
+to 10 and 12 bets so here that I mean
+from the previous paper we already had
+
+936
+01:12:04,560 --> 01:12:08,039
+this intuition that maybe when you're
+using very low precision floating-point
+
+937
+01:12:08,039 --> 01:12:11,359
+numbers you actually need to use more
+precision in some parts of the network
+
+938
+01:12:11,359 --> 01:12:15,909
+and lower precision in other parts of
+the network so in this paper they were
+
+939
+01:12:15,909 --> 01:12:22,149
+able to get away with using story in the
+activations in 10 bit 10 bit values and
+
+940
+01:12:22,149 --> 01:12:27,500
+stand doing computing gradients using 12
+bets and they've got this to work which
+
+941
+01:12:27,500 --> 01:12:34,800
+is pretty amazing but anyone think that
+that's the limit can we go further
+
+942
+01:12:34,800 --> 01:12:36,310
+yes
+
+943
+01:12:36,310 --> 01:12:44,180
+there was actually a paper just last
+week so this is actually from the same
+
+944
+01:12:44,180 --> 01:12:49,200
+author as the previous paper and this is
+crazy I was I was amazed about this and
+
+945
+01:12:49,199 --> 01:12:53,539
+hear the idea is that all activations
+and weights of a network use only one
+
+946
+01:12:53,539 --> 01:12:58,819
+bet either one or negative one that's
+pretty fast to compute now you don't
+
+947
+01:12:58,819 --> 01:13:02,429
+even really have to do multiplication
+you can just do like why is explored and
+
+948
+01:13:02,430 --> 01:13:07,240
+multiply those that's pretty cool but
+the trick is that on the forward pass
+
+949
+01:13:07,239 --> 01:13:11,199
+all of the gradients and activations are
+either one or minus one so it's super
+
+950
+01:13:11,199 --> 01:13:15,399
+stuff four passes super super fast and
+efficient but now on a backward pass
+
+951
+01:13:15,399 --> 01:13:20,179
+they actually compute gradients using
+higher precision and then these higher
+
+952
+01:13:20,180 --> 01:13:24,150
+precision gradients are used to actually
+make updates to these single bit
+
+953
+01:13:24,149 --> 01:13:28,059
+parameters so it's it's it's actually
+really cool paper and I'd encourage you
+
+954
+01:13:28,060 --> 01:13:33,310
+to check it out but the pitch is that
+may be a training time you can afford to
+
+955
+01:13:33,310 --> 01:13:36,600
+use maybe more floating point precision
+but then a test time do you want your
+
+956
+01:13:36,600 --> 01:13:41,250
+network to be super super fast and all
+binary so I think this is a really
+
+957
+01:13:41,250 --> 01:13:45,010
+really cool idea that I mean it the
+paper just came out two weeks ago so I
+
+958
+01:13:45,010 --> 01:13:50,460
+don't know but I think it's a pretty
+cool thing so the recap from
+
+959
+01:13:50,460 --> 01:13:52,199
+implementation details
+
+960
+01:13:52,199 --> 01:13:56,960
+is that overall GPUs are much much
+faster than CPUs sometimes people use
+
+961
+01:13:56,960 --> 01:14:00,739
+distributed training distributing over
+multiple GPUs in one system is pretty
+
+962
+01:14:00,739 --> 01:14:04,840
+common if your Google and using tensor
+flow then distributing over multiple
+
+963
+01:14:04,840 --> 01:14:10,239
+nodes is maybe more common be aware of
+the potential bottlenecks between the
+
+964
+01:14:10,239 --> 01:14:15,739
+CPU and GPU between the GPU in the desk
+and between the GPU memory and also pay
+
+965
+01:14:15,739 --> 01:14:19,510
+attention to floating point precision it
+might not be the most glamorous thing
+
+966
+01:14:19,510 --> 01:14:23,409
+but it actually I think makes huge
+differences in practice and maybe binary
+
+967
+01:14:23,409 --> 01:14:28,639
+nuts will be the next big thing that'd
+be pretty exciting so yeah just to recap
+
+968
+01:14:28,640 --> 01:14:32,690
+everything we talked about today that we
+talked to a date augmentation as a trick
+
+969
+01:14:32,689 --> 01:14:37,449
+for improving when you have small
+datasets and help prevent overfitting we
+
+970
+01:14:37,449 --> 01:14:40,859
+talk about transfer learning as a way to
+initialize from existing models to help
+
+971
+01:14:40,859 --> 01:14:44,399
+with your help with your training we
+talked a lot of detail about
+
+972
+01:14:44,399 --> 01:14:48,159
+convolutions both how to combine them to
+make efficient models and
+
+973
+01:14:48,159 --> 01:14:52,840
+and we talked about all these
+implementation details so I think that's
+
+974
+01:14:52,840 --> 01:14:57,319
+that's all we have printed ASAP is any
+last minute questions
+
+975
+01:14:57,319 --> 01:15:02,840
+alright so I guess we're done a couple
+minutes early and our midst the midterms
+

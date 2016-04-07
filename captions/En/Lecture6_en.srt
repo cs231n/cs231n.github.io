@@ -1,0 +1,4497 @@
+﻿1
+00:00:00,000 --> 00:00:07,009
+ok so what's now first today we'll talk
+about training neural networks again and
+
+2
+00:00:07,009 --> 00:00:10,449
+then I'll give you a bit of an interview
+coming to show that works before we dive
+
+3
+00:00:10,449 --> 00:00:15,489
+into that the material just some
+administrative things first first I
+
+4
+00:00:15,490 --> 00:00:18,618
+didn't get a chance to actually
+interviews Justin last lecture justin is
+
+5
+00:00:18,618 --> 00:00:21,579
+your instructor also for this class and
+he was missing for the first two weeks
+
+6
+00:00:21,579 --> 00:00:28,409
+and they can can ask me anything about
+anything he's very knowledgeable maybe
+
+7
+00:00:28,410 --> 00:00:29,428
+that's an understatement
+
+8
+00:00:29,428 --> 00:00:37,960
+ok and the 72 is out as a reminder it's
+quite long so I encourage you to start
+
+9
+00:00:37,960 --> 00:00:43,850
+to build here and it's do basically next
+Friday so get started on that as soon as
+
+10
+00:00:43,850 --> 00:00:47,679
+possible and you implement know that
+works with the proper API of forward
+
+11
+00:00:47,679 --> 00:00:50,429
+backward classes and you'll see the
+abstraction of a competition will grab
+
+12
+00:00:50,429 --> 00:00:54,820
+and go back to my session drop out and
+then you'll actually implement
+
+13
+00:00:54,820 --> 00:00:57,770
+commercial networks so by the end of
+this assignment to actually have a
+
+14
+00:00:57,770 --> 00:01:00,770
+fairly good understanding of all the
+low-level details of how come on strong
+
+15
+00:01:00,770 --> 00:01:06,530
+network classifiers I'm just ok so where
+we are in this class just as a reminder
+
+16
+00:01:06,530 --> 00:01:10,140
+again we're training neural networks and
+turns out the training on networks is
+
+17
+00:01:10,140 --> 00:01:15,590
+really a four-step process you have an
+entire dataset images and labels we
+
+18
+00:01:15,590 --> 00:01:18,920
+sample a small back from the dataset we
+thought propagating through the network
+
+19
+00:01:18,920 --> 00:01:23,060
+to get to the loss which is telling us
+how well we're currently classifying
+
+20
+00:01:23,060 --> 00:01:26,390
+dispatch of data and we back propagates
+to complete the gradient of all the
+
+21
+00:01:26,390 --> 00:01:29,969
+weights and this gradient is telling us
+how we should not sure every single wait
+
+22
+00:01:29,969 --> 00:01:33,789
+in the network so that we're better
+classifying these images and then once
+
+23
+00:01:33,790 --> 00:01:36,700
+we have the gradient we can use it for a
+primary update where we actually do that
+
+24
+00:01:36,700 --> 00:01:38,930
+small notch
+
+25
+00:01:38,930 --> 00:01:42,659
+last class we looked into activation
+functions and I'm tired of activation
+
+26
+00:01:42,659 --> 00:01:45,368
+functions and some pros and cons of
+using any of these insider neural
+
+27
+00:01:45,368 --> 00:01:49,060
+network a good question came up in
+Piazza so when asked why would you even
+
+28
+00:01:49,060 --> 00:01:53,939
+using your activation function why not
+just skip it and question was posed it
+
+29
+00:01:53,938 --> 00:01:57,618
+and I've got to really address this very
+nicely in the last lecture by basically
+
+30
+00:01:57,618 --> 00:02:00,790
+if you don't use an activation function
+than your entire neural network ends up
+
+31
+00:02:00,790 --> 00:02:05,500
+being one single in your sandwich and so
+your capacity is equal to that of just a
+
+32
+00:02:05,500 --> 00:02:10,080
+linear classifier so those activation
+functions are really critical to have
+
+33
+00:02:10,080 --> 00:02:13,880
+between and they they are the ones that
+give you all this way that you can use
+
+34
+00:02:13,879 --> 00:02:17,490
+to actually put your data we talked
+briefly about the preprocessing
+
+35
+00:02:17,490 --> 00:02:21,860
+techniques but very briefly we also
+looked at the activation functions and
+
+36
+00:02:21,860 --> 00:02:24,830
+their distributions throughout the
+neural network and so the problem here I
+
+37
+00:02:24,830 --> 00:02:31,370
+see your call is we have to choose this
+initial weights and in particular the
+
+38
+00:02:31,370 --> 00:02:34,930
+scale of how large you want those who
+wait to be in the beginning and we saw
+
+39
+00:02:34,930 --> 00:02:38,260
+that if that if those weights are too
+small then your activation in a neural
+
+40
+00:02:38,259 --> 00:02:41,909
+network as you have a deep network goes
+toward zero and if you set that skill is
+
+41
+00:02:41,909 --> 00:02:45,129
+likely to higher than all of them will
+explode instead and so you end up with
+
+42
+00:02:45,129 --> 00:02:48,939
+other super-saturated networks or you
+end up with networks that just about all
+
+43
+00:02:48,939 --> 00:02:54,189
+zeros and so that scale is very very
+tricky thing to set we looked into the
+
+44
+00:02:54,189 --> 00:02:59,579
+initialisation which gives you a
+reasonable kind of thing to use in that
+
+45
+00:02:59,580 --> 00:03:03,290
+form and that gives you basically
+roughly good active activations or
+
+46
+00:03:03,289 --> 00:03:06,459
+distributions of activation throughout
+the network in the beginning of training
+
+47
+00:03:06,459 --> 00:03:10,959
+and then we went into best normalization
+which is this thing that alleviate a lot
+
+48
+00:03:10,959 --> 00:03:14,120
+of these headaches with actually setting
+that skill properly and Sebastian
+
+49
+00:03:14,120 --> 00:03:16,689
+legislation makes this a much more
+robust choices they don't have to
+
+50
+00:03:16,689 --> 00:03:20,550
+precisely get that initial scale correct
+and we went to all of its present calls
+
+51
+00:03:20,550 --> 00:03:23,620
+and we talked about that for a while and
+then we talked about the learning
+
+52
+00:03:23,620 --> 00:03:26,920
+process by trying to show you a kind of
+tips and tricks for how you actually be
+
+53
+00:03:26,919 --> 00:03:29,809
+said these neural networks how you get
+them to train properly and also how you
+
+54
+00:03:29,810 --> 00:03:34,860
+run across violations and how you slowly
+over time in to get up rendering just so
+
+55
+00:03:34,860 --> 00:03:37,769
+we talked about all that last time so
+this time we're going to go into some of
+
+56
+00:03:37,769 --> 00:03:41,060
+the remaining items for training neural
+networks in particular parameter up the
+
+57
+00:03:41,060 --> 00:03:44,989
+schemes I think most part and then we'll
+talk a bit about my l'ensemble dropout
+
+58
+00:03:44,989 --> 00:03:49,480
+and so on so before I dive into that any
+administrative things my way that I'm
+
+59
+00:03:49,479 --> 00:03:53,509
+forgetting not necessarily so
+
+60
+00:03:53,509 --> 00:03:58,030
+primary updates because there's a
+process to training a neural network and
+
+61
+00:03:58,030 --> 00:04:01,199
+this is a pseudocode really in what it
+looks like that about you violate the
+
+62
+00:04:01,199 --> 00:04:04,419
+law severely the gradient and performer
+primary update when I talk about
+
+63
+00:04:04,419 --> 00:04:08,030
+parameter updates were specifically
+looking at this last line in here where
+
+64
+00:04:08,030 --> 00:04:12,129
+we are trying to make that more complex
+where so right now what we're doing in
+
+65
+00:04:12,129 --> 00:04:17,129
+school just reading the st. where we
+take that break into my computer and we
+
+66
+00:04:17,129 --> 00:04:21,639
+just multiply it scaled by the learning
+rate on to our primary factor we can be
+
+67
+00:04:21,639 --> 00:04:23,159
+much more elaborate with how we
+
+68
+00:04:23,160 --> 00:04:27,960
+on that date and so I flash this image
+briefly in the last few lectures where
+
+69
+00:04:27,959 --> 00:04:30,759
+you can see different parameter update
+schemes and how quickly they actually
+
+70
+00:04:30,759 --> 00:04:35,129
+optimize this simple loss function here
+and so in particular can see that STD
+
+71
+00:04:35,129 --> 00:04:38,550
+which is what we're using right now in
+the fourth line here that's a speedy and
+
+72
+00:04:38,550 --> 00:04:41,710
+read to you can see that that's actually
+the slowest one of all of them so
+
+73
+00:04:41,709 --> 00:04:45,139
+practice you rarely ever use just basic
+custody and are better schemes that we
+
+74
+00:04:45,139 --> 00:04:48,979
+can use we're going to go into those in
+the structure so let's look at what the
+
+75
+00:04:48,980 --> 00:04:54,810
+problem is with Sgt why is it so slow so
+consider this particular slightly
+
+76
+00:04:54,810 --> 00:04:58,589
+contrived example here where we have a
+loss function surface level sets of our
+
+77
+00:04:58,589 --> 00:05:02,099
+loss as opposed to elevated long one
+direction much more than another
+
+78
+00:05:02,100 --> 00:05:05,500
+direction so basically this loss
+function here is very shallow
+
+79
+00:05:05,500 --> 00:05:10,199
+horizontally but very steep vertically
+and we want to of course minimize this
+
+80
+00:05:10,199 --> 00:05:13,469
+and right now we're at the Rex Baltimore
+trying to get to the minimum denoted by
+
+81
+00:05:13,470 --> 00:05:19,240
+the smiley face that's where we're happy
+but think about what's the trajectory of
+
+82
+00:05:19,240 --> 00:05:22,980
+this is both X&Y directions
+
+83
+00:05:22,980 --> 00:05:30,650
+judy if we try to optimize this
+landscape with that look like so what
+
+84
+00:05:30,649 --> 00:05:35,729
+would it look like horizontally and
+vertically I see someone's butt so what
+
+85
+00:05:35,730 --> 00:05:43,540
+are you planning out there and why is it
+so I'm going to bounce up and down like
+
+86
+00:05:43,540 --> 00:05:52,030
+that and why is it not making a lot of
+progress right is basically has this
+
+87
+00:05:52,029 --> 00:05:56,969
+forum where when we look at the gradient
+horizontally we see that the radiant is
+
+88
+00:05:56,970 --> 00:06:00,680
+very small because this is a shallow
+function horizontally but we have a
+
+89
+00:06:00,680 --> 00:06:03,439
+large rating because it's a very steep
+function as to what's going to happen
+
+90
+00:06:03,439 --> 00:06:06,389
+when you roll out a street in these
+kinds of cases and you end up with this
+
+91
+00:06:06,389 --> 00:06:10,250
+kind of pattern where you're going way
+too slow in horizontal direction but
+
+92
+00:06:10,250 --> 00:06:13,300
+you're going way too fast and vertical
+direction because you end up at this
+
+93
+00:06:13,300 --> 00:06:17,918
+year so one way of remedying this kind
+of situation as we recall and momentum
+
+94
+00:06:17,918 --> 00:06:22,189
+update to the momentum update will
+change our update in the following way
+
+95
+00:06:22,189 --> 00:06:25,319
+so right now we're just implementing the
+gradient
+
+96
+00:06:25,319 --> 00:06:28,409
+taking the gradient and we're
+integrating our current position by the
+
+97
+00:06:28,410 --> 00:06:34,220
+ratings in a date instead we're going to
+take the gradient that we computed and
+
+98
+00:06:34,220 --> 00:06:36,449
+instead of integrating the position
+directly
+
+99
+00:06:36,449 --> 00:06:40,840
+we're going to increment this variable V
+which I could leave for velocity so
+
+100
+00:06:40,839 --> 00:06:44,049
+we're going to see why that is in a bit
+so we increment
+
+101
+00:06:44,050 --> 00:06:48,020
+velocity variable be and instead instead
+we're basically building up this
+
+102
+00:06:48,019 --> 00:06:53,278
+exponential some credence in the past
+and that's what integrating the position
+
+103
+00:06:53,278 --> 00:06:58,610
+this new here is a happy primer and mute
+as kind of a number between 0 and one
+
+104
+00:06:58,610 --> 00:07:03,629
+and was doing it became the previous be
+and adding on the screen gradient so
+
+105
+00:07:03,629 --> 00:07:07,180
+what's nice about the momentum updated
+you can interpret it in a very physical
+
+106
+00:07:07,180 --> 00:07:14,310
+terms and in the following way basically
+using momentum update corresponds to
+
+107
+00:07:14,310 --> 00:07:18,899
+interpreting discount list as really a
+bold rolling allows this round is
+
+108
+00:07:18,899 --> 00:07:22,459
+landscape and the gradient in this case
+is your forest that the particles
+
+109
+00:07:22,459 --> 00:07:26,408
+feeling so this article is feeling some
+force you to gradient instead of
+
+110
+00:07:26,408 --> 00:07:31,158
+directly integrating the position this
+force in physics so force is equivalent
+
+111
+00:07:31,158 --> 00:07:36,019
+to acceleration there and so
+acceleration is what we're competing and
+
+112
+00:07:36,019 --> 00:07:39,938
+so the velocity gets integrated by the
+acceleration here and then the new times
+
+113
+00:07:39,939 --> 00:07:43,039
+he has the interpretation of friction in
+that case because it every single
+
+114
+00:07:43,038 --> 00:07:47,759
+iteration were slightly slowing down and
+intuitively if this new times be was not
+
+115
+00:07:47,759 --> 00:07:51,550
+there then does bold with never come to
+rest because it was just around the law
+
+116
+00:07:51,550 --> 00:07:54,509
+surface forever and there will be no
+loss of energy where it would settle at
+
+117
+00:07:54,509 --> 00:07:58,158
+the end of a loss function and so that
+the momentum update is taking this
+
+118
+00:07:58,158 --> 00:08:01,810
+physical interpretation of optimization
+but we have a ball rolling around around
+
+119
+00:08:01,810 --> 00:08:08,249
+and it's slowing down over time and so
+the way this works is what's very nice
+
+120
+00:08:08,249 --> 00:08:11,669
+about this update as you end up building
+up this velocity and in particular in
+
+121
+00:08:11,668 --> 00:08:14,959
+the shallow directions is very easy to
+see that if you have a shallow but
+
+122
+00:08:14,959 --> 00:08:18,449
+consistent direction then the momentum
+update will slowly build up the velocity
+
+123
+00:08:18,449 --> 00:08:21,360
+vector in the direction you end up
+speeding up and up across the shallow
+
+124
+00:08:21,360 --> 00:08:24,999
+direction but in a very steep directions
+what's going to happen is you start of
+
+125
+00:08:24,999 --> 00:08:28,919
+course generally around but then you're
+always being pulled up the other
+
+126
+00:08:28,918 --> 00:08:32,429
+direction toward the center and with the
+damping and the kind of oscillating to
+
+127
+00:08:32,429 --> 00:08:36,338
+the middle and so it's kind of denting
+these oscillations in a steep directions
+
+128
+00:08:36,339 --> 00:08:41,139
+and it's kind of encouraging it's
+encouraging process and is consistent
+
+129
+00:08:41,139 --> 00:08:44,889
+shallow directions and that's why it
+ends up improving the convergence in
+
+130
+00:08:44,889 --> 00:08:49,600
+many cases so for example here in this
+visualization we see the SED update in
+
+131
+00:08:49,600 --> 00:08:53,459
+momentum update isn't green and so you
+can see what happens with the green one
+
+132
+00:08:53,458 --> 00:08:57,008
+hit over shoes because it built up all
+this publicity
+
+133
+00:08:57,009 --> 00:09:00,909
+overshoots the minimum but then it
+eventually ends up converting gallon and
+
+134
+00:09:00,909 --> 00:09:04,169
+of course it's over shot but once it
+emerges there you can see that it's
+
+135
+00:09:04,169 --> 00:09:07,879
+converging there much quicker than just
+basic as did the update to end up
+
+136
+00:09:07,879 --> 00:09:11,230
+building up too much of a statement than
+you eventually get there quicker than if
+
+137
+00:09:11,230 --> 00:09:17,110
+you did not have the velocity got the
+momentum update are going to a
+
+138
+00:09:17,110 --> 00:09:20,430
+particular variation of the momentum
+appeared in a bit I just wanted to ask
+
+139
+00:09:20,429 --> 00:09:34,289
+questions about the momentum updates
+when I got a single like a primer and
+
+140
+00:09:34,289 --> 00:09:40,078
+usually it takes some values of roughly
+8.5 4.9 and usually people sometimes
+
+141
+00:09:40,078 --> 00:09:43,219
+it's not super comet but people
+sometimes in the lead from 25 2.99
+
+142
+00:09:43,220 --> 00:09:54,200
+slowly over time but it's just a single
+number
+
+143
+00:09:54,200 --> 00:09:57,180
+yes so you can avoid those with a
+smaller learning rate but then the issue
+
+144
+00:09:57,179 --> 00:10:03,000
+is if you had a slower learning rate is
+applied globally to all directions in
+
+145
+00:10:03,000 --> 00:10:06,070
+the gradient and so then you would
+basically do no progress in the
+
+146
+00:10:06,070 --> 00:10:09,390
+horizontal direction right you wouldn't
+get as much but then it would take you
+
+147
+00:10:09,389 --> 00:10:12,710
+forever to go horizontally few small
+learning says this kind of trade off
+
+148
+00:10:12,710 --> 00:10:25,350
+their selected describe a modification
+on the question is how to initialize
+
+149
+00:10:25,350 --> 00:10:29,050
+lost you usually 10 and it doesn't
+matter too much because you end up
+
+150
+00:10:29,049 --> 00:10:32,490
+building it up in the first few steps
+and then you end up like this if you
+
+151
+00:10:32,490 --> 00:10:35,480
+spend out this recurrence you'll see
+that basically it's exponentially
+
+152
+00:10:35,480 --> 00:10:39,330
+decaying some of your previous greetings
+and so once you've got it up to you you
+
+153
+00:10:39,330 --> 00:10:46,020
+have certain 10 so particular variation
+of momentum has got something called
+
+154
+00:10:46,019 --> 00:10:53,449
+mister on momentum and gradient descent
+and the idea here is we have the
+
+155
+00:10:53,450 --> 00:10:57,550
+ordinary momentum equation here and the
+way to think about it is that your
+
+156
+00:10:57,549 --> 00:10:59,789
+excess recommended by really two parts
+
+157
+00:10:59,789 --> 00:11:03,279
+there's a part of that you build up some
+momentum in a particular direction so
+
+158
+00:11:03,279 --> 00:11:06,799
+that's the momentum step in green that's
+the new times and that's where the
+
+159
+00:11:06,799 --> 00:11:09,959
+momentum is currently trying to carry
+you and then you have the second
+
+160
+00:11:09,960 --> 00:11:12,610
+contribution from the gradients the
+gradient is pulling you this way towards
+
+161
+00:11:12,610 --> 00:11:17,450
+the decrease of a loss function and the
+actual step ends up being the vector sum
+
+162
+00:11:17,450 --> 00:11:21,350
+of the two so the blue as much you end
+up with is just the green plus the red
+
+163
+00:11:21,350 --> 00:11:24,840
+and the idea but necessary momentum and
+this ends up working better in practice
+
+164
+00:11:24,840 --> 00:11:29,629
+as the following we know at this point
+regardless of what the current input was
+
+165
+00:11:29,629 --> 00:11:33,439
+to us so we haven't competed against up
+yet but we know that we've built up some
+
+166
+00:11:33,440 --> 00:11:37,240
+momentum and we know we're definitely
+going to take this green direction ok so
+
+167
+00:11:37,240 --> 00:11:41,220
+we're definitely going to take this
+Green Valley ingredient here at our
+
+168
+00:11:41,220 --> 00:11:45,310
+current spot Nesterov momentum does
+wants to look ahead and instead
+
+169
+00:11:45,309 --> 00:11:49,379
+evaluates the gradient at this point
+this point at the top of the arrow so
+
+170
+00:11:49,379 --> 00:11:53,679
+what you end up with is the following
+difference here we know we're going to
+
+171
+00:11:53,679 --> 00:11:57,089
+go this way anyway so why not just like
+look ahead to get to that part of the
+
+172
+00:11:57,090 --> 00:12:00,420
+objective and evaluate the green at that
+point and it doesn't of course you're
+
+173
+00:12:00,419 --> 00:12:02,309
+reading is going to be slightly
+different because you're in a different
+
+174
+00:12:02,309 --> 00:12:05,669
+position in Los function and this one
+step ahead give you a slightly better
+
+175
+00:12:05,669 --> 00:12:06,259
+direction
+
+176
+00:12:06,259 --> 00:12:11,109
+over there and get it a slightly
+different update now you can do you can
+
+177
+00:12:11,109 --> 00:12:14,379
+theoretically show that this actually
+enjoys better theoretical guarantees on
+
+178
+00:12:14,379 --> 00:12:18,069
+convergence rates but not only is a true
+in theory but also in practice and
+
+179
+00:12:18,068 --> 00:12:23,068
+almost always works better than just a
+moment to ok so the difference roughly
+
+180
+00:12:23,068 --> 00:12:28,358
+is the following year I've written like
+like notations that of code but we still
+
+181
+00:12:28,359 --> 00:12:29,589
+have the time
+
+182
+00:12:29,589 --> 00:12:33,089
+mutants the previous velocity vector and
+the gradient that you're currently
+
+183
+00:12:33,089 --> 00:12:37,629
+evaluating and then we do an update here
+and so the necessary update the only
+
+184
+00:12:37,629 --> 00:12:41,720
+differences were pending here this new
+plus new times bTW minus 11 will
+
+185
+00:12:41,720 --> 00:12:44,949
+evaluate the gradient we have evaluated
+at a slightly different position in this
+
+186
+00:12:44,948 --> 00:12:48,278
+look ahead to position and so that's
+really in the strong momentum it almost
+
+187
+00:12:48,278 --> 00:12:51,698
+always works that are now there's a
+slight technology here which I don't
+
+188
+00:12:51,698 --> 00:12:57,068
+think I'm going to go into too much but
+it's slightly inconvenient the fact that
+
+189
+00:12:57,068 --> 00:13:00,418
+normally we think about just going
+forward and backward pass so what we end
+
+190
+00:13:00,418 --> 00:13:04,288
+up with is we have a primary victories
+data and the gradient at that point but
+
+191
+00:13:04,288 --> 00:13:09,088
+you're never off wants us to have a
+breeding parameters and gradient at a
+
+192
+00:13:09,089 --> 00:13:12,600
+different point so doesn't quite fit in
+with like a simple API between only
+
+193
+00:13:12,600 --> 00:13:16,019
+having your code and so turns out that
+there's a way and I don't want to really
+
+194
+00:13:16,019 --> 00:13:19,899
+probably spent too much time on this but
+there's a way to basically do a variable
+
+195
+00:13:19,899 --> 00:13:23,379
+transformer get the notice the beefy you
+do some rearrangement and then you get
+
+196
+00:13:23,379 --> 00:13:26,079
+something that looks much more like of
+the newly updated that you can just
+
+197
+00:13:26,078 --> 00:13:29,538
+swipe in from Amanda Martin swapping
+impressed ed because you end up with
+
+198
+00:13:29,538 --> 00:13:34,119
+only needing gradient atrophy and you up
+to update something and this feature is
+
+199
+00:13:34,119 --> 00:13:35,209
+really do look ahead
+
+200
+00:13:35,208 --> 00:13:38,159
+version of the parameters since they're
+just the raw parameter vector that's
+
+201
+00:13:38,159 --> 00:13:40,608
+just a technicality you can go into
+notes to check this out
+
+202
+00:13:40,609 --> 00:13:46,709
+ok so here Nesterov accelerated reading
+is in magenta and you can see the
+
+203
+00:13:46,708 --> 00:13:50,208
+original momentum here over shop but not
+a lot but because mister of accelerating
+
+204
+00:13:50,208 --> 00:13:53,958
+momentum has this one step ahead you'll
+see that it's curls around much more
+
+205
+00:13:53,958 --> 00:13:57,738
+quickly and that's because all these
+tiny contributions of a slightly better
+
+206
+00:13:57,739 --> 00:14:01,619
+gradient at where you're about to be end
+up adding up and you almost always
+
+207
+00:14:01,619 --> 00:14:08,600
+converge faster so that's necessary so
+until recently as UD momentum was the
+
+208
+00:14:08,600 --> 00:14:11,329
+standard default way of training
+commercial networks and many people
+
+209
+00:14:11,328 --> 00:14:14,658
+still trained using just a moment to
+update this is a common thing to see in
+
+210
+00:14:14,658 --> 00:14:17,610
+practice and even better if necessary
+
+211
+00:14:17,610 --> 00:14:20,990
+so mag here stands for a week
+
+212
+00:14:20,990 --> 00:14:44,350
+question you're thinking about that so i
+think it's slightly incorrect to was
+
+213
+00:14:44,350 --> 00:14:46,990
+only think about a lot of options for
+neural networks usually think about
+
+214
+00:14:46,990 --> 00:14:50,350
+these crazy ravines and lots of local
+minima everywhere it's actually not a
+
+215
+00:14:50,350 --> 00:14:53,670
+correct way to look at it that's a
+correct approximation to have conceptual
+
+216
+00:14:53,669 --> 00:14:56,278
+in your mind when you have a very small
+neural networks and people used to think
+
+217
+00:14:56,278 --> 00:14:59,769
+that local minima an issue and
+optimizing networks but actually turns
+
+218
+00:14:59,769 --> 00:15:04,269
+out with a lot of recent theoretical
+work that as you scale up your models
+
+219
+00:15:04,269 --> 00:15:10,740
+these local minimum has become less and
+less of an issue so that the picture to
+
+220
+00:15:10,740 --> 00:15:14,389
+have in mind is there are lots of local
+minima but they're all about the same
+
+221
+00:15:14,389 --> 00:15:18,958
+actually loss that's a better way to
+look at it so these functions neural
+
+222
+00:15:18,958 --> 00:15:22,078
+networks actually in practice and i'm
+looking much more like like a bowl
+
+223
+00:15:22,078 --> 00:15:25,599
+instead of the crazy ravine landscape
+and you can show that as you still up
+
+224
+00:15:25,600 --> 00:15:28,360
+the neural network the difference
+between like the worst than your best
+
+225
+00:15:28,360 --> 00:15:29,259
+local minima
+
+226
+00:15:29,259 --> 00:15:32,448
+actually kinda like shrinks down over
+time with some researchers also
+
+227
+00:15:32,448 --> 00:15:36,120
+basically there's no bad local minima
+this only happens in very small networks
+
+228
+00:15:36,120 --> 00:15:41,409
+so and in fact in practice what you find
+is if you initialize with different
+
+229
+00:15:41,409 --> 00:15:44,610
+random initialization almost always end
+up getting the same answer like the same
+
+230
+00:15:44,610 --> 00:15:48,009
+loss in the end so you don't end up
+there's no like bad local minima you
+
+231
+00:15:48,009 --> 00:15:57,429
+sometimes especially when you have begun
+networks question with a question
+
+232
+00:15:57,429 --> 00:16:10,849
+Nesterov as an oscillating feature which
+part
+
+233
+00:16:10,850 --> 00:16:14,819
+ok I think you're jumping had maybe by
+by several slides were going to go into
+
+234
+00:16:14,818 --> 00:16:19,849
+second or two methods in a bit okay let
+me jump into another update that is very
+
+235
+00:16:19,850 --> 00:16:23,069
+common to see in practice it's called a
+ground and it was originally developed
+
+236
+00:16:23,068 --> 00:16:25,969
+in a convex optimization literature and
+then it was kind of ported over to
+
+237
+00:16:25,970 --> 00:16:30,019
+neural networks and people sometimes use
+it so the other great update looks as
+
+238
+00:16:30,019 --> 00:16:30,560
+follows
+
+239
+00:16:30,559 --> 00:16:35,619
+we have this update as we normally see
+some basic stochastic gradient descent
+
+240
+00:16:35,620 --> 00:16:37,500
+here learning great times here
+
+241
+00:16:37,500 --> 00:16:42,259
+gradient but now we're scaling this
+gradient but this additional variable
+
+242
+00:16:42,259 --> 00:16:47,589
+that we keep accumulating note here that
+this cash which were building up and is
+
+243
+00:16:47,589 --> 00:16:52,199
+the sum of gradient square this cache
+contains positive numbers only
+
+244
+00:16:52,198 --> 00:16:55,599
+and note that the cache variable here is
+a joint venture of the same size as your
+
+245
+00:16:55,600 --> 00:17:00,730
+primary factor and so this cash and up
+building up in a personal dimension were
+
+246
+00:17:00,730 --> 00:17:03,839
+keeping track of the sum of squares of
+the gradients or as we like to sometimes
+
+247
+00:17:03,839 --> 00:17:07,679
+called the second moment of those the
+Oncenter take a moment and so we keep
+
+248
+00:17:07,679 --> 00:17:12,409
+building up this cash and then we divide
+element why's this step function by the
+
+249
+00:17:12,409 --> 00:17:21,709
+square root of cash and so what ends up
+happening here so that's the reason that
+
+250
+00:17:21,709 --> 00:17:26,189
+people call it a purr purr parameter
+adaptive learning rate method because
+
+251
+00:17:26,189 --> 00:17:31,090
+every single product every single
+dimension of your parameter space now
+
+252
+00:17:31,089 --> 00:17:34,569
+has its own kind of like learning rate
+that is scaled dynamically based on what
+
+253
+00:17:34,569 --> 00:17:39,079
+kinds of ingredients are seeing in terms
+of their scale so with this
+
+254
+00:17:39,079 --> 00:17:42,859
+interpretation what happens with
+autograph in this particular case if we
+
+255
+00:17:42,859 --> 00:17:47,019
+do this what happens in the horizontal
+and vertical direction but this kind of
+
+256
+00:17:47,019 --> 00:17:51,359
+dynamics
+
+257
+00:17:51,359 --> 00:18:03,789
+what you'll see as we have a large
+gradient vertically and that large
+
+258
+00:18:03,789 --> 00:18:07,259
+gradient will be added up to cash and
+then we end up dividing by larger and
+
+259
+00:18:07,259 --> 00:18:11,359
+larger numbers so will get smaller and
+smaller updates in the vertical step so
+
+260
+00:18:11,359 --> 00:18:14,798
+since we're seeing lots of large regions
+very clean this will decayed learning
+
+261
+00:18:14,798 --> 00:18:18,859
+rate and will make smaller and smaller
+steps in the vertical direction but in
+
+262
+00:18:18,859 --> 00:18:22,009
+the horizontal direction it's a very
+shallow direction so we end up with
+
+263
+00:18:22,009 --> 00:18:25,750
+smaller numbers in denominator and
+you'll see that the relative to the Y
+
+264
+00:18:25,750 --> 00:18:29,058
+dimension we're going to end up making
+faster progress so we have this equalize
+
+265
+00:18:29,058 --> 00:18:35,058
+the effect of accounting for this the
+steepness and inshallah directions you
+
+266
+00:18:35,058 --> 00:18:40,319
+can actually have much larger learning
+right then instead of the vertical
+
+267
+00:18:40,319 --> 00:18:48,048
+directions and but so that's one problem
+without a grad is think about what
+
+268
+00:18:48,048 --> 00:18:53,009
+happens to the step size as we're
+updating this position if we want to
+
+269
+00:18:53,009 --> 00:18:55,900
+train an entire deep neural network the
+stakes for a long time and we're
+
+270
+00:18:55,900 --> 00:19:01,970
+training this summer long time what's
+going to happen in a degree of course so
+
+271
+00:19:01,970 --> 00:19:05,169
+your cash end up building up all the
+time you add all these positive numbers
+
+272
+00:19:05,169 --> 00:19:09,100
+goes into denominator you're literally
+just the case 20 and you end up stopping
+
+273
+00:19:09,099 --> 00:19:14,579
+learning like completely and so that's
+not so that's ok income tax problems
+
+274
+00:19:14,579 --> 00:19:17,970
+perhaps we just have a bowling just kind
+of decay down to the optimum and you're
+
+275
+00:19:17,970 --> 00:19:21,919
+done but in the neural network the stuff
+is kinda like shuttling around then it's
+
+276
+00:19:21,919 --> 00:19:24,549
+trying to picture based on that's like a
+better way to think of it and so this
+
+277
+00:19:24,548 --> 00:19:28,329
+thing needs continuous kind of energy to
+get your data and so you don't want to
+
+278
+00:19:28,329 --> 00:19:33,009
+just decay to a halt so there's a very
+simple change to an autographed that was
+
+279
+00:19:33,009 --> 00:19:37,829
+proposed by Jeff Hinton recently and the
+idea here is that instead of keeping
+
+280
+00:19:37,829 --> 00:19:42,289
+completely just a sum of squares and I
+was able to mention weekend we make that
+
+281
+00:19:42,289 --> 00:19:46,250
+counter a leaky counter so instead we
+end up with this decay rate hike the
+
+282
+00:19:46,250 --> 00:19:52,500
+primary which we set to something like
+0.99% squares but the sum of squares is
+
+283
+00:19:52,500 --> 00:19:57,750
+leaking slowly but that's ok so we we
+still maintain this nice equalizing
+
+284
+00:19:57,750 --> 00:20:01,569
+effect of equalizing the step sizes in
+steep or shelling directions
+
+285
+00:20:01,569 --> 00:20:05,869
+we're not going to just convert
+completely 20 updates that sold arms
+
+286
+00:20:05,869 --> 00:20:10,299
+prop 19 is historical contact about
+Armas proper way is the way was
+
+287
+00:20:10,299 --> 00:20:11,430
+introduced to us
+
+288
+00:20:11,430 --> 00:20:14,340
+you think that it would be a paper that
+proposed this method but in fact it was
+
+289
+00:20:14,339 --> 00:20:18,789
+a slide and Justin Scott Sarah class
+just a few years ago and so Justin just
+
+290
+00:20:18,789 --> 00:20:22,240
+was giving this Corsair class and
+flashed a slide of life this is
+
+291
+00:20:22,240 --> 00:20:25,630
+unpublished but this usually works well
+in practice and do this and it's
+
+292
+00:20:25,630 --> 00:20:29,920
+basically our math problem and so I
+implemented it then I saw like better
+
+293
+00:20:29,920 --> 00:20:34,060
+results on my optimization right away
+and I thought that was really funny and
+
+294
+00:20:34,059 --> 00:20:37,769
+so in fact mike in papers not only my
+papers but many other papers of people
+
+295
+00:20:37,769 --> 00:20:44,559
+have cited slide from Coursera just
+slide lecture 6 the slide just this
+
+296
+00:20:44,559 --> 00:20:48,389
+problem since then this is actually now
+an actual paper and there's more results
+
+297
+00:20:48,390 --> 00:20:52,300
+on exactly what he's doing and and so on
+but for a while this was really funny
+
+298
+00:20:52,299 --> 00:20:57,609
+and so in this up my perspective we can
+see the ground here is blue and Aramis
+
+299
+00:20:57,609 --> 00:20:58,579
+prop is this
+
+300
+00:20:58,579 --> 00:21:02,490
+and black and we can see that both of
+them covered quite quickly down here
+
+301
+00:21:02,490 --> 00:21:07,519
+this way in this particular case at a
+grad and converting slightly faster than
+
+302
+00:21:07,519 --> 00:21:11,589
+Armas problem but that's not always the
+case something usually what you see in
+
+303
+00:21:11,589 --> 00:21:15,839
+practice when you train to Penn Jillette
+works as a grad stops too early and are
+
+304
+00:21:15,839 --> 00:21:21,329
+miserable end up usually the winning out
+in these these methods and questions
+
+305
+00:21:21,329 --> 00:21:24,509
+about our most prob go ahead
+
+306
+00:21:24,509 --> 00:21:55,150
+the issue is very steep directions you
+probably don't want to this method is
+
+307
+00:21:55,150 --> 00:21:58,800
+saying to make very fast updates in that
+direction so yourself down so maybe in
+
+308
+00:21:58,799 --> 00:22:02,220
+this particular case you'd like to go
+faster but you're kind of reading into
+
+309
+00:22:02,220 --> 00:22:05,019
+this particular example and that's not
+true kind of in general and these
+
+310
+00:22:05,019 --> 00:22:09,940
+optimization landscape that no networks
+are made up of a good strategy to apply
+
+311
+00:22:09,940 --> 00:22:22,930
+in those cases in the beginning
+
+312
+00:22:22,930 --> 00:22:25,730
+oh by the way I skipped over this
+exploration of 17 but you guys can
+
+313
+00:22:25,730 --> 00:22:30,380
+hopefully see that 127 is there just to
+prevent the division by zero it's moving
+
+314
+00:22:30,380 --> 00:22:34,550
+back to its high proprietor usually we
+sat at two one five or six or seven or
+
+315
+00:22:34,549 --> 00:22:39,139
+something like that in the beginning
+your cash is 0 so then you can come into
+
+316
+00:22:39,140 --> 00:22:46,540
+your life learning rate 22 what you get
+is this adaptive behavior but the scale
+
+317
+00:22:46,539 --> 00:22:50,420
+of it is still in your control the
+absolute scale of it distilling or
+
+318
+00:22:50,420 --> 00:22:57,370
+control is still learning rate this
+story just interrupt its kind of thing
+
+319
+00:22:57,369 --> 00:23:00,989
+can look at more like a relative thing
+with respect to different primers how
+
+320
+00:23:00,990 --> 00:23:12,190
+are you equalizing the steps but
+absolute global step is still up to you
+
+321
+00:23:12,190 --> 00:23:18,710
+from the very beginning so effectively
+doing what you're describing right
+
+322
+00:23:18,710 --> 00:23:23,038
+because it ends up for getting sort of
+ingredients from very long time ago and
+
+323
+00:23:23,038 --> 00:23:27,750
+it's only really its expression at time
+t is only a function of the last few
+
+324
+00:23:27,750 --> 00:23:36,480
+ingredients but in an exponentially
+decaying weighted sum up we're going to
+
+325
+00:23:36,480 --> 00:23:43,819
+go into last update glad
+
+326
+00:23:43,819 --> 00:24:03,039
+would be similar to exponentially
+weighted way and so you want to have a
+
+327
+00:24:03,039 --> 00:24:09,789
+finite window on this or I don't think
+people have really tried you can ya
+
+328
+00:24:09,789 --> 00:24:19,889
+takes too much memory when you're 10
+optimizing networks will see that X for
+
+329
+00:24:19,890 --> 00:24:23,560
+example 240 million parameters so that's
+taking up quite a lot of memory and so
+
+330
+00:24:23,559 --> 00:24:29,659
+you don't want to keep track of 10
+previous grievances well okay then we're
+
+331
+00:24:29,660 --> 00:24:37,540
+gonna go in 20 sure if you combine a
+degraded momentum thank you for the
+
+332
+00:24:37,539 --> 00:24:45,269
+question and that's the slide so so
+roughly what's happening is Adam is this
+
+333
+00:24:45,269 --> 00:24:49,119
+last update was only prison actually
+proposed very recently and it has
+
+334
+00:24:49,119 --> 00:24:52,959
+elements of both as you'll notice
+momentum is kind of keeping track of the
+
+335
+00:24:52,960 --> 00:24:57,190
+first order moment of your of your
+reading that sums up the wrong gradients
+
+336
+00:24:57,190 --> 00:25:02,350
+and keeping this exponential some and a
+grandson are keeping track of the second
+
+337
+00:25:02,349 --> 00:25:07,869
+moment the gradient and and what you end
+up with is Adam Adam update as you end
+
+338
+00:25:07,869 --> 00:25:13,389
+up with the step that's basically take
+it's kind of like yeah it's kind of like
+
+339
+00:25:13,390 --> 00:25:16,980
+our most probably momentum a bit so you
+end up with this thing that looks like
+
+340
+00:25:16,980 --> 00:25:21,650
+it's basically keep track of this
+velocity in a decaying way and that's
+
+341
+00:25:21,650 --> 00:25:25,420
+your step but then you also scaling it
+down by this exponentially adding up
+
+342
+00:25:25,420 --> 00:25:29,490
+leaky counter of your square gradients
+and so you end up with both in the same
+
+343
+00:25:29,490 --> 00:25:36,009
+formula and thats update combining those
+do so you're doing both momentum and
+
+344
+00:25:36,009 --> 00:25:41,759
+you're also doing this adaptive scaling
+and let see so here's the army's prob
+
+345
+00:25:41,759 --> 00:25:44,789
+actually I should have flashed this
+earlier so even when compared this
+
+346
+00:25:44,789 --> 00:25:46,339
+basically our most prob
+
+347
+00:25:46,339 --> 00:25:52,079
+red is the same thing as here except
+we've replaced TX which there was just a
+
+348
+00:25:52,079 --> 00:25:56,220
+previous just a gradient currently right
+now we're replacing this gradient TX
+
+349
+00:25:56,220 --> 00:25:56,630
+with it
+
+350
+00:25:56,630 --> 00:26:01,170
+which is this running counter of RDX so
+if you imagine for example one way to
+
+351
+00:26:01,170 --> 00:26:04,090
+look at it also is your nasty kasich
+setting your sampling many batches
+
+352
+00:26:04,089 --> 00:26:07,359
+there's gonna be lots of randomness in a
+poor pass and you get all these noisy
+
+353
+00:26:07,359 --> 00:26:10,990
+gradients so instead of using any great
+impact every single time step we're
+
+354
+00:26:10,990 --> 00:26:14,309
+actually going to be using this became
+some of previous greetings and it can
+
+355
+00:26:14,309 --> 00:26:19,139
+stabilize your gradient direction of it
+and that's the function of the momentum
+
+356
+00:26:19,140 --> 00:26:23,720
+here and the scaling here is to make
+sure that the step-size workout relative
+
+357
+00:26:23,720 --> 00:26:29,940
+to each other and Steven L directions
+thank you don't want to be that you are
+
+358
+00:26:29,940 --> 00:26:31,269
+hyper parameters
+
+359
+00:26:31,269 --> 00:26:36,119
+801 usually point 9802 usually Point 995
+
+360
+00:26:36,119 --> 00:26:42,869
+somewhere there so it's a high premium
+across a leader in my own work I found
+
+361
+00:26:42,869 --> 00:26:45,719
+that this is a relatively robust
+settings across I don't actually usually
+
+362
+00:26:45,720 --> 00:26:50,690
+end up leaving these I just set them to
+put smileys usually but you can play
+
+363
+00:26:50,690 --> 00:27:04,259
+with those of it and sometimes it can
+help you get momentum we saw the
+
+364
+00:27:04,259 --> 00:27:08,789
+restaurant works better clean do that
+yes you can actually just read the paper
+
+365
+00:27:08,789 --> 00:27:12,849
+about this yesterday and actually wasn't
+a paper it was a project report from 229
+
+366
+00:27:12,849 --> 00:27:17,149
+someone actually that that I'm not sure
+if there's a paper about it but you can
+
+367
+00:27:17,150 --> 00:27:20,250
+play with that simply does not being
+done here
+
+368
+00:27:20,250 --> 00:27:25,759
+ok and one more thing that I so I have
+to make Adam slightly more complex here
+
+369
+00:27:25,759 --> 00:27:30,849
+as you see it's incomplete so let me
+just put into complete immersion in Adam
+
+370
+00:27:30,849 --> 00:27:33,949
+there's one more thing where you might
+be confused when you see it there's this
+
+371
+00:27:33,950 --> 00:27:38,220
+thing called bias correction to insert
+their and despise correction the way to
+
+372
+00:27:38,220 --> 00:27:40,920
+the reason I'm expanding of the loop is
+that the bias correction depends on your
+
+373
+00:27:40,920 --> 00:27:46,940
+absolute time step T 00 T is used here
+and the reason for that is what this is
+
+374
+00:27:46,940 --> 00:27:49,730
+doing is kind of like a minor point and
+I don't want to be confused about this
+
+375
+00:27:49,730 --> 00:27:54,049
+too much but basically it's compensated
+for compensating for the fact that MMV
+
+376
+00:27:54,049 --> 00:27:58,659
+ornish 500 statistics are incorrect in
+the beginning and so what he's doing is
+
+377
+00:27:58,660 --> 00:28:01,269
+really at scaling up your Mb
+
+378
+00:28:01,269 --> 00:28:04,250
+the first few iterations so you don't
+end up with a very kind of biased
+
+379
+00:28:04,250 --> 00:28:07,359
+estimate of the first and the second
+moment so don't worry about that
+
+380
+00:28:07,359 --> 00:28:11,279
+too much this is only this is only
+changing your update at the very first
+
+381
+00:28:11,279 --> 00:28:15,190
+few times that's as as the item is
+warming up and so it's done in a proper
+
+382
+00:28:15,190 --> 00:28:18,210
+way in terms of the statistics Mb
+
+383
+00:28:18,210 --> 00:28:23,380
+I don't go too much into that ok so we
+talked about several different updates
+
+384
+00:28:23,380 --> 00:28:26,710
+and we saw that all these updates have
+this learning great primer still there
+
+385
+00:28:26,710 --> 00:28:31,279
+and so I just want to briefly talk about
+the fact that although still require a
+
+386
+00:28:31,279 --> 00:28:34,369
+learning and we saw what happens with
+the front racism learning rates for all
+
+387
+00:28:34,369 --> 00:28:37,639
+of these methods and the question i'd
+like to pose is which one of these
+
+388
+00:28:37,640 --> 00:28:47,290
+learning rates is best to use
+
+389
+00:28:47,289 --> 00:28:55,509
+so when you're running neural networks
+this is a slide about learning rate the
+
+390
+00:28:55,509 --> 00:28:59,819
+case the trick answer is that none of
+those are good learning race to use what
+
+391
+00:28:59,819 --> 00:29:04,259
+you should do is you should use the high
+learning rate first because it optimizes
+
+392
+00:29:04,259 --> 00:29:07,869
+faster than the good learning rate is
+seen you make a very fast progress but
+
+393
+00:29:07,869 --> 00:29:10,779
+at some point you're going to be two
+stochastic and you can't converging to
+
+394
+00:29:10,779 --> 00:29:13,829
+your main my very nicely because you
+have too much energy in your system and
+
+395
+00:29:13,829 --> 00:29:17,869
+you can't settle down into black nice
+parts of your loss function and so what
+
+396
+00:29:17,869 --> 00:29:21,399
+you do then is UDK you're learning rate
+and then you can kind of ride this
+
+397
+00:29:21,400 --> 00:29:26,269
+dragon of decreasing learning rates and
+do best in all of them are many
+
+398
+00:29:26,269 --> 00:29:28,670
+different ways that people begin to
+learn rates over time and you should
+
+399
+00:29:28,670 --> 00:29:32,400
+also became your assignment of their
+stuff decay which is kind of like the
+
+400
+00:29:32,400 --> 00:29:36,810
+simplest one perhaps or after one epoch
+of training data is referring to you've
+
+401
+00:29:36,809 --> 00:29:41,619
+seen every single training sample one
+time so after saying what a Paki decayed
+
+402
+00:29:41,619 --> 00:29:45,219
+learning rates to my point nine or
+something like that you can also use
+
+403
+00:29:45,220 --> 00:29:49,600
+exponential decay or one of the TDK
+there several several of them are going
+
+404
+00:29:49,599 --> 00:29:54,379
+to know it's likely expanding on some of
+the theoretical properties that improve
+
+405
+00:29:54,380 --> 00:29:58,260
+about these different case unfortunately
+not many of them apply because I think
+
+406
+00:29:58,259 --> 00:30:01,150
+they're mostly from convex optimization
+literature and we're dealing with very
+
+407
+00:30:01,150 --> 00:30:05,160
+different objectives but usually in
+practice I just used for something that
+
+408
+00:30:05,160 --> 00:30:12,330
+was a question
+
+409
+00:30:12,329 --> 00:30:25,259
+not committing to any one of these
+between them during training
+
+410
+00:30:25,259 --> 00:30:28,470
+yeah I don't think that's the standard
+at all
+
+411
+00:30:28,470 --> 00:30:32,990
+an interesting point I'm not sure I'm
+not sure when you'd want to use yeah
+
+412
+00:30:32,990 --> 00:30:37,839
+it's not clear to me you could try
+something to try and practice I like to
+
+413
+00:30:37,839 --> 00:30:42,079
+make the point that you almost always I
+find at least impact is right now is
+
+414
+00:30:42,079 --> 00:30:46,189
+usually the nice default rose to go with
+so I use a time for everything now and
+
+415
+00:30:46,190 --> 00:30:49,840
+seems to work quite well better than
+momentum are our most problems or
+
+416
+00:30:49,839 --> 00:30:56,638
+anything like that so it's a tall order
+methods as we call them because they
+
+417
+00:30:56,638 --> 00:31:00,579
+only use your gradient information at
+your loss function so we've evaluated
+
+418
+00:31:00,579 --> 00:31:03,720
+the gradient and we basically know the
+slope and every single direction and
+
+419
+00:31:03,720 --> 00:31:05,710
+that's the only thing that we use
+
+420
+00:31:05,710 --> 00:31:09,600
+there's an entire set of second order
+methods for optimization but you should
+
+421
+00:31:09,599 --> 00:31:13,168
+be aware of the second order opposition
+as I do want to go into too much detail
+
+422
+00:31:13,169 --> 00:31:17,919
+but the end up forming a larger
+approximation to your loss function so
+
+423
+00:31:17,919 --> 00:31:20,820
+they don't only approximated with this
+basically hyperplane of like which way I
+
+424
+00:31:20,819 --> 00:31:26,069
+was hoping but you also approximated by
+discussion which is telling you how your
+
+425
+00:31:26,069 --> 00:31:29,710
+services curbing so you don't only need
+the gradient he also need the Hessian
+
+426
+00:31:29,710 --> 00:31:36,808
+need to compute that as well and you may
+have seen you tonight I'd say for
+
+427
+00:31:36,808 --> 00:31:38,500
+example in 229
+
+428
+00:31:38,500 --> 00:31:44,190
+Newton method it's basically giving you
+an update that was you formed your bowl
+
+429
+00:31:44,190 --> 00:31:47,259
+like fashion approximation to your
+objective you can use this updated
+
+430
+00:31:47,259 --> 00:31:54,259
+number to jump directly to the minimum
+of that that approximation scheme so
+
+431
+00:31:54,259 --> 00:31:58,490
+what's nice about second order methods
+why do people like these are used them
+
+432
+00:31:58,490 --> 00:32:02,099
+especially the Newton method is
+presented here what's nice about this
+
+433
+00:32:02,099 --> 00:32:05,399
+update for convergence
+
+434
+00:32:05,400 --> 00:32:13,410
+you'll notice no learning rate know how
+primary in this update ok and that's
+
+435
+00:32:13,410 --> 00:32:17,220
+because if you see your gradient in this
+loss function in this loss function but
+
+436
+00:32:17,220 --> 00:32:20,480
+you also know the curvature and that
+place and so if you approximated with
+
+437
+00:32:20,480 --> 00:32:23,920
+this bull you know exactly where to go
+to the minimum order approximation so
+
+438
+00:32:23,920 --> 00:32:26,900
+there's no need for learning you can
+jump directly to that minimum of that
+
+439
+00:32:26,900 --> 00:32:30,610
+approximating bowl so that's a very nice
+feature I think those are the two that I
+
+440
+00:32:30,609 --> 00:32:32,969
+had in mind you have a fast convergence
+because you're using second order
+
+441
+00:32:32,970 --> 00:32:38,839
+information as well why is it kind of
+impractical to use this step update in
+
+442
+00:32:38,839 --> 00:32:47,069
+training all that works for the issue of
+course is passion say you have a hundred
+
+443
+00:32:47,069 --> 00:32:48,500
+million primary network
+
+444
+00:32:48,500 --> 00:32:52,299
+hundred-million by hundred-million
+matrix and then you want to convert it
+
+445
+00:32:52,299 --> 00:32:59,259
+so good luck with that this is not going
+to happen so there are several
+
+446
+00:32:59,259 --> 00:33:02,480
+algorithms and I just like you to be
+aware of your not going to use them as
+
+447
+00:33:02,480 --> 00:33:05,650
+class which is below where there's
+something called DHS which basically
+
+448
+00:33:05,650 --> 00:33:08,360
+lets you get away with not converting
+the fashion and build up an
+
+449
+00:33:08,359 --> 00:33:11,819
+approximation of the Hessian through
+successive updates that are all ranked
+
+450
+00:33:11,819 --> 00:33:15,000
+one and it kind of builds up the session
+but you still need to store the Hessian
+
+451
+00:33:15,000 --> 00:33:18,279
+in memory so still no good for large
+networks and then there's something
+
+452
+00:33:18,279 --> 00:33:22,710
+called lbs short for limited Jeremy BFGS
+was not actually store in the fall
+
+453
+00:33:22,710 --> 00:33:26,980
+fashion or it's approximated members and
+that's what people use in practice
+
+454
+00:33:26,980 --> 00:33:33,549
+sometimes now lbs you'll see sometimes
+mentioned in optimization literature
+
+455
+00:33:33,549 --> 00:33:37,769
+especially when it works really really
+well for us if you have a single small
+
+456
+00:33:37,769 --> 00:33:42,450
+deterministic function like a box
+there's no stochastic noise like there's
+
+457
+00:33:42,450 --> 00:33:47,920
+no city in and everything fits in your
+memory address can usually crushing loss
+
+458
+00:33:47,920 --> 00:33:53,200
+functions very easily but what's tricky
+as to extend lbs gs2 basically very very
+
+459
+00:33:53,200 --> 00:33:56,539
+large datasets and the reason is that
+were subsampling these many doctors
+
+460
+00:33:56,539 --> 00:33:59,730
+because we can't fit all the training
+data into memory so wassup simple many
+
+461
+00:33:59,730 --> 00:34:02,930
+batches and then I'll be at risk of
+works on these many matches and its
+
+462
+00:34:02,930 --> 00:34:06,810
+approximation is in the being incorrect
+as you swap different many batches and
+
+463
+00:34:06,809 --> 00:34:10,449
+and also has the capacity you have to be
+careful with it then you have to make
+
+464
+00:34:10,449 --> 00:34:12,539
+sure that you fix a dropout
+
+465
+00:34:12,539 --> 00:34:17,690
+you have to make sure that your function
+so internally albeit rascals your
+
+466
+00:34:17,690 --> 00:34:20,679
+function many many different times is
+doing all these approximations and lie
+
+467
+00:34:20,679 --> 00:34:24,480
+search and stuff like that it's a very
+heavy function and so you have to make
+
+468
+00:34:24,480 --> 00:34:26,668
+sure that when you use this you disable
+or sources
+
+469
+00:34:26,668 --> 00:34:29,889
+randomness because really not going to
+like it so basically in practice we
+
+470
+00:34:29,889 --> 00:34:33,779
+don't use all BHS because it seems to
+not great not worked really well right
+
+471
+00:34:33,780 --> 00:34:36,970
+now compared to other methods is
+basically to have too much stuff is
+
+472
+00:34:36,969 --> 00:34:41,529
+happening and you it's better to just do
+this and noisy our stuff but do more of
+
+473
+00:34:41,530 --> 00:34:47,880
+it that's the trade off so in summary
+used as a good choice and if you can
+
+474
+00:34:47,880 --> 00:34:51,570
+afford to just have you can afford for
+banks to maybe your day as it is not
+
+475
+00:34:51,570 --> 00:34:55,419
+very large income for 2009 memory and
+the forward and they get passes in
+
+476
+00:34:55,418 --> 00:35:00,460
+memory then you can look into lbs but
+you won't see it in practice used in
+
+477
+00:35:00,460 --> 00:35:05,220
+large-scale setting right now although
+its research direction right now right
+
+478
+00:35:05,219 --> 00:35:10,009
+so that concludes my discussion of
+different private updates because you're
+
+479
+00:35:10,010 --> 00:35:14,830
+learning rates we're not going to look
+into all beatrice in this class there's
+
+480
+00:35:14,829 --> 00:35:24,739
+a question the very back
+
+481
+00:35:24,739 --> 00:35:34,609
+you're asking about so a great for
+example it automatically case you're
+
+482
+00:35:34,610 --> 00:35:38,510
+learning rate over time so would you use
+also learning break the case if you're
+
+483
+00:35:38,510 --> 00:35:41,930
+using a grand or so usually you see
+learning Reiki very common when you
+
+484
+00:35:41,929 --> 00:35:55,379
+actually I'm not sure if you use it but
+at a grad or or Adam yeah it's it's not
+
+485
+00:35:55,380 --> 00:36:04,900
+not not a very good answer that you can
+certainly do it but maybe item is not
+
+486
+00:36:04,900 --> 00:36:08,910
+like Adam will not just wantonly make
+your learning 30 at the Android because
+
+487
+00:36:08,909 --> 00:36:12,339
+it's a leaky gradient but he was a great
+concern he became the learning rate
+
+488
+00:36:12,340 --> 00:36:15,170
+probably does not make sense because
+it's decayed automatically 20 Indian
+
+489
+00:36:15,170 --> 00:36:22,710
+alright okay we're going to go into
+model ensembles I just very briefly like
+
+490
+00:36:22,710 --> 00:36:24,829
+to talk about it because it's quite
+simple
+
+491
+00:36:24,829 --> 00:36:28,750
+turns out that if you train multiple
+independent models on your training data
+
+492
+00:36:28,750 --> 00:36:32,949
+instead of just a single one and then
+you averaged results at this time you've
+
+493
+00:36:32,949 --> 00:36:39,929
+always got 22 percent extra performance
+ok so this is not really a theoretical
+
+494
+00:36:39,929 --> 00:36:43,289
+result here it's kind of like a result
+but just like in practice
+
+495
+00:36:43,289 --> 00:36:46,570
+basically this is like a good thing to
+do almost always works better
+
+496
+00:36:46,570 --> 00:36:48,850
+the downside of course is not have to
+have all these different independent
+
+497
+00:36:48,849 --> 00:36:52,259
+models and need to do forward and
+backward classes of all of them and you
+
+498
+00:36:52,260 --> 00:36:56,850
+have trained all of them so that's not
+ideal and presumably you're slow down
+
+499
+00:36:56,849 --> 00:37:00,989
+just time with the number of models in
+your ensemble and so there are some tips
+
+500
+00:37:00,989 --> 00:37:05,689
+and tricks for using on some kind of
+picking up a bit so one approach for
+
+501
+00:37:05,690 --> 00:37:08,619
+example is as your training your neural
+network you have all these different
+
+502
+00:37:08,619 --> 00:37:11,680
+checkpoints usually are saving them
+every single hockey save a checkpoint
+
+503
+00:37:11,679 --> 00:37:14,750
+and you figure out what your was your
+validation performance so one thing you
+
+504
+00:37:14,750 --> 00:37:18,119
+can do for example it turns out to
+actually gets like this sometimes is you
+
+505
+00:37:18,119 --> 00:37:23,420
+just take some different checkpoints on
+your model and you were those that
+
+506
+00:37:23,420 --> 00:37:26,349
+actually turns out to sometimes improve
+things in it and so that way you don't
+
+507
+00:37:26,349 --> 00:37:29,730
+have to train seven independent models
+US-trained one but you ensemble some
+
+508
+00:37:29,730 --> 00:37:34,809
+different checkpoints related to that
+there's a trick of
+
+509
+00:37:34,809 --> 00:37:39,739
+protest what's happening here this is
+your four steps that we've seen before
+
+510
+00:37:39,739 --> 00:37:44,709
+I'm keeping another set of primaries
+here X test and this text as a running
+
+511
+00:37:44,710 --> 00:37:49,590
+some exponentially decaying off my
+actual parameter vector X and when I use
+
+512
+00:37:49,590 --> 00:37:52,750
+text test and validation or test data it
+turns out that this almost always
+
+513
+00:37:52,750 --> 00:37:57,199
+perform slightly better than using X
+alone ok so this is kind of doing like a
+
+514
+00:37:57,199 --> 00:38:00,919
+small like weighted ensemble of last
+previous few primary factors it's kind
+
+515
+00:38:00,920 --> 00:38:05,309
+of a kind of difficult to interpret
+actually but basically one way to
+
+516
+00:38:05,309 --> 00:38:08,329
+interpret it one way I can handle about
+why this is actually a good thing to do
+
+517
+00:38:08,329 --> 00:38:12,900
+is think about optimizing your ball
+function and you're stepping too much
+
+518
+00:38:12,900 --> 00:38:16,849
+around your minimum that actually taking
+the average of all those steps gets you
+
+519
+00:38:16,849 --> 00:38:20,980
+closer to the minimum ok I can do for
+why this actually is important slightly
+
+520
+00:38:20,980 --> 00:38:25,639
+better so that small ensembles I had to
+discuss my life because we're going to
+
+521
+00:38:25,639 --> 00:38:29,759
+look into dropout and this is a very
+important technique that you will be
+
+522
+00:38:29,760 --> 00:38:34,590
+using an implementation and so on so the
+idea for dropout is very interesting
+
+523
+00:38:34,590 --> 00:38:38,620
+what you do with dropout is you as
+you're doing your whole purpose of
+
+524
+00:38:38,619 --> 00:38:45,429
+neural network you will randomly set
+some neurons 20 in the park pass so just
+
+525
+00:38:45,429 --> 00:38:49,839
+to clarify what you will do is as you're
+doing a forward pass of your data X your
+
+526
+00:38:49,840 --> 00:38:52,670
+computing a say in this function
+
+527
+00:38:52,670 --> 00:38:57,010
+your first hidden layer is the
+nonlinearity of W one times XP sp1 so
+
+528
+00:38:57,010 --> 00:39:02,830
+that's a little later and then I will
+compute here a mask of binary numbers
+
+529
+00:39:02,829 --> 00:39:05,230
+either 0 or 1 based on whether or not
+
+530
+00:39:05,230 --> 00:39:09,469
+numbers between 0 and one are smaller
+than P which we hear serious pump so
+
+531
+00:39:09,469 --> 00:39:13,469
+this you want is a binary mask of zeros
+and ones half and half and then we
+
+532
+00:39:13,469 --> 00:39:17,469
+multiply that are hidden activations
+actively dropping half of them so we
+
+533
+00:39:17,469 --> 00:39:21,349
+computed all the activations each one
+hidden layer and then we drop have two
+
+534
+00:39:21,349 --> 00:39:25,730
+units at random and then we do second
+and then we drop half of them at random
+
+535
+00:39:25,730 --> 00:39:30,699
+ok and of course this is only the
+forward pass the backward pass has to be
+
+536
+00:39:30,699 --> 00:39:35,719
+appropriately adjusted as well so these
+drops have to be also back propagated
+
+537
+00:39:35,719 --> 00:39:39,309
+through so remember to do that when you
+implement drop out so it's not only in
+
+538
+00:39:39,309 --> 00:39:41,980
+the forward pass a drop but in a
+backward pass if the backpropagation
+
+539
+00:39:41,980 --> 00:39:45,829
+multiplying by u2 and buy you one so you
+killed radiance basically in places
+
+540
+00:39:45,829 --> 00:39:46,559
+where you dropped
+
+541
+00:39:46,559 --> 00:39:52,179
+ok so you might be thinking when I
+showed you this for the first time how
+
+542
+00:39:52,179 --> 00:39:56,799
+does this make any sense at all and how
+was this good idea why would you want to
+
+543
+00:39:56,800 --> 00:40:00,390
+compute your neuroses and then set them
+a trend in 20 make any sense whatsoever
+
+544
+00:40:00,389 --> 00:40:12,369
+so I don't know let's let's do you guys
+think ahead to prevent overheating in
+
+545
+00:40:12,369 --> 00:40:23,880
+what sense
+
+546
+00:40:23,880 --> 00:40:27,170
+you're really getting the right
+information so you're saying it will
+
+547
+00:40:27,170 --> 00:40:31,240
+prevent overfitting because if I'm only
+using half of my network then roughly I
+
+548
+00:40:31,239 --> 00:40:34,500
+have like smaller capacity I'm only
+using half of my network any one time
+
+549
+00:40:34,500 --> 00:40:37,739
+and one smaller networks there's only
+like I'm basically there's only so much
+
+550
+00:40:37,739 --> 00:40:40,209
+I can do what happened at work then
+there's a full network so it's kind of
+
+551
+00:40:40,210 --> 00:40:44,798
+like control of your of your variance in
+terms of what you can represent
+
+552
+00:40:44,798 --> 00:40:55,619
+yeah I would like to meet the terms of
+like by various trade often so I haven't
+
+553
+00:40:55,619 --> 00:40:59,480
+really we're not going to that too much
+but you have a smaller model it's harder
+
+554
+00:40:59,480 --> 00:41:08,579
+to over that but having many ensembles
+of different neural networks were going
+
+555
+00:41:08,579 --> 00:41:34,289
+to go into that point in a bit because
+if that was the only one that was used
+
+556
+00:41:34,289 --> 00:41:38,119
+upstairs ok I have a better way of
+phrasing that point in my next life
+
+557
+00:41:38,119 --> 00:41:43,028
+let's look at a particular example is
+that okay suppose that we are trying to
+
+558
+00:41:43,028 --> 00:41:47,130
+compute the cat score in the neural
+network and the idea here is that you
+
+559
+00:41:47,130 --> 00:41:51,380
+have all these different units and
+dropout is doing sports sing their many
+
+560
+00:41:51,380 --> 00:41:54,920
+way to look at dropout but one of them
+is it's forcing your code your
+
+561
+00:41:54,920 --> 00:41:59,608
+representation for what the image was
+about to be redundant because you need
+
+562
+00:41:59,608 --> 00:42:03,318
+that redundancy because you're about to
+in a way that you can't control get half
+
+563
+00:42:03,318 --> 00:42:06,710
+of your network dropped off and so you
+need to make your cat score on many more
+
+564
+00:42:06,710 --> 00:42:09,900
+features if you're going to cook
+correctly compute the cat score because
+
+565
+00:42:09,900 --> 00:42:14,000
+any any one of them you can't rely on it
+because it might be dropped and so
+
+566
+00:42:14,000 --> 00:42:17,068
+that's one way to look at it so in this
+case we can still classify catskill
+
+567
+00:42:17,068 --> 00:42:22,639
+properly even if we don't have access to
+whether or not it's very essential so
+
+568
+00:42:22,639 --> 00:42:24,768
+that's one interpretation of dropout
+
+569
+00:42:24,768 --> 00:42:29,088
+another interpretation of dropout is as
+was mentioned in terms of muscle so
+
+570
+00:42:29,088 --> 00:42:33,358
+dropout is effectively can be looked at
+as training a large ensemble of models
+
+571
+00:42:33,358 --> 00:42:36,420
+that are basically subnetworks
+
+572
+00:42:36,420 --> 00:42:43,099
+one large network but they cannot share
+primaries in a good way so you
+
+573
+00:42:43,099 --> 00:42:46,650
+understand this you have to notice the
+following if we do it for us and we
+
+574
+00:42:46,650 --> 00:42:49,970
+randomly drop off some of the units than
+in backward pass think about what
+
+575
+00:42:49,969 --> 00:42:53,669
+happens with the gradient right so I
+suppose we bring a random dropped off
+
+576
+00:42:53,670 --> 00:42:57,409
+these units in a backward pass we're
+back propagating through the max that
+
+577
+00:42:57,409 --> 00:43:01,879
+were induced by the dropout so in
+particular only the neurons that were
+
+578
+00:43:01,880 --> 00:43:05,349
+used in a forward pass will actually be
+updated or have any grievance flowing
+
+579
+00:43:05,349 --> 00:43:09,599
+through them because any neuron that was
+shut off 20 no gradient will flow
+
+580
+00:43:09,599 --> 00:43:13,650
+through it and its weights to its
+previous layer will not be updated so
+
+581
+00:43:13,650 --> 00:43:18,550
+actively anymore on that was dropped out
+its connections to the previous layer
+
+582
+00:43:18,550 --> 00:43:22,750
+will not be updated and it was just it's
+as if it wasn't there so really what the
+
+583
+00:43:22,750 --> 00:43:27,230
+drop-off masks your sub sampling a part
+of your neural network and you're only
+
+584
+00:43:27,230 --> 00:43:30,789
+training that neural network on that
+single example that you happen that
+
+585
+00:43:30,789 --> 00:43:44,980
+point in time so as one model and gets
+rained on only one data point
+
+586
+00:43:44,980 --> 00:43:51,250
+ok I can try to repeat that
+
+587
+00:43:51,250 --> 00:44:04,239
+came from somewhere here I want you guys
+to understand this or not
+
+588
+00:44:04,239 --> 00:44:10,789
+ok so when you drop drop drop in your
+own I wish I had the example of the
+
+589
+00:44:10,789 --> 00:44:14,429
+neuron right but if I drop in the value
+I multiply its up to buy 09 its effect
+
+590
+00:44:14,429 --> 00:44:17,918
+on the loss function there's no effect
+right so its gradient 10 because it's
+
+591
+00:44:17,918 --> 00:44:21,668
+about he was not used in computing the
+loss and so it's weights will not get an
+
+592
+00:44:21,668 --> 00:44:25,679
+update and so it's as if we've subsample
+a part of the network and we only train
+
+593
+00:44:25,679 --> 00:44:28,959
+that single data point that currently
+came to network with only trained on it
+
+594
+00:44:28,958 --> 00:44:32,348
+and every time we do it for possibly
+subsample two different part of your
+
+595
+00:44:32,349 --> 00:44:35,899
+neural network but they all share
+parameters so it's kind of like a weird
+
+596
+00:44:35,898 --> 00:44:39,778
+ensemble of lots of different models all
+training Monday a point but they all
+
+597
+00:44:39,778 --> 00:44:48,458
+share parameters so that's kind of
+roughly the idea here doesn't make sense
+
+598
+00:44:48,458 --> 00:45:07,108
+usually save 50% is a very rough way to
+raise the same size so in this in this
+
+599
+00:45:07,108 --> 00:45:09,798
+world powers will notice we actually
+computer H
+
+600
+00:45:09,798 --> 00:45:14,009
+we compute them just as we did before
+all of the computer it more than half of
+
+601
+00:45:14,009 --> 00:45:17,119
+the values will get dropped 20
+
+602
+00:45:17,119 --> 00:45:29,250
+nothing changes they're good
+
+603
+00:45:29,250 --> 00:45:38,349
+stations instead of competing on the
+issues you want to compete in the roads
+
+604
+00:45:38,349 --> 00:45:42,150
+are not being dropped in that case you
+want to do sports updates so you could
+
+605
+00:45:42,150 --> 00:45:44,950
+in theory but I don't think that's
+unusual in practice we don't worry about
+
+606
+00:45:44,949 --> 00:46:12,369
+it too much and so you always gotta work
+training so every single iteration we
+
+607
+00:46:12,369 --> 00:46:15,469
+get a minute match we sample or noise
+pattern for what we're gonna drop out
+
+608
+00:46:15,469 --> 00:46:19,359
+and go forward and backward pass and the
+gradient and we keep turning this over
+
+609
+00:46:19,360 --> 00:46:31,360
+and over again so your question is like
+somehow cleverly true the binary mask in
+
+610
+00:46:31,360 --> 00:46:35,829
+like a way that best optimize the model
+or something that not really I don't
+
+611
+00:46:35,829 --> 00:46:44,769
+think that's done or anyone has looked
+into too much sorry I yes I'm going to
+
+612
+00:46:44,769 --> 00:46:47,389
+get into that in one slide next slide
+
+613
+00:46:47,389 --> 00:46:57,618
+we're going to look at this time I'll
+take up one last question
+
+614
+00:46:57,619 --> 00:47:04,519
+questions one drop out to different
+amounts in different layers you can
+
+615
+00:47:04,518 --> 00:47:05,459
+there's nothing stopping you
+
+616
+00:47:05,460 --> 00:47:09,338
+its intuitively you want to apply
+stronger drop out if you need more
+
+617
+00:47:09,338 --> 00:47:12,690
+regularization so there's a layer that
+has a huge amount of Primaris will see
+
+618
+00:47:12,690 --> 00:47:16,349
+that income that's in one example you
+want to hit by strong drop out there
+
+619
+00:47:16,349 --> 00:47:20,269
+conversely there might be some layers
+that we'll see what the network's early
+
+620
+00:47:20,268 --> 00:47:24,248
+on the comedy show layers are very small
+he don't really play as much drop out
+
+621
+00:47:24,248 --> 00:47:27,368
+there it's quite common for example the
+color networking going to this in a bit
+
+622
+00:47:27,369 --> 00:47:30,740
+you start off with a low dropout ending
+up over time so the answer to that is
+
+623
+00:47:30,739 --> 00:47:38,848
+yes and I forgot your second question
+can you instead units dropout just
+
+624
+00:47:38,849 --> 00:47:41,880
+individual weights you can and that's
+something called dropped connect we want
+
+625
+00:47:41,880 --> 00:47:46,349
+to go into too much in this class but
+there's a way to do that as well i got
+
+626
+00:47:46,349 --> 00:47:52,829
+now it s time i trust ideally what you
+want to do is we've introduced all this
+
+627
+00:47:52,829 --> 00:47:56,940
+noise right into the park pass and so if
+you would like to do now it just time as
+
+628
+00:47:56,940 --> 00:48:00,349
+we'd like to integrate out all that
+noise and want to cuddle approximation
+
+629
+00:48:00,349 --> 00:48:03,318
+to that would be something like you have
+a test image that you like to classify
+
+630
+00:48:03,318 --> 00:48:06,909
+you can do many forward passes with many
+different settings of your binary masks
+
+631
+00:48:06,909 --> 00:48:10,558
+and you're only using the subnetworks
+and then you can averaged across all
+
+632
+00:48:10,559 --> 00:48:14,329
+those probably distributions so that
+would be great but unfortunately is not
+
+633
+00:48:14,329 --> 00:48:17,818
+very efficient so it turns out that you
+can actually approximate this process to
+
+634
+00:48:17,818 --> 00:48:22,338
+some degree has given to point out when
+first introduced dropout and the way
+
+635
+00:48:22,338 --> 00:48:26,170
+will do this intuitively you want to
+take advantage of all your neurons you
+
+636
+00:48:26,170 --> 00:48:29,509
+don't want to be dropping my random
+we're going to try to copy the way we
+
+637
+00:48:29,509 --> 00:48:33,548
+can leave all the neurons turned on so
+dunno drop out in a forward pass on a
+
+638
+00:48:33,548 --> 00:48:39,920
+test image but we have to actually be
+careful with how we do this so we can so
+
+639
+00:48:39,920 --> 00:48:43,480
+in a poor pass your test images we're
+not going to drop any units but we have
+
+640
+00:48:43,480 --> 00:48:48,028
+to be careful with something and
+basically one way to get that what the
+
+641
+00:48:48,028 --> 00:48:54,880
+issue is supposed that this was an Iran
+and its got two inputs and I suppose
+
+642
+00:48:54,880 --> 00:48:59,079
+that with all these inputs present at
+this time so we're not dropping unit so
+
+643
+00:48:59,079 --> 00:49:02,630
+it s time these two have some
+activations and the other doctors near a
+
+644
+00:49:02,630 --> 00:49:06,400
+computer to be some value tax yet to
+compare this
+
+645
+00:49:06,400 --> 00:49:12,608
+value of x two what the neurons out but
+would be during training time in
+
+646
+00:49:12,608 --> 00:49:18,440
+expectation ok because in training time
+this dropout masks very randomly and so
+
+647
+00:49:18,440 --> 00:49:21,170
+there are many different cases that
+could have happened any different in
+
+648
+00:49:21,170 --> 00:49:27,068
+those cases of this would be a different
+scale and have to worry about this let
+
+649
+00:49:27,068 --> 00:49:32,259
+me show you exactly what this means I
+think this
+
+650
+00:49:32,260 --> 00:49:35,539
+computes say there's no nonlinearity
+were only looking at the lingering Iran
+
+651
+00:49:35,539 --> 00:49:39,990
+during stress tests this activation
+becomes W 0 which is the wait here 10
+
+652
+00:49:39,989 --> 00:49:44,848
+sacks + W one times why oK so that's
+what I want to compute a test on and the
+
+653
+00:49:44,849 --> 00:49:48,420
+reason I have to be careful is that
+during training time the expected output
+
+654
+00:49:48,420 --> 00:49:51,528
+of a in this particular case would have
+been quite different so we have four
+
+655
+00:49:51,528 --> 00:49:55,619
+possibilities we could drop one or the
+other or both or none so in those four
+
+656
+00:49:55,619 --> 00:49:56,720
+possibilities
+
+657
+00:49:56,719 --> 00:50:00,750
+computer different Valley was actually
+crunch do this math you'll see that when
+
+658
+00:50:00,750 --> 00:50:01,659
+you reduce it
+
+659
+00:50:01,659 --> 00:50:07,548
+you end up with one half off WRX + W one
+times why so in expectation at training
+
+660
+00:50:07,548 --> 00:50:15,630
+time the update of this neuron was
+actually just time and so when you want
+
+661
+00:50:15,630 --> 00:50:19,640
+to use all the time you have to
+compensate for this and this and that
+
+662
+00:50:19,639 --> 00:50:22,730
+happened away as coming from the fact
+that we've dropped units with probably
+
+663
+00:50:22,730 --> 00:50:29,219
+the half and so that's why this end up
+being half and so with probably point
+
+664
+00:50:29,219 --> 00:50:35,358
+five Olympic Singapore pass so basically
+if we did not do this then we end up
+
+665
+00:50:35,358 --> 00:50:39,019
+having to large enough but compared to
+what we had an expectation during
+
+666
+00:50:39,019 --> 00:50:42,960
+training time and you're out the
+distribution will change and basically
+
+667
+00:50:42,960 --> 00:50:45,639
+things in the world that would break
+because they're not used to seeing such
+
+668
+00:50:45,639 --> 00:50:49,368
+large epithermal neutrons and she have
+to compensate for that and you have to
+
+669
+00:50:49,369 --> 00:50:53,798
+squish down so you're not using all your
+things instead of just happened things
+
+670
+00:50:53,798 --> 00:50:57,480
+but you have to scratch daily
+activations to get back to recover your
+
+671
+00:50:57,480 --> 00:51:03,099
+expected output ok this is actually a
+tricky point but I think I was told once
+
+672
+00:51:03,099 --> 00:51:06,559
+a story that when Jeff Hinton came up
+with drop out in the beginning he
+
+673
+00:51:06,559 --> 00:51:10,710
+actually didn't fully come up with this
+part so we tried drop out any didn't
+
+674
+00:51:10,710 --> 00:51:16,088
+work and actually the reason it didn't
+work as he he missed out on this tricky
+
+675
+00:51:16,088 --> 00:51:19,340
+point actually admittedly and so we have
+to scale your activation
+
+676
+00:51:19,340 --> 00:51:24,070
+system down because of this effect and
+then everything works much better so I
+
+677
+00:51:24,070 --> 00:51:28,500
+just I'm just to show you what this
+looks like we basically compute these
+
+678
+00:51:28,500 --> 00:51:33,449
+neural nets as normal so we can be the
+first or second but now it just time we
+
+679
+00:51:33,449 --> 00:51:38,869
+have to multiply by P so for example of
+peace haha dropping probability scale
+
+680
+00:51:38,869 --> 00:51:43,139
+and down the activation so that the
+expectation expected out but now has the
+
+681
+00:51:43,139 --> 00:51:46,969
+same as expected output in the training
+time and so at this time you actually
+
+682
+00:51:46,969 --> 00:51:52,449
+recover for dropout and expected outputs
+are matching and this actually works
+
+683
+00:51:52,449 --> 00:52:18,069
+really well so I'm dropping from this is
+just the discrepancy between train and
+
+684
+00:52:18,070 --> 00:52:20,780
+test like every using all your neurons
+are dropping them there's a discrepancy
+
+685
+00:52:20,780 --> 00:52:24,580
+so either you can correct it at this
+time or you can use what we call in
+
+686
+00:52:24,579 --> 00:52:29,469
+Burley dropout which I'll show you in a
+bit so we'll get to that in a bit
+
+687
+00:52:29,469 --> 00:52:34,319
+dropout summary if you want to drop out
+drop your units with probably off with
+
+688
+00:52:34,320 --> 00:52:38,210
+keeping a probability of pee and then it
+just forget to scale them so if you do
+
+689
+00:52:38,210 --> 00:52:40,820
+this network will do will work better
+
+690
+00:52:40,820 --> 00:52:44,190
+ok and don't forget to also back
+propagate the masks which I'm not
+
+691
+00:52:44,190 --> 00:52:49,710
+showing an inverted dropout by the way
+to do is to take care of this
+
+692
+00:52:49,710 --> 00:52:53,349
+discrepancy between the train and test
+solution a slightly different way in
+
+693
+00:52:53,349 --> 00:52:57,710
+particular what we'll do is we're
+changing this year so before you one was
+
+694
+00:52:57,710 --> 00:53:01,250
+a biomass cups frozen ones we're not
+going to do is we're going to do the
+
+695
+00:53:01,250 --> 00:53:04,980
+scaling here at training time so we're
+going to scale down the activations a
+
+696
+00:53:04,980 --> 00:53:07,960
+trying time for another skill them up
+because if he spent five then we're
+
+697
+00:53:07,960 --> 00:53:12,079
+boosting accusations a train time by hot
+and then it s time we can leave our code
+
+698
+00:53:12,079 --> 00:53:16,029
+touched right so we're doing the
+boosting of the activations a train time
+
+699
+00:53:16,030 --> 00:53:20,880
+we're making everything artificially
+greater by two acts and then it s time
+
+700
+00:53:20,880 --> 00:53:24,450
+we're supposed to have but now we're
+just going to recover the clean
+
+701
+00:53:24,449 --> 00:53:27,819
+expressions because we've done the
+scaling a trying time so now you'll be
+
+702
+00:53:27,820 --> 00:53:31,010
+you'll be properly calibrated
+expectations between the train and test
+
+703
+00:53:31,010 --> 00:53:39,290
+every year on and work that's right so
+using a dropout that's most common want
+
+704
+00:53:39,289 --> 00:53:42,779
+to use in practice so infected really
+comes down to a few lines and then the
+
+705
+00:53:42,780 --> 00:53:47,300
+backward pass changes a bit but the
+networks almost always work better with
+
+706
+00:53:47,300 --> 00:54:15,070
+this unless you're severely under
+fitting in their actual exact and that's
+
+707
+00:54:15,070 --> 00:54:17,230
+why this is as i mentioned here
+
+708
+00:54:17,230 --> 00:54:22,039
+approximation is an approximation to
+assemble and one of the reasons an
+
+709
+00:54:22,039 --> 00:54:25,029
+approximation is because once you
+actually happened in the picture then
+
+710
+00:54:25,030 --> 00:54:27,769
+these expected outputs are all kind of
+screwed up because of the nonlinear
+
+711
+00:54:27,769 --> 00:54:37,500
+effects on top of these questions thank
+you for pointing that I go ahead
+
+712
+00:54:37,500 --> 00:54:44,769
+I see you're saying that they are
+inverted drop-in and drop-out are not
+
+713
+00:54:44,769 --> 00:54:49,039
+equivalent so doing her job whether or
+not is not a problem because of the the
+
+714
+00:54:49,039 --> 00:54:59,309
+nineties I'd have to think about it
+maybe maybe you're right you may be
+
+715
+00:54:59,309 --> 00:55:37,949
+right here and I think all of this is
+just about expectations in expectation
+
+716
+00:55:37,949 --> 00:55:41,349
+you're dropping a half and so that's the
+correct thing to use even though there's
+
+717
+00:55:41,349 --> 00:55:44,049
+some randomness in exactly the amount
+that actually end up being dropped
+
+718
+00:55:44,050 --> 00:55:47,370
+okay great
+
+719
+00:55:47,369 --> 00:55:51,869
+oh yeah there's like to tell you as a
+fun story will drop out so I was in a
+
+720
+00:55:51,869 --> 00:55:55,509
+deep learning summer school in 2012 and
+Jeff Hinton was for the first time or at
+
+721
+00:55:55,510 --> 00:55:56,590
+least the first time I saw it
+
+722
+00:55:56,590 --> 00:56:00,930
+presenting dropout and so he's basically
+just saying okay said your neurons 20 at
+
+723
+00:56:00,929 --> 00:56:04,589
+random and just I'm just busy
+activations and this always works better
+
+724
+00:56:04,590 --> 00:56:07,750
+better and we're like wow that's
+interesting as a friend of mine sitting
+
+725
+00:56:07,750 --> 00:56:10,469
+next to me he just pulled up his laptop
+right there he has a station has
+
+726
+00:56:10,469 --> 00:56:13,959
+University machines and implement it
+right there during the talk and by the
+
+727
+00:56:13,960 --> 00:56:17,340
+time Jeff Hinton finish to talk he was
+getting better results and getting
+
+728
+00:56:17,340 --> 00:56:18,950
+actually state of the art reporter like
+
+729
+00:56:18,949 --> 00:56:25,189
+on his data that he was working with the
+fastest I've seen someone go like get an
+
+730
+00:56:25,190 --> 00:56:30,490
+extra 5% it was right there and then
+while Japan too much going to talk I
+
+731
+00:56:30,489 --> 00:56:33,589
+thought that was really funny there's
+very few times actually the something
+
+732
+00:56:33,590 --> 00:56:36,590
+like this happens it's a dropout is a
+great thing because it's one of those
+
+733
+00:56:36,590 --> 00:56:42,390
+few investors that is very simple and it
+always works just better and there's
+
+734
+00:56:42,389 --> 00:56:45,579
+very few of those kinds of tips and
+tricks that we've picked up and I guess
+
+735
+00:56:45,579 --> 00:56:49,659
+the question is how many more simple
+things like dropout are there and that
+
+736
+00:56:49,659 --> 00:56:50,879
+just give you two percent boost
+
+737
+00:56:50,880 --> 00:56:54,140
+always so we don't know
+
+738
+00:56:54,139 --> 00:57:01,199
+ok so I was going to go on at this point
+into gradient checking but I think I
+
+739
+00:57:01,199 --> 00:57:04,588
+actually I decided I'm gonna skip this
+because I'm tired of all the neural
+
+740
+00:57:04,588 --> 00:57:07,130
+network like we've been talking about
+lots of details in training all that
+
+741
+00:57:07,130 --> 00:57:10,180
+works and I think you guys are tired as
+well and so I'm going to skip gradient
+
+742
+00:57:10,179 --> 00:57:13,469
+checking because it's quite well
+described herein notes I encourage you
+
+743
+00:57:13,469 --> 00:57:19,028
+to go through it is kind of a tricky
+process takes a bit of time to to
+
+744
+00:57:19,028 --> 00:57:23,190
+appreciate all the difficulties with the
+process and so just read through it I
+
+745
+00:57:23,190 --> 00:57:27,250
+don't think there's anything I can drive
+around to make it more interesting to
+
+746
+00:57:27,250 --> 00:57:29,469
+you so I would encourage you to just
+check it out
+
+747
+00:57:29,469 --> 00:57:33,118
+meanwhile we're going to jump right hand
+and it's going to come that works and
+
+748
+00:57:33,119 --> 00:57:42,358
+look at pictures so look like this this
+is Aileen at five from nineteen eighty
+
+749
+00:57:42,358 --> 00:57:46,538
+roughly and we're going to go into
+details of how commercial networks mark
+
+750
+00:57:46,539 --> 00:57:49,609
+and in this class we're not actually
+going to do any of the low-level details
+
+751
+00:57:49,608 --> 00:57:52,768
+I'm just going to try to give you
+intuition about how this field can about
+
+752
+00:57:52,768 --> 00:57:56,868
+some days total context and just come
+back from that works in general so if
+
+753
+00:57:56,869 --> 00:57:59,559
+you'd like to talk about the history of
+commercial networks you have to go back
+
+754
+00:57:59,559 --> 00:58:04,910
+to roughly nineteen sixties experiments
+approval and weasel so in particular
+
+755
+00:58:04,909 --> 00:58:10,449
+they were studying the primary visual
+cortex and cat and they were sending an
+
+756
+00:58:10,449 --> 00:58:14,710
+early visual area and the cat brain as
+the cat was looking at patterns on the
+
+757
+00:58:14,710 --> 00:58:19,500
+screen and they ended up actually
+winning a Nobel Prize for this sometime
+
+758
+00:58:19,500 --> 00:58:23,449
+later for these experiments as we'd like
+to show you what these experiments look
+
+759
+00:58:23,449 --> 00:58:27,518
+like just so they're really fun to look
+at so I pulled up eighty video here in
+
+760
+00:58:27,518 --> 00:58:32,258
+and see what's going on here is the cat
+is fixed in position and we're recording
+
+761
+00:58:32,259 --> 00:58:35,900
+from its cortex somewhere in the area of
+processing which is in the back of your
+
+762
+00:58:35,900 --> 00:58:39,809
+brain could be one and now we're showing
+different light patterns to the cat and
+
+763
+00:58:39,809 --> 00:58:43,519
+we're recording and sharing the neurons
+fire for different stimuli let's look at
+
+764
+00:58:43,518 --> 00:58:48,039
+how this experience will look like
+
+765
+00:58:48,039 --> 00:59:14,050
+here
+
+766
+00:59:14,050 --> 00:59:27,410
+experiments like these cells and they
+seem to turn all four edges in a
+
+767
+00:59:27,409 --> 00:59:30,279
+particular orientation and they get
+excited about the edges and one
+
+768
+00:59:30,280 --> 00:59:36,360
+orientation and northern orientation
+does not excite them and so like this
+
+769
+00:59:36,360 --> 00:59:42,150
+through a long process like a 10 minute
+video so we're not going to do this for
+
+770
+00:59:42,150 --> 00:59:45,450
+a long time they spirited and they came
+up with a model of how the visual cortex
+
+771
+00:59:45,449 --> 00:59:52,349
+process information in the brain and so
+they can several things that ended up
+
+772
+00:59:52,349 --> 00:59:56,059
+leading to the Nobel Prize for example
+they figured out that the cortex is
+
+773
+00:59:56,059 --> 00:59:56,759
+arranged
+
+774
+00:59:56,760 --> 01:00:02,570
+topically the visual cortex and what
+that means is that she was my printer
+
+775
+01:00:02,570 --> 01:00:06,920
+basically nearby cells in the cortex so
+this is cortical tissue unfolded nearby
+
+776
+01:00:06,920 --> 01:00:11,389
+salt air cortex are actually processing
+nearby areas in your visual field so
+
+777
+01:00:11,389 --> 01:00:15,049
+you're whatever is not a recognized
+processed nearby and your bring this
+
+778
+01:00:15,050 --> 01:00:20,510
+locality is preserved in your processing
+and they also figured out that there was
+
+779
+01:00:20,510 --> 01:00:23,790
+an entire year of these roles what's
+called the simple cells and they
+
+780
+01:00:23,789 --> 01:00:27,659
+responded to a particular orientation of
+an edge and then there were all these
+
+781
+01:00:27,659 --> 01:00:31,809
+other cells that had more complex
+responses so for example some cells
+
+782
+01:00:31,809 --> 01:00:34,949
+would be turning offer specific
+orientation but were slightly
+
+783
+01:00:34,949 --> 01:00:38,159
+translation invariant so they don't care
+about the specific position of the edge
+
+784
+01:00:38,159 --> 01:00:41,839
+but they only cared about the
+orientation and so they hypothesize
+
+785
+01:00:41,840 --> 01:00:44,120
+through all of these experiments that
+the visual cortex has this kind of
+
+786
+01:00:44,119 --> 01:00:48,269
+hierarchical organization where you end
+up a simple sell their reading to other
+
+787
+01:00:48,269 --> 01:00:52,679
+cells called complex cells and etc and
+these cells are built on top of each
+
+788
+01:00:52,679 --> 01:00:56,369
+other and the simple songs in particular
+have these relatively local receptive
+
+789
+01:00:56,369 --> 01:01:00,019
+fields and they were building up more
+and more complex kind of representations
+
+790
+01:01:00,019 --> 01:01:04,320
+in the brain through successive layers
+of representation and so these are
+
+791
+01:01:04,320 --> 01:01:09,240
+experienced a lot of course some people
+are trying to reproduce this in
+
+792
+01:01:09,239 --> 01:01:14,649
+computers and trying to model the visual
+cortex with code and so one of the first
+
+793
+01:01:14,650 --> 01:01:19,389
+examples of this was gonna drop from
+Fukushima and he basically ended up
+
+794
+01:01:19,389 --> 01:01:20,429
+setting up
+
+795
+01:01:20,429 --> 01:01:26,710
+architecture with these local receptive
+cells that basically look at a small
+
+796
+01:01:26,710 --> 01:01:31,760
+region of the impact and then he stepped
+up layers and layers of these and so he
+
+797
+01:01:31,760 --> 01:01:34,750
+had these simple assault on the complex
+also simple solves complex also the
+
+798
+01:01:34,750 --> 01:01:39,000
+sandwich of simple and complex also
+building up into iraqi now back then
+
+799
+01:01:39,000 --> 01:01:41,849
+though in nineteen eighties back
+propagation will still not really around
+
+800
+01:01:41,849 --> 01:01:45,380
+and so pushing my head and unsupervised
+learning procedure for training these
+
+801
+01:01:45,380 --> 01:01:49,599
+networks with like a clustering scheme
+but this is not back propagates at the
+
+802
+01:01:49,599 --> 01:01:54,150
+time but it had this idea of successive
+layers small cells building up on top of
+
+803
+01:01:54,150 --> 01:02:00,039
+each other and then these experiments
+further and he kind of built on top of
+
+804
+01:02:00,039 --> 01:02:04,739
+work and he kept the architectural
+layout but what he did was actually
+
+805
+01:02:04,739 --> 01:02:09,009
+trainees network the back propagation
+and so for example he trained different
+
+806
+01:02:09,010 --> 01:02:12,770
+classifiers four digits or letters and
+so on and so trained all of it
+
+807
+01:02:12,769 --> 01:02:16,769
+backdrop and they actually ended up
+using this in complex systems that read
+
+808
+01:02:16,769 --> 01:02:23,469
+to check the radar like digits from
+postal mail service and so on and so
+
+809
+01:02:23,469 --> 01:02:27,239
+that's actually go back to quite a long
+time ago to nineteen nineties and
+
+810
+01:02:27,239 --> 01:02:33,199
+someone who was using them back then but
+they were quite small ok and so in 2012
+
+811
+01:02:33,199 --> 01:02:37,559
+is when the come to start to get quite a
+bit bigger so this was the paper from
+
+812
+01:02:37,559 --> 01:02:43,549
+that I keep referring to escape into
+they took all of that and it's not as a
+
+813
+01:02:43,550 --> 01:02:48,200
+dataset that comes actually from our lab
+so it's a million images with thousand
+
+814
+01:02:48,199 --> 01:02:51,339
+classes huge amount of data you take
+this model which is roughly 60 million
+
+815
+01:02:51,340 --> 01:02:56,380
+parameters and cold in Alex net based on
+the first name of Alex Kozinski these
+
+816
+01:02:56,380 --> 01:02:59,260
+networks were going to see that they
+have names so this is Alex Knapp is a
+
+817
+01:02:59,260 --> 01:03:05,560
+region that has that Google at their
+several minutes so just like this one is
+
+818
+01:03:05,559 --> 01:03:09,630
+a limit and so we give them names so
+this was Alex net and it was the one
+
+819
+01:03:09,630 --> 01:03:13,090
+that actually outperformed by quite a
+bit on the other algorithms what's
+
+820
+01:03:13,090 --> 01:03:17,530
+interesting to note historically is the
+difference between Alex nothing 2012 and
+
+821
+01:03:17,530 --> 01:03:21,850
+the limit in nineteen nineties there's
+basically very very little difference is
+
+822
+01:03:21,849 --> 01:03:25,940
+when you look at these two different
+networks this one used I think signals
+
+823
+01:03:25,940 --> 01:03:31,789
+or 10 H pennies probably and this one is
+real and it was bigger and deeper and
+
+824
+01:03:31,789 --> 01:03:33,460
+was training GPU and have more data
+
+825
+01:03:33,460 --> 01:03:38,889
+and that's basically it that's the only
+like that's roughly the difference and
+
+826
+01:03:38,889 --> 01:03:41,098
+so really what we've done is we've
+figured out better ways of course
+
+827
+01:03:41,099 --> 01:03:45,000
+initializing them and it works better
+with national army and rebels work much
+
+828
+01:03:45,000 --> 01:03:49,480
+better but other than that it was just
+killing up both the data and compute
+
+829
+01:03:49,480 --> 01:03:53,740
+but for the most part the actor was
+quite similar and we've done a few more
+
+830
+01:03:53,739 --> 01:03:56,719
+tricks like for example they used a big
+filters will see that we use a much
+
+831
+01:03:56,719 --> 01:04:01,379
+smaller filters we also now this is only
+a few tens of players we now have a
+
+832
+01:04:01,380 --> 01:04:05,059
+hundred and fifty later come that so we
+really just skill is up quite a bit in
+
+833
+01:04:05,059 --> 01:04:08,150
+some respects but otherwise the basic
+concept of how you process information
+
+834
+01:04:08,150 --> 01:04:09,789
+is similar
+
+835
+01:04:09,789 --> 01:04:15,150
+oK so that's are now basically
+everywhere so they can do all kinds of
+
+836
+01:04:15,150 --> 01:04:19,280
+things like classify things of course
+they're very good at retrieval so if you
+
+837
+01:04:19,280 --> 01:04:24,119
+show them an image they can retrieve
+other images like it they can also do
+
+838
+01:04:24,119 --> 01:04:29,809
+detection so here and there detecting
+dogs or horses are people and so on
+
+839
+01:04:29,809 --> 01:04:33,230
+this might be used for example in some
+German cars all have this in the next
+
+840
+01:04:33,230 --> 01:04:36,588
+line they can also do some
+experimentation so every single pixel is
+
+841
+01:04:36,588 --> 01:04:41,409
+labeled for example the person or a road
+or tree or sky rebuilding segmentation
+
+842
+01:04:41,409 --> 01:04:47,529
+for their use in cars for example here's
+an Nvidia Tegra which is small embedded
+
+843
+01:04:47,530 --> 01:04:51,480
+GPU we can run come that's one reason
+for example this might be useful in the
+
+844
+01:04:51,480 --> 01:04:55,480
+car where you can identify all the you
+can be skewed perception of rounding
+
+845
+01:04:55,480 --> 01:04:57,219
+things around you
+
+846
+01:04:57,219 --> 01:05:02,039
+comments are identifying faces probably
+if you some of your friends are tacked
+
+847
+01:05:02,039 --> 01:05:04,909
+on Facebook automatically it's almost
+certainly I would guess at this point
+
+848
+01:05:04,909 --> 01:05:10,069
+that video classification on YouTube
+identify what's inside YouTube videos
+
+849
+01:05:10,070 --> 01:05:14,900
+they're used in this is a project from
+Google that was very successful where
+
+850
+01:05:14,900 --> 01:05:17,900
+basically Google was really interested
+in taking street view images and
+
+851
+01:05:17,900 --> 01:05:20,809
+automatically reading outhouse numbers
+from them
+
+852
+01:05:20,809 --> 01:05:25,019
+ok and turns out this is a perfect
+astrakhan that so they had lots of human
+
+853
+01:05:25,019 --> 01:05:30,289
+labor is at eight huge amounts of data
+and then put a giant comment on it and
+
+854
+01:05:30,289 --> 01:05:33,429
+it ended up working almost as well as a
+human and that's the thing that we'll
+
+855
+01:05:33,429 --> 01:05:37,710
+see throughout that this stuff works
+really really well make an estimate
+
+856
+01:05:37,710 --> 01:05:41,730
+poses they can play computer games
+
+857
+01:05:41,730 --> 01:05:46,559
+they detect all kinds of cancer or
+something like that and bye bye bye
+
+858
+01:05:46,559 --> 01:05:53,519
+images they can read Chinese characters
+recognized street signs this is I think
+
+859
+01:05:53,519 --> 01:05:57,690
+segmentation of neural tissue they can
+also do things that are not visual so
+
+860
+01:05:57,690 --> 01:06:02,510
+for example they can recognize speech
+for speech processing they've been used
+
+861
+01:06:02,510 --> 01:06:07,780
+also for text documents so you can see
+that text into comments as well they've
+
+862
+01:06:07,780 --> 01:06:11,400
+been used for to recognize different
+types of galaxies they've been used to
+
+863
+01:06:11,400 --> 01:06:15,570
+in the recent cattle competition to
+recognize different Wales this is a
+
+864
+01:06:15,570 --> 01:06:18,420
+particular well there was like a hundred
+miles or something like that and that's
+
+865
+01:06:18,420 --> 01:06:24,409
+just my specific individual so this will
+buy the pattern of its white spots on
+
+866
+01:06:24,409 --> 01:06:28,179
+its head is a particular way I'll become
+it has recognized so it's amazing that
+
+867
+01:06:28,179 --> 01:06:32,618
+works at all they're using satellite
+images quite a bit because now there are
+
+868
+01:06:32,619 --> 01:06:35,280
+several companies that have lots of
+satellite data so this is all analyzed
+
+869
+01:06:35,280 --> 01:06:39,530
+with large comments in this case it's
+winding roads but you can also look at
+
+870
+01:06:39,530 --> 01:06:43,850
+agriculture applications or someone they
+can also do image capturing you might
+
+871
+01:06:43,849 --> 01:06:48,829
+have seen some of these results my work
+included as well we take images and
+
+872
+01:06:48,829 --> 01:06:53,369
+captions that more sentences instead of
+just a single category and they can also
+
+873
+01:06:53,369 --> 01:06:56,150
+be used for various artistic endeavors
+
+874
+01:06:56,150 --> 01:06:59,800
+so this is something called deep dream
+and we're going to go into how this
+
+875
+01:06:59,800 --> 01:07:00,350
+works
+
+876
+01:07:00,349 --> 01:07:04,440
+actually implementing your third
+assignment may be ok maybe you will
+
+877
+01:07:04,440 --> 01:07:08,099
+implement in your third assignment you
+give it an image and using that you can
+
+878
+01:07:08,099 --> 01:07:11,349
+make it do weird stuff
+
+879
+01:07:11,349 --> 01:07:17,380
+particularly a lot of hallucinations of
+dogs and we're going to go into why dogs
+
+880
+01:07:17,380 --> 01:07:20,349
+appear it has to do with the fact that
+image net which is where these networks
+
+881
+01:07:20,349 --> 01:07:25,579
+get trained to the end up they have a
+lot of dogs and so these these networks
+
+882
+01:07:25,579 --> 01:07:28,259
+and apple juice and eating dogs it's
+kind of like they're used to some
+
+883
+01:07:28,260 --> 01:07:32,440
+patterns and then you should have a
+different image you can make them put
+
+884
+01:07:32,440 --> 01:07:36,710
+them in the loop with the image and dole
+hallucinate things so we'll see how this
+
+885
+01:07:36,710 --> 01:07:42,769
+works in a bit I'm not going to explain
+the slide but it looks cool so you can
+
+886
+01:07:42,769 --> 01:07:47,559
+imagine that it's probably involved
+somewhere I also want to point out that
+
+887
+01:07:47,559 --> 01:07:51,579
+what's interesting there's this paper
+called the networks rival representation
+
+888
+01:07:51,579 --> 01:07:55,420
+of private I think cortex call for a
+quarter of the recognition what they did
+
+889
+01:07:55,420 --> 01:08:00,250
+here is basically looking at I think
+this was a macaque monkey and the
+
+890
+01:08:00,250 --> 01:08:05,280
+recording from the ITV from the cortex
+here and there recording neural
+
+891
+01:08:05,280 --> 01:08:09,030
+activations monkeys looking at images
+and then they fed the same images to
+
+892
+01:08:09,030 --> 01:08:12,660
+accomplish on your network and what
+they're trying to do is from the popular
+
+893
+01:08:12,659 --> 01:08:16,960
+prom the commercial network code or from
+the population of neurons only sparse
+
+894
+01:08:16,960 --> 01:08:21,560
+population of context they're trying to
+perform classification of some concepts
+
+895
+01:08:21,560 --> 01:08:25,820
+and what you see is that the coating
+from the idea cortex and classifying
+
+896
+01:08:25,819 --> 01:08:30,519
+images is almost as good as using this
+neural network from 2013 in terms of the
+
+897
+01:08:30,520 --> 01:08:35,400
+information that they're about the image
+you can do almost equal in performance
+
+898
+01:08:35,399 --> 01:08:40,279
+for classification perhaps even more
+striking results here we're comparing
+
+899
+01:08:40,279 --> 01:08:43,759
+the fed a lot of images through the
+competition at work and they got this
+
+900
+01:08:43,760 --> 01:08:46,720
+month he took a lot of images and then
+you look at how these images are
+
+901
+01:08:46,720 --> 01:08:48,789
+represented in the brain or in the
+comment
+
+902
+01:08:48,789 --> 01:08:53,019
+so these are two spaces representation
+of how images are arranged in the space
+
+903
+01:08:53,020 --> 01:08:57,520
+by the comment and you can compare the
+similarity matrices and statistics
+
+904
+01:08:57,520 --> 01:09:00,450
+you'll see that the I T cortex and the
+comment
+
+905
+01:09:00,449 --> 01:09:04,099
+that's are basically very very similar
+representation there's a mapping between
+
+906
+01:09:04,100 --> 01:09:08,440
+them it almost seems like similar things
+are being computed the way they arranged
+
+907
+01:09:08,439 --> 01:09:12,399
+a visual space of different concepts and
+what's closed and what's far is very
+
+908
+01:09:12,399 --> 01:09:16,809
+very remarkably similar to what you see
+in the in the brain and so some people
+
+909
+01:09:16,810 --> 01:09:20,780
+think that this is just some evidence
+that companies are doing something brain
+
+910
+01:09:20,779 --> 01:09:23,769
+like and that's very interesting so the
+only question that remains then in that
+
+911
+01:09:23,770 --> 01:09:24,330
+case
+
+912
+01:09:24,329 --> 01:09:27,210
+is this work
+
+913
+01:09:27,210 --> 01:09:28,609
+and we'll find out the next class
+

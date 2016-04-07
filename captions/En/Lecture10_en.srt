@@ -1,0 +1,4776 @@
+﻿1
+00:00:00,000 --> 00:00:04,129
+trust us
+
+2
+00:00:04,129 --> 00:00:12,109
+ok that works ok good we'll get started
+soon so today we'll be talking about the
+
+3
+00:00:12,109 --> 00:00:15,199
+recurrent neural networks which is one
+of my favorite topics one of my favorite
+
+4
+00:00:15,199 --> 00:00:18,960
+models to play with input into neural
+networks just everywhere there a lot of
+
+5
+00:00:18,960 --> 00:00:23,009
+fun to play with in terms of
+administrative high temps recall that
+
+6
+00:00:23,009 --> 00:00:26,089
+your midterms on Wednesday this
+Wednesday you can tell that I'm really
+
+7
+00:00:26,089 --> 00:00:32,738
+excited I know if you guys are excited
+very excited to me what a cemetery will
+
+8
+00:00:32,738 --> 00:00:37,979
+be out due this Wednesday it's so he
+will be out on Wednesday its due two
+
+9
+00:00:37,979 --> 00:00:40,429
+weeks from now on Monday but I think
+since we're shifting it I think to
+
+10
+00:00:40,429 --> 00:00:43,399
+Wednesday we plan to have released it
+today but we're gonna be shipping it to
+
+11
+00:00:43,399 --> 00:00:47,129
+roughly Wednesday so we'll probably the
+first deadline for a few days and
+
+12
+00:00:47,130 --> 00:00:51,179
+assignment to him of mistaken was due on
+Friday so if you're using 38 days then
+
+13
+00:00:51,179 --> 00:00:55,119
+you'd be having it in today hopefully
+not too many of you are doing that our
+
+14
+00:00:55,119 --> 00:01:01,089
+people down with a 72 or many people are
+done okay most of you looking great for
+
+15
+00:01:01,090 --> 00:01:04,549
+doing well so currently in the class
+were talking about coming ashore neural
+
+16
+00:01:04,549 --> 00:01:07,820
+networks las Casas specifically we
+looked at to visualizing understanding
+
+17
+00:01:07,819 --> 00:01:11,618
+convolutional neural networks so we look
+at a whole bunch of pretty pictures and
+
+18
+00:01:11,618 --> 00:01:14,938
+video so we had a lot of fun trying to
+interpret exactly what he's accomplished
+
+19
+00:01:14,938 --> 00:01:17,828
+all networks are doing what they're
+learning how they're working and so on
+
+20
+00:01:17,828 --> 00:01:24,188
+and so we debug this through several
+ways that you may become a call from a
+
+21
+00:01:24,188 --> 00:01:27,408
+structure actually over the weekend I
+stumbled by some other visualizations
+
+22
+00:01:27,409 --> 00:01:32,569
+are new I found these on Twitter and
+they look really cool and I'm not sure
+
+23
+00:01:32,569 --> 00:01:37,118
+how to how people made these because
+there's not too much description to it
+
+24
+00:01:37,118 --> 00:01:43,099
+but looks like this is turtles tarantula
+and then this is chained and some kind
+
+25
+00:01:43,099 --> 00:01:47,468
+of a dog and so the way you do this I
+think it's something like the tree nuts
+
+26
+00:01:47,468 --> 00:01:50,509
+again optimization into images but
+they're using a different regularize on
+
+27
+00:01:50,509 --> 00:01:53,679
+the image in this case I think they're
+using a bilateral filter which is this
+
+28
+00:01:53,679 --> 00:01:57,049
+kind of a fancy filter so if you put
+that regularization on the image that my
+
+29
+00:01:57,049 --> 00:01:59,420
+impression is that these are the kinds
+of visualizations that you achieve
+
+30
+00:01:59,420 --> 00:02:03,659
+instead so that looks pretty cool but I
+am not sure exactly what's going on I
+
+31
+00:02:03,659 --> 00:02:04,549
+guess we'll find out soon
+
+32
+00:02:04,549 --> 00:02:10,360
+ok so today we're going to be talking
+about recurrent neural networks what's
+
+33
+00:02:10,360 --> 00:02:13,520
+nice about recurrent neural networks is
+that they offer a lot of flexibility in
+
+34
+00:02:13,520 --> 00:02:15,870
+how to wire up your network
+architectures
+
+35
+00:02:15,870 --> 00:02:18,650
+normally when you work with no let's
+hear the case on the very left here
+
+36
+00:02:18,650 --> 00:02:22,849
+where you are given a fixed size picture
+here in red then you process it with
+
+37
+00:02:22,848 --> 00:02:27,639
+some hidden layers and green and then
+produce a fix I saw the better in San
+
+38
+00:02:27,639 --> 00:02:30,738
+image comes in which is a fix I
+statements and we're producing a fixed
+
+39
+00:02:30,739 --> 00:02:34,469
+size picture which is the closest course
+when the recurrent neural networks we
+
+40
+00:02:34,469 --> 00:02:38,239
+can actually operate over sequences
+sequence at the input output or both at
+
+41
+00:02:38,239 --> 00:02:41,319
+the same time so for example in the case
+of image captioning and we'll see some
+
+42
+00:02:41,318 --> 00:02:44,689
+of it today you're given a fixed size
+image and then through a recurrent
+
+43
+00:02:44,689 --> 00:02:47,829
+neural network we're going to produce a
+sequence of words that describe the
+
+44
+00:02:47,829 --> 00:02:52,560
+content of that image so that's going to
+be a sentence that is the caption for
+
+45
+00:02:52,560 --> 00:02:55,969
+that and in the case of sentiment
+classification in the lobby for example
+
+46
+00:02:55,969 --> 00:02:59,759
+were consuming a number of words and
+sequins and they will try to class
+
+47
+00:02:59,759 --> 00:03:03,828
+driver the sentiment of that sentence is
+positive or negative in a case of
+
+48
+00:03:03,829 --> 00:03:07,590
+machine translation we can have a
+recurrent neural network that takes us a
+
+49
+00:03:07,590 --> 00:03:12,069
+number of words in say English and then
+asked to produce a number of words in
+
+50
+00:03:12,068 --> 00:03:17,119
+French translation so we'd feed this end
+Andrew recurrent neural network in what
+
+51
+00:03:17,120 --> 00:03:20,280
+we call sequence to sequence kind of
+setup and so this work or not work with
+
+52
+00:03:20,280 --> 00:03:25,169
+just performed translation on arbitrary
+sentences in English into French and in
+
+53
+00:03:25,169 --> 00:03:28,000
+the last case for example we have video
+classification where you might want to
+
+54
+00:03:28,000 --> 00:03:31,699
+imagine classifying every single frame
+of a video with some number of classes
+
+55
+00:03:31,699 --> 00:03:35,429
+but crucially don't want to the
+prediction to be only a function of the
+
+56
+00:03:35,430 --> 00:03:38,739
+current time step the current frame of
+the video but also all the things that
+
+57
+00:03:38,739 --> 00:03:41,909
+have come before it in the video as a
+recurrent neural networks allow you to
+
+58
+00:03:41,909 --> 00:03:44,680
+wire up in architecture where the
+prediction that every single time step
+
+59
+00:03:44,680 --> 00:03:48,760
+is a function of all the frames that
+have come in up to that point now even
+
+60
+00:03:48,759 --> 00:03:52,388
+if you don't have sequences that input
+or output you can still use recurrent
+
+61
+00:03:52,389 --> 00:03:55,250
+neural networks even in the case on the
+very left because you can process your
+
+62
+00:03:55,250 --> 00:04:01,560
+fix as inputs or outputs sequentially
+for example one of my favorite examples
+
+63
+00:04:01,560 --> 00:04:05,189
+of this is from people from deep mine
+for a while ago we're trying to
+
+64
+00:04:05,189 --> 00:04:09,750
+transcribe house numbers and instead of
+just having this big image feet into a
+
+65
+00:04:09,750 --> 00:04:13,530
+comment and try to classify exactly what
+house numbers are in there they came up
+
+66
+00:04:13,530 --> 00:04:16,649
+with a recurrent neural network policy
+where there's a small come that and it
+
+67
+00:04:16,649 --> 00:04:19,779
+steered around the image especially with
+recurrent neural network and so their
+
+68
+00:04:19,779 --> 00:04:23,969
+current work learned to basically
+readout house numbers from left to right
+
+69
+00:04:23,970 --> 00:04:26,870
+sequentially and so we have pics as
+input but we're processing it
+
+70
+00:04:26,870 --> 00:04:32,019
+sequentially conversely we can think
+about this is also a well-known people
+
+71
+00:04:32,019 --> 00:04:35,879
+draw this is a general model what you're
+seeing here are samples from the model
+
+72
+00:04:35,879 --> 00:04:39,490
+where it's coming up with these digits
+samples but crucially we're not just
+
+73
+00:04:39,490 --> 00:04:42,860
+predicting these digits at a single time
+but we have our current network and we
+
+74
+00:04:42,860 --> 00:04:47,540
+think of the up as a canvas and the
+kernel goes in and painted over time and
+
+75
+00:04:47,540 --> 00:04:50,200
+so you're giving yourself more chance to
+actually do some computation before you
+
+76
+00:04:50,199 --> 00:04:53,479
+actually produce you're out that it's
+more powerful kind of form of processing
+
+77
+00:04:53,480 --> 00:05:14,189
+data was a question over the specifics
+of exactly what this means for now
+
+78
+00:05:14,189 --> 00:05:19,310
+eros just indicated indicate functional
+dependence so things are so things are
+
+79
+00:05:19,310 --> 00:05:23,139
+harsh enough things before and we're
+going to exactly what that looks like in
+
+80
+00:05:23,139 --> 00:05:37,168
+a bit okay so these are generated house
+numbers so the network looked at a lot
+
+81
+00:05:37,168 --> 00:05:41,219
+of house numbers and came up with a way
+of painting them and so these are not in
+
+82
+00:05:41,220 --> 00:05:44,830
+a training day on these are made up
+numbers from the model none of these are
+
+83
+00:05:44,829 --> 00:05:48,219
+actually the training set these are made
+up
+
+84
+00:05:48,220 --> 00:05:51,689
+yeah they look quite real but they're
+actually made up from the local
+
+85
+00:05:51,689 --> 00:05:55,809
+so a recurrent neural network is
+basically this thing he remarks and
+
+86
+00:05:55,809 --> 00:06:00,979
+green and it has a state and it
+basically receives through time it
+
+87
+00:06:00,978 --> 00:06:04,859
+receives an actress so every single time
+that we can feed in an input vector into
+
+88
+00:06:04,860 --> 00:06:08,538
+the armed men and it has some state
+internally and then it can modify that
+
+89
+00:06:08,538 --> 00:06:12,988
+state as a function of what it what it
+receives every single time step and so
+
+90
+00:06:12,988 --> 00:06:17,258
+they're all of course be weights and CNN
+and so when we turn those wastes the
+
+91
+00:06:17,259 --> 00:06:20,829
+Arnold different behavior in terms of
+how its stated goals as it received
+
+92
+00:06:20,829 --> 00:06:25,769
+exempts I usually we can also be
+interested in producing and all but
+
+93
+00:06:25,769 --> 00:06:30,429
+based on the R&S state so we can produce
+these matters on top of the hour now but
+
+94
+00:06:30,428 --> 00:06:33,988
+so you'll see a show pictures like this
+but I just like to know that the Arnon
+
+95
+00:06:33,988 --> 00:06:36,688
+is really just the block in the middle
+
+96
+00:06:36,689 --> 00:06:39,489
+worked as a state and it can receive
+pictures over time and then we can be
+
+97
+00:06:39,488 --> 00:06:44,838
+some prediction on top of its state in
+some applications so completely the way
+
+98
+00:06:44,838 --> 00:06:50,610
+this will look like is the Army has some
+kind of a state which hereunder noting
+
+99
+00:06:50,610 --> 00:06:55,399
+as Victor H and this can be also a
+collection of doctors are just two more
+
+100
+00:06:55,399 --> 00:07:00,939
+general state and we're going to base it
+as a function of the previous hadn't
+
+101
+00:07:00,939 --> 00:07:05,769
+state administration time I T minus one
+and the current input vector 60 and this
+
+102
+00:07:05,769 --> 00:07:08,338
+is going to be done through a function
+which I'll call a recurrence function
+
+103
+00:07:08,338 --> 00:07:13,728
+and that function will have parameters W
+and so as we change those W us we're
+
+104
+00:07:13,728 --> 00:07:16,228
+going to see the Arnold different
+behaviors and then of course we want
+
+105
+00:07:16,228 --> 00:07:19,338
+some specific behavior are the Arnon
+we're going to be training those weights
+
+106
+00:07:19,338 --> 00:07:23,639
+under seal see examples of that song for
+now I'd like to note that the same
+
+107
+00:07:23,639 --> 00:07:28,209
+function is used at every single time
+step with a fixed function of weights w
+
+108
+00:07:28,209 --> 00:07:31,778
+and we played that single function at
+every single time stuff and that allows
+
+109
+00:07:31,778 --> 00:07:35,928
+us to use the external network on
+sequences of without having to commit to
+
+110
+00:07:35,928 --> 00:07:38,778
+the size of the sequence because we
+applied the exact same function at every
+
+111
+00:07:38,778 --> 00:07:43,528
+single time step no matter how long the
+input or output sequences are so in a
+
+112
+00:07:43,528 --> 00:07:46,769
+specific case of recurrent neural
+network of recurrent neural network the
+
+113
+00:07:46,769 --> 00:07:50,309
+simplest way you can set this up in the
+simplest recurrence you can use is what
+
+114
+00:07:50,309 --> 00:07:54,569
+other 42 as a bit alarming in this case
+the state of recurrent neural network is
+
+115
+00:07:54,569 --> 00:08:00,569
+just a single state h and then we have a
+cross formula that basically tells you
+
+116
+00:08:00,569 --> 00:08:04,039
+how you should update your hidden state
+age as a function of the previous head
+
+117
+00:08:04,038 --> 00:08:04,688
+of state
+
+118
+00:08:04,689 --> 00:08:08,369
+and the current input eckstein and in
+particular and the simplest case we're
+
+119
+00:08:08,369 --> 00:08:10,349
+going to have these weight matrices
+whaaa
+
+120
+00:08:10,348 --> 00:08:15,238
+WX age and they're going to basically
+project both in the hidden state from
+
+121
+00:08:15,238 --> 00:08:18,238
+the previous times that in the current
+input and then those are going to add
+
+122
+00:08:18,238 --> 00:08:21,978
+and then we squish them with at any age
+and that's how we update the state at
+
+123
+00:08:21,978 --> 00:08:26,199
+time t so this recurrence is telling you
+how a total change as a function of its
+
+124
+00:08:26,199 --> 00:08:29,769
+history and also the current input at
+this time that and then we can make
+
+125
+00:08:29,769 --> 00:08:34,129
+predictions we can base predictions on
+top of H for example using just another
+
+126
+00:08:34,129 --> 00:08:37,528
+matrix projection on top of the hill
+state so this is the simplest complete
+
+127
+00:08:37,528 --> 00:08:42,288
+case in which you can wire up in your
+life work so just give you example of
+
+128
+00:08:42,288 --> 00:08:46,639
+how this will work right now I'm just
+talked about sex age and why an abstract
+
+129
+00:08:46,639 --> 00:08:49,299
+forms in terms of actors we could
+actually end of these factors with
+
+130
+00:08:49,299 --> 00:08:53,059
+semantics and so one of the ways in
+which we can use a recurrent neural
+
+131
+00:08:53,059 --> 00:08:56,149
+network as in the case of character
+level language models and this is one of
+
+132
+00:08:56,149 --> 00:08:59,899
+my favorite ways of explaining our next
+because its intuitive and fun to look at
+
+133
+00:08:59,899 --> 00:09:04,698
+so in this case we have character level
+language models using our dance and the
+
+134
+00:09:04,698 --> 00:09:07,859
+way this will work as we will feed a
+sequence of characters into the
+
+135
+00:09:07,860 --> 00:09:10,899
+recurring role at work and at every
+single time step will ask the recurrent
+
+136
+00:09:10,899 --> 00:09:14,299
+neural network to predict the next
+character in the sequence will predict
+
+137
+00:09:14,299 --> 00:09:16,909
+an entire distribution for what it
+thinks should come next in the sequence
+
+138
+00:09:16,909 --> 00:09:21,120
+that has seen so far so I suppose that
+in this very simple example we have the
+
+139
+00:09:21,120 --> 00:09:25,610
+training sequence hello and so we have a
+vocabulary for characters that are in
+
+140
+00:09:25,610 --> 00:09:29,870
+the ATL and we're going to try to get a
+recurrent neural network to learn to
+
+141
+00:09:29,870 --> 00:09:33,289
+predict the next character in a sequence
+on this training data so the way this
+
+142
+00:09:33,289 --> 00:09:37,000
+will work as will set up will feed in
+every one of these characters one at a
+
+143
+00:09:37,000 --> 00:09:40,509
+time into a recurrent neural network
+you'll see it in a chat the first time
+
+144
+00:09:40,509 --> 00:09:47,110
+step and hear the x-axis is the time to
+time so we'll keep an H II L&L and
+
+145
+00:09:47,110 --> 00:09:50,629
+Hiromi coating characters using what we
+call it one hot representation where we
+
+146
+00:09:50,629 --> 00:09:53,889
+just turned on the bitter that response
+to that characters order and vocabulary
+
+147
+00:09:53,889 --> 00:09:58,129
+now we're going to use the recurrence
+formula that I have shown you wear it
+
+148
+00:09:58,129 --> 00:10:01,860
+every single time step suppose we start
+off with 80 and then we applied this
+
+149
+00:10:01,860 --> 00:10:04,720
+request to compute the hidden state
+electorate every single time step using
+
+150
+00:10:04,720 --> 00:10:08,790
+this fix recurrence formula so I suppose
+here we have only three percent in state
+
+151
+00:10:08,789 --> 00:10:11,099
+we're going to end up with a
+three-dimensional representation that
+
+152
+00:10:11,100 --> 00:10:13,040
+basically at any point in time
+
+153
+00:10:13,039 --> 00:10:15,759
+summarizes all the characters that have
+come until
+
+154
+00:10:15,759 --> 00:10:20,159
+and so we have to apply this requires
+that every single time step and now
+
+155
+00:10:20,159 --> 00:10:23,139
+we're going to predict that every single
+time step what should be the next
+
+156
+00:10:23,139 --> 00:10:27,569
+character in a sequence so for example
+since we had four characters in this in
+
+157
+00:10:27,570 --> 00:10:32,100
+this we're going to protect the phone
+numbers at every single time so for
+
+158
+00:10:32,100 --> 00:10:37,139
+example in a very first time that we've
+said in the letter H and the RNN with
+
+159
+00:10:37,139 --> 00:10:40,799
+its current setting of weights computer
+these are normalized lock problem he's
+
+160
+00:10:40,799 --> 00:10:42,959
+here for what it thinks should come next
+
+161
+00:10:42,960 --> 00:10:47,950
+so things that H is 110 likely to come
+next things that eat as 2.2 likely well
+
+162
+00:10:47,950 --> 00:10:52,640
+as negative three likely and OS 4.1
+likely right now in terms of unless lott
+
+163
+00:10:52,639 --> 00:10:56,409
+probabilities of course we know that in
+this training sequence we know that we
+
+164
+00:10:56,409 --> 00:11:00,669
+should follow each so in fact this 2.2
+which are shown in green is the correct
+
+165
+00:11:00,669 --> 00:11:04,559
+answer in this case and so we want that
+to be high and we will do all these
+
+166
+00:11:04,559 --> 00:11:07,799
+other numbers to be low as on every
+single time that we have basically a
+
+167
+00:11:07,799 --> 00:11:12,209
+target for what next character should
+come in the sequence and so we just want
+
+168
+00:11:12,210 --> 00:11:15,470
+all these numbers to be high and all the
+other numbers to be low and so that's of
+
+169
+00:11:15,470 --> 00:11:19,950
+course including in the included in the
+green signal loss function and then that
+
+170
+00:11:19,950 --> 00:11:23,220
+gets back propagated through these
+connections so another way to think
+
+171
+00:11:23,220 --> 00:11:26,600
+about it is that every single time step
+we basically have a soft max classifier
+
+172
+00:11:26,600 --> 00:11:31,300
+so every one of these a soft max
+classifier over the next character and
+
+173
+00:11:31,299 --> 00:11:34,269
+at every single point we know what the
+next character should be and so we just
+
+174
+00:11:34,269 --> 00:11:37,879
+get all those losses slowing down from
+the top and they will all flow through
+
+175
+00:11:37,879 --> 00:11:41,179
+this graph backwards to all the arrows
+were going to get gradients on all the
+
+176
+00:11:41,179 --> 00:11:44,479
+weight matrices and then we'll know how
+to shift the matrices so that the
+
+177
+00:11:44,480 --> 00:11:50,039
+correct problems are coming out of the
+Arnon so we'd be shaping those weights
+
+178
+00:11:50,039 --> 00:11:53,599
+so that the correct behavior the army
+have the correct behaviour you feeding
+
+179
+00:11:53,600 --> 00:11:57,750
+characters as you can imagine how we can
+turn this over to other questions about
+
+180
+00:11:57,750 --> 00:12:02,879
+the diagram
+
+181
+00:12:02,879 --> 00:12:08,750
+yeah Thank you so desperately lying as I
+mentioned a scene the recurrence the
+
+182
+00:12:08,750 --> 00:12:13,320
+same functions always so we have a
+single WX patient every time step we
+
+183
+00:12:13,320 --> 00:12:17,010
+have a single WHYY at every time step in
+the same whah applied at every time step
+
+184
+00:12:17,009 --> 00:12:23,830
+here so we've used WX awh why awhh four
+times in this diagram and in back
+
+185
+00:12:23,830 --> 00:12:27,720
+propagation when we get through YouTube
+account for that because we'll have all
+
+186
+00:12:27,720 --> 00:12:30,750
+these gradients adding up to the same
+weight matrix because it has been used
+
+187
+00:12:30,750 --> 00:12:35,879
+at multiple time steps and this is what
+allows us to process you know variably
+
+188
+00:12:35,879 --> 00:12:38,960
+sized inputs because every time that
+we're doing the same thing so not a
+
+189
+00:12:38,960 --> 00:12:48,540
+function of the absolute amount of
+things and your question what are common
+
+190
+00:12:48,539 --> 00:12:52,579
+things for initializing the first 80 I
+think US Senate 20 this quite quite
+
+191
+00:12:52,580 --> 00:13:00,650
+common in the beginning but does the
+order in which will receive the data
+
+192
+00:13:00,649 --> 00:13:01,289
+that matter
+
+193
+00:13:01,289 --> 00:13:11,299
+yes because so are you asking for these
+characters in a different order so if
+
+194
+00:13:11,299 --> 00:13:14,359
+you see if this was a longer sequence
+the order in this case in this case
+
+195
+00:13:14,360 --> 00:13:17,870
+always doesn't matter because it every
+single point in time if you think about
+
+196
+00:13:17,870 --> 00:13:21,299
+it functionally like this it's a factor
+at this time step as a function of
+
+197
+00:13:21,299 --> 00:13:26,859
+everything that has come before it right
+and so disorder just matters for as long
+
+198
+00:13:26,860 --> 00:13:31,590
+as you're reading it and we're going to
+go through a sieve through some specific
+
+199
+00:13:31,590 --> 00:13:36,149
+examples which i think will clarify some
+of these points to look at a specific
+
+200
+00:13:36,149 --> 00:13:38,980
+example in fact if you want to try to
+characterize the language model it's
+
+201
+00:13:38,980 --> 00:13:43,350
+quite short so I wrote a just then you
+can find a good home where this is
+
+202
+00:13:43,350 --> 00:13:47,220
+hundred line application in numpy for
+accuracy level are and then you can go
+
+203
+00:13:47,220 --> 00:13:49,840
+through an actual active steps through
+this with you so you can see concretely
+
+204
+00:13:49,840 --> 00:13:53,220
+how we could train a recurrent neural
+network impact this and so I'm going to
+
+205
+00:13:53,220 --> 00:13:58,250
+step through this so we're going to go
+through all the blocks in the beginning
+
+206
+00:13:58,250 --> 00:14:02,389
+as you'll see the only dependence here
+is we're loading in some text data so
+
+207
+00:14:02,389 --> 00:14:05,569
+our input here is just a large
+collection of a large sequence of
+
+208
+00:14:05,570 --> 00:14:10,090
+characters in this case a text input
+that txt file and then we get all the
+
+209
+00:14:10,090 --> 00:14:14,810
+characters in that file and we find all
+the unique characters in that file
+
+210
+00:14:14,809 --> 00:14:18,179
+create these mapping dictionaries that
+map from characteristic in the season
+
+211
+00:14:18,179 --> 00:14:23,120
+from indices two characters we basically
+order our characters so seeming bread in
+
+212
+00:14:23,120 --> 00:14:27,350
+a whole bunch of to file and a whole
+bunch of data and we have hundred
+
+213
+00:14:27,350 --> 00:14:30,860
+characters or something like that and
+ordered them in a in a sequence so we
+
+214
+00:14:30,860 --> 00:14:36,300
+associate indices to every character men
+here we're going to diminish license
+
+215
+00:14:36,299 --> 00:14:39,899
+first are hidden sizes hyper primary as
+you'll see with recurrent neural
+
+216
+00:14:39,899 --> 00:14:43,100
+networks so you aren't using it to be a
+hundred here we have a learning rate
+
+217
+00:14:43,100 --> 00:14:46,720
+sequence length here is up to
+twenty-five this is a parameter that
+
+218
+00:14:46,720 --> 00:14:51,019
+you'll be you'll become aware of what
+the problem is if our input data is way
+
+219
+00:14:51,019 --> 00:14:53,899
+too large say like millions of times the
+UPS there's no way you can put in
+
+220
+00:14:53,899 --> 00:14:56,870
+dhahran and on top of all of it because
+we need to maintain all of the stuff and
+
+221
+00:14:56,870 --> 00:15:00,070
+memory so that you can do back
+propagation in fact we won't be able to
+
+222
+00:15:00,070 --> 00:15:03,540
+keep all of it and two men in memory and
+a back rub through all of it so we'll go
+
+223
+00:15:03,539 --> 00:15:07,139
+in chunks through our input data in this
+case we're going through chunks of 25 at
+
+224
+00:15:07,139 --> 00:15:09,230
+a time so as you'll see in a bit
+
+225
+00:15:09,230 --> 00:15:14,769
+we have this entire dataset but will be
+going in chunks of 25 characters at a
+
+226
+00:15:14,769 --> 00:15:19,509
+time and every time we're just going to
+backup get through 25 characters on time
+
+227
+00:15:19,509 --> 00:15:22,149
+because we can't afford to do back
+propagation for longer because we have
+
+228
+00:15:22,149 --> 00:15:26,899
+to remember all that stuff and so we're
+going in chunks here of 25 and then we
+
+229
+00:15:26,899 --> 00:15:30,789
+have all these W matrices that here I'm
+analyzing randomly and some boxes so WX
+
+230
+00:15:30,789 --> 00:15:34,709
+HHH and HY and those are all of our hype
+all of our parameters that we're going
+
+231
+00:15:34,710 --> 00:15:36,790
+to train a backrub
+
+232
+00:15:36,789 --> 00:15:40,699
+I'm going to skip over the loss function
+here and I'm going to get to the bottom
+
+233
+00:15:40,700 --> 00:15:44,020
+of the script here we have a main loop
+and I'm going to go through some of this
+
+234
+00:15:44,019 --> 00:15:48,399
+may look now so there are some
+initialization here of various things 20
+
+235
+00:15:48,399 --> 00:15:50,829
+in the beginning and then we're looking
+for ever
+
+236
+00:15:50,830 --> 00:15:54,960
+we're doing here is a sampling a batch
+of data so here it is where I actually
+
+237
+00:15:54,960 --> 00:15:58,970
+take a batch of 25 characters out of
+this dataset so that's in the list
+
+238
+00:15:58,970 --> 00:16:03,019
+inputs and the list and puts basically
+just has 25 integers correspond to the
+
+239
+00:16:03,019 --> 00:16:06,919
+characters the targets as you'll see is
+just all the same characters but offset
+
+240
+00:16:06,919 --> 00:16:09,909
+by one because those are the indices
+that we're trying to predict it every
+
+241
+00:16:09,909 --> 00:16:15,269
+single time stuff so so important
+targets are just list of 25 characters
+
+242
+00:16:15,269 --> 00:16:20,689
+targets as offset by one into the future
+so that's what we sampled basically back
+
+243
+00:16:20,690 --> 00:16:26,480
+from data here we this is some sample
+code so it every single point in time
+
+244
+00:16:26,480 --> 00:16:30,659
+training this week and of course I try
+to generate some samples of what it's
+
+245
+00:16:30,659 --> 00:16:35,370
+currently thanks character should
+actually what these sequences look like
+
+246
+00:16:35,370 --> 00:16:40,320
+the way we use character low-level
+artists and test time is that we're
+
+247
+00:16:40,320 --> 00:16:43,570
+going to see that with some characters
+and then this aren't always gives us the
+
+248
+00:16:43,570 --> 00:16:46,379
+distribution of the next character in a
+sequence so you can imagine sampling
+
+249
+00:16:46,379 --> 00:16:49,259
+from it and then you feat in the next
+character getting a sample from the
+
+250
+00:16:49,259 --> 00:16:52,769
+distribution and keep doing it in to
+keep feeding all the samples into the
+
+251
+00:16:52,769 --> 00:16:56,549
+iron and you can just generate arbitrary
+text data that's what this code will do
+
+252
+00:16:56,549 --> 00:17:00,549
+and it caused the sample function so
+we're going to that in a bit then here
+
+253
+00:17:00,549 --> 00:17:04,250
+I'm calling the loss function the loss
+function receives the inputs the targets
+
+254
+00:17:04,250 --> 00:17:09,160
+and it receives also this H prep H
+pressure is short for his state vector
+
+255
+00:17:09,160 --> 00:17:13,900
+from the previous trunk so we're going
+in batches of 25 and we are keeping
+
+256
+00:17:13,900 --> 00:17:18,179
+track of what is the latest a picture at
+the end of your 25 letters so that we
+
+257
+00:17:18,179 --> 00:17:22,400
+can when we meet in the next back we can
+see that in as the initial h at that
+
+258
+00:17:22,400 --> 00:17:26,140
+time so we're making sure that the
+hidden states are basically correctly
+
+259
+00:17:26,140 --> 00:17:30,700
+propagated from batch to batch through
+that but we're only back propagating
+
+260
+00:17:30,700 --> 00:17:35,558
+those 25 time steps so we fit into a
+function of the loss and gradients and
+
+261
+00:17:35,558 --> 00:17:39,319
+all the weight matrices and all the
+boxes and you're just printing the loss
+
+262
+00:17:39,319 --> 00:17:44,149
+and then here's a primer update we're
+told us older greetings and here we are
+
+263
+00:17:44,150 --> 00:17:47,429
+actually perform the update which you
+should recognize as an undergrad update
+
+264
+00:17:47,429 --> 00:17:53,100
+so I have all these cash to think of all
+these cashed
+
+265
+00:17:53,099 --> 00:17:56,819
+variables for the gradient squared which
+I'm accumulating and then perform the
+
+266
+00:17:56,819 --> 00:18:00,639
+autocratic date someone to go into the
+loss function and what that looks like
+
+267
+00:18:00,640 --> 00:18:05,790
+now the loss function is this block of
+code it really consists of forward and
+
+268
+00:18:05,789 --> 00:18:08,990
+backward method so we're comparing the
+forward pass and then the back of
+
+269
+00:18:08,990 --> 00:18:13,130
+passing Green so I'll go through those
+two steps forward pass you should
+
+270
+00:18:13,130 --> 00:18:18,919
+recognize basically we get those deficit
+targets we're waiting receive these 25
+
+271
+00:18:18,919 --> 00:18:23,360
+indices and we're not trading through
+them from 1 to 25 we create this text
+
+272
+00:18:23,359 --> 00:18:27,500
+input vector which is just zeros and
+then we set the one hot encoding so
+
+273
+00:18:27,500 --> 00:18:32,169
+whatever the index and impetus we turned
+it on for with one so we're feeding in
+
+274
+00:18:32,169 --> 00:18:34,110
+the character with that one hot encoding
+
+275
+00:18:34,109 --> 00:18:39,229
+here in computing the recurrence formula
+using this equation so hsi T
+
+276
+00:18:39,230 --> 00:18:42,210
+their ages and all these things to keep
+track of everything and every single
+
+277
+00:18:42,210 --> 00:18:46,910
+time stuff so we compute the state
+vector and the output using the
+
+278
+00:18:46,910 --> 00:18:50,779
+recurrence formula and these two lines
+and then over there I'm computing the
+
+279
+00:18:50,779 --> 00:18:54,440
+suspects function so normalizing this so
+that if we get probabilities and then
+
+280
+00:18:54,440 --> 00:18:58,190
+your loss is negative lock probability
+of the correct answer so that's just a
+
+281
+00:18:58,190 --> 00:19:02,779
+softness classifier lost over there so
+that's the purpose and we're going to
+
+282
+00:19:02,779 --> 00:19:06,899
+back propagate through the graph so in
+the backward pass we go backwards
+
+283
+00:19:06,900 --> 00:19:08,530
+through that sequence from 25
+
+284
+00:19:08,529 --> 00:19:12,899
+all the way back to one and maybe you'll
+recognize I don't know how much detail I
+
+285
+00:19:12,900 --> 00:19:16,509
+want to go in here but you'll recognize
+them back propagating through a soft max
+
+286
+00:19:16,509 --> 00:19:19,089
+propagating through the activation
+functions I'm not propagating through
+
+287
+00:19:19,089 --> 00:19:23,379
+all of it and I'm just adding up all the
+greetings and all the prime minister and
+
+288
+00:19:23,380 --> 00:19:27,210
+one thing to note here especially is
+that these ingredients and make weight
+
+289
+00:19:27,210 --> 00:19:31,210
+matrices like woahh I'm using a plus
+equals because it every single time step
+
+290
+00:19:31,210 --> 00:19:34,590
+all of these weight matrices getting
+gradient and we need to accumulate
+
+291
+00:19:34,589 --> 00:19:37,449
+fit into all the weight matrices because
+we keep using all these weight matrices
+
+292
+00:19:37,450 --> 00:19:43,980
+at the same at every time step and so we
+just backdrop into them over time and
+
+293
+00:19:43,980 --> 00:19:48,130
+that gives us the radiance and then we
+can use that loss function from the
+
+294
+00:19:48,130 --> 00:19:52,580
+primary and then here we have finally a
+sampling function so here is where we
+
+295
+00:19:52,579 --> 00:19:55,960
+try to actually get the artist to
+generate new text data based on what he
+
+296
+00:19:55,960 --> 00:19:59,058
+has seen an attorney and based on the
+statistics of the characters and how
+
+297
+00:19:59,058 --> 00:20:02,048
+they follow each other in the training
+data so we initialize with some rain and
+
+298
+00:20:02,048 --> 00:20:06,759
+character and then we go for until we
+get tired and we compute the recurrence
+
+299
+00:20:06,759 --> 00:20:09,289
+formula that the problem the
+distribution sample from the
+
+300
+00:20:09,289 --> 00:20:10,450
+distribution
+
+301
+00:20:10,450 --> 00:20:15,640
+encoded in one hot Kate 11 hot
+representation and then we fielded a
+
+302
+00:20:15,640 --> 00:20:22,460
+next time so we keep doing this until we
+actually get 200 texts so is there any
+
+303
+00:20:22,460 --> 00:20:27,190
+question over just like the rough layout
+of how this works
+
+304
+00:20:27,190 --> 00:21:04,680
+$25 South max classifiers at every batch
+and we back all of those at the same
+
+305
+00:21:04,680 --> 00:21:14,910
+time and all add up in the connections
+going backwards that's why do we use
+
+306
+00:21:14,910 --> 00:21:19,259
+regularization here you'll see that I
+probably do not I guess I skipped it
+
+307
+00:21:19,259 --> 00:21:23,720
+here but you can in general I think
+sometimes I tried regularization I don't
+
+308
+00:21:23,720 --> 00:21:27,269
+think it is common to use it and
+recurring nuts as outside sometimes it
+
+309
+00:21:27,269 --> 00:21:38,379
+gave me like worst results so sometimes
+I skip it it's kind of a fight promoter
+
+310
+00:21:38,380 --> 00:21:48,260
+yeah that's right yeah that's right so
+in the sequence of 25 shots here we are
+
+311
+00:21:48,259 --> 00:21:51,839
+very low level on character level and we
+don't actually care about words we don't
+
+312
+00:21:51,839 --> 00:21:56,289
+know that word exists as just character
+indices so miss arnelle in fact doesn't
+
+313
+00:21:56,289 --> 00:21:58,569
+know anything about characters so
+language or anything like that just in
+
+314
+00:21:58,569 --> 00:22:08,009
+the series and sequences appendices and
+that's what we're modeling using pieces
+
+315
+00:22:08,009 --> 00:22:13,460
+can be used space as the letters or
+something like that instead of just
+
+316
+00:22:13,460 --> 00:22:18,630
+constant batches of 25 I think he maybe
+could but then it kind of just you have
+
+317
+00:22:18,630 --> 00:22:22,530
+to make assumptions about language will
+see soon why you would want to do that
+
+318
+00:22:22,529 --> 00:22:25,359
+because you can plug anything into this
+and we'll see that we can have a lot of
+
+319
+00:22:25,359 --> 00:22:31,539
+fun with that ok now we can do we can
+take a whole bunch of texts we don't
+
+320
+00:22:31,539 --> 00:22:34,889
+care where it came from a sequence of
+characters and we feed into the Arnon
+
+321
+00:22:34,890 --> 00:22:40,670
+and we can train the iron and to create
+text like it and so for example you can
+
+322
+00:22:40,670 --> 00:22:44,789
+take all of William Shakespeare's works
+you can catch all of it is just a giant
+
+323
+00:22:44,789 --> 00:22:48,289
+sequence of characters and you put into
+the recurrent neural network and try to
+
+324
+00:22:48,289 --> 00:22:51,909
+predict the next character in a sequence
+for William Shakespeare proponents and
+
+325
+00:22:51,910 --> 00:22:54,650
+so when you do those of course in the
+beginning the recurrent neural network
+
+326
+00:22:54,650 --> 00:22:59,030
+has random random parameters so just
+producing a garbled at the very end so
+
+327
+00:22:59,029 --> 00:23:03,200
+it's just random characters but then
+when you train the Arnon will start to
+
+328
+00:23:03,200 --> 00:23:06,930
+understand that ok there are actually
+things like spaces there's words start
+
+329
+00:23:06,930 --> 00:23:11,490
+to experiment with quotes it and it
+basically learn some of the very short
+
+330
+00:23:11,490 --> 00:23:16,420
+words like here or on and so on and then
+as you train more and more disease
+
+331
+00:23:16,420 --> 00:23:18,820
+becomes more and more refined and the
+recurrent neural network learns that
+
+332
+00:23:18,819 --> 00:23:22,609
+when you open a quote you should close
+it later or that those sentences and
+
+333
+00:23:22,609 --> 00:23:26,379
+with a cup with a dot it learns all the
+stuff statistically just from the rock
+
+334
+00:23:26,380 --> 00:23:29,630
+patterns without actually having to head
+coach anything and in the end you can
+
+335
+00:23:29,630 --> 00:23:30,580
+sample entire
+
+336
+00:23:30,579 --> 00:23:34,349
+shakespeare based on this on a character
+level so just give an idea about what
+
+337
+00:23:34,349 --> 00:23:38,740
+kind of stuff comes out a lot I think he
+shall become approached and the gang
+
+338
+00:23:38,740 --> 00:23:42,900
+will strain would be attained into being
+never fed and his but the chain and
+
+339
+00:23:42,900 --> 00:23:45,460
+subject of his death I should not sleep
+
+340
+00:23:45,460 --> 00:23:56,909
+that's the kind of stuff that you would
+get out of this regard network you're
+
+341
+00:23:56,909 --> 00:24:02,679
+mean up a very subtle point which I'd
+like to get back to you in a bit okay so
+
+342
+00:24:02,679 --> 00:24:05,980
+we can run this on Shakespeare but we
+can run the Sun basically anything so
+
+343
+00:24:05,980 --> 00:24:08,960
+we're playing with this with Justin I
+think like roughly year ago and so
+
+344
+00:24:08,960 --> 00:24:12,990
+Justin Tuck he found this book on
+algebraic geometry and this is just a
+
+345
+00:24:12,990 --> 00:24:18,069
+large latex source file and we took that
+latex source file for this geometry and
+
+346
+00:24:18,069 --> 00:24:23,398
+finance the art and the artist can learn
+to basically generate mathematics so
+
+347
+00:24:23,398 --> 00:24:27,199
+this is a sample submitted this morning
+just spits out late check and then we
+
+348
+00:24:27,200 --> 00:24:30,009
+can pilot and of course doesn't work
+right away we had to tune it a tiny bit
+
+349
+00:24:30,009 --> 00:24:33,890
+but basically the Arnon after we tweaked
+some of the mistakes that has made you
+
+350
+00:24:33,890 --> 00:24:37,200
+can compile it and you can get the
+generate mathematics as you'll see that
+
+351
+00:24:37,200 --> 00:24:42,460
+it basically creates all these proofs it
+puts her stupid little squares at the
+
+352
+00:24:42,460 --> 00:24:47,090
+end of troops it creates let us and so
+on
+
+353
+00:24:47,089 --> 00:24:52,428
+sometimes we are going to create
+diagrams to varying amounts of success
+
+354
+00:24:52,429 --> 00:24:56,720
+and my best my favorite part about this
+is that on the top left the proof here
+
+355
+00:24:56,720 --> 00:24:59,650
+is emitted
+
+356
+00:24:59,650 --> 00:25:05,780
+the Sarno is just lazy but otherwise
+this stuff is quite indistinguishable I
+
+357
+00:25:05,779 --> 00:25:12,480
+would say from from actual geometry so
+let X 10 scheme of X ok I'm not sure
+
+358
+00:25:12,480 --> 00:25:16,160
+about that part but otherwise the
+gestalt of this looks very good
+
+359
+00:25:16,160 --> 00:25:19,529
+arbitrary things that it so I tried to
+find the hardest arbitrary thing that I
+
+360
+00:25:19,529 --> 00:25:22,769
+could throw the character level I
+decided that source code is actually
+
+361
+00:25:22,769 --> 00:25:27,879
+very difficult so I took all of Linux
+source which is just older like C code
+
+362
+00:25:27,880 --> 00:25:30,850
+you can copy it and you end up with I
+think some hundred megabytes and just
+
+363
+00:25:30,849 --> 00:25:35,079
+see code and header files and then just
+thrown into the Arnon and then it can
+
+364
+00:25:35,079 --> 00:25:39,849
+learn to generate code and so this is
+generated code from the Arnon and you
+
+365
+00:25:39,849 --> 00:25:42,949
+can see that basically creates function
+declarations it knows about inputs
+
+366
+00:25:42,950 --> 00:25:47,460
+syntactically it makes very few mistakes
+it knows about variables sort of how to
+
+367
+00:25:47,460 --> 00:25:53,230
+use them sometimes it intends to code it
+creates its own bogus comments
+
+368
+00:25:53,230 --> 00:25:58,089
+syntactically is very rare to find that
+it would open a bracket and not close it
+
+369
+00:25:58,089 --> 00:26:01,808
+and so on this actually is relatively
+easy for dornin to learn and so some of
+
+370
+00:26:01,808 --> 00:26:04,058
+the mistakes that makes actually is that
+for example it
+
+371
+00:26:04,058 --> 00:26:07,240
+declare some variables that it never
+ends up using or do the same variables
+
+372
+00:26:07,240 --> 00:26:09,929
+that it never declared and so some of
+these high level stuff is still missing
+
+373
+00:26:09,929 --> 00:26:12,509
+but otherwise it can do just fine
+
+374
+00:26:12,509 --> 00:26:17,460
+it also no hostile recite the Jeep the
+new GOP licensed character by character
+
+375
+00:26:17,460 --> 00:26:22,009
+that has learned from data and that
+knows that after the GPL license there
+
+376
+00:26:22,009 --> 00:26:25,779
+some include files there some macros and
+then there's some code so that's
+
+377
+00:26:25,779 --> 00:26:33,879
+basically what has learned that in turn
+into just a show is very small
+
+378
+00:26:33,880 --> 00:26:37,169
+just a toy thing to show you what's
+going on then there's a char and then
+
+379
+00:26:37,169 --> 00:26:41,230
+which is a more kind of implementation
+and torch which has just been charged
+
+380
+00:26:41,230 --> 00:26:45,009
+and scaled up and runs and GPU and so
+you can play with that yourself and so
+
+381
+00:26:45,009 --> 00:26:49,269
+this in particular was going to this by
+then the latter it's a three-layer Alice
+
+382
+00:26:49,269 --> 00:26:52,289
+team and so we'll see what that means
+it's a more complex kind of phone
+
+383
+00:26:52,289 --> 00:26:58,839
+network I just give an idea about how
+this works so there's a paper that we
+
+384
+00:26:58,839 --> 00:27:02,089
+played with a lot but this was just an
+last year and we're basically trying to
+
+385
+00:27:02,089 --> 00:27:08,949
+pretend that we're neuroscientists and
+we threw a hair salon on some test text
+
+386
+00:27:08,950 --> 00:27:13,110
+and so the Arden is reading this text in
+the snippet of code and we're looking at
+
+387
+00:27:13,109 --> 00:27:17,119
+a specific cell and his state of the art
+coloring the text based on whether or
+
+388
+00:27:17,119 --> 00:27:18,699
+not that sells excited or not
+
+389
+00:27:18,700 --> 00:27:23,470
+ok so you can see that many of the state
+
+390
+00:27:23,470 --> 00:27:27,110
+neurons are not interpretable to kind of
+fire on nothin kind of weird ways
+
+391
+00:27:27,109 --> 00:27:29,829
+because they have to do some of them
+have to do quite low level character
+
+392
+00:27:29,829 --> 00:27:33,859
+level stuff like how often does she come
+after age and stuff like that let's all
+
+393
+00:27:33,859 --> 00:27:37,928
+the cells are quite interpretable so for
+example we find ourselves like a quick
+
+394
+00:27:37,929 --> 00:27:41,830
+detection so that this cell just turns
+on when it is a quote and then it stays
+
+395
+00:27:41,829 --> 00:27:46,460
+on until the quote closets and so this
+quite reliably keeps track of this and
+
+396
+00:27:46,460 --> 00:27:50,610
+it just comes out from backpropagation
+the island of this size that the
+
+397
+00:27:50,609 --> 00:27:54,329
+character level statistics are different
+inside and outside of course and this is
+
+398
+00:27:54,329 --> 00:27:57,639
+a useful feature to learn and so it
+dedicate some of its head of state to
+
+399
+00:27:57,640 --> 00:28:00,650
+keeping track of whether or not you're
+inside a quote and this goes back to
+
+400
+00:28:00,650 --> 00:28:05,159
+your question which I want to point out
+here that this RNN was trained on I
+
+401
+00:28:05,159 --> 00:28:06,500
+think sequence length
+
+402
+00:28:06,500 --> 00:28:10,269
+hundred but if you measure the length of
+this quote is actually much more than a
+
+403
+00:28:10,269 --> 00:28:16,220
+hundred i think is like 250 and so we
+worked on we only back propagated up to
+
+404
+00:28:16,220 --> 00:28:20,190
+a hundred and so that's the only place
+where the cell can actually like Lauren
+
+405
+00:28:20,190 --> 00:28:23,460
+itself because it wouldn't be able to
+spot the appendices there much longer
+
+406
+00:28:23,460 --> 00:28:27,809
+than that but I think basically this
+seems to show that you can train this
+
+407
+00:28:27,809 --> 00:28:31,159
+character level detection sell as a
+useful on sequences less than a hundred
+
+408
+00:28:31,160 --> 00:28:36,580
+and then it generalizes properly to
+longer sequences so this so this cell
+
+409
+00:28:36,579 --> 00:28:39,859
+seems to work for more than a hundred
+steps even if it was only trained even
+
+410
+00:28:39,859 --> 00:28:44,759
+if it was only able to spot the
+dependencies on less than a hundred this
+
+411
+00:28:44,759 --> 00:28:48,890
+is another dataset here this is I think
+Leo Tolstoy's War and Peace this is in
+
+412
+00:28:48,890 --> 00:28:52,460
+this dataset there's a new line
+character at every single at roughly 80
+
+413
+00:28:52,460 --> 00:28:57,819
+characters in 80 characters roughly
+there's a new line and there's a there's
+
+414
+00:28:57,819 --> 00:29:02,470
+a line link tracking so that we found
+where it starts off at like one and then
+
+415
+00:29:02,470 --> 00:29:06,539
+it slowly case over time and you might
+imagine that a cell like this is
+
+416
+00:29:06,539 --> 00:29:09,019
+actually very useful in predicting that
+you like character at the end because
+
+417
+00:29:09,019 --> 00:29:13,059
+this arnie's to count a tee time steps
+so that it knows when a new line
+
+418
+00:29:13,059 --> 00:29:15,149
+character is likely to come next
+
+419
+00:29:15,150 --> 00:29:19,280
+ok so there's like tracking tell us we
+found cells that actually respond only a
+
+420
+00:29:19,279 --> 00:29:23,970
+sudden statements we found cells that
+only respondents cite quotes and strings
+
+421
+00:29:23,970 --> 00:29:28,710
+we found cells that I get more excited
+the deeper you nestin expression and so
+
+422
+00:29:28,710 --> 00:29:33,150
+all kinds of interesting cells that you
+can actually find inside these are not
+
+423
+00:29:33,150 --> 00:29:36,710
+completely come out just from the back
+propagation and so that's quite magical
+
+424
+00:29:36,710 --> 00:29:42,130
+I suppose but
+
+425
+00:29:42,130 --> 00:29:49,110
+this Alice team I think they're about
+2,100 cell so you just gonna go through
+
+426
+00:29:49,109 --> 00:29:54,589
+them and some of them look like this but
+I would say roughly 5 percent of them
+
+427
+00:29:54,589 --> 00:30:00,429
+you spot something interesting so you
+just go through it manually
+
+428
+00:30:00,430 --> 00:30:05,310
+sorry so we are completely running the
+entire are in an intact but we're only
+
+429
+00:30:05,309 --> 00:30:09,679
+looking at a single hidden state fire at
+the firing of US one single cell in
+
+430
+00:30:09,680 --> 00:30:14,470
+dhahran so running the are normally but
+we're just kind of a recording from one
+
+431
+00:30:14,470 --> 00:30:20,900
+cell and the hidden state that makes
+sense so this sell just the entire are
+
+432
+00:30:20,900 --> 00:30:23,940
+among those rising one part of the
+hidden state basically there's many
+
+433
+00:30:23,940 --> 00:30:27,740
+other hidden still hittin cells that
+involved in different ways and they're
+
+434
+00:30:27,740 --> 00:30:30,349
+all believing in different times and
+they're all doing different things
+
+435
+00:30:30,349 --> 00:30:41,899
+inside the Arnon hidden state
+
+436
+00:30:41,900 --> 00:30:50,150
+but you can get similar results with one
+layer
+
+437
+00:30:50,150 --> 00:31:00,490
+these cells were always between negative
+one in 110 each and this is from
+
+438
+00:31:00,490 --> 00:31:04,120
+analysis team which we haven't covered
+yet but the firing of the salsa between
+
+439
+00:31:04,119 --> 00:31:11,869
+a one and one so that's the scale that's
+us this picture so are as are pretty
+
+440
+00:31:11,869 --> 00:31:15,609
+cool and you can actually trendy
+sequence models over time about roughly
+
+441
+00:31:15,609 --> 00:31:19,039
+one year ago several people have come to
+realize that you can actually use the
+
+442
+00:31:19,039 --> 00:31:22,039
+same very neat application in the
+context of computer vision to perform
+
+443
+00:31:22,039 --> 00:31:25,210
+image capturing in this context for
+taking a single imagine we'd like to
+
+444
+00:31:25,210 --> 00:31:27,840
+describe it with a sequence of warrants
+and these are nuns are very good at
+
+445
+00:31:27,839 --> 00:31:32,490
+understanding how sequences develop over
+time so in this particular model them
+
+446
+00:31:32,490 --> 00:31:36,240
+going to describe this actually work
+from roughly year-ago happens to be my
+
+447
+00:31:36,240 --> 00:31:43,039
+paper I have I have pictures from my
+paper so I'm going to use those so we
+
+448
+00:31:43,039 --> 00:31:46,629
+are feeding a commission and omission to
+accomplish on your network and then
+
+449
+00:31:46,630 --> 00:31:48,990
+you'll see that this phone models
+actually just made up of two modules
+
+450
+00:31:48,990 --> 00:31:51,750
+there's the comment that is doing the
+processing of the image and their
+
+451
+00:31:51,750 --> 00:31:55,460
+current debt which will be very which is
+very good with modeling sequences as so
+
+452
+00:31:55,460 --> 00:31:58,470
+if you remember my analogy from the very
+beginning of the course where this is
+
+453
+00:31:58,470 --> 00:32:01,039
+kinda like playing with Lego blocks
+we're going to take those two modules
+
+454
+00:32:01,039 --> 00:32:04,509
+and stick them together that corresponds
+to the arrow in between and so what
+
+455
+00:32:04,509 --> 00:32:07,829
+we're doing effectively here is where
+conditioning this RNN generative model
+
+456
+00:32:07,829 --> 00:32:11,349
+or not just telling its sample text at
+random but we're conditioning that
+
+457
+00:32:11,349 --> 00:32:14,939
+generate process by the upper to come
+ashore network and I'll show you exactly
+
+458
+00:32:14,940 --> 00:32:21,220
+how that looks like so suppose I'm going
+to show you what the forward pass on
+
+459
+00:32:21,220 --> 00:32:24,110
+your own that is so suppose we have a
+test image and we're trying to describe
+
+460
+00:32:24,109 --> 00:32:27,679
+it with a sequence of words so the way
+this model with process the images US
+
+461
+00:32:27,680 --> 00:32:31,240
+policy which take that any plugin to
+accomplish on your left work in this
+
+462
+00:32:31,240 --> 00:32:35,250
+case is a VG nett so we go through a
+whole bunch of comics pool and so on
+
+463
+00:32:35,250 --> 00:32:37,349
+until we arrived at the end
+
+464
+00:32:37,349 --> 00:32:40,149
+normally at the end we have this
+automatic classifier which is giving you
+
+465
+00:32:40,150 --> 00:32:44,440
+a profit distribution over say 1000
+categories of images in this case we're
+
+466
+00:32:44,440 --> 00:32:47,420
+going to actually get rid of that
+classifier and instead we're going to
+
+467
+00:32:47,420 --> 00:32:50,750
+redirect representation at the top of
+the coalition member into the recurrent
+
+468
+00:32:50,750 --> 00:32:54,880
+neural network so we begin to generation
+of the Arnon with a special
+
+469
+00:32:54,880 --> 00:33:00,410
+art vector so the impetus are
+nonetheless I think 300 emotional and
+
+470
+00:33:00,410 --> 00:33:02,700
+this is a special three hundred
+emotional victory that we always plug
+
+471
+00:33:02,700 --> 00:33:05,750
+into the first iteration tells me that
+this is the beginning of the sequence
+
+472
+00:33:05,750 --> 00:33:09,039
+and then we're going to perform the
+recurrence formula that I shown you
+
+473
+00:33:09,039 --> 00:33:13,769
+before for recurrent neural network
+normally we computed this recurrence
+
+474
+00:33:13,769 --> 00:33:18,779
+which we've solidarity where we compute
+WSH time sex but whhhy and now we want
+
+475
+00:33:18,779 --> 00:33:23,500
+to additionally conditioned as recurrent
+neural network not only on the current
+
+476
+00:33:23,500 --> 00:33:28,089
+input and current in a state which we
+must like 20 so that term goes away at
+
+477
+00:33:28,089 --> 00:33:33,649
+the first time that but we initially
+condition just by adding wiht times be
+
+478
+00:33:33,650 --> 00:33:38,040
+and so this is the top of the comment
+here and we've added interaction and
+
+479
+00:33:38,039 --> 00:33:43,399
+added weight matrix W which tells us how
+this image information emerges into the
+
+480
+00:33:43,400 --> 00:33:46,380
+very first time since the recurring role
+at work now there are many ways to
+
+481
+00:33:46,380 --> 00:33:48,940
+actually play with this recurrence in
+many ways to actually plug in the image
+
+482
+00:33:48,940 --> 00:33:51,690
+into there are now and this is only one
+of them and one of the simpler ones
+
+483
+00:33:51,690 --> 00:33:55,750
+perhaps and at the very first time step
+here in this wine zero vector is the
+
+484
+00:33:55,750 --> 00:34:00,009
+distribution over the first word in a
+sequence so the way this works
+
+485
+00:34:00,009 --> 00:34:05,490
+you might imagine for example is you can
+see that these structures in the mass
+
+486
+00:34:05,490 --> 00:34:09,699
+hat can be recognized by the Coalition
+network as strong like stuff and then
+
+487
+00:34:09,699 --> 00:34:12,939
+through this interaction wiht my
+condition to hit in state to go into a
+
+488
+00:34:12,940 --> 00:34:17,039
+particular state where the probability
+of the word straw can be slightly higher
+
+489
+00:34:17,039 --> 00:34:20,519
+right so you might imagine that the
+strong like textures can influence the
+
+490
+00:34:20,519 --> 00:34:23,940
+probability of strong so one of the
+numbers inside 10 to be higher because
+
+491
+00:34:23,940 --> 00:34:28,470
+their structures and so the army from
+now on has to kind of jungle two tasks
+
+492
+00:34:28,469 --> 00:34:32,269
+it has to predict the next care and next
+word in the sequence in this case and it
+
+493
+00:34:32,269 --> 00:34:36,550
+has to remember the image information so
+we sent from that sock Max and
+
+494
+00:34:36,550 --> 00:34:40,629
+supposedly the most likely word that we
+sampled from that distribution was
+
+495
+00:34:40,628 --> 00:34:44,710
+indeed the word strong we will take
+strong and we would try to plug it into
+
+496
+00:34:44,710 --> 00:34:47,519
+the recording all that work on the
+bottom again and so in this case I think
+
+497
+00:34:47,519 --> 00:34:52,190
+we're using word level and beddings so
+the strong strong word is associate with
+
+498
+00:34:52,190 --> 00:34:55,750
+a three hundred national Dr we're going
+to learn to represent the three hundred
+
+499
+00:34:55,750 --> 00:35:00,010
+national representation for every single
+unique jewellery and we plug in those
+
+500
+00:35:00,010 --> 00:35:02,940
+three hundred numbers into the Arnon and
+forward again to get a description of
+
+501
+00:35:02,940 --> 00:35:07,090
+the second world and sequence inside why
+one so we get all these properties we
+
+502
+00:35:07,090 --> 00:35:08,010
+sample from it again
+
+503
+00:35:08,010 --> 00:35:12,490
+suppose that the word hat is likely now
+we take hats 400 much older presentation
+
+504
+00:35:12,489 --> 00:35:18,299
+and get the distribution of it there and
+then we sample again and we sample until
+
+505
+00:35:18,300 --> 00:35:21,350
+we sample a special and token which is
+really the period at the end of the
+
+506
+00:35:21,349 --> 00:35:24,900
+sentence and that tells us that the
+arnaz now done generating and at this
+
+507
+00:35:24,900 --> 00:35:30,280
+point the army would have described this
+image as a straw hat period ok so the
+
+508
+00:35:30,280 --> 00:35:34,010
+number of dimensions and his wife
+picture is a number of words in your
+
+509
+00:35:34,010 --> 00:35:39,220
+vocabulary +1 for the special and token
+and we are always feeding industry
+
+510
+00:35:39,219 --> 00:35:43,609
+sectors that correspond to different
+words and a special start talkin and
+
+511
+00:35:43,610 --> 00:35:46,250
+then we always just that propagates
+through the whole thing and a single
+
+512
+00:35:46,250 --> 00:35:49,769
+time to nationalize this at random or
+you can initialize your BG net with free
+
+513
+00:35:49,769 --> 00:35:52,099
+trade for a minute and then
+
+514
+00:35:52,099 --> 00:35:56,319
+distributions and then you encode the
+gradient and then you backed up through
+
+515
+00:35:56,320 --> 00:35:59,700
+the whole thing as a single model and
+just trained at all jointly and you get
+
+516
+00:35:59,699 --> 00:36:08,389
+a caption or image capture lots of
+questions ok but yes i three hundred
+
+517
+00:36:08,389 --> 00:36:12,609
+emotional embeddings they're just
+independent of the image so every word
+
+518
+00:36:12,610 --> 00:36:18,430
+has 300 numbers associated with it so
+we're going to bankrupt get into it so
+
+519
+00:36:18,429 --> 00:36:21,769
+you initialize it random and then you
+can back up to get into these better sex
+
+520
+00:36:21,769 --> 00:36:25,360
+right so those embeddings will shift
+around there just a parameter another
+
+521
+00:36:25,360 --> 00:36:30,530
+way to think about it is it's to having
+a one-hop representation for all the
+
+522
+00:36:30,530 --> 00:36:34,960
+words and then you have a giant W matrix
+where every single
+
+523
+00:36:34,960 --> 00:36:40,130
+multiplied W with that one hundred
+plantation and it w has 300 out but size
+
+524
+00:36:40,130 --> 00:36:43,530
+then it's effectively plucking out a
+single broke up w which and something
+
+525
+00:36:43,530 --> 00:36:47,560
+I'm betting it's kind of a cold front so
+just think of it if you don't like those
+
+526
+00:36:47,559 --> 00:36:50,279
+in bed and just think of it as a
+one-hopper presentation and you can
+
+527
+00:36:50,280 --> 00:36:58,920
+think of it that way yes the modelers to
+up at the end token yes in the training
+
+528
+00:36:58,920 --> 00:37:02,769
+data the correct sequence that we expect
+from the art is the first words I can
+
+529
+00:37:02,769 --> 00:37:07,969
+look forward and so every single
+training example sort of have a special
+
+530
+00:37:07,969 --> 00:37:10,288
+and token it go ahead
+
+531
+00:37:10,289 --> 00:37:28,929
+you can wired differently we plugged
+into every single state it turns out
+
+532
+00:37:28,929 --> 00:37:32,999
+that actually works worse so it actually
+works better if you just plug in the
+
+533
+00:37:32,998 --> 00:37:36,718
+very first time step and then the Arnon
+has to juggle these both tasks that has
+
+534
+00:37:36,719 --> 00:37:40,829
+to remember about the image what it
+needs to remember through the art and it
+
+535
+00:37:40,829 --> 00:37:45,179
+also has to produce all these outfits
+and somehow it wants to do that there's
+
+536
+00:37:45,179 --> 00:38:04,209
+some headway the reasons I can give you
+after class right that's true
+
+537
+00:38:04,208 --> 00:38:10,208
+a single instance will correspond to an
+image and a sequence of words and so we
+
+538
+00:38:10,208 --> 00:38:16,328
+would plug in those words here and we
+will talk in that image and we shall I
+
+539
+00:38:16,329 --> 00:38:22,159
+come so it's a train time you have all
+those weren't planning on the bottom of
+
+540
+00:38:22,159 --> 00:38:25,528
+the image London and then you unroll
+this graph and you have your losses in
+
+541
+00:38:25,528 --> 00:38:29,389
+the background and then you can do
+batches of images if you're careful and
+
+542
+00:38:29,389 --> 00:38:33,108
+so if your images they sometimes have
+different lengths sequences in the
+
+543
+00:38:33,108 --> 00:38:36,199
+training data have to be careful with
+that because you have to say that ok I'm
+
+544
+00:38:36,199 --> 00:38:41,059
+willing to process batches of up to
+twenty words maybe and then some of
+
+545
+00:38:41,059 --> 00:38:44,499
+those sentences will be shorter or
+longer a need to in your code you know
+
+546
+00:38:44,498 --> 00:38:48,188
+worry about that because some some some
+sentences are longer than others
+
+547
+00:38:48,188 --> 00:38:55,368
+we have way too many questions I have
+stuff to go
+
+548
+00:38:55,369 --> 00:39:03,450
+yes thank you so that propagate
+everything completely jointly and two in
+
+549
+00:39:03,449 --> 00:39:07,538
+training so you can pre train with the
+internet and then you put those words
+
+550
+00:39:07,539 --> 00:39:10,190
+there but then you just want to train
+everything jointly and that's a big
+
+551
+00:39:10,190 --> 00:39:15,429
+advantage actually because we can we can
+figure out what features to look for in
+
+552
+00:39:15,429 --> 00:39:20,368
+order to better describe the image that
+the end so when you train this in
+
+553
+00:39:20,369 --> 00:39:23,890
+practice we tried this on the census
+data sets one of the more common wants
+
+554
+00:39:23,889 --> 00:39:27,368
+is called Microsoft Coco so just to give
+you an idea of what it looks like it's
+
+555
+00:39:27,369 --> 00:39:31,499
+roughly 800,000 images and five sentence
+descriptions for each image these were
+
+556
+00:39:31,498 --> 00:39:35,288
+obtained using Amazon Mechanical Turk so
+you just ask people please give us a
+
+557
+00:39:35,289 --> 00:39:39,710
+sentence description for an image and
+your record and end up your data set and
+
+558
+00:39:39,710 --> 00:39:43,249
+so when you train this model the kinds
+of results that you can expect or
+
+559
+00:39:43,248 --> 00:39:49,078
+roughly what is kinda like this so this
+is our in describing these images so
+
+560
+00:39:49,079 --> 00:39:52,329
+this it says that this is a man in black
+shirt playing guitar or construction
+
+561
+00:39:52,329 --> 00:39:55,710
+worker in Orange City West working on
+the road or two young girls are playing
+
+562
+00:39:55,710 --> 00:40:00,528
+with Lego toy or boy is doing backflip
+on a wakeboard and of course that's not
+
+563
+00:40:00,528 --> 00:40:04,650
+a wakeboard but it's close there are
+also some very funny failure cases which
+
+564
+00:40:04,650 --> 00:40:07,680
+I also like to show this is a young boy
+holding a baseball bat
+
+565
+00:40:07,679 --> 00:40:12,338
+this is a cat sitting on a couch with
+the remote control that's a woman
+
+566
+00:40:12,338 --> 00:40:15,710
+holding a teddy bear in front of a
+mirror
+
+567
+00:40:15,710 --> 00:40:22,400
+I'm pretty sure that the texture here
+probably is what what happened made it
+
+568
+00:40:22,400 --> 00:40:26,289
+think that it's a teddy bear and the
+last one is a whore standing in the
+
+569
+00:40:26,289 --> 00:40:30,409
+middle of a street road so there's no
+horse obviously some not sure what
+
+570
+00:40:30,409 --> 00:40:34,858
+happened there so this is just a
+simplest kind of model that came out
+
+571
+00:40:34,858 --> 00:40:37,619
+last year there were many people who try
+to work on top of these kinds of models
+
+572
+00:40:37,619 --> 00:40:41,559
+and make them more complex I just like
+to give you an idea of 11 level that is
+
+573
+00:40:41,559 --> 00:40:44,929
+interesting just to get an idea how how
+people play with this basic architecture
+
+574
+00:40:44,929 --> 00:40:51,329
+so this is a paper from last year where
+if you noticed in the current model we
+
+575
+00:40:51,329 --> 00:40:55,608
+only feed into images single time to
+time at the beginning and one where you
+
+576
+00:40:55,608 --> 00:40:59,480
+can play with this is actually a rowdy
+recurrent neural network to look back to
+
+577
+00:40:59,480 --> 00:41:03,130
+the image and reference parts of the
+image Wireless describing to work does
+
+578
+00:41:03,130 --> 00:41:07,180
+the words such as you're generating
+every single word you allow the aren't
+
+579
+00:41:07,179 --> 00:41:10,460
+actually make a look up next to the
+image and look for different features of
+
+580
+00:41:10,460 --> 00:41:13,470
+what it might want to describe next and
+you can actually do this in the fully
+
+581
+00:41:13,469 --> 00:41:17,899
+trainable way so they are not only
+create these words but also the sides
+
+582
+00:41:17,900 --> 00:41:21,289
+where to look next in the image and so
+the way this works is not only does the
+
+583
+00:41:21,289 --> 00:41:24,259
+Arnon out but you're probably
+distribution for the next one sequence
+
+584
+00:41:24,260 --> 00:41:29,250
+but this coming that gives you does
+valium so saying this case we forwarded
+
+585
+00:41:29,250 --> 00:41:37,389
+the comment and got a 14 by 14 by 512 by
+512 activation volume and at every
+
+586
+00:41:37,389 --> 00:41:40,179
+single time that we don't just admit
+that distribution but you also emit a
+
+587
+00:41:40,179 --> 00:41:44,358
+five hundred and twelve dimensional
+picture that is kinda like a look up key
+
+588
+00:41:44,358 --> 00:41:48,019
+of what you want to look for next to the
+image and so actually I don't think this
+
+589
+00:41:48,019 --> 00:41:51,210
+is what they did in in this particular
+paper but this is one way you can wire
+
+590
+00:41:51,210 --> 00:41:54,510
+something like this up and saw this
+picture is emitted from the Arnon just
+
+591
+00:41:54,510 --> 00:41:58,430
+like it's just predicted using some
+weights and then this picture can be dot
+
+592
+00:41:58,429 --> 00:42:03,618
+product and with all these 14 by 14
+locations so we do all these dot product
+
+593
+00:42:03,619 --> 00:42:09,108
+and we achieved our we compute basically
+14 by 14 compatibility now and then we
+
+594
+00:42:09,108 --> 00:42:13,949
+put a soft max on this so basically we
+normalize all this so that it's all you
+
+595
+00:42:13,949 --> 00:42:17,149
+get this what we call in the tension
+over the image so it's a 14 by 14
+
+596
+00:42:17,150 --> 00:42:21,230
+probably map over what's interesting for
+the Arnon right now in the image and
+
+597
+00:42:21,230 --> 00:42:25,889
+then we use this problem asked to do a
+weighted sum of these guys with this
+
+598
+00:42:25,889 --> 00:42:27,239
+saliency
+
+599
+00:42:27,239 --> 00:42:30,929
+and so this morning can basically a myth
+of what it thinks is currently
+
+600
+00:42:30,929 --> 00:42:36,089
+interesting for it and it goes back and
+you end up doing a weighted sum of
+
+601
+00:42:36,090 --> 00:42:39,850
+different kinds of features that the
+Ellis team wants to look at this point
+
+602
+00:42:39,849 --> 00:42:44,809
+in time and so for example the island's
+generating stuff and it might decide
+
+603
+00:42:44,809 --> 00:42:49,400
+that ok I'd like to look for something
+object like now admits a vector file
+
+604
+00:42:49,400 --> 00:42:53,220
+numbers of objects like stuff it
+interacts with cum that's when the
+
+605
+00:42:53,219 --> 00:42:57,379
+comment a commission and maybe some of
+the object like regions of that coming
+
+606
+00:42:57,380 --> 00:43:01,700
+out of that activation falling like
+light up and ceiling see map in this
+
+607
+00:43:01,699 --> 00:43:05,949
+4514 irate and then you just end up
+focusing your attention on that part of
+
+608
+00:43:05,949 --> 00:43:10,059
+the image through this interaction and
+so you can basically just do lookups
+
+609
+00:43:10,059 --> 00:43:14,130
+into the image while you're describing
+the sentence and so this is something we
+
+610
+00:43:14,130 --> 00:43:17,360
+refer to as a soft detention and will
+actually going to this in a few lectures
+
+611
+00:43:17,360 --> 00:43:21,050
+so we're going to cover things like this
+where the army can actually haven't
+
+612
+00:43:21,050 --> 00:43:26,880
+selective attention over its imports as
+processing the input and that's so I
+
+613
+00:43:26,880 --> 00:43:30,030
+just want to bring it up roughly an hour
+just to give you a preview of what that
+
+614
+00:43:30,030 --> 00:43:34,490
+looks like okay now if we want to make
+our lives more complex one of the ways
+
+615
+00:43:34,489 --> 00:43:39,259
+we can do that is to stack them up in
+layers so this gives you you know more
+
+616
+00:43:39,260 --> 00:43:43,570
+deep stuff usually works better so the
+way we start this up one of the ways at
+
+617
+00:43:43,570 --> 00:43:46,809
+least you can stack recurrent neural
+networks and there's many ways but this
+
+618
+00:43:46,809 --> 00:43:49,409
+is just one of them that people use in
+practice as you can
+
+619
+00:43:49,409 --> 00:43:53,339
+straight up just plug harness into each
+other so the impetus for one Arnon is
+
+620
+00:43:53,340 --> 00:43:59,170
+the director of the State picture of the
+previous on and so this image we have
+
+621
+00:43:59,170 --> 00:44:02,750
+the time axis going horizontally and
+then going upwards we have different
+
+622
+00:44:02,750 --> 00:44:05,960
+ordinance and so in this particular
+image there are three separate recurrent
+
+623
+00:44:05,960 --> 00:44:09,858
+neural networks each with their own set
+of weights and these are colonel that
+
+624
+00:44:09,858 --> 00:44:16,299
+works I just feed into each other and so
+this is always train jointly there's no
+
+625
+00:44:16,300 --> 00:44:19,119
+train first won second term one that's
+all just a single competition growth of
+
+626
+00:44:19,119 --> 00:44:22,700
+a backdrop to get through this
+recurrence formula to top it
+
+627
+00:44:22,699 --> 00:44:25,980
+ivory britain it's likely to make it
+more general rule still we're still
+
+628
+00:44:25,980 --> 00:44:29,280
+doing the exact same thing is we didn't
+have the same formula we're taking a
+
+629
+00:44:29,280 --> 00:44:35,390
+lecture from below and below in depth
+and effective from before in time we're
+
+630
+00:44:35,389 --> 00:44:39,469
+cutting them and putting them supporting
+them through this w transformation and a
+
+631
+00:44:39,469 --> 00:44:40,519
+smashing the 10 each
+
+632
+00:44:40,519 --> 00:44:44,509
+so if you remember if you are slightly
+confused about this there's there was a
+
+633
+00:44:44,510 --> 00:44:51,760
+WRX H times X plus whah times H you can
+rewrite this is a concatenation of exxon
+
+634
+00:44:51,760 --> 00:44:56,260
+H multiplied by a single matrix right so
+it's as if I stick tacks nation to a
+
+635
+00:44:56,260 --> 00:45:03,680
+single column vector and then I have
+this w matrix where basically what ends
+
+636
+00:45:03,679 --> 00:45:07,690
+up happening is that your WX ages the
+first part of this matrix and WH
+
+637
+00:45:07,690 --> 00:45:12,700
+nation's second part of your matrix and
+so this kind of formula can be written
+
+638
+00:45:12,699 --> 00:45:16,099
+into formula where you stack with your
+inputs and you have a single W
+
+639
+00:45:16,099 --> 00:45:24,759
+transformation so the same formula so
+that's how we can stop these are
+
+640
+00:45:24,760 --> 00:45:29,780
+announced and then there now indexed by
+both time and by later at which they
+
+641
+00:45:29,780 --> 00:45:33,510
+occur now one way we can also make these
+more complex is not shared by stacking
+
+642
+00:45:33,510 --> 00:45:37,030
+them but actually using a slightly
+better recurrence formula so right now
+
+643
+00:45:37,030 --> 00:45:40,300
+so far we've seen as very simple
+recurrence formula for the return to
+
+644
+00:45:40,300 --> 00:45:44,480
+work in practice you will actually
+rarely ever use formula like this and
+
+645
+00:45:44,480 --> 00:45:48,170
+basic network is very rarely used
+instead you'll use what we call it an
+
+646
+00:45:48,170 --> 00:45:52,059
+LSD and our long short term memory so
+this is basically used in all the papers
+
+647
+00:45:52,059 --> 00:45:56,500
+now so this is the formula would be
+using also your project if you were to
+
+648
+00:45:56,500 --> 00:46:00,989
+use are currently works but I'd like you
+to notice at this point is everything is
+
+649
+00:46:00,989 --> 00:46:04,729
+exactly the same as with an arlen it's
+just that the recurrence formula has a
+
+650
+00:46:04,730 --> 00:46:09,050
+slightly more complex function ok we're
+still taking the picture from the low
+
+651
+00:46:09,050 --> 00:46:13,789
+and depth like your input from before in
+time the previous an estate were
+
+652
+00:46:13,789 --> 00:46:18,309
+contacting them putting them through aww
+transport but now we have this more
+
+653
+00:46:18,309 --> 00:46:21,869
+complexity and how we actually achieve
+the New Haven state at this point in
+
+654
+00:46:21,869 --> 00:46:25,539
+time so we're just being a slightly more
+complex and how to combine defector from
+
+655
+00:46:25,539 --> 00:46:28,900
+below and before to actually perform an
+update on heading state just a more
+
+656
+00:46:28,900 --> 00:46:33,050
+complex formula so we'll go into some
+details of exactly what motivates this
+
+657
+00:46:33,050 --> 00:46:41,609
+formula and why it might be a better
+idea to actually use in Austin
+
+658
+00:46:41,608 --> 00:46:49,909
+and it makes sense trust me we'll go
+through it just right now so if you
+
+659
+00:46:49,909 --> 00:46:56,480
+block 4 p.m. some online video or you go
+to Google Images you'll find diagrams
+
+660
+00:46:56,480 --> 00:47:00,989
+like this which is really not helping I
+think anyone the first time I saw him
+
+661
+00:47:00,989 --> 00:47:04,048
+being really scared like this one really
+scared he was really sure what's going
+
+662
+00:47:04,048 --> 00:47:08,170
+on I understand Ellis teams and I still
+don't know what these two diagrams are
+
+663
+00:47:08,170 --> 00:47:14,289
+so ok so I'm going to try to break down
+the list and it's kind of a tricky thing
+
+664
+00:47:14,289 --> 00:47:18,329
+to put into a diagram you really have to
+kind of step through it so lecture
+
+665
+00:47:18,329 --> 00:47:24,220
+format is perfect for no steam ok so
+here we have the US equations and I'm
+
+666
+00:47:24,219 --> 00:47:28,238
+going to focus on the first part here on
+the top where we take these two vectors
+
+667
+00:47:28,239 --> 00:47:32,720
+from below and from before so X and HHS
+our previous in a state an accident but
+
+668
+00:47:32,719 --> 00:47:37,848
+we met them through that transformation
+W and now if both Jackson href size and
+
+669
+00:47:37,849 --> 00:47:40,950
+so there's a number send them we're
+going to end up producing for any
+
+670
+00:47:40,949 --> 00:47:46,068
+numbers ok through this w matrix which
+was put forward by 21 so we have these
+
+671
+00:47:46,068 --> 00:47:51,108
+four and dimensional vectors I F oMG
+they're short for input for get out but
+
+672
+00:47:51,108 --> 00:47:57,328
+and G I'm not sure what that's just you
+and so the ISI no go through signaled
+
+673
+00:47:57,329 --> 00:48:05,859
+gates and G go straight tenants gate now
+the way this way this actually works the
+
+674
+00:48:05,858 --> 00:48:09,420
+best way to think about it is one thing
+I forgot to mention actually in the
+
+675
+00:48:09,420 --> 00:48:15,028
+previous slide is normally require no
+network to says the single HVAC tried
+
+676
+00:48:15,028 --> 00:48:18,018
+every single time stopped and asked him
+actually has two vectors that every
+
+677
+00:48:18,018 --> 00:48:23,618
+single time and thus we call see the
+cell state vector so that every single
+
+678
+00:48:23,619 --> 00:48:29,470
+time step we have both agency in peril
+and and see vector here as shown in
+
+679
+00:48:29,469 --> 00:48:33,558
+yellow so we basically have two vectors
+every single point in space here and
+
+680
+00:48:33,559 --> 00:48:37,849
+what they're doing is they're basically
+operating over this cell state so
+
+681
+00:48:37,849 --> 00:48:41,680
+depending on what's before you and below
+you and that is your context you end up
+
+682
+00:48:41,679 --> 00:48:45,199
+operating over the cell state with these
+
+683
+00:48:45,199 --> 00:48:50,509
+and Ong elements and new way to think
+about it is I'm going to go through a
+
+684
+00:48:50,510 --> 00:48:58,290
+lot of this way to think about this is I
+N O as just binary either 0 or 1 we want
+
+685
+00:48:58,289 --> 00:49:01,199
+them to be we want them to have an
+interpretation of the gate like to think
+
+686
+00:49:01,199 --> 00:49:05,449
+of it as heroes are ones we of course
+make them later signals because we want
+
+687
+00:49:05,449 --> 00:49:08,348
+this to be differentiable so that we can
+back propagate through everything but
+
+688
+00:49:08,349 --> 00:49:11,960
+just think of Ino as just binary things
+that were computing base in our context
+
+689
+00:49:11,960 --> 00:49:17,740
+and then what this from always doing
+here see you can see that based on what
+
+690
+00:49:17,739 --> 00:49:22,250
+these gates are and what Diaz we're
+going to end up dating this see value
+
+691
+00:49:22,250 --> 00:49:29,289
+and in particular this episode to forget
+gate that will be used to shut a tus
+
+692
+00:49:29,289 --> 00:49:34,869
+reset some of the cells 20 solar cells
+are best thought of as shelters and
+
+693
+00:49:34,869 --> 00:49:38,700
+these counters basically we can either
+recent than 20 with us this interaction
+
+694
+00:49:38,699 --> 00:49:42,368
+this is an element of multiplication
+their laser pointer is running out of
+
+695
+00:49:42,369 --> 00:49:45,530
+battery so
+
+696
+00:49:45,530 --> 00:49:50,140
+interaction 0 then you can see that will
+zero out the cell so we can reset the
+
+697
+00:49:50,139 --> 00:49:53,969
+counter and then we can also add to a
+counter so we can add through this
+
+698
+00:49:53,969 --> 00:50:00,459
+interaction I times G and since I S
+between 11 and G is between negative one
+
+699
+00:50:00,460 --> 00:50:05,900
+in 10 basically adding a number between
+one and 12 every cell so that every
+
+700
+00:50:05,900 --> 00:50:09,338
+single time step we have these counters
+in all the cells we can reset these
+
+701
+00:50:09,338 --> 00:50:13,588
+countries 2012 forget Kate or we can
+choose to add a number between one and
+
+702
+00:50:13,588 --> 00:50:18,039
+12 every single cell oK so that's how we
+performed the cell update and then the
+
+703
+00:50:18,039 --> 00:50:24,029
+head an update ends up being a squashed
+cell so 10 HFC squashed cell that is
+
+704
+00:50:24,030 --> 00:50:28,760
+modulated by this update so only some of
+the cell state and up leaking into the
+
+705
+00:50:28,760 --> 00:50:33,500
+hidden state is modulated by this vector
+oh so we only choose to reveal some of
+
+706
+00:50:33,500 --> 00:50:39,530
+the cells into the hen state and
+learnable way there are several things
+
+707
+00:50:39,530 --> 00:50:43,910
+to to kind of highlight here one maybe
+most confusing part here is that we're
+
+708
+00:50:43,909 --> 00:50:47,500
+adding a number between one and one with
+I times D here but that's kind of
+
+709
+00:50:47,500 --> 00:50:51,809
+confusing because if we only had a G
+there instead then jeez already between
+
+710
+00:50:51,809 --> 00:50:56,679
+8 11 so why do we need I times G what
+does that actually giving us when all we
+
+711
+00:50:56,679 --> 00:50:58,279
+want is to implement a sea by
+
+712
+00:50:58,280 --> 00:51:02,330
+a number between one and one and so
+that's kind of my castle part about the
+
+713
+00:51:02,329 --> 00:51:08,989
+last time I think one answer is that if
+you think about the G it's a function of
+
+714
+00:51:08,989 --> 00:51:16,159
+its a linear function of your context no
+one has to laser printer by chance right
+
+715
+00:51:16,159 --> 00:51:26,649
+ok so G as a function of your Geo 310
+age ok so G is a linear function of your
+
+716
+00:51:26,650 --> 00:51:30,579
+previous contacts squashed by 10 h and
+so if we were adding just jeans that if
+
+717
+00:51:30,579 --> 00:51:35,349
+I time she then that would be kind of
+like a very simple function so by adding
+
+718
+00:51:35,349 --> 00:51:38,929
+this I and then having a multiplicative
+interaction you're actually getting more
+
+719
+00:51:38,929 --> 00:51:42,710
+richer function that you can actually
+expressed in terms of what we're adding
+
+720
+00:51:42,710 --> 00:51:47,010
+torso state as a function of the
+previous tests and another way to think
+
+721
+00:51:47,010 --> 00:51:50,620
+about this is that would basically
+decoupling these two concepts of how
+
+722
+00:51:50,619 --> 00:51:54,159
+much do we want to add to a cell state
+which is G and then do we want to
+
+723
+00:51:54,159 --> 00:51:58,129
+address all state which is so I is
+likely we actually what this operation
+
+724
+00:51:58,130 --> 00:52:03,280
+to go through and genius what we want to
+by decoupling these two that also may be
+
+725
+00:52:03,280 --> 00:52:08,470
+dynamically has some nice properties in
+terms of how this all steam trains but
+
+726
+00:52:08,469 --> 00:52:12,039
+we just end up that's like the Austin
+formulas and I'm going to actually go
+
+727
+00:52:12,039 --> 00:52:14,059
+through this in more detail as well
+
+728
+00:52:14,059 --> 00:52:21,400
+ok so think about this as cell C flowing
+through and now the first interaction
+
+729
+00:52:21,400 --> 00:52:28,269
+here is the DOTC so efforts in a bit of
+a sigmoid of that and so economically
+
+730
+00:52:28,269 --> 00:52:32,559
+gating yourselves with multiplicative
+interaction so if f is zero you will
+
+731
+00:52:32,559 --> 00:52:38,409
+shut off the cell and reset the counter
+the cytology part is basically giving
+
+732
+00:52:38,409 --> 00:52:44,799
+you a comp is basically adding to the
+sole state and then the sub-state leaks
+
+733
+00:52:44,800 --> 00:52:51,100
+into the hill state but only through a
+10 h and then that gets gated by so the
+
+734
+00:52:51,099 --> 00:52:55,380
+only electric and decide which parts
+with some state to actually reveal into
+
+735
+00:52:55,380 --> 00:52:59,610
+the hidden didn't sell and then you'll
+notice that this interstate not only
+
+736
+00:52:59,610 --> 00:53:03,720
+goes to the next iteration of the STM
+but it also actually closed up to a
+
+737
+00:53:03,719 --> 00:53:07,159
+higher layers because this is the head
+of state doctrine that we actually end
+
+738
+00:53:07,159 --> 00:53:11,250
+up looking into teams above us or them
+goes into a prediction
+
+739
+00:53:11,250 --> 00:53:14,510
+and so when you unroll this basically
+the way it looks like it's kind of like
+
+740
+00:53:14,510 --> 00:53:19,270
+this which now I have a confusing
+diagram of my own thats I guess we ended
+
+741
+00:53:19,269 --> 00:53:24,550
+up with but you get your input vectors
+from below you have your own state from
+
+742
+00:53:24,550 --> 00:53:26,090
+248
+
+743
+00:53:26,090 --> 00:53:31,030
+determine your gates fije know they're
+all in dimensional vectors and then the
+
+744
+00:53:31,030 --> 00:53:35,110
+end of modulating how you operate over
+the cell state and the cell state can
+
+745
+00:53:35,110 --> 00:53:38,610
+once you actually we set some countries
+and once you add numbers between one and
+
+746
+00:53:38,610 --> 00:53:42,630
+12 your country's the cell state leaks
+out some of it leaks out in a learnable
+
+747
+00:53:42,630 --> 00:53:45,840
+way and then it can either go up to the
+prediction or can go to the next
+
+748
+00:53:45,840 --> 00:53:52,269
+iteration of the US team going forward
+and so that's the so this looks ugly so
+
+749
+00:53:52,269 --> 00:53:58,429
+we're going to so the question is
+probably in your mind is why did we go
+
+750
+00:53:58,429 --> 00:54:02,649
+through all of this there something why
+does this look at this particular way I
+
+751
+00:54:02,650 --> 00:54:05,639
+should like to know that this point that
+there are many various to analyst at
+
+752
+00:54:05,639 --> 00:54:09,309
+this point but by the end of lecture
+people play a lot with these equations
+
+753
+00:54:09,309 --> 00:54:12,840
+and we've kind of converged on this as
+being like a reasonable thing but
+
+754
+00:54:12,840 --> 00:54:15,510
+there's many little tweaks you can make
+to this that actually doesn't
+
+755
+00:54:15,510 --> 00:54:18,930
+deteriorate the performance by a lot you
+can remove some of those gates like
+
+756
+00:54:18,929 --> 00:54:20,359
+maybe the implicate and so on
+
+757
+00:54:20,360 --> 00:54:25,200
+you can turns out that the stench of see
+that can be a sea and it works just fine
+
+758
+00:54:25,199 --> 00:54:28,619
+normally but with a tender age of seats
+were slightly better sometimes and I
+
+759
+00:54:28,619 --> 00:54:33,869
+don't think we have a very good reasons
+for why and CSI end up with a bit of a
+
+760
+00:54:33,869 --> 00:54:37,039
+monster but I think it actually kinda
+makes sense in terms of Justice counters
+
+761
+00:54:37,039 --> 00:54:40,739
+that can be reset to zero or you can add
+small numbers between one and 12 them
+
+762
+00:54:40,739 --> 00:54:46,039
+and so it's kind of like a nice actually
+relatively simple now to understand
+
+763
+00:54:46,039 --> 00:54:49,300
+exactly why this is much better than our
+own and we have to go to a slightly
+
+764
+00:54:49,300 --> 00:54:55,330
+different picture to draw the
+distinction so the recurrent neural
+
+765
+00:54:55,329 --> 00:54:59,259
+network that has some state vector right
+and you're operating over it and you're
+
+766
+00:54:59,260 --> 00:55:02,260
+completely transforming into through
+this recurrence formula and so you end
+
+767
+00:55:02,260 --> 00:55:06,280
+up changing your state vector from time
+to time stuff you'll notice that the US
+
+768
+00:55:06,280 --> 00:55:11,140
+team instead has the cell States flowing
+through and what we're doing effectively
+
+769
+00:55:11,139 --> 00:55:15,250
+as we're looking at the cells and some
+of it leaks into the head of state to
+
+770
+00:55:15,250 --> 00:55:19,329
+state for deciding how to operate over
+the cell and if you forget gains then we
+
+771
+00:55:19,329 --> 00:55:22,869
+end up basically just tweaking the cell
+by
+
+772
+00:55:22,869 --> 00:55:28,509
+active interaction here so so there's
+some stuff that looked at as a function
+
+773
+00:55:28,510 --> 00:55:33,040
+of the cell state and then whatever it
+is we end up changing the soul state
+
+774
+00:55:33,039 --> 00:55:37,190
+instead of just transforming it right
+away so it's an additive instead of a
+
+775
+00:55:37,190 --> 00:55:38,429
+transformative
+
+776
+00:55:38,429 --> 00:55:42,929
+interaction or something like that now
+this is actually remind you of something
+
+777
+00:55:42,929 --> 00:55:48,839
+that we've already covered in the class
+with this in mind you that's right yeah
+
+778
+00:55:48,840 --> 00:55:53,240
+so in fact like this is basically the
+same thing as be solid resonates so
+
+779
+00:55:53,239 --> 00:55:56,299
+normally with a calm that we're
+transforming representation resident has
+
+780
+00:55:56,300 --> 00:56:00,019
+these skip connections here and you'll
+see that basically residents have this
+
+781
+00:56:00,019 --> 00:56:04,690
+additive interaction so we have this X
+here now we do some computation based on
+
+782
+00:56:04,690 --> 00:56:10,240
+sex and then we have an additive
+interaction with acts and so that's the
+
+783
+00:56:10,239 --> 00:56:12,959
+basic block of residents and that's in
+fact what happens with an awesome as
+
+784
+00:56:12,960 --> 00:56:18,440
+well we have these interactions we're
+here and the ex is your cell and we go
+
+785
+00:56:18,440 --> 00:56:22,619
+off with you some function and then we
+choose to add to this cell state but the
+
+786
+00:56:22,619 --> 00:56:26,900
+LSD and unlike residents have also
+please forget dates that were adding
+
+787
+00:56:26,900 --> 00:56:31,519
+these forget case-control choose to shut
+off some parts of the signal as well but
+
+788
+00:56:31,519 --> 00:56:33,679
+otherwise it looks very much like a
+president so I think it's kind of
+
+789
+00:56:33,679 --> 00:56:36,710
+interesting that were converging on very
+similar kind of looking architecture
+
+790
+00:56:36,710 --> 00:56:40,429
+that works both income that's end in
+recurrent neural networks where it seems
+
+791
+00:56:40,429 --> 00:56:43,809
+like dynamically somehow it's much nicer
+to actually have these additive
+
+792
+00:56:43,809 --> 00:56:48,739
+interactions that allow you to actually
+that propagate much more effectively so
+
+793
+00:56:48,739 --> 00:56:49,779
+to that point
+
+794
+00:56:49,780 --> 00:56:53,860
+think about the the back propagation
+dynamics between our analysis team
+
+795
+00:56:53,860 --> 00:56:57,760
+especially in the US team is very clear
+that if I inject some gradients and
+
+796
+00:56:57,760 --> 00:57:01,120
+sometimes that's here so if I inject
+radiance and let the end of this diagram
+
+797
+00:57:01,119 --> 00:57:05,239
+then these plus interactions are just
+like ingredients superhighway here right
+
+798
+00:57:05,239 --> 00:57:09,299
+like these videos will just flow through
+all the tabs addition interactions right
+
+799
+00:57:09,300 --> 00:57:13,240
+because edition distributed equally so
+if I plugging gradient any point in time
+
+800
+00:57:13,239 --> 00:57:16,849
+here just going to blow all the way back
+and then of course the gradient also
+
+801
+00:57:16,849 --> 00:57:20,809
+flows through these acts and they end up
+contributing their ingredients into the
+
+802
+00:57:20,809 --> 00:57:25,630
+reading to flow but you'll never end up
+with what we refer to with our intense
+
+803
+00:57:25,630 --> 00:57:30,110
+problem called vanishing regions where
+these gradients just died off go to zero
+
+804
+00:57:30,110 --> 00:57:32,880
+as you back propagate through and I'll
+show an example
+
+805
+00:57:32,880 --> 00:57:36,640
+completely off why this happens in a bit
+sonar now we have this banishing
+
+806
+00:57:36,639 --> 00:57:40,670
+gradient problem I'll show you why that
+happens analyst am because of this
+
+807
+00:57:40,670 --> 00:57:45,210
+superhighway of just editions these
+gradients of every single time step that
+
+808
+00:57:45,210 --> 00:57:47,130
+we inject into the US team from above
+
+809
+00:57:47,130 --> 00:57:54,829
+just flow through the cells and your
+ratings don't end up finishing at this
+
+810
+00:57:54,829 --> 00:57:57,339
+point maybe I take some questions are
+there questions about what's confusing
+
+811
+00:57:57,338 --> 00:58:01,849
+here but the last time and then after
+that I'm going to why arnaz have been in
+
+812
+00:58:01,849 --> 00:58:03,059
+Greensboro
+
+813
+00:58:03,059 --> 00:58:09,789
+yes 000 vector is that important
+
+814
+00:58:09,789 --> 00:58:13,400
+turns out that I think that one
+specifically is not super important so
+
+815
+00:58:13,400 --> 00:58:16,660
+there's a paper I'm going to show you
+what else to answer Space Odyssey they
+
+816
+00:58:16,659 --> 00:58:21,719
+really played with this take stuff out
+but stuff in there there's also like
+
+817
+00:58:21,719 --> 00:58:25,588
+these people connections you can you can
+add so this cell state here that can be
+
+818
+00:58:25,588 --> 00:58:29,538
+actually put in with the hidden state
+better as an input so people really play
+
+819
+00:58:29,539 --> 00:58:32,049
+with this architecture and they tried
+lots of iterations of exactly these
+
+820
+00:58:32,048 --> 00:58:37,230
+equations and what you end up with us
+almost everything works about equal some
+
+821
+00:58:37,230 --> 00:58:40,490
+of it we're slightly were sometimes so
+it's very kind of confusing in this in
+
+822
+00:58:40,489 --> 00:58:45,699
+this way to show your paper where they
+took they treated the DS update
+
+823
+00:58:45,699 --> 00:58:49,538
+equations has just been built trees over
+the update equations and then they did
+
+824
+00:58:49,539 --> 00:58:52,950
+this like random mutation stuff and they
+tried all kinds of different grass and
+
+825
+00:58:52,949 --> 00:58:57,028
+updates you can have and most of them
+work about some of them break some of
+
+826
+00:58:57,028 --> 00:58:59,858
+them work about the same but nothing
+like really does much better than
+
+827
+00:58:59,858 --> 00:59:08,150
+analyst team and the questions are going
+to why recurrent neural networks have
+
+828
+00:59:08,150 --> 00:59:15,389
+terrible backward flow video also
+
+829
+00:59:15,389 --> 00:59:22,000
+showing the vanishing gradients problem
+in recurrent neural networks with
+
+830
+00:59:22,000 --> 00:59:29,250
+respect to all stems so we're showing
+here as we're looking at a recurrent
+
+831
+00:59:29,250 --> 00:59:33,039
+neural network over many periods many
+time steps and then injecting gradient
+
+832
+00:59:33,039 --> 00:59:36,760
+and say it's a hundred and twenty eighth
+time step and we're bankrupting
+
+833
+00:59:36,760 --> 00:59:40,028
+ingredients through the network and
+we're looking at what is the gradient
+
+834
+00:59:40,028 --> 00:59:44,699
+for I think the input type hidden matrix
+one of the weight matrices at every
+
+835
+00:59:44,699 --> 00:59:49,009
+single time step so remember that to
+actually get the full update through the
+
+836
+00:59:49,010 --> 00:59:52,289
+back we actually adding all those
+gradients here and so what's what's
+
+837
+00:59:52,289 --> 00:59:56,760
+what's being shown here is that as a
+backdrop we only inject ingredient at
+
+838
+00:59:56,760 --> 01:00:00,799
+120th time steps we do backdrop back
+through time and the strong the slices
+
+839
+01:00:00,798 --> 01:00:04,088
+of that propagation what you're seeing
+is that the US team gives you lots of
+
+840
+01:00:04,088 --> 01:00:06,699
+gradients throughout this
+backpropagation so there's lots of
+
+841
+01:00:06,699 --> 01:00:11,000
+information that is flowing through this
+art and just instantly dies off that
+
+842
+01:00:11,000 --> 01:00:15,210
+just greedy and we say banishes just
+just becomes tiny numbers there's no
+
+843
+01:00:15,210 --> 01:00:18,750
+gradient so in this case I think
+indication about a time steps are so
+
+844
+01:00:18,750 --> 01:00:22,679
+like 10 times steps as all the
+information that we injected did not
+
+845
+01:00:22,679 --> 01:00:26,149
+flow through the network and you can't
+learn very long dependencies because all
+
+846
+01:00:26,150 --> 01:00:29,720
+the correlation structure has been just
+died down there so we'll see why this
+
+847
+01:00:29,719 --> 01:00:39,399
+happens dynamically in a bit there some
+comments your channel so funny he's like
+
+848
+01:00:39,400 --> 01:00:40,490
+YouTube or something
+
+849
+01:00:40,489 --> 01:00:44,779
+ok
+
+850
+01:00:44,780 --> 01:00:53,170
+ok so let's look at very simple example
+here we have a recurrent neural network
+
+851
+01:00:53,170 --> 01:00:56,300
+that I'm going to unfold for you in this
+recurrent neural network I'm not showing
+
+852
+01:00:56,300 --> 01:01:03,960
+any inputs we're only have his state
+updates so wait whaaa church and state
+
+853
+01:01:03,960 --> 01:01:07,260
+hidden to hit an interaction and I'm
+going to basically forward a recurrent
+
+854
+01:01:07,260 --> 01:01:12,380
+neural network does it not for some tea
+time steps here I'm using T-fifty so
+
+855
+01:01:12,380 --> 01:01:16,260
+what I'm doing is WHAS time the previous
+tenant and stuff and then on top of that
+
+856
+01:01:16,260 --> 01:01:20,570
+so this is just a forward pass for
+ignoring any input vectors coming in is
+
+857
+01:01:20,570 --> 01:01:25,280
+just WHAS times H threshold WHAS time
+sage threshold and so on
+
+858
+01:01:25,280 --> 01:01:29,500
+that's the forward pass and then
+backward pass here where i'm directing a
+
+859
+01:01:29,500 --> 01:01:33,820
+random gradient here at the last time
+step so in the 50th time step by
+
+860
+01:01:33,820 --> 01:01:37,880
+injecting gradient which is random and
+then go backwards and I backed up so
+
+861
+01:01:37,880 --> 01:01:41,059
+when you back up through this right you
+have to back up through here I'm using a
+
+862
+01:01:41,059 --> 01:01:46,170
+rather get the backdrop through a wh
+multiply than 400 W H multiply and so on
+
+863
+01:01:46,170 --> 01:01:51,800
+and so the thing to note here is so here
+I am doing developers brownback
+
+864
+01:01:51,800 --> 01:01:54,980
+propagate through the relevant just
+holding anything that where the imports
+
+865
+01:01:54,980 --> 01:02:02,309
+were less than zero and Here I am
+dropping the WH times each operation
+
+866
+01:02:02,309 --> 01:02:06,570
+where we actually multiplied by WH
+matrix before we do the nonlinearity so
+
+867
+01:02:06,570 --> 01:02:09,570
+there's something very funky going on
+when you actually look at what happens
+
+868
+01:02:09,570 --> 01:02:13,300
+to these DHS which is the gradient on
+the NHS as you go backwards through time
+
+869
+01:02:13,300 --> 01:02:18,160
+it has a very kind of funny structure
+that is very worrying as you look at
+
+870
+01:02:18,159 --> 01:02:22,210
+like how this gets chained up in the
+loop like what we're doing here with
+
+871
+01:02:22,210 --> 01:02:33,409
+these two time steps
+
+872
+01:02:33,409 --> 01:02:43,849
+zeros yes I think and sometimes that's
+maybe the outputs the rebels were all
+
+873
+01:02:43,849 --> 01:02:47,630
+dead and seemed you may have killed it
+but that's not really the issue of the
+
+874
+01:02:47,630 --> 01:02:51,470
+more worrying issue is well that would
+be a show of all but I think one wearing
+
+875
+01:02:51,469 --> 01:02:55,500
+issue that people can easily spot as
+well as you'll see that we're
+
+876
+01:02:55,500 --> 01:03:00,380
+multiplying by this whah matrix over and
+over and over again because in the
+
+877
+01:03:00,380 --> 01:03:04,840
+forward pass we multiply by awhh at
+every single iteration
+
+878
+01:03:04,840 --> 01:03:09,670
+back propagates through all the hidden
+states we end up back propagating this
+
+879
+01:03:09,670 --> 01:03:13,820
+formula wh ich konnte chess and a
+backrub turns out to actually be that
+
+880
+01:03:13,820 --> 01:03:19,000
+you take your greeting signaling
+multiplied by whah matrix and so we end
+
+881
+01:03:19,000 --> 01:03:26,199
+up the gradient gets multiplied by whah
+hold it then multiplied by WH official
+
+882
+01:03:26,199 --> 01:03:32,019
+did so we end up multiplying by does
+matrix WH age fifty times and so the
+
+883
+01:03:32,019 --> 01:03:37,509
+issue with this is that the green signal
+basically two things can happen like if
+
+884
+01:03:37,510 --> 01:03:41,080
+you think about working with scalar
+value supposedly scale is not matrices
+
+885
+01:03:41,079 --> 01:03:45,469
+if I take a number that's random and
+then I have a second number and I keep
+
+886
+01:03:45,469 --> 01:03:48,509
+multiplying the first number by the
+second number so again and again and
+
+887
+01:03:48,510 --> 01:03:55,990
+again what does that sequence go to
+their cases right to play with the same
+
+888
+01:03:55,989 --> 01:04:01,849
+number either I die or just goes to
+sleep yet if your second number exactly
+
+889
+01:04:01,849 --> 01:04:05,119
+one year so that the only case where you
+don't actually explode but otherwise
+
+890
+01:04:05,119 --> 01:04:09,679
+really bad things are happening either
+die or we explode and here we have major
+
+891
+01:04:09,679 --> 01:04:12,659
+cities we don't have a single number but
+in fact it's the same thing happens a
+
+892
+01:04:12,659 --> 01:04:16,599
+generalization of it happens in the
+spectral radius of the WHS major axis
+
+893
+01:04:16,599 --> 01:04:21,839
+which is the largest eigenvalue of that
+matrix is greater than one then does
+
+894
+01:04:21,840 --> 01:04:25,220
+radio signal will explode if it's lower
+than one degree in civil completely died
+
+895
+01:04:25,219 --> 01:04:30,549
+and so basically since dr Tan has this
+very weird because of this recurrence
+
+896
+01:04:30,550 --> 01:04:34,680
+formula we end up at this very just
+terrible dynamics and it's very unstable
+
+897
+01:04:34,679 --> 01:04:39,949
+and just dies or explodes and so in
+practice the way this was handled was
+
+898
+01:04:39,949 --> 01:04:44,439
+you can control the exploding gradients
+one simple hockey as if your greetings
+
+899
+01:04:44,440 --> 01:04:45,720
+exploding you click it
+
+900
+01:04:45,719 --> 01:04:50,789
+so people actually do this and practices
+like a very patchy solution but if
+
+901
+01:04:50,789 --> 01:04:55,119
+you're reading Does above five min
+Norman Lin clampett 25 element twice or
+
+902
+01:04:55,119 --> 01:04:58,150
+something like that so you can do that
+is degrading clipping that's how you
+
+903
+01:04:58,150 --> 01:05:01,829
+address the exploding grading problem
+and then you're you're recording don't
+
+904
+01:05:01,829 --> 01:05:06,049
+explode anymore but the Greens can still
+vanish in a carnival at work and Ellis
+
+905
+01:05:06,050 --> 01:05:08,310
+team is very good with the vanishing
+gradient problem because of these
+
+906
+01:05:08,309 --> 01:05:12,429
+highways of cells that are only change
+with additive interactions with the
+
+907
+01:05:12,429 --> 01:05:17,309
+gradient just blow they never die down
+if you are if you because you're
+
+908
+01:05:17,309 --> 01:05:21,000
+multiplying by the same age or something
+like that that's roughly why these are
+
+909
+01:05:21,000 --> 01:05:26,909
+just better dynamically so we always
+teams and we do do gradient clipping
+
+910
+01:05:26,909 --> 01:05:30,149
+usually so because the gradients in
+Dallas team can potentially explode
+
+911
+01:05:30,150 --> 01:05:33,400
+still made they don't usually vanish
+
+912
+01:05:33,400 --> 01:05:48,608
+recurrent neural networks as well for
+Ellis teams it's not clear where you
+
+913
+01:05:48,608 --> 01:05:53,769
+would plunge in its not clear in this
+equation like exactly how you would plug
+
+914
+01:05:53,769 --> 01:06:00,619
+into relative and where maybe instead of
+the May from G much since then attend
+
+915
+01:06:00,619 --> 01:06:08,690
+huug here but then resells would only
+grow in a single direction right so
+
+916
+01:06:08,690 --> 01:06:11,980
+maybe then you can't actually end up
+making it smaller so that's not a great
+
+917
+01:06:11,980 --> 01:06:18,539
+idea I suppose you know so there is
+basically there's no clear way to plug
+
+918
+01:06:18,539 --> 01:06:25,380
+in a row here so yeah one thing I notice
+that in terms of these superhighways
+
+919
+01:06:25,380 --> 01:06:29,780
+gradients this this viewpoint actually
+breaks down when you have four get gates
+
+920
+01:06:29,780 --> 01:06:33,310
+because when you have four get Kate's
+where we can forget some of these acts
+
+921
+01:06:33,309 --> 01:06:37,150
+with the multiplicative interaction then
+whenever I forget gates turns on and it
+
+922
+01:06:37,150 --> 01:06:41,470
+kills the gradient then of course the
+backward flow will stop so these super
+
+923
+01:06:41,469 --> 01:06:45,250
+highways are only kind of true if you
+don't have any forget gates but if you
+
+924
+01:06:45,250 --> 01:06:50,000
+have a forget gave their then it can
+kill the gradient and so in practice
+
+925
+01:06:50,000 --> 01:06:54,710
+when we play with us teams are we use
+Austin's I suppose sometimes people when
+
+926
+01:06:54,710 --> 01:06:58,099
+they initially to forget get to the
+initializer with a positive bias because
+
+927
+01:06:58,099 --> 01:06:58,769
+that by
+
+928
+01:06:58,769 --> 01:07:05,699
+forget to to turn on to me always kind
+of turned off I suppose in the beginning
+
+929
+01:07:05,699 --> 01:07:08,679
+so in the beginning the green spoke very
+well and then the US team can learn how
+
+930
+01:07:08,679 --> 01:07:12,779
+to shut them off at once you later on so
+people play with that bias on that for
+
+931
+01:07:12,780 --> 01:07:17,530
+decades sometimes and so the last night
+here I wanted to mention that cost him
+
+932
+01:07:17,530 --> 01:07:21,580
+so many people have basically play with
+this quite a bit so there's a Space
+
+933
+01:07:21,579 --> 01:07:26,119
+Odyssey paper where they tried various
+changes to the architecture there's a
+
+934
+01:07:26,119 --> 01:07:32,829
+paper here that tries to do this search
+over huge number of potential changes to
+
+935
+01:07:32,829 --> 01:07:36,940
+the LST equations and they did a large
+search and they didn't find anything
+
+936
+01:07:36,940 --> 01:07:42,300
+that works substantially better than
+just analyst am so yeah and then there's
+
+937
+01:07:42,300 --> 01:07:45,560
+the GRU which also has a relatively
+actually popular and I would actually
+
+938
+01:07:45,559 --> 01:07:50,159
+recommend that you might want to use
+this drus a change in the Coliseum it
+
+939
+01:07:50,159 --> 01:07:54,460
+also has decided to interactions with
+nice about it is that it's a shorter
+
+940
+01:07:54,460 --> 01:07:59,400
+smaller formula and it only has a single
+a tractor doesn't have a Tennessee it
+
+941
+01:07:59,400 --> 01:08:03,130
+only has an H so implementation wise is
+just nicer to remember just a single had
+
+942
+01:08:03,130 --> 01:08:07,590
+a setback in your forward past two
+factors as just a smaller simpler thing
+
+943
+01:08:07,590 --> 01:08:12,190
+that seems to have most of the benefits
+of a nasty but so it's called GRU and it
+
+944
+01:08:12,190 --> 01:08:16,730
+almost always works about the coolest
+and in my experience and so you might
+
+945
+01:08:16,729 --> 01:08:19,939
+want to use it or you can use the last
+time they both kinda knew about the same
+
+946
+01:08:19,939 --> 01:08:28,088
+and so somebody is that harness are very
+nice but the rawr and does not actually
+
+947
+01:08:28,088 --> 01:08:29,130
+work very well
+
+948
+01:08:29,130 --> 01:08:32,420
+soyuz US teams are used instead what's
+nice about them is that weird having
+
+949
+01:08:32,420 --> 01:08:36,000
+these additive interactions that allow
+Greece to play much better and you don't
+
+950
+01:08:36,000 --> 01:08:39,579
+get a vanishing breed problem we still
+have to worry a bit about the exploding
+
+951
+01:08:39,579 --> 01:08:44,269
+feeding problems so it's common to see
+people clip these women sometimes and I
+
+952
+01:08:44,270 --> 01:08:46,670
+would say that better simpler
+architectures are really trying to
+
+953
+01:08:46,670 --> 01:08:50,838
+understand how come there's something
+deeper going on with the connection
+
+954
+01:08:50,838 --> 01:08:53,899
+between residents and Ellis teams and
+there's something deeper about these
+
+955
+01:08:53,899 --> 01:08:57,579
+interactions that I think we're not
+fully understanding yet exactly why that
+
+956
+01:08:57,579 --> 01:09:02,210
+works so well and which parts of it were
+cool and so I think we need to
+
+957
+01:09:02,210 --> 01:09:05,119
+understand both theoretical and
+empirical in the space and it's a very
+
+958
+01:09:05,119 --> 01:09:10,979
+wide open area of research and so so
+it's
+
+959
+01:09:10,979 --> 01:09:23,469
+sport 10 but the end of class where they
+can I i suppose to explode so it's not
+
+960
+01:09:23,470 --> 01:09:27,020
+as clear why they would but you keep
+injecting gradient into the cell state
+
+961
+01:09:27,020 --> 01:09:30,069
+and so maybe degrading can sometimes get
+larger
+
+962
+01:09:30,069 --> 01:09:33,960
+it's common to collect em but I think
+not as may be important maybe as an hour
+
+963
+01:09:33,960 --> 01:09:40,829
+and then I'm not a hundred percent sure
+about that point but urological basis I
+
+964
+01:09:40,829 --> 01:09:46,640
+have no idea what's interesting yeah I
+think we should end up here but I'm
+
+965
+01:09:46,640 --> 01:09:47,569
+happy to take your questions here
+

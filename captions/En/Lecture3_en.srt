@@ -1,0 +1,4444 @@
+﻿1
+00:00:00,000 --> 00:00:05,400
+so before we get into some of the
+material today on loss function
+
+2
+00:00:05,400 --> 00:00:09,429
+optimization I wanted to go over some
+administrative things first
+
+3
+00:00:09,429 --> 00:00:12,859
+just as a reminder of the person Simon
+is due on next Wednesday so you have
+
+4
+00:00:12,859 --> 00:00:18,100
+roughly nine days left and just as a
+warning Monday is holidays so there will
+
+5
+00:00:18,100 --> 00:00:23,050
+be no class in office hours so plan out
+your time accordingly to make sure that
+
+6
+00:00:23,050 --> 00:00:25,920
+you can complete the assignment in time
+of course he also have some late two
+
+7
+00:00:25,920 --> 00:00:29,960
+days that you can use and allocate among
+your silence as you see fit
+
+8
+00:00:29,960 --> 00:00:35,149
+ok so I diving into the material first
+i'd like to remind you where we are
+
+9
+00:00:35,149 --> 00:00:39,100
+currently last time we looked at this
+problem visual recognition as
+
+10
+00:00:39,100 --> 00:00:42,950
+specifically at image classification and
+we're talking about the fact that this
+
+11
+00:00:42,950 --> 00:00:45,780
+is actually a very difficult problem
+right so he just consider the cross
+
+12
+00:00:45,780 --> 00:00:50,829
+product called the possible variations
+that we have to be robust to when we
+
+13
+00:00:50,829 --> 00:00:54,198
+recognize any of these categories such
+as cat just seems like such an
+
+14
+00:00:54,198 --> 00:00:58,049
+intractable and possible problem and not
+only do we know how to solve these
+
+15
+00:00:58,049 --> 00:01:02,108
+problems now but we can solve this
+problem for thousands of categories and
+
+16
+00:01:02,109 --> 00:01:05,859
+the state of the art methods work almost
+at human accuracy or even slightly
+
+17
+00:01:05,859 --> 00:01:11,829
+surpassing it and some of those classes
+and it's also runs nearly in real kind
+
+18
+00:01:11,829 --> 00:01:16,539
+of your phone and so basically and all
+of this also happened in the last three
+
+19
+00:01:16,540 --> 00:01:19,790
+years and also you'll be experts by the
+end of the class on all of this
+
+20
+00:01:19,790 --> 00:01:23,609
+technology so it's really cool and
+exciting oK so that's the problem of
+
+21
+00:01:23,609 --> 00:01:27,140
+classification of a commission we talked
+specifically about the data German
+
+22
+00:01:27,140 --> 00:01:30,450
+approaching the fact that we can't just
+explicitly hardcode these classifiers so
+
+23
+00:01:30,450 --> 00:01:34,100
+we have to actually trained them from
+Dana and so we looked at the idea of
+
+24
+00:01:34,099 --> 00:01:37,188
+having different the training data
+having the validation splits where we
+
+25
+00:01:37,188 --> 00:01:41,408
+just had our hyper parameters and a test
+that that you don't touch too much we
+
+26
+00:01:41,409 --> 00:01:44,810
+look specifically at the example of the
+nearest neighbor classifier and someone
+
+27
+00:01:44,810 --> 00:01:48,618
+and the canyons neighbor classifier and
+I talked about the secret India said
+
+28
+00:01:48,618 --> 00:01:52,938
+which is our Toyota said that we play
+with during this class then I introduced
+
+29
+00:01:52,938 --> 00:01:58,438
+the idea of this approach that I termed
+paratroop approach which is really that
+
+30
+00:01:58,438 --> 00:02:03,639
+we're writing a function from image
+directly to the tennis courts that have
+
+31
+00:02:03,640 --> 00:02:07,618
+10 closest and the spermatic formerly
+seem to be a long year for us so we just
+
+32
+00:02:07,618 --> 00:02:11,520
+have equal WX and we talked about the
+interpretations of this linear
+
+33
+00:02:11,520 --> 00:02:12,850
+classifier the fact that you can
+
+34
+00:02:12,849 --> 00:02:16,039
+interpreted as matching templates or
+that you can interpret it as these
+
+35
+00:02:16,039 --> 00:02:18,449
+images being in the very
+high-dimensional space and arlen your
+
+36
+00:02:18,449 --> 00:02:23,560
+class partner kind of going in and
+coloring this space my class course so
+
+37
+00:02:23,560 --> 00:02:28,740
+to speak and so by the end of the class
+we got to this picture where we suppose
+
+38
+00:02:28,740 --> 00:02:32,240
+we have a training example training
+dataset them just three images here
+
+39
+00:02:32,240 --> 00:02:36,530
+along the columns and we have some
+classes say 10 classes and support n and
+
+40
+00:02:36,530 --> 00:02:40,740
+basically this function assigning scores
+for every single one of these images
+
+41
+00:02:40,740 --> 00:02:44,510
+with some particular setting off weights
+which have chosen randomly here we got
+
+42
+00:02:44,509 --> 00:02:47,939
+some scores out and so some of these
+results are good and some of them are
+
+43
+00:02:47,939 --> 00:02:51,419
+bad so if you inspect this course for
+example in the first image you can see
+
+44
+00:02:51,419 --> 00:02:55,509
+that the correct class or just cat got a
+score of 2.9 and that's kind of in the
+
+45
+00:02:55,509 --> 00:03:00,060
+middle so some some classes he received
+a higher score which is not very good
+
+46
+00:03:00,060 --> 00:03:03,289
+some classes received a much lower score
+which is good for that particular image
+
+47
+00:03:03,289 --> 00:03:09,019
+the car was very well classified because
+the car was much higher than all of the
+
+48
+00:03:09,020 --> 00:03:12,980
+other ones and the Frog was enough
+durable classified all right so we have
+
+49
+00:03:12,979 --> 00:03:18,199
+this notion that four different weights
+these different weights work better or
+
+50
+00:03:18,199 --> 00:03:21,389
+worse on different images and of course
+we're trying to find a way it's that
+
+51
+00:03:21,389 --> 00:03:26,209
+give us course that are consistent with
+all the ground truth labels labels and
+
+52
+00:03:26,210 --> 00:03:30,490
+the data and so what we're going to do
+now is so far with only I believe what I
+
+53
+00:03:30,490 --> 00:03:33,590
+just described like this is good and
+that's not so good and so on but we have
+
+54
+00:03:33,590 --> 00:03:34,900
+to actually give it a shot
+
+55
+00:03:34,900 --> 00:03:38,710
+actually quantify this notion we have to
+say that this particular set of weights
+
+56
+00:03:38,710 --> 00:03:44,189
+WSA like 12 bad or 1.5 bad or whatever
+and then once we have this loss function
+
+57
+00:03:44,189 --> 00:03:47,710
+we're going to minimize it so we're
+going to find W that gets us the lowest
+
+58
+00:03:47,710 --> 00:03:50,830
+loss and we're going to look into that
+today we're going to look specifically
+
+59
+00:03:50,830 --> 00:03:55,830
+into how we can define a loss function
+that measures this unhappiness and then
+
+60
+00:03:55,830 --> 00:04:00,030
+we're actually going to look at two
+different cases a boston soft max costs
+
+61
+00:04:00,030 --> 00:04:04,840
+costs and then we're going to look into
+the process optimization which is how do
+
+62
+00:04:04,840 --> 00:04:08,000
+you start off with these random audits
+and how do you actually find very very
+
+63
+00:04:08,000 --> 00:04:13,110
+good sighting of weight sufficiently so
+I'm going to downsize this example that
+
+64
+00:04:13,110 --> 00:04:16,620
+we have a nice working example to work
+with suppose we only had three classes
+
+65
+00:04:16,620 --> 00:04:18,030
+and stuff you know
+
+66
+00:04:18,029 --> 00:04:22,009
+tens of thousands and we have these
+three images and these are our scores
+
+67
+00:04:22,009 --> 00:04:23,360
+for some setup W
+
+68
+00:04:23,360 --> 00:04:27,949
+we're going to now try to write down
+exactly our unhappiness with this result
+
+69
+00:04:27,949 --> 00:04:32,680
+of the first loss we're going to look
+into it is termed a multi-class SVM loss
+
+70
+00:04:32,680 --> 00:04:36,629
+this is a generalization of a minority
+support vector machine that you may have
+
+71
+00:04:36,629 --> 00:04:42,379
+seen over the closest I think between 9
+covers as well and so the setup here is
+
+72
+00:04:42,379 --> 00:04:47,710
+that we miss core function right so as a
+vector of Lacoste course these are our
+
+73
+00:04:47,709 --> 00:04:50,948
+inspectors and there's a specific term
+here
+
+74
+00:04:50,949 --> 00:04:55,348
+loss equal stew stuff and I'm going to
+interpret this loss now for Easter that
+
+75
+00:04:55,348 --> 00:04:59,978
+and we're going to see through a
+specific example of why this expression
+
+76
+00:04:59,978 --> 00:05:06,158
+excess effectively what the SVM losses
+same is that it's something across all
+
+77
+00:05:06,158 --> 00:05:11,399
+the incorrect examples so all the all
+the same across all the incorrect course
+
+78
+00:05:11,399 --> 00:05:17,209
+classes so for every single example we
+have that loss and it's coming across
+
+79
+00:05:17,209 --> 00:05:20,769
+all the incorrect classes and it's
+comparing the score at the core class
+
+80
+00:05:20,769 --> 00:05:25,209
+received in this court that the
+incorrect class receipt Jane minus s why
+
+81
+00:05:25,209 --> 00:05:31,269
+I why I being the correct label plus one
+and then that smacks of zero so what's
+
+82
+00:05:31,269 --> 00:05:35,838
+going on here as we're comparing the
+difference in this course and this
+
+83
+00:05:35,838 --> 00:05:40,338
+particular lost the same that not only
+do I want the correct score to be higher
+
+84
+00:05:40,338 --> 00:05:43,918
+than the incorrect score but there's
+actually a safety margin that we putting
+
+85
+00:05:43,918 --> 00:05:46,079
+on will put were using a safety margin
+
+86
+00:05:46,079 --> 00:05:53,198
+exactly one and we're going to go into
+why one makes sense to use as opposed to
+
+87
+00:05:53,199 --> 00:05:56,900
+some other hyper primary that we have to
+choose their and intuitively you can
+
+88
+00:05:56,899 --> 00:06:00,508
+look into notes for a much more rigorous
+derivation of exactly why that one
+
+89
+00:06:00,509 --> 00:06:04,278
+doesn't matter but then too early to
+think about this underscores our kind of
+
+90
+00:06:04,278 --> 00:06:08,500
+scale-free because I can skim I W I can
+make it larger or smaller and you're
+
+91
+00:06:08,500 --> 00:06:12,490
+going to get larger or smaller course so
+really there's this pre-primary off
+
+92
+00:06:12,490 --> 00:06:16,550
+discourse and how large or small they
+can be that is tied to how large or
+
+93
+00:06:16,550 --> 00:06:19,930
+weights are in magnitude and so these
+whores are kind of arbitrary so using
+
+94
+00:06:19,930 --> 00:06:25,269
+one is just an arbitrary choice to some
+extent ok so let's see specifically how
+
+95
+00:06:25,269 --> 00:06:29,128
+this expression works with a concrete
+example so here I am going to evaluate
+
+96
+00:06:29,129 --> 00:06:33,899
+that loss for the first example so here
+we're competing for plugging in this
+
+97
+00:06:33,899 --> 00:06:35,949
+course so we see that we're comparing
+
+98
+00:06:35,949 --> 00:06:40,829
+the score we got your car from 1-3 point
+to which is the correct class car and
+
+99
+00:06:40,829 --> 00:06:45,219
+then adding our safety margin of one and
+the maximum 0 and that is really what
+
+100
+00:06:45,220 --> 00:06:48,770
+it's doing is it's going to be clamping
+values 80 right so if we get a negative
+
+101
+00:06:48,769 --> 00:06:53,759
+result we're going to exclude VAT 0 so
+if you see the second class for the
+
+102
+00:06:53,759 --> 00:06:55,089
+incorrect Plaza frog
+
+103
+00:06:55,089 --> 00:06:59,699
+1.7 subtracted from 3.2 at a safety
+margin and we gonna get to a point nine
+
+104
+00:06:59,699 --> 00:07:03,629
+and then when you work this through you
+get a loss of 2.9
+
+105
+00:07:03,629 --> 00:07:07,209
+intuitively what you can see here the
+way this worked out is intuitively the
+
+106
+00:07:07,209 --> 00:07:12,930
+cat score is 3.2 so according to ESPN
+Los we would we would like ideally is
+
+107
+00:07:12,930 --> 00:07:16,100
+that the scores for all the classes are
+up to it most
+
+108
+00:07:16,100 --> 00:07:21,370
+2.2 but the car class actually had much
+higher much higher score than one and
+
+109
+00:07:21,370 --> 00:07:24,620
+this difference in what we would have
+liked which is 2.2 and what actually
+
+110
+00:07:24,620 --> 00:07:30,939
+happened just like 11 is exactly this
+difference of 2.9 which is how bad of a
+
+111
+00:07:30,939 --> 00:07:36,129
+score outcome this was and in the other
+case in fraud case you can see the proc
+
+112
+00:07:36,129 --> 00:07:40,139
+score was quite a bit lower than low 2.2
+and so the way that works out then the
+
+113
+00:07:40,139 --> 00:07:43,289
+math is that you end up getting a
+negative number when you compare this
+
+114
+00:07:43,290 --> 00:07:48,110
+course and then the max 2000 lost
+contribution for that particular part
+
+115
+00:07:48,110 --> 00:07:54,439
+and you end up with a loss of 2.9 oK so
+that's the loss for this first major for
+
+116
+00:07:54,439 --> 00:07:57,050
+the second image we're going to again do
+the same thing
+
+117
+00:07:57,050 --> 00:08:01,689
+plug in the numbers were comparing the
+cats got the car score so we get my
+
+118
+00:08:01,689 --> 00:08:07,329
+point three months from 19 at a safety
+margin and the same for the other class
+
+119
+00:08:07,329 --> 00:08:11,659
+so when you plug in your actually end up
+with a lot of zero and loss of 0
+
+120
+00:08:11,660 --> 00:08:17,280
+intuitively is because the car score
+here is it is true that the car score is
+
+121
+00:08:17,279 --> 00:08:22,479
+higher than all the others course for
+that image by at least one right that's
+
+122
+00:08:22,480 --> 00:08:27,490
+why we got zero score 0 lost that is so
+the constraint was satisfied and some of
+
+123
+00:08:27,490 --> 00:08:31,310
+their loss and in this case we end up
+with a very bad loss because of course
+
+124
+00:08:31,310 --> 00:08:34,470
+the frog class received a very low score
+but the other classes received quite
+
+125
+00:08:34,470 --> 00:08:39,349
+high school so this adds up to an
+unhappiness of 10.9 and now if we
+
+126
+00:08:39,349 --> 00:08:42,520
+actually want to combine all of this
+into a single loss function we're going
+
+127
+00:08:42,519 --> 00:08:45,929
+to do the relatively intuitive
+transformation here we just take the
+
+128
+00:08:45,929 --> 00:08:48,049
+average across all the losses we obtain
+
+129
+00:08:48,049 --> 00:08:51,458
+empower training set and so it would say
+that the loss at the end when you
+
+130
+00:08:51,458 --> 00:08:56,369
+average these numbers is 4.6 so this
+particular setting up w on this training
+
+131
+00:08:56,370 --> 00:09:01,320
+data gives us some course which we plug
+into the loss function and we've given
+
+132
+00:09:01,320 --> 00:09:06,170
+and unhappiness a four-point sex with
+this result ok so not going to ask you a
+
+133
+00:09:06,169 --> 00:09:08,939
+series of questions to kind of test your
+understanding a bit about how this works
+
+134
+00:09:08,940 --> 00:09:12,390
+I'll get into questions in a bit let me
+just pose my friend Michael questions
+
+135
+00:09:12,389 --> 00:09:20,230
+first of all what if that's over there
+which is some overall the incorrect
+
+136
+00:09:20,230 --> 00:09:25,560
+colossus of Jane whatever that means
+that some overall the closest not just
+
+137
+00:09:25,559 --> 00:09:29,799
+the incorrect ones so what if we allowed
+J to equal to why I why am I actually
+
+138
+00:09:29,799 --> 00:09:39,149
+adding that small constraint in the
+summer there yes so in fact what would
+
+139
+00:09:39,149 --> 00:09:43,139
+have happened is the reason the better
+gnite equal to I as if we allowed to I
+
+140
+00:09:43,139 --> 00:09:46,539
+then score of why I cancel reply
+
+141
+00:09:46,539 --> 00:09:49,828
+you end up with a zero and really what
+you're doing is you're adding a constant
+
+142
+00:09:49,828 --> 00:09:53,549
+of London so if that someone's overall
+this course then really maybe just
+
+143
+00:09:53,549 --> 00:09:59,250
+completing the loss by constant of 10
+that's why that's their second what if
+
+144
+00:09:59,250 --> 00:10:03,940
+we used a mean instead of a sudden right
+so I'm summing up over all these
+
+145
+00:10:03,940 --> 00:10:10,500
+constraints what if I used to mean just
+like I'm using mean to actually averaged
+
+146
+00:10:10,500 --> 00:10:13,389
+over all the losses for all the examples
+what if I use the mean over this course
+
+147
+00:10:13,389 --> 00:10:28,000
+the score concerns there were too many
+classes so you're right in that the
+
+148
+00:10:28,000 --> 00:10:33,870
+absolute value of the loss will be lower
+
+149
+00:10:33,870 --> 00:10:37,879
+a constant factor why
+
+150
+00:10:37,879 --> 00:10:52,689
+did actually do an average here would be
+averaging over the number of classes
+
+151
+00:10:52,690 --> 00:10:56,220
+here but there's a constant number of
+classes say three in the specific
+
+152
+00:10:56,220 --> 00:10:56,889
+example
+
+153
+00:10:56,889 --> 00:11:01,000
+amounts to putting constant of one-third
+in front of the loss and since we're
+
+154
+00:11:01,000 --> 00:11:04,450
+always in the end so that would make the
+Los lower just like you pointed out but
+
+155
+00:11:04,450 --> 00:11:07,820
+in the end what we're always interested
+in as we're going to minimize aw over
+
+156
+00:11:07,820 --> 00:11:12,470
+that loss so if you're shifting your
+lost by one or if you're scaling it with
+
+157
+00:11:12,470 --> 00:11:15,350
+a constant is actually doesn't change
+our solutions but you're still going to
+
+158
+00:11:15,350 --> 00:11:19,420
+end up at the same optimal W so these
+choices are kind of basically free
+
+159
+00:11:19,419 --> 00:11:23,169
+parameters doesn't matter so for
+convenience I'm adding do not equal to Y
+
+160
+00:11:23,169 --> 00:11:26,299
+and I'm not actually taken to mean
+although it's the same thing and the
+
+161
+00:11:26,299 --> 00:11:33,329
+same goes for us for whether or not we
+average for some across the examples ok
+
+162
+00:11:33,330 --> 00:11:38,410
+next question what if we instead used
+not to the formulation of there but a
+
+163
+00:11:38,409 --> 00:11:42,669
+very similar looking for inflation but
+there's an additional squared at the end
+
+164
+00:11:42,669 --> 00:11:47,809
+so we're taking the difference between
+course plus one this morning and then
+
+165
+00:11:47,809 --> 00:11:54,509
+were squaring that do we obtain the same
+or different lost when you think we
+
+166
+00:11:54,509 --> 00:11:57,710
+obtain the same or different loss in a
+sense that if you were to optimize and
+
+167
+00:11:57,710 --> 00:12:05,759
+find the best W do we get the same
+result or not
+
+168
+00:12:05,759 --> 00:12:20,340
+yes in fact get a different loss it's
+not as obvious to see but what one way
+
+169
+00:12:20,340 --> 00:12:26,639
+to see it as that we're not just clearly
+scaling not just clearly scaling the Los
+
+170
+00:12:26,639 --> 00:12:30,710
+up or down by constant or shifting it by
+constant we're actually changing the
+
+171
+00:12:30,710 --> 00:12:35,580
+differences we are changing the
+tradeoffs nonlinearly in terms of how
+
+172
+00:12:35,580 --> 00:12:38,920
+the SVM support vector machines going to
+go there and trade all the different
+
+173
+00:12:38,919 --> 00:12:43,519
+score margins in different examples but
+it's not obvious to see but basically
+
+174
+00:12:43,519 --> 00:12:46,829
+it's not very clear but I want to to
+illustrate that all changes to this loss
+
+175
+00:12:46,830 --> 00:12:53,320
+are completely and the second permission
+here is in fact something we call a
+
+176
+00:12:53,320 --> 00:12:57,530
+squared hinge loss instead of the one on
+top which recall hinge loss and you can
+
+177
+00:12:57,529 --> 00:13:01,480
+use two different kind of hyper
+primarily 20 use most often you see the
+
+178
+00:13:01,480 --> 00:13:04,750
+first formulation that's what we use
+most of the time but sometimes you can
+
+179
+00:13:04,750 --> 00:13:07,950
+see these assets with the square inch
+loss and better so that's something you
+
+180
+00:13:07,950 --> 00:13:12,550
+play with that's really hyper primer but
+its most often used for the first one
+
+181
+00:13:12,549 --> 00:13:18,919
+let's also think about the scale of this
+loss was the min and max possible loss
+
+182
+00:13:18,919 --> 00:13:23,149
+that you can achieved with the
+multi-class SVM on your entire dataset
+
+183
+00:13:23,149 --> 00:13:26,759
+what is the smallest Mali
+
+184
+00:13:26,759 --> 00:13:35,029
+0 good what is the highest value so
+basically scores could be arbitrarily
+
+185
+00:13:35,029 --> 00:13:39,870
+terrible so if you're signed score to
+the correct example is very very small
+
+186
+00:13:39,870 --> 00:13:45,230
+then you're going to get your loss going
+to infinity and one more question which
+
+187
+00:13:45,230 --> 00:13:49,480
+becomes kind of important when we start
+doing optimization usually when we
+
+188
+00:13:49,480 --> 00:13:53,200
+actually optimize these loss functions
+we start up with the initialization aw
+
+189
+00:13:53,200 --> 00:13:56,430
+that are very small weights so what ends
+up happening is that the scores at the
+
+190
+00:13:56,429 --> 00:14:00,819
+very beginning of optimization are
+roughly near zero all of these are black
+
+191
+00:14:00,820 --> 00:14:05,650
+small numbers near zero so what are the
+loss when all these are new era in this
+
+192
+00:14:05,649 --> 00:14:12,329
+particular case that's right number of
+classes minus 10 if all this course are
+
+193
+00:14:12,330 --> 00:14:16,639
+zero then he would this particular loss
+I put down here and by doing an average
+
+194
+00:14:16,639 --> 00:14:21,269
+across this way we would have achieved a
+loss of two ok so this is not very
+
+195
+00:14:21,269 --> 00:14:24,429
+important what's important is for safety
+checks when you're actually starting
+
+196
+00:14:24,429 --> 00:14:28,399
+optimization and you're starting with
+very small numbers W and you print out
+
+197
+00:14:28,399 --> 00:14:31,389
+your first loss as you're talking about
+migration and you want to make sure that
+
+198
+00:14:31,389 --> 00:14:34,279
+you kind of understand the functional
+forms and that they can think through
+
+199
+00:14:34,279 --> 00:14:38,929
+whether or not the number you get to
+make sense so I'm seeing to in this case
+
+200
+00:14:38,929 --> 00:14:42,799
+then I'm happy that the further losses
+may be implemented correctly percent
+
+201
+00:14:42,799 --> 00:14:46,990
+sure but shortly certainly there's
+nothing wrong with it right away so it's
+
+202
+00:14:46,990 --> 00:14:51,730
+interesting to think about these I'm
+going to go more into this loss of tiny
+
+203
+00:14:51,730 --> 00:14:55,950
+bit but as a question in terms of the
+slide right now
+
+204
+00:14:55,950 --> 00:15:10,870
+question I was asked questions
+
+205
+00:15:10,870 --> 00:15:15,029
+efficient to actually not have this
+constraint joy is not why I because it
+
+206
+00:15:15,029 --> 00:15:19,049
+makes it more difficult to actually do
+these easy better eyes implementations
+
+207
+00:15:19,049 --> 00:15:23,799
+of this loss implementation so that
+actually predict my next slide to some
+
+208
+00:15:23,799 --> 00:15:27,459
+degree so let me just going to say here
+sometime by code for Hollywood right out
+
+209
+00:15:27,460 --> 00:15:33,290
+to this loss function in the same here
+we're evaluating a lie in bed right now
+
+210
+00:15:33,289 --> 00:15:37,759
+we're getting a single example here so
+acts as a single column vector light is
+
+211
+00:15:37,759 --> 00:15:42,279
+an integer specifying the label and W is
+our weight matrix so what we do is we
+
+212
+00:15:42,279 --> 00:15:45,799
+validate this course which is just a
+couple times X then we compute these
+
+213
+00:15:45,799 --> 00:15:50,179
+margins which is the difference between
+the course we obtained and the correct
+
+214
+00:15:50,179 --> 00:15:55,569
+score + 10 these are numbers between 0
+and whatever and then see this dish
+
+215
+00:15:55,570 --> 00:16:03,360
+online margins that y equals 0 YZ them
+there
+
+216
+00:16:03,360 --> 00:16:07,320
+yeah exactly so basically I'm doing this
+efficient backgrounds importation which
+
+217
+00:16:07,320 --> 00:16:11,209
+goes to your point and then I want to
+embrace that margin there because I'm
+
+218
+00:16:11,208 --> 00:16:15,569
+certain that margin said why currently
+has one and I don't want to inflate my
+
+219
+00:16:15,570 --> 00:16:18,360
+score and so I'll set at 20
+
+220
+00:16:18,360 --> 00:16:27,269
+yes I suppose you could subtract one of
+the end as well so we can optimize if we
+
+221
+00:16:27,269 --> 00:16:31,200
+want but we're not going to think about
+this too much if you do if you do in
+
+222
+00:16:31,200 --> 00:16:35,050
+your assignment that's very welcome for
+extreme punishments and there were some
+
+223
+00:16:35,049 --> 00:16:40,859
+of those markets and so we got lost
+going back to the site anymore questions
+
+224
+00:16:40,860 --> 00:16:45,320
+about this formulation and by the way
+this formulation if you wanted to make
+
+225
+00:16:45,320 --> 00:16:49,430
+it if you actually write it down for
+just two closest you'll see that it
+
+226
+00:16:49,429 --> 00:16:57,229
+reduces to a minor support vector
+machine lost ok so we'll see a different
+
+227
+00:16:57,230 --> 00:17:00,190
+function soon and then we're going to
+look at the comparisons of them as well
+
+228
+00:17:00,190 --> 00:17:05,400
+but for now actually so at this point
+what we have is we have this
+
+229
+00:17:05,400 --> 00:17:08,699
+wrapping up its course and then we have
+this loss function which have not
+
+230
+00:17:08,699 --> 00:17:11,870
+written out and its full form where we
+have these differences between this
+
+231
+00:17:11,869 --> 00:17:18,178
+course +1 some of her closest and the
+Sun and the average across hold examples
+
+232
+00:17:18,179 --> 00:17:21,309
+right so that's the loss function right
+now I'd like to convince you that
+
+233
+00:17:21,308 --> 00:17:25,149
+there's actually a bug with this loss
+function in other words if I'd like to
+
+234
+00:17:25,150 --> 00:17:31,798
+use this loss on Sunday as in practice I
+might get some not very nice properties
+
+235
+00:17:31,798 --> 00:17:36,589
+ok if this if this was the only thing I
+was using my phone and it's not
+
+236
+00:17:36,589 --> 00:17:39,709
+completely obvious to see exactly what
+the issue is so I'll give you guys a
+
+237
+00:17:39,710 --> 00:17:43,620
+hint in particular suppose that we found
+the W
+
+238
+00:17:43,619 --> 00:17:55,058
+getting zero loss ok on something and
+now the question is is this w unique or
+
+239
+00:17:55,058 --> 00:18:00,329
+face another way can you give me aww
+that would be different but also
+
+240
+00:18:00,329 --> 00:18:04,210
+definitely achieve zero loss in the back
+
+241
+00:18:04,210 --> 00:18:12,410
+that's right and so you're saying we can
+scale it by some constant and in
+
+242
+00:18:12,410 --> 00:18:20,009
+particular all formats are based on
+constraint you probably want to meet
+
+243
+00:18:20,009 --> 00:18:24,259
+young greater than one right so
+basically what I can do as I can change
+
+244
+00:18:24,259 --> 00:18:28,119
+my weight and make them larger and
+larger all I would be doing is I'm just
+
+245
+00:18:28,119 --> 00:18:31,639
+create making the score differences
+larger and larger as I came up w right
+
+246
+00:18:31,640 --> 00:18:35,890
+because of the liquor law sport here so
+basically it's not a very desirable
+
+247
+00:18:35,890 --> 00:18:40,370
+property because we have the entire
+subspace of W that is optimal and all of
+
+248
+00:18:40,369 --> 00:18:44,319
+them are according to this loss function
+completely the same but intuitively
+
+249
+00:18:44,319 --> 00:18:48,019
+that's not what I can burn as property
+to pass and so just to see this in
+
+250
+00:18:48,019 --> 00:18:51,920
+america to convince yourself that this
+is the case I taking this example of
+
+251
+00:18:51,920 --> 00:18:58,480
+what we achieved previously 0 loss there
+before and I suppose I W I twice I mean
+
+252
+00:18:58,480 --> 00:19:02,360
+this is a very simple math going on here
+but basically I would be conflicting or
+
+253
+00:19:02,359 --> 00:19:07,000
+my scores by two times and so their
+difference would also becomes larger so
+
+254
+00:19:07,000 --> 00:19:11,019
+if all your score differences inside the
+max 50 well already negative then
+
+255
+00:19:11,019 --> 00:19:14,389
+there's going to become more and more
+negative and so you end up with larger
+
+256
+00:19:14,390 --> 00:19:18,040
+and larger negative values inside them
+access and just become zero all the time
+
+257
+00:19:18,039 --> 00:19:32,159
+but the scale factor would have to be
+larger than 1 because
+
+258
+00:19:32,160 --> 00:19:56,940
+another question for simplicity but yeah
+basically scores are WX + be so so
+
+259
+00:19:56,940 --> 00:19:58,309
+you're just yet
+
+260
+00:19:58,309 --> 00:20:06,589
+forget to buy some just chillin W myself
+ok so the way to fix this is intuitively
+
+261
+00:20:06,589 --> 00:20:10,250
+we have this entire subway some W's and
+it all works the same according to this
+
+262
+00:20:10,250 --> 00:20:13,269
+loss function and what we'd like to do
+as we'd like to have a preference over
+
+263
+00:20:13,269 --> 00:20:17,170
+some W's over others just based on
+intrinsic you know what what do we
+
+264
+00:20:17,170 --> 00:20:21,430
+desire of W to look like forget the data
+is just what what are nice things to
+
+265
+00:20:21,430 --> 00:20:26,110
+happen and so this introduces the notion
+of regularization which we're going to
+
+266
+00:20:26,109 --> 00:20:29,319
+be attending to our loss function so we
+have an additional term there which is
+
+267
+00:20:29,319 --> 00:20:33,309
+land up times a regularization function
+of W and the regularization function
+
+268
+00:20:33,309 --> 00:20:37,500
+measures the niceness of your W ok and
+so we don't only want to fit the data
+
+269
+00:20:37,500 --> 00:20:43,279
+but we also won W to be nice and we're
+going to see some ways of framing that
+
+270
+00:20:43,279 --> 00:20:47,549
+exactly why they make sense and into
+going on as regularization has a way of
+
+271
+00:20:47,549 --> 00:20:52,509
+trading off your training act your
+training loss and your generalization
+
+272
+00:20:52,509 --> 00:20:56,589
+lost on a test set so intuitively
+regularization a set of techniques where
+
+273
+00:20:56,589 --> 00:21:00,899
+we're adding objectives to the loss
+which will be fighting with this guy so
+
+274
+00:21:00,900 --> 00:21:04,560
+this guy just wants to fit your training
+data and that guy once W to look some
+
+275
+00:21:04,559 --> 00:21:07,879
+particular way and so they're fighting
+each other sometimes in your objective
+
+276
+00:21:07,880 --> 00:21:11,730
+because we want to simultaneously
+achieve both of them but it turns out
+
+277
+00:21:11,730 --> 00:21:14,470
+that adding these regularization
+techniques even if it makes your
+
+278
+00:21:14,470 --> 00:21:18,319
+training error worse so we're not
+correctly classifying examples which he
+
+279
+00:21:18,319 --> 00:21:21,599
+noticed is that the test set performance
+and something better and we'll see an
+
+280
+00:21:21,599 --> 00:21:26,089
+example of why that might be actually
+what the next for now I just want to
+
+281
+00:21:26,089 --> 00:21:29,109
+point out the next light but for now I
+just want to point out that the most
+
+282
+00:21:29,109 --> 00:21:33,019
+common form of realization is the what
+we call to regularization or weight
+
+283
+00:21:33,019 --> 00:21:37,539
+decay and really what we're doing is
+suppose W in this case is a 2d matrix so
+
+284
+00:21:37,539 --> 00:21:42,230
+I had to some Sauveur que el the rows
+and columns that really is just
+
+285
+00:21:42,230 --> 00:21:44,230
+element wise W squared
+
+286
+00:21:44,230 --> 00:21:48,019
+and we're just putting them all into the
+Los ok so this this particular
+
+287
+00:21:48,019 --> 00:21:55,069
+regulation it likes w's to be 0 right so
+when WS all 09 realization is happy but
+
+288
+00:21:55,069 --> 00:21:58,649
+of course you can't people there because
+then you can classify so these guys will
+
+289
+00:21:58,650 --> 00:22:03,140
+fight each other there are different
+forms of regularization with different
+
+290
+00:22:03,140 --> 00:22:08,570
+approaching Kong's will go into some of
+them much later in the class and I just
+
+291
+00:22:08,569 --> 00:22:12,548
+like the 2nd Lt regularization is the
+most common form and that's what you'll
+
+292
+00:22:12,548 --> 00:22:17,569
+use quite often in this class as well
+it's not like to convince you I'd like
+
+293
+00:22:17,569 --> 00:22:20,529
+to convince you that this is a
+reasonable thing to want out of it w
+
+294
+00:22:20,529 --> 00:22:25,779
+that its weights are small so consider
+this very simple cooked up example to
+
+295
+00:22:25,779 --> 00:22:30,149
+get the intuition suppose we have an
+example where we are in four-dimensional
+
+296
+00:22:30,150 --> 00:22:32,370
+space where we're doing this
+classification and we have an even
+
+297
+00:22:32,369 --> 00:22:36,139
+better off just all once X and now
+suppose we have these two candidates
+
+298
+00:22:36,140 --> 00:22:37,880
+weight matrices or wait
+
+299
+00:22:37,880 --> 00:22:44,780
+single voice I suppose to right now so
+one of them is 100 and the other is 25
+
+300
+00:22:44,779 --> 00:22:49,200
+everywhere since we have in your loss
+functions you'll see that their effects
+
+301
+00:22:49,200 --> 00:22:55,080
+are the same so basically have a leading
+scorer is by WX so the doc product with
+
+302
+00:22:55,079 --> 00:22:59,109
+ex is identical for both of these
+discourse with both of these but
+
+303
+00:22:59,109 --> 00:23:03,469
+regularization with strictly favor one
+of these over the other which one with
+
+304
+00:23:03,470 --> 00:23:07,720
+the regularization cost favor even
+though their effects are the same which
+
+305
+00:23:07,720 --> 00:23:13,548
+one is better in terms of realization
+the second one right and so the
+
+306
+00:23:13,548 --> 00:23:15,740
+regularization would tell you that even
+though they're achieving the same
+
+307
+00:23:15,740 --> 00:23:19,109
+effects in terms of the data loss
+classification down the road we actually
+
+308
+00:23:19,109 --> 00:23:22,629
+significantly preferred the second one
+what's better about the second one is
+
+309
+00:23:22,630 --> 00:23:27,340
+that a good idea to have
+
+310
+00:23:27,339 --> 00:23:38,230
+that's correct so well that's one
+interpretation I like the most is well
+
+311
+00:23:38,230 --> 00:23:43,549
+it takes into account the most number of
+things in your X Factor right so what
+
+312
+00:23:43,549 --> 00:23:47,859
+this Delta realization wants to do is to
+spread out your WSUS as much as possible
+
+313
+00:23:47,859 --> 00:23:51,169
+so that you're taking into account all
+the input features are only empathic
+
+314
+00:23:51,170 --> 00:23:55,900
+sauce and wants to use as much as many
+other dimensions as it likes its a
+
+315
+00:23:55,900 --> 00:23:57,600
+cheating the same effect
+
+316
+00:23:57,599 --> 00:24:01,439
+intuitively speaking and so that's
+better than just focusing on just one
+
+317
+00:24:01,440 --> 00:24:06,990
+dimension is just nice it's something
+that often works in practice basically
+
+318
+00:24:06,990 --> 00:24:11,880
+just the way things are and biggest
+arranged and the property that they
+
+319
+00:24:11,880 --> 00:24:17,230
+usually have to tackle any questions
+about the regularization good idea
+
+320
+00:24:17,230 --> 00:24:22,130
+everyone has sold some basically our
+losses will always have this forum where
+
+321
+00:24:22,130 --> 00:24:25,350
+we we have a dinner loss and they will
+also have a regularization it's a very
+
+322
+00:24:25,349 --> 00:24:29,529
+common thing to have in practice ok I'm
+not going to go into the second
+
+323
+00:24:29,529 --> 00:24:34,629
+classifier pacifier and we'll see some
+differences between the US and support
+
+324
+00:24:34,630 --> 00:24:38,070
+vector machine and this soft mask
+classifier in practice these are kind of
+
+325
+00:24:38,069 --> 00:24:41,369
+like these two choices that you can have
+either a spam or something like the most
+
+326
+00:24:41,369 --> 00:24:47,629
+commonly used linear classifiers often
+you'll see that so far as preferred and
+
+327
+00:24:47,630 --> 00:24:51,480
+I'm not exactly sure why because usually
+the end up working about the same and I
+
+328
+00:24:51,480 --> 00:24:54,420
+just like to mention that this is also
+sometimes called multnomah was just
+
+329
+00:24:54,420 --> 00:24:57,019
+aggression so if you're familiar with
+logistic regression this is just the
+
+330
+00:24:57,019 --> 00:25:00,190
+generalization of it into multiple
+dimensions or in this case multiple
+
+331
+00:25:00,190 --> 00:25:12,009
+clouds of smoke just as they're
+questioned over there
+
+332
+00:25:12,009 --> 00:25:32,150
+why do we want to use if we'd like to
+pick between them in some way and I
+
+333
+00:25:32,150 --> 00:25:36,820
+think we are going for is that one thing
+low W us is a reasonable way to pick
+
+334
+00:25:36,819 --> 00:25:42,700
+among men and the ultra-right favor
+diffuse w's like in this case here and
+
+335
+00:25:42,700 --> 00:25:47,900
+one of the intuitive ways in which I can
+try to pitch why this is a good idea is
+
+336
+00:25:47,900 --> 00:25:54,290
+that diffuse weights basically see this
+w one is completely ignoring your inputs
+
+337
+00:25:54,289 --> 00:25:58,220
+to three and four but W two is using all
+of the inputs right because of the way
+
+338
+00:25:58,220 --> 00:26:04,480
+to defuse and so intuitively this just
+end up usually working better at a test
+
+339
+00:26:04,480 --> 00:26:10,150
+I'm because more evidence is being
+accumulated and your decisions instead
+
+340
+00:26:10,150 --> 00:26:21,470
+of just one single evidence one single
+feature that's right
+
+341
+00:26:21,470 --> 00:26:28,140
+that's right that's right so the idea
+here is that these two W 110 w to
+
+342
+00:26:28,140 --> 00:26:32,630
+achieving the same effect so this data
+loss suppose that that's basically it
+
+343
+00:26:32,630 --> 00:26:35,650
+doesn't care between the two but the
+regularization expressed a preference
+
+344
+00:26:35,650 --> 00:26:39,169
+for them and since we had any objective
+and we're going to end up optimizing
+
+345
+00:26:39,169 --> 00:26:42,240
+over this loss functions are going to
+find the W that simultaneously
+
+346
+00:26:42,240 --> 00:26:46,659
+accomplishes both of those and so we end
+up aw that not only classified correctly
+
+347
+00:26:46,659 --> 00:26:50,360
+but we also have the added preference
+that actually wanted to be and we wanted
+
+348
+00:26:50,359 --> 00:27:05,668
+to be diffuse as much as possible could
+also be indifferent L one has some nice
+
+349
+00:27:05,669 --> 00:27:09,240
+properties which I don't want to go into
+right now we might cover it later fell
+
+350
+00:27:09,240 --> 00:27:16,579
+one has some properties like a sparsity
+inducing properties what if you end up
+
+351
+00:27:16,579 --> 00:27:20,240
+having lunch in your objectives you'll
+find that lots of W's will end up being
+
+352
+00:27:20,240 --> 00:27:25,329
+exactly zero for reasons that we might
+go into labor and that sometimes is like
+
+353
+00:27:25,329 --> 00:27:30,629
+a feature selection almost and so I'll
+one is another alternative that we might
+
+354
+00:27:30,630 --> 00:27:45,760
+go into a bit more later
+
+355
+00:27:45,759 --> 00:27:54,220
+that isn't it may be a good thing that
+were ignoring features and just using
+
+356
+00:27:54,220 --> 00:28:02,960
+one of them yeah there's many technical
+reasons why realization is a good idea I
+
+357
+00:28:02,960 --> 00:28:09,090
+went to give you just basic intuition so
+maybe maybe tell them that but I think
+
+358
+00:28:09,089 --> 00:28:59,740
+that's a fair point if I have a good
+return I would have to be ignoring some
+
+359
+00:28:59,740 --> 00:29:25,980
+and looking at times and learning theory
+and you saw some of that in 229 and
+
+360
+00:29:25,980 --> 00:29:29,710
+there are some results on white
+regularization is a good case in in
+
+361
+00:29:29,710 --> 00:29:33,650
+those areas and I don't think I'm gonna
+go into that and salt also beyond the
+
+362
+00:29:33,650 --> 00:29:37,610
+scope of this class so far this class
+just altering our nation will make your
+
+363
+00:29:37,609 --> 00:29:44,139
+test error better someone to go to
+satisfy to find out which is just
+
+364
+00:29:44,140 --> 00:29:49,309
+generalization of logistic regression to
+the way the way this will work as this
+
+365
+00:29:49,308 --> 00:29:53,049
+is just a different functional form for
+how loss is specified on top of these
+
+366
+00:29:53,049 --> 00:29:58,539
+course some particular there's this
+interpretation that classifier puts on
+
+367
+00:29:58,539 --> 00:30:02,170
+top of this course these are not just
+some arbitrary scores and we want to
+
+368
+00:30:02,170 --> 00:30:05,769
+margins to be met but we have specific
+interpretation that is maybe more
+
+369
+00:30:05,769 --> 00:30:10,549
+principled kind of from a problem that
+point of view where we actually
+
+370
+00:30:10,549 --> 00:30:14,490
+interpret these course not just as these
+things that mean margins but these are
+
+371
+00:30:14,490 --> 00:30:17,880
+actually the normalized lock
+probabilities that are assigned to
+
+372
+00:30:17,880 --> 00:30:23,140
+different classes ok so we're going to
+go into exactly what this means in a bit
+
+373
+00:30:23,140 --> 00:30:28,880
+these are normalized lock probabilities
+of all the twice given the image in
+
+374
+00:30:28,880 --> 00:30:34,490
+other words we are assuming that the
+scores are unlike problem peace than the
+
+375
+00:30:34,490 --> 00:30:38,799
+way to get probabilities of the closest
+like Sasuke is that we take these the
+
+376
+00:30:38,799 --> 00:30:39,690
+score
+
+377
+00:30:39,690 --> 00:30:45,029
+exponential all of them to get the
+anomalous probabilities and we normalize
+
+378
+00:30:45,029 --> 00:30:48,849
+them to get them to normalize
+probabilities so we divided by the sum
+
+379
+00:30:48,849 --> 00:30:54,209
+over all the exponential its course and
+that's how we actually get this
+
+380
+00:30:54,210 --> 00:30:58,240
+expression for a probability of a class
+given the image and so this function
+
+381
+00:30:58,240 --> 00:31:02,880
+here is called a soft max function if
+you see if someone has to eat to them
+
+382
+00:31:02,880 --> 00:31:07,840
+the elements are currently interested in
+divided by the sum overall expense sheet
+
+383
+00:31:07,839 --> 00:31:11,918
+its course that's the way this will work
+basically is if we're in this problem
+
+384
+00:31:11,919 --> 00:31:13,040
+premark we're really lucky
+
+385
+00:31:13,039 --> 00:31:16,869
+that we're deciding that this is the
+probability of different classes that
+
+386
+00:31:16,869 --> 00:31:19,619
+makes sense in terms of what you what
+you really want to do in this setting
+
+387
+00:31:19,619 --> 00:31:23,809
+will probably over different classes one
+of these is correct so we wanted to
+
+388
+00:31:23,809 --> 00:31:25,429
+maximize the log-likelihood
+
+389
+00:31:25,430 --> 00:31:32,900
+for the loss function and so we want to
+maximize the log likelihood of the true
+
+390
+00:31:32,900 --> 00:31:38,140
+class and since we're running a loss
+function we want to minimize the
+
+391
+00:31:38,140 --> 00:31:42,980
+negative log-likelihood of the true
+class ok so you end up with a series of
+
+392
+00:31:42,980 --> 00:31:46,599
+expressions here really are lost
+function as you want the log-likelihood
+
+393
+00:31:46,599 --> 00:31:51,169
+the correct class to be high so negative
+of it want to be low and the
+
+394
+00:31:51,170 --> 00:31:54,820
+log-likelihood is some expansion of
+course let's look at a specific example
+
+395
+00:31:54,819 --> 00:32:00,599
+to make this more later here I actually
+like something that expression so that
+
+396
+00:32:00,599 --> 00:32:04,839
+this is the Los negative log that
+expression let's look at how this
+
+397
+00:32:04,839 --> 00:32:07,859
+expression works and I think it'll give
+you a better intuition know exactly what
+
+398
+00:32:07,859 --> 00:32:12,009
+this is doing lights what's computing so
+suppose here we haven't these scores
+
+399
+00:32:12,009 --> 00:32:16,379
+that came out from our neural network or
+from our earlier pacifier and these are
+
+400
+00:32:16,380 --> 00:32:19,780
+the unlock problem peace so as I
+mentioned we want to exponentially them
+
+401
+00:32:19,779 --> 00:32:22,879
+first because under this interpretation
+that gives us the normalized
+
+402
+00:32:22,880 --> 00:32:28,150
+probabilities and now he's always some
+21 so we have two divided by the sum of
+
+403
+00:32:28,150 --> 00:32:33,310
+all of these so we add up these guys and
+we divide to actually get probably out
+
+404
+00:32:33,309 --> 00:32:37,609
+under this interpretation we've carried
+out the set of transformations and what
+
+405
+00:32:37,609 --> 00:32:41,219
+this is saying is that this
+interpretation the probability assigned
+
+406
+00:32:41,220 --> 00:32:47,029
+to this image of being a cat is 13% car
+is 87% and progress very unlikely 0%
+
+407
+00:32:47,029 --> 00:32:51,399
+these are the probabilities and not
+normally in the setting you want to
+
+408
+00:32:51,400 --> 00:32:54,960
+maximize the lock probability because it
+turns out that maximizing just a rock
+
+409
+00:32:54,960 --> 00:32:58,049
+probability is not as nice
+mathematically so lonely you see
+
+410
+00:32:58,049 --> 00:33:03,460
+maximizing luck probabilities and then
+so you want to minimize the probability
+
+411
+00:33:03,460 --> 00:33:08,850
+so the correct class here is cat which
+is only having 13 percent chance
+
+412
+00:33:08,849 --> 00:33:14,679
+Anderson misinterpretation so negative
+log of points 13 gets us 89 and so
+
+413
+00:33:14,680 --> 00:33:21,180
+that's the final to find a loss that we
+would achieve for this class here under
+
+414
+00:33:21,180 --> 00:33:25,529
+this interpretation of a classifier so
+29
+
+415
+00:33:25,529 --> 00:33:32,869
+let's go over some examples were some
+questions now related to this to try to
+
+416
+00:33:32,869 --> 00:33:34,219
+interpret exactly how this works
+
+417
+00:33:34,220 --> 00:33:38,519
+first I was the min and max possible
+lost with this loss function so that the
+
+418
+00:33:38,519 --> 00:33:44,460
+loss function what is the smallest Mali
+and the highest body has to think about
+
+419
+00:33:44,460 --> 00:33:49,809
+this what is the smallest value that we
+can cheap zero and how would that happen
+
+420
+00:33:49,809 --> 00:33:57,220
+I can get so if you're correct class is
+getting probably have one where we have
+
+421
+00:33:57,220 --> 00:34:02,890
+a one was replying to the law and we're
+getting negative log of 110 and the
+
+422
+00:34:02,890 --> 00:34:09,030
+highest possible loss so just as well as
+we were getting the same 0 is minimum
+
+423
+00:34:09,030 --> 00:34:14,250
+and infinite is maximum so infant loss
+would be achieved if you end up giving
+
+424
+00:34:14,250 --> 00:34:18,769
+your cat score very tiny probability and
+then log of 0 gives you negative
+
+425
+00:34:18,769 --> 00:34:24,679
+infinity so negative that is just the
+infinite so yeah so the same balance as
+
+426
+00:34:24,679 --> 00:34:28,159
+p.m. and also this question
+
+427
+00:34:28,159 --> 00:34:33,440
+normally when we initialize W with
+roughly small small weights wind up with
+
+428
+00:34:33,440 --> 00:34:37,550
+all these cars are nearly zero what ends
+up being the loss in this case
+
+429
+00:34:37,550 --> 00:34:40,419
+checks at the beginning of your
+optimization what do you expect to see
+
+430
+00:34:40,418 --> 00:34:47,000
+as your first loss
+
+431
+00:34:47,000 --> 00:34:59,449
+one over a number of classes so you may
+be getting older is here you get to all
+
+432
+00:34:59,449 --> 00:35:04,139
+of one's here and so here is one over a
+number of classes and then they get a
+
+433
+00:35:04,139 --> 00:35:07,599
+blog about and something your final
+awesome so actually for myself whenever
+
+434
+00:35:07,599 --> 00:35:11,569
+I run up my station I sometimes take
+note of my number of classes and I
+
+435
+00:35:11,570 --> 00:35:14,970
+evaluate negative log one of a number of
+classes and I'm trying to see what is
+
+436
+00:35:14,969 --> 00:35:18,429
+the my first beginning lost expect and
+so when I start up my decision I make
+
+437
+00:35:18,429 --> 00:35:21,159
+sure that I'm getting roughly that
+otherwise I know some things may be
+
+438
+00:35:21,159 --> 00:35:24,399
+slightly off expect to get something on
+that order
+
+439
+00:35:24,400 --> 00:35:28,630
+moreover as an optimizing expect that I
+go from thats 20 and if I'm seeing
+
+440
+00:35:28,630 --> 00:35:31,039
+negative numbers then I know from the
+functional form that something very
+
+441
+00:35:31,039 --> 00:35:32,590
+strange is going on right
+
+442
+00:35:32,590 --> 00:35:37,070
+never actually expected gonna give
+numbers out of this assault max loss
+
+443
+00:35:37,070 --> 00:35:40,630
+I'll show you one more slide nothing
+some questions just to reiterate the
+
+444
+00:35:40,630 --> 00:35:44,599
+difference between them and really what
+they look like as we have the score
+
+445
+00:35:44,599 --> 00:35:48,909
+function which gives aw we get our
+scores of actor and now the difference
+
+446
+00:35:48,909 --> 00:35:54,420
+is just how they interpret what these
+course coming out from this function is
+
+447
+00:35:54,420 --> 00:35:58,500
+so I just ran its course no
+interpretation whatsoever we just want
+
+448
+00:35:58,500 --> 00:36:02,710
+that a lot of a larger score the correct
+score to be some margin above the
+
+449
+00:36:02,710 --> 00:36:07,240
+incorrect course or interpreted to be
+these unless lott probabilities and then
+
+450
+00:36:07,239 --> 00:36:10,569
+in this framework we first went to get
+the probabilities and then we want to
+
+451
+00:36:10,570 --> 00:36:14,450
+maximize the public in the crack losses
+or the log of them and so that ends up
+
+452
+00:36:14,449 --> 00:36:19,250
+giving us the loss function or something
+so they start off at the same way but
+
+453
+00:36:19,250 --> 00:36:22,780
+they just happened to get to the
+difference less results we're going to
+
+454
+00:36:22,780 --> 00:36:31,150
+exactly what the differences are in a
+bit there are questions
+
+455
+00:36:31,150 --> 00:36:41,579
+they take your classified as near
+instantaneous to evaluate most of the
+
+456
+00:36:41,579 --> 00:36:45,949
+work is done in the convolutions and so
+will see that the classifier and
+
+457
+00:36:45,949 --> 00:36:51,629
+especially the losses roughly the same
+of course South max involve some XP and
+
+458
+00:36:51,630 --> 00:36:56,200
+so on so these operations are slightly
+more expensive perhaps but usually it
+
+459
+00:36:56,199 --> 00:36:57,439
+completely washes away
+
+460
+00:36:57,440 --> 00:36:59,320
+compared to everything else you're
+worried about which is all the
+
+461
+00:36:59,320 --> 00:37:15,260
+competitions over the image of God
+
+462
+00:37:15,260 --> 00:37:32,600
+probably
+
+463
+00:37:32,599 --> 00:37:42,210
+exact same problem and so maximizing the
+property and maximizing the locality
+
+464
+00:37:42,210 --> 00:37:46,119
+give you the identical result but in
+terms of the match everything comes out
+
+465
+00:37:46,119 --> 00:37:49,279
+too much nicer looking when you actually
+put a lot of there but it's the exact
+
+466
+00:37:49,280 --> 00:37:51,310
+same optimization problem
+
+467
+00:37:51,309 --> 00:37:56,539
+ok let's get some interpretations of
+these two and exactly how they differ
+
+468
+00:37:56,539 --> 00:38:01,230
+max vs SEM and trying to give you an
+idea about one property that actually
+
+469
+00:38:01,230 --> 00:38:03,559
+quite different between the two
+
+470
+00:38:03,559 --> 00:38:08,059
+these two different functional analysis
+team that we have these three examples
+
+471
+00:38:08,059 --> 00:38:12,710
+all three examples and suppose there are
+three closest three different examples
+
+472
+00:38:12,710 --> 00:38:15,980
+and these are discourse of these
+examples for every one of these examples
+
+473
+00:38:15,980 --> 00:38:19,659
+the first class here is the correct
+class so 10 is the correct class score
+
+474
+00:38:19,659 --> 00:38:24,509
+and the other scores are these guys
+either the first one second or third one
+
+475
+00:38:24,510 --> 00:38:30,970
+and now just think about how would these
+losses tell you about how desirable
+
+476
+00:38:30,969 --> 00:38:36,480
+outcomes are in terms of that w in
+particular one way to think about it for
+
+477
+00:38:36,480 --> 00:38:39,530
+example is suppose I think this data
+point the third one tenth of a hundred
+
+478
+00:38:39,530 --> 00:38:44,700
+and eight hundred and suppose I jiggle
+it move it around a bit and my input
+
+479
+00:38:44,699 --> 00:38:58,159
+space what is happening to the losses as
+I do that
+
+480
+00:38:58,159 --> 00:39:03,339
+I do so they increase and decrease as I
+would go around do they both increase or
+
+481
+00:39:03,340 --> 00:39:10,050
+decrease for the third appointment for
+example as me and remains the same
+
+482
+00:39:10,050 --> 00:39:13,740
+correct and why is that it's because the
+margin was met by a huge amount so
+
+483
+00:39:13,739 --> 00:39:17,659
+there's just added robustness when I
+take the day off on a sheet around the
+
+484
+00:39:17,659 --> 00:39:22,379
+SVM is already very happy because the
+margins were met by you know we desire
+
+485
+00:39:22,380 --> 00:39:27,809
+margin of one and here we have a margin
+of two hundred and there's a huge margin
+
+486
+00:39:27,809 --> 00:39:32,299
+ESPN doesn't express a preference over
+these examples where this course come
+
+487
+00:39:32,300 --> 00:39:37,010
+out very negative ads no additional
+preference over do I want to be negative
+
+488
+00:39:37,010 --> 00:39:43,890
+2009 200,000 PSP and wound care but the
+s but the South max could always see you
+
+489
+00:39:43,889 --> 00:39:46,659
+will always get an improvement for
+something that's right so soft max
+
+490
+00:39:46,659 --> 00:39:49,480
+function express a preference for
+everyone's needs to be negative about
+
+491
+00:39:49,480 --> 00:39:53,590
+two hundred or five hundred or thousand
+of them will give you better loss right
+
+492
+00:39:53,590 --> 00:39:58,530
+but the SVM at this point doesn't care
+if the other examples I don't know if
+
+493
+00:39:58,530 --> 00:40:03,320
+it's as clear distinction rights of the
+FBI has decided robustness to it once
+
+494
+00:40:03,320 --> 00:40:07,120
+this margin to be met but beyond that it
+doesn't micromanage your course where
+
+495
+00:40:07,119 --> 00:40:11,400
+soft max will always want peace course
+to be you know everything here nothing
+
+496
+00:40:11,400 --> 00:40:15,300
+there and so that's one kind of very
+clear difference between the two
+
+497
+00:40:15,300 --> 00:40:20,548
+it was a question
+
+498
+00:40:20,548 --> 00:40:28,568
+yes the margin of one I mentioned very
+briefly that that's not a hyper primary
+
+499
+00:40:28,568 --> 00:40:34,528
+you can fix it to be one reason for that
+is that lease course they're the kind of
+
+500
+00:40:34,528 --> 00:40:40,048
+the absolute values of those course are
+kind of don't really mattered because my
+
+501
+00:40:40,048 --> 00:40:45,088
+W I can make it a larger or smaller and
+I can achieve different sizes course and
+
+502
+00:40:45,088 --> 00:40:49,759
+so one turns out to work better and in
+the notes I have a longer duration go
+
+503
+00:40:49,759 --> 00:40:54,699
+into details exactly why one is safe to
+choose so refer to that but i dont wanna
+
+504
+00:40:54,699 --> 00:41:03,239
+spend time on it in like 20 would be if
+you wanna 20 there would be trouble you
+
+505
+00:41:03,239 --> 00:41:07,358
+can use any positive number and that
+would give you a nice p.m. if he was 0
+
+506
+00:41:07,358 --> 00:41:14,328
+that would look different
+
+507
+00:41:14,329 --> 00:41:18,259
+for example this added constant there
+one property gives you when you actually
+
+508
+00:41:18,259 --> 00:41:21,920
+go through the mathematical analysis
+likes in the ass p.m. in CST 29 as
+
+509
+00:41:21,920 --> 00:41:26,269
+you'll see that the chief suspects
+margin property where the Eskimo playing
+
+510
+00:41:26,268 --> 00:41:29,698
+that the best margin when you actually
+have a plus
+
+511
+00:41:29,699 --> 00:41:33,539
+constant their combined with the altar
+regularization on the way it's very
+
+512
+00:41:33,539 --> 00:41:38,499
+small weights that meet specific margin
+and as well give you this very nice mix
+
+513
+00:41:38,498 --> 00:41:42,259
+margin property that I didn't really
+going to in this in this lecture right
+
+514
+00:41:42,259 --> 00:41:46,818
+now but I basically do want a positive
+number there otherwise things would
+
+515
+00:41:46,818 --> 00:41:51,480
+break
+
+516
+00:41:51,480 --> 00:42:14,780
+numbers that are real numbers and we're
+kind of free to get in this course out
+
+517
+00:42:14,780 --> 00:42:18,200
+and it's up to you to endow them with
+interpretation right we can have
+
+518
+00:42:18,199 --> 00:42:21,669
+different losses in this specific case I
+showed you the closest p.m. there's
+
+519
+00:42:21,670 --> 00:42:25,180
+multiple versions of a multi-class SVM
+you can paddle around with exactly the
+
+520
+00:42:25,179 --> 00:42:30,750
+Los expression in one of the one of the
+interpretations we can put on this
+
+521
+00:42:30,750 --> 00:42:34,510
+course then there'd be some normalized
+block probably say they can't be
+
+522
+00:42:34,510 --> 00:42:37,590
+normalized because they just came we
+have to explicitly because there's no
+
+523
+00:42:37,590 --> 00:42:42,180
+constraint that the output of your
+function will be normalized and they
+
+524
+00:42:42,179 --> 00:42:45,579
+have to be the camp probably because
+you're out that in just his real numbers
+
+525
+00:42:45,579 --> 00:42:51,309
+that can be positive or negative so we
+interpret them as a problem peace and
+
+526
+00:42:51,309 --> 00:42:52,699
+and done
+
+527
+00:42:52,699 --> 00:42:58,329
+requires us to treat them some very bad
+kind of explanation of it but I think
+
+528
+00:42:58,329 --> 00:43:05,889
+he's got
+
+529
+00:43:05,889 --> 00:43:57,139
+energy and losses like kind of an
+equivalent of all about what you're
+
+530
+00:43:57,139 --> 00:44:05,690
+saying look at this one here right here
+saying if I googled this around
+
+531
+00:44:05,690 --> 00:44:09,460
+nothing's changing I think the
+difference is the loss would definitely
+
+532
+00:44:09,460 --> 00:44:12,800
+change for max even though it wouldn't
+change a lot but I would definitely
+
+533
+00:44:12,800 --> 00:44:16,660
+change the subject to express preference
+whereas p.m. guess you identically zero
+
+534
+00:44:16,659 --> 00:44:27,339
+wouldn't be very big blunder differently
+as preference but in practice basically
+
+535
+00:44:27,340 --> 00:44:32,720
+this distinction the interaction of
+trying to give you is that the SPM has a
+
+536
+00:44:32,719 --> 00:44:38,469
+very local part of the space immature
+classifying that it cares about and
+
+537
+00:44:38,469 --> 00:44:40,279
+beyond it
+
+538
+00:44:40,280 --> 00:44:43,700
+its environment and a soft max kind of
+physical action of the full data cloud
+
+539
+00:44:43,699 --> 00:44:48,129
+it cares about it cares about all the
+points in your data cloud not just you
+
+540
+00:44:48,130 --> 00:44:50,590
+know there's like a small class here
+that you're trying to separate out from
+
+541
+00:44:50,590 --> 00:44:51,410
+everything else
+
+542
+00:44:51,409 --> 00:44:55,659
+assault Maxwell kind of concerned the
+full data closet getting your plane and
+
+543
+00:44:55,659 --> 00:44:59,059
+SPM just want to separate out that tiny
+piece from the immediate part of the
+
+544
+00:44:59,059 --> 00:45:04,219
+data cloud like that in practice when
+you actually run the state can give
+
+545
+00:45:04,219 --> 00:45:09,569
+nearly identical results almost always
+so really when trying to I'm not trying
+
+546
+00:45:09,570 --> 00:45:12,640
+to pitch one or the other I'm just
+trying to give you this notion that
+
+547
+00:45:12,639 --> 00:45:16,809
+you're in charge of the loss function
+you get some scores out and you can
+
+548
+00:45:16,809 --> 00:45:19,199
+write down nearly any mathematical
+expression
+
+549
+00:45:19,199 --> 00:45:23,279
+is differentiable into what you want
+your scores to be like and there are
+
+550
+00:45:23,280 --> 00:45:26,619
+different ways of actually formulating
+this and actually two examples that are
+
+551
+00:45:26,619 --> 00:45:30,579
+coming to see practice but in practice
+we can put down any losses for what you
+
+552
+00:45:30,579 --> 00:45:34,619
+want your scores to be and that's a very
+nice picture because we can optimize
+
+553
+00:45:34,619 --> 00:45:46,700
+overall let me show you an interactive
+web them at this point
+
+554
+00:45:46,699 --> 00:45:54,289
+alright see this so this is an
+interactive seminar class page you can
+
+555
+00:45:54,289 --> 00:45:58,409
+find it at this URL I wrote it last year
+and I have to show it to all of you guys
+
+556
+00:45:58,409 --> 00:46:04,279
+to justify spending one day on
+developing ok but some that your last
+
+557
+00:46:04,280 --> 00:46:12,440
+year not too many people looked at this
+vehicle is one day of my life so we have
+
+558
+00:46:12,440 --> 00:46:18,000
+here is a two-dimensional problem with
+three classes and I'm showing here three
+
+559
+00:46:18,000 --> 00:46:22,139
+classes each has three examples over
+here in two dimensions and I'm showing
+
+560
+00:46:22,139 --> 00:46:24,969
+the three classifiers here because the
+level set aside for example the red
+
+561
+00:46:24,969 --> 00:46:29,659
+classifier is as scores of 0 along the
+line and then I'm showing the arrows
+
+562
+00:46:29,659 --> 00:46:35,509
+which scores increased right here's RW
+matrix so as you recall the W matrix
+
+563
+00:46:35,510 --> 00:46:38,609
+double rows of that w matrix are the
+different classifiers so we have the
+
+564
+00:46:38,608 --> 00:46:42,289
+blue classifier red and green classifier
+and Brett classifier and we have both
+
+565
+00:46:42,289 --> 00:46:47,349
+the weights for both the X&Y component
+and also the bias and then here we have
+
+566
+00:46:47,349 --> 00:46:50,609
+the data said so we have the X&Y
+coordinates of all the data points there
+
+567
+00:46:50,608 --> 00:46:55,779
+correct label and thus course as well as
+the loss achieved by all those data
+
+568
+00:46:55,780 --> 00:46:59,769
+points right now with this setting up w
+and so you can see that I'm taking the
+
+569
+00:46:59,769 --> 00:47:04,568
+mean overall the loss so right now our
+data losses 2.77 regularization loss for
+
+570
+00:47:04,568 --> 00:47:08,509
+this w is 3.5 and talk hola 6.27
+
+571
+00:47:08,510 --> 00:47:14,810
+and so basically you can fiddle around
+with this so so as I change my W you can
+
+572
+00:47:14,809 --> 00:47:19,328
+see that here I'm making my W one of the
+WC bigger and you can see what that does
+
+573
+00:47:19,329 --> 00:47:25,940
+in in their order bias you can see the
+bias basically shut these high plains
+
+574
+00:47:25,940 --> 00:47:32,639
+okay and then what we can do is we can
+we're going to work this kind of a
+
+575
+00:47:32,639 --> 00:47:35,848
+preview of what's going to happen we're
+getting the loss here and there were
+
+576
+00:47:35,849 --> 00:47:38,829
+going to do back propagation which has
+given us the gradient over how we want
+
+577
+00:47:38,829 --> 00:47:44,359
+to adjust these W it's in order to make
+the law smaller and so we're going to do
+
+578
+00:47:44,358 --> 00:47:48,838
+is this repeated states where we start
+off with this w but now I can improve I
+
+579
+00:47:48,838 --> 00:47:54,460
+can improve this set of W's so when I do
+a perimeter update this is actually
+
+580
+00:47:54,460 --> 00:47:57,568
+using these gradients which are shown
+here in the right now and it's actually
+
+581
+00:47:57,568 --> 00:47:59,900
+making a tiny changed everything
+
+582
+00:47:59,900 --> 00:48:03,088
+according to this gradient right so as I
+do
+
+583
+00:48:03,088 --> 00:48:07,699
+primary update you can see that the loss
+here is decreasing special the total
+
+584
+00:48:07,699 --> 00:48:11,338
+loss here so the lost just keeps getting
+better and better as I do primary date
+
+585
+00:48:11,338 --> 00:48:16,639
+so this is the process of optimization
+that we're going to go into in a bit so
+
+586
+00:48:16,639 --> 00:48:20,989
+I can also start a repeated update and
+then basically we keep improving this w
+
+587
+00:48:20,989 --> 00:48:24,808
+over and over until our loss it started
+off was roughly three or something that
+
+588
+00:48:24,809 --> 00:48:29,579
+you are mean loss over the data is point
+one like that and we're correctly
+
+589
+00:48:29,579 --> 00:48:39,068
+classifying all these buttons here so I
+can also randomized randomized W so just
+
+590
+00:48:39,068 --> 00:48:41,980
+kind of knocks it off and then there's
+always converges these acting point
+
+591
+00:48:41,980 --> 00:48:47,650
+through the process optimization and you
+can play here with the regularization as
+
+592
+00:48:47,650 --> 00:48:51,730
+well you have different forms of loss so
+the one I shown you right now is there
+
+593
+00:48:51,730 --> 00:48:55,990
+was a consensus p.m. formulation there's
+a few more SPM formulations and there's
+
+594
+00:48:55,989 --> 00:49:01,098
+also soft max here you'll see that when
+I Swisher soft max loss our losses look
+
+595
+00:49:01,099 --> 00:49:06,670
+different and but the solution and are
+being roughly the same so when I switch
+
+596
+00:49:06,670 --> 00:49:10,700
+back to him you know the type of players
+move around the tiny bit but really it's
+
+597
+00:49:10,699 --> 00:49:21,558
+it's mostly the same and so this is just
+a size so this is how much how big steps
+
+598
+00:49:21,559 --> 00:49:25,650
+are we making when we get the gradient
+on how to improve things so much promise
+
+599
+00:49:25,650 --> 00:49:29,119
+we should start with the very biggest
+upside the scenes are giggling trying to
+
+600
+00:49:29,119 --> 00:49:32,309
+separate out these data points and then
+over time we're going to be doing in a
+
+601
+00:49:32,309 --> 00:49:36,430
+position as we're going to decrease our
+updates eyes and this thing or just
+
+602
+00:49:36,429 --> 00:49:43,298
+slowly converging on the premise that we
+want in the end and so so you can play
+
+603
+00:49:43,298 --> 00:49:47,170
+with us and you can see how he scores to
+go around and what the losses and if I
+
+604
+00:49:47,170 --> 00:49:53,358
+stop repeated update you can also drag
+these points but I think on the Mac it
+
+605
+00:49:53,358 --> 00:49:58,598
+doesn't work so I tried to drag this
+point it disappears so good
+
+606
+00:49:58,599 --> 00:50:02,479
+but it works on a desktop so I don't go
+in and figure out exactly what happened
+
+607
+00:50:02,478 --> 00:50:14,480
+there but they can play with this
+
+608
+00:50:14,480 --> 00:50:30,840
+we have as mean loss over data plus
+regularization this is one other diagram
+
+609
+00:50:30,840 --> 00:50:35,240
+to show you how did what this looks like
+I don't think it's a very good diagram
+
+610
+00:50:35,239 --> 00:50:38,858
+and there's something confusing about it
+that I can't remember from last year but
+
+611
+00:50:38,858 --> 00:50:45,269
+basically you have this data and why
+your images your labels and there's W
+
+612
+00:50:45,269 --> 00:50:49,719
+and keeping this course and getting the
+lawsuit and the regularization losses
+
+613
+00:50:49,719 --> 00:50:54,939
+only function of the weights not of the
+data and mister what we want to do now
+
+614
+00:50:54,940 --> 00:50:58,608
+is we don't have control over the data
+set right that's given to us we have
+
+615
+00:50:58,608 --> 00:51:04,130
+control over that w and as we changed at
+W the loss will be different so for any
+
+616
+00:51:04,130 --> 00:51:08,340
+W give me I can compute the loss and
+that lost is linked to how well we're
+
+617
+00:51:08,340 --> 00:51:12,730
+classifying all of our examples so one
+thing a low loss means world-class find
+
+618
+00:51:12,730 --> 00:51:15,880
+them very very well on the training data
+and then we're crossing our fingers that
+
+619
+00:51:15,880 --> 00:51:20,809
+also works on some test data that we
+haven't seen so here's one strategy for
+
+620
+00:51:20,809 --> 00:51:26,139
+optimization it's a random search so
+because we can evaluate loss for any
+
+621
+00:51:26,139 --> 00:51:30,500
+arbitrary W when I can afford to do and
+I'm not sure if i dont im go through
+
+622
+00:51:30,500 --> 00:51:34,480
+this in full detail but effectively I
+randomly sampled and I can check their
+
+623
+00:51:34,480 --> 00:51:37,460
+loss and I can just keep track of the W
+that works best
+
+624
+00:51:37,460 --> 00:51:43,090
+oK so that's an amazing process of
+optimization of getting check and it
+
+625
+00:51:43,090 --> 00:51:46,760
+turns out if you do this I think I tried
+two thousand times if you do this
+
+626
+00:51:46,760 --> 00:51:50,970
+thousand times and take the best W found
+at random and you run it on your seat
+
+627
+00:51:50,969 --> 00:51:56,108
+bartend data just made up you end up
+with about 15.5 percent accuracy and
+
+628
+00:51:56,108 --> 00:52:01,150
+since they're acting classes are the
+mean baseline as a 10% chance
+
+629
+00:52:01,150 --> 00:52:06,559
+performance so 15.5 there some signal
+actually notably and so state of the art
+
+630
+00:52:06,559 --> 00:52:10,219
+is that ninety-five which is a common
+that so we have some got too close over
+
+631
+00:52:10,219 --> 00:52:10,980
+the next
+
+632
+00:52:10,980 --> 00:52:17,670
+two weeks or so so this is so don't use
+this just because it's on the slides one
+
+633
+00:52:17,670 --> 00:52:21,659
+interpretation of exactly what this
+looks like this process optimization is
+
+634
+00:52:21,659 --> 00:52:25,399
+that we have this loss landscape right
+this loss landscape is in this high
+
+635
+00:52:25,400 --> 00:52:32,619
+dimensional W space so here we sit here
+in 3d and your losses the height then
+
+636
+00:52:32,619 --> 00:52:38,369
+you only have 2 W's in this case and
+you're here and you're blindfolded W you
+
+637
+00:52:38,369 --> 00:52:42,269
+can see where the valleys are but you're
+trying to find low loss as you're
+
+638
+00:52:42,269 --> 00:52:45,699
+blindfolded and you have an altitude
+meter and so you can tell what your
+
+639
+00:52:45,699 --> 00:52:49,029
+losses at any single point and you're
+trying to get to the bottom of the
+
+640
+00:52:49,030 --> 00:52:55,430
+valley right and so that's really the
+process of optimization and what we've
+
+641
+00:52:55,429 --> 00:52:59,399
+shown you would actually so far as this
+random optimization where you teleport
+
+642
+00:52:59,400 --> 00:53:03,309
+around and you just check your altitude
+right so not the best idea so we're
+
+643
+00:53:03,309 --> 00:53:06,940
+going to do instead is we're going to
+use what I refer to as a gradient or
+
+644
+00:53:06,940 --> 00:53:12,800
+really we're just computing the slope
+across in every single direction so I'm
+
+645
+00:53:12,800 --> 00:53:17,990
+trying to compute the slope and then I'm
+going to go downhill ok so we're
+
+646
+00:53:17,989 --> 00:53:21,289
+following the slope I'm not going to go
+into too much detail on this but
+
+647
+00:53:21,289 --> 00:53:24,779
+basically there's an expression for the
+gradient which is defined like that
+
+648
+00:53:24,780 --> 00:53:31,859
+there's a derivative populist 101
+definition and multiple dimensions if
+
+649
+00:53:31,858 --> 00:53:35,409
+you have a director of derivatives
+that's referred to as the gradient right
+
+650
+00:53:35,409 --> 00:53:39,589
+so because we have multiple dimensions
+multiple w's we have a gradient vector
+
+651
+00:53:39,590 --> 00:53:45,660
+ok so this is the expression and in fact
+we can numerically evaluate the
+
+652
+00:53:45,659 --> 00:53:48,769
+expression before I go into the Analects
+how to show you what that would look
+
+653
+00:53:48,769 --> 00:53:54,190
+like to evaluate the gradient at some W
+suppose we have some current W and we're
+
+654
+00:53:54,190 --> 00:53:58,500
+getting some loss ok what we want to do
+not want to get an idea about the slope
+
+655
+00:53:58,500 --> 00:54:03,239
+at this point so we're going to
+basically look at this formula and we're
+
+656
+00:54:03,239 --> 00:54:07,329
+just going to evaluated so I'm going to
+go in the first dimension and I'm going
+
+657
+00:54:07,329 --> 00:54:11,840
+and really what this is telling you to
+do is evaluate explosive your altitude
+
+658
+00:54:11,840 --> 00:54:15,590
+at Xmas H subtracted from FFX and divide
+by H
+
+659
+00:54:15,590 --> 00:54:19,800
+what that response to as me being on
+this landscape taking a small step in
+
+660
+00:54:19,800 --> 00:54:23,130
+some direction and looking whether or
+not my foot went up or down
+
+661
+00:54:23,130 --> 00:54:27,340
+right that's what the gradient is
+telling me so I took a small step and
+
+662
+00:54:27,340 --> 00:54:32,150
+the lost there is 1.25 then I can use
+that formula with a finite difference
+
+663
+00:54:32,150 --> 00:54:36,230
+approximation we review the small H two
+actually derived that the gradient here
+
+664
+00:54:36,230 --> 00:54:41,199
+as negative 2.5 the slope downwards so I
+took a step the loss and decreased so
+
+665
+00:54:41,199 --> 00:54:45,480
+the sloping downwards in terms of the
+loss function so negative 2.5 in that
+
+666
+00:54:45,480 --> 00:54:49,369
+particular dimension so I can do this
+for every single dimension independently
+
+667
+00:54:49,369 --> 00:54:53,210
+right so I go into the second dimension
+I add a small amount so I step in a
+
+668
+00:54:53,210 --> 00:54:56,869
+different direction I look at what
+happened to the loss I use that formula
+
+669
+00:54:56,869 --> 00:55:00,969
+and is telling me that the gradient the
+slope is 2.6 I can do that in the third
+
+670
+00:55:00,969 --> 00:55:06,429
+dimension and I get the grieving ok so
+what I'm referring to here is basically
+
+671
+00:55:06,429 --> 00:55:11,149
+evaluating the numerical ingredient
+which is using the spine a difference
+
+672
+00:55:11,150 --> 00:55:14,539
+approximation where for every single
+dimension independently I can take a
+
+673
+00:55:14,539 --> 00:55:18,500
+small step at the loss and that tells me
+the slower is it going upwards or
+
+674
+00:55:18,500 --> 00:55:23,829
+downwards for every single one of these
+parameters and so this is America
+
+675
+00:55:23,829 --> 00:55:28,500
+gradient the way this would look like it
+is by con funk shun here it looks ugly
+
+676
+00:55:28,500 --> 00:55:32,630
+because it turns out it's slightly
+tricky to iterate over all the W's but
+
+677
+00:55:32,630 --> 00:55:36,780
+basically we're just looking at age
+comparing two effects and dividing by
+
+678
+00:55:36,780 --> 00:55:41,200
+age and we're getting agreement now the
+problem with this is if you want to use
+
+679
+00:55:41,199 --> 00:55:44,960
+the numerical gradient event of course
+we have to do this for every single
+
+680
+00:55:44,960 --> 00:55:47,949
+dimension to get a sense of what the
+great iam this endeavor single dimension
+
+681
+00:55:47,949 --> 00:55:53,079
+and right when you have a comment you
+have hundreds of millions of parameters
+
+682
+00:55:53,079 --> 00:55:58,139
+right so we can't afford to actually
+check the loss in hundreds of millions
+
+683
+00:55:58,139 --> 00:56:02,920
+of primaries before we do a single step
+so this approach where we would try to
+
+684
+00:56:02,920 --> 00:56:06,869
+evaluate the gradient numerically is
+approximate because we're using finite
+
+685
+00:56:06,869 --> 00:56:11,119
+difference approximation second is also
+extremely slow because I need to do
+
+686
+00:56:11,119 --> 00:56:15,460
+million checks on the loss function on
+the icon that before I know what the
+
+687
+00:56:15,460 --> 00:56:20,519
+gradient doesn't I can take a primary
+update so very slow approximate turns
+
+688
+00:56:20,519 --> 00:56:26,730
+out that this is all so silly right
+because the loss as a function of W as
+
+689
+00:56:26,730 --> 00:56:29,800
+we've written about it and really what
+we want is we want the gradient of the
+
+690
+00:56:29,800 --> 00:56:33,220
+last 11 respectively and luckily we can
+just write that down
+
+691
+00:56:33,219 --> 00:56:42,598
+thanks to these guys actually know who
+those guys are doing that's right you
+
+692
+00:56:42,599 --> 00:56:49,400
+know which is which could just get a
+look remarkably similar but basically
+
+693
+00:56:49,400 --> 00:56:54,289
+anything like this to inventors of
+calculus there's actually controversy
+
+694
+00:56:54,289 --> 00:56:59,429
+over who really invented calculus and
+these guys each other over it but
+
+695
+00:56:59,429 --> 00:57:03,799
+basically calculus is this powerful
+hammer and so what we can do is instead
+
+696
+00:57:03,800 --> 00:57:06,440
+of doing the silly thing we're
+evaluating numerical gradient we can
+
+697
+00:57:06,440 --> 00:57:10,230
+actually use calculus and we can break
+down an expression for what the gradient
+
+698
+00:57:10,230 --> 00:57:14,880
+is off the loss function in the white
+space so basically instead of fumbling
+
+699
+00:57:14,880 --> 00:57:18,289
+around and doing this is it going up or
+is it going down by checking the loss I
+
+700
+00:57:18,289 --> 00:57:22,509
+just have an expression where I take the
+gradient of this and I can sync simply
+
+701
+00:57:22,510 --> 00:57:26,500
+evaluate what the entire matter is that
+the only way that you can actually run
+
+702
+00:57:26,500 --> 00:57:30,159
+this in practice right we can just an
+expression for years the gradient we can
+
+703
+00:57:30,159 --> 00:57:35,149
+do to stop and so on so in summary
+basically numerical gradient approximate
+
+704
+00:57:35,150 --> 00:57:39,800
+slow but very easy to write because
+you're just doing this very simple
+
+705
+00:57:39,800 --> 00:57:44,190
+process for any damage or loss function
+I can get the gradient vector for a
+
+706
+00:57:44,190 --> 00:57:47,659
+gradient which is you actually do
+calculus its exact no finite
+
+707
+00:57:47,659 --> 00:57:52,210
+proclamations it's very fast but it's
+error-prone because you actually have to
+
+708
+00:57:52,210 --> 00:57:57,300
+do math right so in practice what you
+see is we always use a lot of gradient
+
+709
+00:57:57,300 --> 00:58:01,380
+we do calculus we figure out what the
+gradient should be but then you always
+
+710
+00:58:01,380 --> 00:58:04,789
+check your implementation using an
+American gradient check as its referred
+
+711
+00:58:04,789 --> 00:58:10,480
+to so I will do all I care about the
+loss function should be I write an
+
+712
+00:58:10,480 --> 00:58:15,500
+expression for the gradient I evaluated
+in my code so I get in the holiday
+
+713
+00:58:15,500 --> 00:58:18,769
+greetings and then I also have a lead in
+numerical gradient on the side and that
+
+714
+00:58:18,769 --> 00:58:22,280
+takes a while but you mature you have a
+lead to more convenient and you make
+
+715
+00:58:22,280 --> 00:58:25,890
+sure that those two are the same and
+then we say that you passed the green
+
+716
+00:58:25,889 --> 00:58:29,500
+truck oK so that's what you see in
+practice whenever you try to develop a
+
+717
+00:58:29,500 --> 00:58:32,519
+new module for internal network you're
+right I would have lost your right to
+
+718
+00:58:32,519 --> 00:58:35,759
+backward pass for a complete the
+gradient and then you have to make sure
+
+719
+00:58:35,760 --> 00:58:40,250
+the gradient check it just to make sure
+that your calculus is correct and then I
+
+720
+00:58:40,250 --> 00:58:43,980
+already referred to this process of
+optimization which we saw nicely in the
+
+721
+00:58:43,980 --> 00:58:45,838
+Web Demo where we have this
+
+722
+00:58:45,838 --> 00:58:49,548
+loop when we optimized where we simply
+Valley the gradient on your loss
+
+723
+00:58:49,548 --> 00:58:53,759
+function and then knowing the gradient
+we can perform a primer update when we
+
+724
+00:58:53,759 --> 00:58:58,509
+change the WBI tiny amount in particular
+we want to update with the negative
+
+725
+00:58:58,509 --> 00:59:04,509
+step-size times the gradient the
+negative is there because the gradient
+
+726
+00:59:04,509 --> 00:59:07,478
+tells the direction of the greatest
+increase it tells you which way the
+
+727
+00:59:07,478 --> 00:59:10,848
+losses increasing and want to minimize
+it which is where the negative it's
+
+728
+00:59:10,849 --> 00:59:14,298
+coming from where to go and negative
+reading direction step size here as a
+
+729
+00:59:14,298 --> 00:59:17,818
+hyper primary that will cause you a huge
+amount of headaches step size are
+
+730
+00:59:17,818 --> 00:59:23,298
+learning rate this is the most critical
+parameter to basically worry about that
+
+731
+00:59:23,298 --> 00:59:27,778
+really there's two that you have to
+worry about the most the step size or
+
+732
+00:59:27,778 --> 00:59:31,539
+learning rate and there's the
+regularization strength lame duck that
+
+733
+00:59:31,539 --> 00:59:35,180
+we saw already those two parameters are
+really the two largest headaches and
+
+734
+00:59:35,179 --> 00:59:45,219
+that's usually what we cross body Dover
+was a question about but it's not that
+
+735
+00:59:45,219 --> 00:59:50,849
+great just great and it tells you the
+slope in every single direction and then
+
+736
+00:59:50,849 --> 00:59:56,109
+we just take a step by step it so the
+process of opposition in the weight
+
+737
+00:59:56,108 --> 01:00:00,768
+space is your somewhere in your W you
+get your gradient any March some amount
+
+738
+01:00:00,768 --> 01:00:05,228
+in the direction of the gradient but you
+don't know how much so that the step
+
+739
+01:00:05,228 --> 01:00:08,449
+size and you saw that when I increase
+the step size in the demo things were
+
+740
+01:00:08,449 --> 01:00:11,248
+jubilant generating around quite a lot
+right there was a lot of energy no
+
+741
+01:00:11,248 --> 01:00:15,449
+system that's because I was taking huge
+jumps all over this base and so here the
+
+742
+01:00:15,449 --> 01:00:19,578
+loss function is minimal at the blue
+part there and it's high in the reports
+
+743
+01:00:19,579 --> 01:00:23,920
+so we want to get to them as part of the
+basin this is actually with the loss
+
+744
+01:00:23,920 --> 01:00:28,579
+function looks like Princess p.m. or
+discretion is our complex problems so
+
+745
+01:00:28,579 --> 01:00:31,729
+it's really just a bowl and we're trying
+to get to the bottom of it but this bowl
+
+746
+01:00:31,728 --> 01:00:35,009
+is like 30,000 dimensional so that's why
+takes awhile
+
+747
+01:00:35,010 --> 01:00:39,640
+ok so we take a step and we we evaluate
+the gradient and repeat this over and
+
+748
+01:00:39,639 --> 01:00:44,980
+over in practice there's this additional
+part I wanted to mention where we don't
+
+749
+01:00:44,980 --> 01:00:49,860
+actually evaluate the loss for the
+entire training did in fact all we do is
+
+750
+01:00:49,860 --> 01:00:53,370
+we only use what's called me back
+reading the st. where we have this
+
+751
+01:00:53,369 --> 01:00:58,670
+entire dataset but we sample batches
+from it so we sample sale like say
+
+752
+01:00:58,670 --> 01:01:02,300
+thirty two examples out of my training
+data I evaluate the loss of the gradient
+
+753
+01:01:02,300 --> 01:01:05,940
+on this batch of 32 and then I knew my
+primary update and I keep doing this
+
+754
+01:01:05,940 --> 01:01:09,619
+over and over again and make sure what
+ends up happening is if you only sample
+
+755
+01:01:09,619 --> 01:01:14,699
+very few data points from training data
+then your estimate of the gradient of
+
+756
+01:01:14,699 --> 01:01:18,109
+course over the entire training set is
+kind of noisy because you're only
+
+757
+01:01:18,110 --> 01:01:21,970
+estimating based on a small subset of
+your data but it allows me to step more
+
+758
+01:01:21,969 --> 01:01:25,689
+so you can do more steps with
+approximate gradient or you can do few
+
+759
+01:01:25,690 --> 01:01:30,179
+steps with exact gradient and practice
+what ends up working better if used me
+
+760
+01:01:30,179 --> 01:01:35,049
+back and it's much more efficient of
+course and it's impractical to actually
+
+761
+01:01:35,050 --> 01:01:41,550
+do fullback gradient descent so come in
+many sizes 32 64 128 256 this is not
+
+762
+01:01:41,550 --> 01:01:45,940
+usually hyper primarily worry about too
+much usually settled based on whatever
+
+763
+01:01:45,940 --> 01:01:49,380
+fits on your GPU we're going to be
+talking about BP's in a bit but they
+
+764
+01:01:49,380 --> 01:01:53,030
+have finite amount of memory say about
+like 6 gigabytes or talk about its good
+
+765
+01:01:53,030 --> 01:01:58,030
+GPU and usually choose a backside such
+that a small me back to example spits in
+
+766
+01:01:58,030 --> 01:02:01,150
+your memory so that's how usually that's
+the term and it's not a primary that
+
+767
+01:02:01,150 --> 01:02:09,570
+actually matters a lot and optimization
+sense
+
+768
+01:02:09,570 --> 01:02:14,789
+and we're going to get the momentum in a
+bit but if you want to use momentum then
+
+769
+01:02:14,789 --> 01:02:18,969
+this is just fine we always been about
+trying to send but momentum very common
+
+770
+01:02:18,969 --> 01:02:23,799
+to do so just to give you an idea of
+what will this look like in practice if
+
+771
+01:02:23,800 --> 01:02:28,510
+I'm running optimization overtime and
+i'm looking at the Los evaluated on just
+
+772
+01:02:28,510 --> 01:02:32,700
+a small many batch of data and you can
+see that basically my loss goes down
+
+773
+01:02:32,699 --> 01:02:37,309
+over time on these many batches from the
+training data so as an optimizing I'm
+
+774
+01:02:37,309 --> 01:02:42,119
+going downhill now of course if I was
+doing pullbacks gradient descent so this
+
+775
+01:02:42,119 --> 01:02:44,839
+was not just me back a sample from the
+data you wouldn't expect as much noise
+
+776
+01:02:44,840 --> 01:02:48,550
+you just expect this to be aligned to
+just goes down but because we use me
+
+777
+01:02:48,550 --> 01:02:51,730
+back if you get this noise in there
+because something about you are better
+
+778
+01:02:51,730 --> 01:03:01,980
+than others but over time they could all
+go down there question
+
+779
+01:03:01,980 --> 01:03:07,539
+yes sir you're wondering about the shape
+of this loss function you're used to
+
+780
+01:03:07,539 --> 01:03:11,420
+maybe seeing more rapid improvement
+quick are these loss functions come in
+
+781
+01:03:11,420 --> 01:03:17,079
+different shapes sizes so it really
+depends it's not necessarily the case
+
+782
+01:03:17,079 --> 01:03:21,940
+that loss function must look very sharp
+in the beginning although sometimes they
+
+783
+01:03:21,940 --> 01:03:25,929
+do they have different shapes for
+example it also matters on your
+
+784
+01:03:25,929 --> 01:03:29,618
+initialization if I'm careful with my
+initialization I would expect less of a
+
+785
+01:03:29,619 --> 01:03:34,990
+jump but if I initialize very
+incorrectly then you would expect that
+
+786
+01:03:34,989 --> 01:03:38,649
+that's going to be fixed very early on
+in the optimization we're going to get
+
+787
+01:03:38,650 --> 01:03:43,309
+to some of those parts I think much
+later I also want to show you a lot of
+
+788
+01:03:43,309 --> 01:03:49,710
+the effects of learning rate on your
+loss function and the still learning
+
+789
+01:03:49,710 --> 01:03:53,820
+rate is the step size basically a very
+high learning rates or step sizes you
+
+790
+01:03:53,820 --> 01:03:59,240
+start rushing around in your W space and
+so i dont converge or you explode if you
+
+791
+01:03:59,239 --> 01:04:02,618
+have a very low learning rate then
+you're barely doing any updates and also
+
+792
+01:04:02,619 --> 01:04:07,869
+it takes a very long time to actually
+converge and if you have a high learning
+
+793
+01:04:07,869 --> 01:04:11,150
+rate sometimes you can basically get a
+kind of stuck in a bad position of a
+
+794
+01:04:11,150 --> 01:04:14,950
+loss so these loss functions kind of you
+need to get down to the minimum so if
+
+795
+01:04:14,949 --> 01:04:17,929
+you have too much energy in your
+stocking too quickly when you don't have
+
+796
+01:04:17,929 --> 01:04:21,679
+you don't allow your problem to kind of
+settle in on the smaller local minima
+
+797
+01:04:21,679 --> 01:04:25,480
+your objective in general when you talk
+about neural networks and optimization
+
+798
+01:04:25,480 --> 01:04:28,320
+you'll see a lot of hand waving because
+that's the only way we communicate about
+
+799
+01:04:28,320 --> 01:04:32,350
+these losses and distance so just
+imagine like a Big Basin of loss and
+
+800
+01:04:32,349 --> 01:04:36,069
+there are these like smaller pockets of
+smaller loss and so if you're thrashing
+
+801
+01:04:36,070 --> 01:04:39,480
+around and you can settle in on a
+smaller loss parts and converter for
+
+802
+01:04:39,480 --> 01:04:43,730
+their so that's why the learning rate so
+good and so you need to find the correct
+
+803
+01:04:43,730 --> 01:04:47,150
+learning rate which will cause a lot of
+headaches and what people do most of the
+
+804
+01:04:47,150 --> 01:04:49,970
+time is sometimes you start off with a
+high learning rates we get some benefits
+
+805
+01:04:49,969 --> 01:04:55,319
+and then UDK it over time to start up
+with high and then we decadence learning
+
+806
+01:04:55,320 --> 01:05:00,780
+read over time as we're settling in on
+the good solution and I also want to
+
+807
+01:05:00,780 --> 01:05:03,550
+point out who's going to this in much
+more detail but the way I'm doing the
+
+808
+01:05:03,550 --> 01:05:07,890
+update here which is how to use the
+gradient to actually modify your W
+
+809
+01:05:07,889 --> 01:05:12,789
+that's called an update firmware update
+there are many different forms of doing
+
+810
+01:05:12,789 --> 01:05:14,869
+it this is the simplest way which were
+
+811
+01:05:14,869 --> 01:05:20,299
+just STD simplest custom greeting cent
+but there are many formulas such as
+
+812
+01:05:20,300 --> 01:05:23,740
+momentum that was already mentioned in
+momentum you basically imagine as you're
+
+813
+01:05:23,739 --> 01:05:27,949
+doing this optimization you imagine
+keeping track of this blog city so as
+
+814
+01:05:27,949 --> 01:05:31,389
+I'm stepping am also keeping track of my
+velocity so if I keep seeing a positive
+
+815
+01:05:31,389 --> 01:05:35,519
+reading some direction I will accumulate
+velocity in that direction so I don't
+
+816
+01:05:35,519 --> 01:05:39,550
+need someone to go faster at the russian
+and so there are several from Los will
+
+817
+01:05:39,550 --> 01:05:46,100
+look and shortly the class but Thomas
+prop Adam or commonly used so just to
+
+818
+01:05:46,099 --> 01:05:50,569
+show you what these look like these
+different choices and what they might do
+
+819
+01:05:50,570 --> 01:05:56,760
+in your loss function this is a figure
+from Alec so here we have a loss
+
+820
+01:05:56,760 --> 01:06:02,390
+function and these are low-level clerks
+and we start off opposition over there
+
+821
+01:06:02,389 --> 01:06:06,920
+and we're trying to get to the basin and
+different update formulas will give you
+
+822
+01:06:06,920 --> 01:06:10,670
+better or worse convergence in different
+problems so you can see for example this
+
+823
+01:06:10,670 --> 01:06:15,369
+momentum in green it built up momentum
+as it went down and then it overshot and
+
+824
+01:06:15,369 --> 01:06:19,259
+then it kind of go back go back and this
+as UD takes forever to converge can read
+
+825
+01:06:19,260 --> 01:06:23,370
+that's what I presented you so far as
+she takes forever to emerge and are
+
+826
+01:06:23,369 --> 01:06:27,489
+different ways of actually performing
+this primary up there are more or less
+
+827
+01:06:27,489 --> 01:06:35,259
+efficient in modernization will see much
+more of this I also wanted to mention at
+
+828
+01:06:35,260 --> 01:06:39,950
+this point as likely yes I want to go
+slightly into I'm to explain obviously
+
+829
+01:06:39,949 --> 01:06:43,049
+like your classification we know how to
+set up the problem we know that are
+
+830
+01:06:43,050 --> 01:06:47,070
+different loss functions me know how to
+optimize them so we can kind of do at
+
+831
+01:06:47,070 --> 01:06:51,050
+this point across I wanted to mention
+that I want to give you a sense of what
+
+832
+01:06:51,050 --> 01:06:53,710
+computer vision looked like before
+comments came about so that you have a
+
+833
+01:06:53,710 --> 01:06:57,920
+bit of historical perspective because we
+used a linear classifiers all the time
+
+834
+01:06:57,920 --> 01:07:01,019
+but of course you don't usually your
+classic cars on the road original image
+
+835
+01:07:01,019 --> 01:07:06,759
+because that's all you want to believe
+we solve the problems with it like you
+
+836
+01:07:06,760 --> 01:07:10,250
+have to cover all the modes and so on I
+thought the police to do as they used to
+
+837
+01:07:10,250 --> 01:07:14,380
+compute all these different feature
+types of images and then you can view
+
+838
+01:07:14,380 --> 01:07:17,160
+different descriptors in different
+feature types and you get these
+
+839
+01:07:17,159 --> 01:07:22,049
+statistical summaries of what the image
+looks like what the frequencies are like
+
+840
+01:07:22,050 --> 01:07:26,160
+and so on and then we can capitated all
+those into large vectors and then we put
+
+841
+01:07:26,159 --> 01:07:27,710
+those into linear classifiers
+
+842
+01:07:27,710 --> 01:07:32,050
+so different feature types all of them
+concatenated and then that went until
+
+843
+01:07:32,050 --> 01:07:35,369
+your classifiers that was usually the
+pipeline so just to give you an idea of
+
+844
+01:07:35,369 --> 01:07:39,088
+really what these talks were like one
+very simple feature type you might
+
+845
+01:07:39,088 --> 01:07:43,269
+imagine is just a color histogram so I
+go over all the pixels in the image and
+
+846
+01:07:43,269 --> 01:07:47,449
+i'd in them and to say how many bands
+are there are different colors depending
+
+847
+01:07:47,449 --> 01:07:50,750
+on the hue of the color as you can
+imagine this is kind of like one
+
+848
+01:07:50,750 --> 01:07:54,250
+statistical summary of what's in the
+image is just a number of colors each
+
+849
+01:07:54,250 --> 01:07:57,400
+been so this will become one of my
+teachers that I would eventually become
+
+850
+01:07:57,400 --> 01:08:03,440
+cutting with many different feature
+types and other kind of intimately the
+
+851
+01:08:03,440 --> 01:08:06,530
+classifier if you think about it the
+linear classifier can use these features
+
+852
+01:08:06,530 --> 01:08:09,690
+to actually perform the classification
+because the linear classifier can like
+
+853
+01:08:09,690 --> 01:08:14,320
+or dislike seeing lots of different
+colors in the image with positive or
+
+854
+01:08:14,320 --> 01:08:17,930
+negative what's very common features
+also include things like what we call
+
+855
+01:08:17,930 --> 01:08:22,440
+610 hawk features basically these were
+you go in local neighborhoods in the
+
+856
+01:08:22,439 --> 01:08:26,539
+invention and you look at whether or not
+there are lots of different orientations
+
+857
+01:08:26,539 --> 01:08:30,588
+so are there lots of horizontal or
+vertical edges we make up histograms
+
+858
+01:08:30,588 --> 01:08:35,850
+over that and so when you end up with
+just the summary of what kinds of edges
+
+859
+01:08:35,850 --> 01:08:40,338
+are wherein the image and you can
+calculate all those together there was
+
+860
+01:08:40,338 --> 01:08:45,250
+lots of different types of our proposed
+over to over the years just I'll be
+
+861
+01:08:45,250 --> 01:08:50,359
+taxed on lots of different ways of
+measuring what kinds of things are there
+
+862
+01:08:50,359 --> 01:08:54,850
+in the image and statistics of them and
+then we had these pipelines call back
+
+863
+01:08:54,850 --> 01:08:59,660
+over to my place where you look at
+different points in your
+
+864
+01:08:59,659 --> 01:09:04,250
+you describe a little local patch with
+something that you come up with like
+
+865
+01:09:04,250 --> 01:09:08,329
+looking at the frequencies are looking
+at the colors or whatever and then we
+
+866
+01:09:08,329 --> 01:09:12,269
+came up with these dictionaries for ok
+here's the stuff we're seeing images
+
+867
+01:09:12,270 --> 01:09:16,250
+like there's lots of high-frequency stop
+for low-frequency stuff in blue and so
+
+868
+01:09:16,250 --> 01:09:16,699
+on
+
+869
+01:09:16,699 --> 01:09:21,338
+to end up with the centroids using
+k-means of what kind of stuff to be seen
+
+870
+01:09:21,338 --> 01:09:25,818
+in a just and then we express every
+single image as statistics over how much
+
+871
+01:09:25,819 --> 01:09:29,660
+of each thing we see in the image so for
+example this image has lots of
+
+872
+01:09:29,659 --> 01:09:33,949
+high-frequency green stuff so you might
+see some feature vector that basically
+
+873
+01:09:33,949 --> 01:09:38,568
+will have a higher value and high
+frequency and green and then we did is
+
+874
+01:09:38,569 --> 01:09:40,760
+we basically took these feature vectors
+
+875
+01:09:40,760 --> 01:09:45,210
+needed them and put a linear classifier
+on them so really the context for what
+
+876
+01:09:45,210 --> 01:09:49,090
+we're doing is as follows what it looked
+like mostly computer vision before
+
+877
+01:09:49,090 --> 01:09:52,840
+roughly 2012 will let you take your
+image and you have a step of feature
+
+878
+01:09:52,840 --> 01:09:57,409
+extraction where we decided what are
+important things to you know about an
+
+879
+01:09:57,409 --> 01:10:01,859
+image different frequencies different
+tents and we decided on what are
+
+880
+01:10:01,859 --> 01:10:05,109
+interesting features and you see people
+take like 10 different feature types in
+
+881
+01:10:05,109 --> 01:10:09,369
+every paper and just woke up need all of
+it just hit you can double one giant
+
+882
+01:10:09,369 --> 01:10:12,640
+feature vector over your image and then
+you put a linear classifier on top of it
+
+883
+01:10:12,640 --> 01:10:15,920
+just like we saw it right now and so you
+play a train sale in your ass p.m. on
+
+884
+01:10:15,920 --> 01:10:20,109
+top of all these feature types and what
+we're replacing it since then we found
+
+885
+01:10:20,109 --> 01:10:24,869
+that works much better as you start with
+the raw image and you think of the whole
+
+886
+01:10:24,869 --> 01:10:28,979
+thing you're not designing some part of
+it in isolation of what you think is a
+
+887
+01:10:28,979 --> 01:10:33,479
+good idea or not we come up with an
+architecture that can simulate a lot of
+
+888
+01:10:33,479 --> 01:10:38,189
+different features so to speak and since
+everything is just a single function we
+
+889
+01:10:38,189 --> 01:10:41,879
+don't just trying to top it on top of
+the features of we can actually train
+
+890
+01:10:41,880 --> 01:10:45,400
+all the way down to the pixels and we
+can train our feature extractors
+
+891
+01:10:45,399 --> 01:10:49,989
+effectively so that was a big innovation
+and how you approach this problem is we
+
+892
+01:10:49,989 --> 01:10:53,300
+try to eliminate a lot of hand
+engineered components are trying to have
+
+893
+01:10:53,300 --> 01:10:56,779
+a single the principal blob so that we
+can fully trained to pull things
+
+894
+01:10:56,779 --> 01:11:01,550
+starting at the Rock Texas that's what
+historically this is coming from and
+
+895
+01:11:01,550 --> 01:11:06,760
+what we will be doing and so next last
+will be looking specifically at this
+
+896
+01:11:06,760 --> 01:11:10,520
+problem of we need to compute analytic
+gradients and so we're going to go into
+
+897
+01:11:10,520 --> 01:11:14,860
+backpropagation which is an efficient
+way of computing analytics gradient and
+
+898
+01:11:14,859 --> 01:11:18,839
+so that's backdrop and you're going to
+become good at it and then we're going
+
+899
+01:11:18,840 --> 01:11:20,039
+to go slightly works
+

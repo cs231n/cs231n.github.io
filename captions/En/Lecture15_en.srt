@@ -1,0 +1,4238 @@
+﻿1
+00:00:00,000 --> 00:00:03,370
+like to point out that while I'll be
+presenting today is partly my work in
+
+2
+00:00:03,370 --> 00:00:06,919
+collaboration with others and sometimes
+I'm presenting work done by people in my
+
+3
+00:00:06,919 --> 00:00:10,929
+group that I wasn't really involved in
+but its joint work with many many people
+
+4
+00:00:10,929 --> 00:00:14,740
+you'll see lots of names throughout the
+talks so take that with a grain of salt
+
+5
+00:00:14,740 --> 00:00:20,920
+so what I'm gonna tell you about is kind
+of how Google got to where it is today
+
+6
+00:00:20,920 --> 00:00:26,310
+in terms of using departing in a lot of
+different places the project that
+
+7
+00:00:26,309 --> 00:00:30,608
+involved in actually started in 2011
+when entering with spending one day a
+
+8
+00:00:30,609 --> 00:00:36,340
+week in Google and I happen to bump into
+him in the micro kitchen and and I said
+
+9
+00:00:36,340 --> 00:00:39,420
+oh what you were doing was like I don't
+know but I haven't figured out yet but
+
+10
+00:00:39,420 --> 00:00:44,170
+ignore laps or are interesting and I got
+the call and turns out I don't
+
+11
+00:00:44,170 --> 00:00:49,120
+understand pieces on parallel training
+of termites like ages ago I don't want
+
+12
+00:00:49,119 --> 00:00:50,250
+to tell you how long ago
+
+13
+00:00:50,250 --> 00:00:56,350
+back kind of in the first exciting
+period relax and I always kind of really
+
+14
+00:00:56,350 --> 00:01:00,660
+like the computational model they
+provided but at that time there was a
+
+15
+00:01:00,659 --> 00:01:03,599
+little too early like we didn't have a
+big enough data set for the number of
+
+16
+00:01:03,600 --> 00:01:08,879
+computation to really make them sing and
+Andrew kind of sad 0 will be interesting
+
+17
+00:01:08,879 --> 00:01:13,579
+to train but now I'm like ok that's on
+the phone so we kind of collaboratively
+
+18
+00:01:13,579 --> 00:01:20,209
+started the brain project to push the
+size and scale of normativity training
+
+19
+00:01:20,209 --> 00:01:24,059
+and in particular we were really
+interested in using big data sets in
+
+20
+00:01:24,060 --> 00:01:27,890
+large amounts competition to tackle
+perception problems in my marriage
+
+21
+00:01:27,890 --> 00:01:34,400
+problems and read them I often found
+Coursera and kind of just away from
+
+22
+00:01:34,400 --> 00:01:39,719
+google but since then we've been doing a
+lot of interesting work in both kind of
+
+23
+00:01:39,719 --> 00:01:43,408
+research areas in a lot of different
+domains you know one of the nice things
+
+24
+00:01:43,409 --> 00:01:46,859
+about no matter their incredibly
+applicable to many many different kinds
+
+25
+00:01:46,859 --> 00:01:52,478
+of problems as I'm sure you seen in this
+class and we've also deployed production
+
+26
+00:01:52,478 --> 00:01:56,530
+systems using our mats in pretty wide
+variety of different products all kind
+
+27
+00:01:56,530 --> 00:02:00,049
+of give you a sampling of some of the
+research some of the production aspects
+
+28
+00:02:00,049 --> 00:02:04,579
+some of the systems that we've built
+underneath the covers including kind of
+
+29
+00:02:04,578 --> 00:02:08,030
+some of the implementation stuff that we
+do intend to follow to make these kinds
+
+30
+00:02:08,030 --> 00:02:12,959
+of models run fast and I'll focus on her
+mouth but a lot of the techniques are
+
+31
+00:02:12,959 --> 00:02:13,349
+more
+
+32
+00:02:13,349 --> 00:02:17,699
+a couple that just months before you can
+train lots of different kinds of
+
+33
+00:02:17,699 --> 00:02:22,159
+reinforcement algorithms or other kinds
+of other kinds of machinery industrial
+
+34
+00:02:22,159 --> 00:02:29,099
+thats ok Kevin hear me actually some of
+the back if it comes up the time I one
+
+35
+00:02:29,099 --> 00:02:32,560
+of the things I really like about the
+team we've put together is that we have
+
+36
+00:02:32,560 --> 00:02:36,479
+a really broad mix of different kinds of
+expertise so we have people are really
+
+37
+00:02:36,479 --> 00:02:40,709
+experts at machine learning research you
+know people like jeffrey hinton other
+
+38
+00:02:40,710 --> 00:02:45,820
+people all that we have large-scale
+distributed systems builders I kind of
+
+39
+00:02:45,819 --> 00:02:50,169
+consider myself in that more in that
+mold and then we have people can do with
+
+40
+00:02:50,169 --> 00:02:54,989
+a mix of those skills and often some of
+the projects we work on you collectively
+
+41
+00:02:54,990 --> 00:03:00,870
+put together people with these different
+kinds of expertise and collectively you
+
+42
+00:03:00,870 --> 00:03:03,580
+do something that none of you could do
+individually because often you need both
+
+43
+00:03:03,580 --> 00:03:09,670
+kind of large-scale systems thinking and
+machine learning ideas so that's always
+
+44
+00:03:09,669 --> 00:03:13,539
+fun and you often kind of pick up and
+learn new things from other people
+
+45
+00:03:13,539 --> 00:03:22,280
+script outline actually this is from
+hold back so you know you can kind of
+
+46
+00:03:22,280 --> 00:03:26,080
+see the progress of how Google has been
+applying deep learning across lots of
+
+47
+00:03:26,080 --> 00:03:28,540
+different areas with this is sort of
+when we started the project and we
+
+48
+00:03:28,539 --> 00:03:32,209
+started collaborating with a speech team
+a bit and started doing it with some
+
+49
+00:03:32,210 --> 00:03:37,830
+kind of early computer vision kinds of
+problems and as we had success in some
+
+50
+00:03:37,830 --> 00:03:42,770
+of the other teams that Google would say
+hey I have a problem too and like they
+
+51
+00:03:42,770 --> 00:03:46,550
+would come to us or we would go to them
+and say hey we think this could help
+
+52
+00:03:46,550 --> 00:03:50,610
+with your particular problem and over
+time we've kind of gradually not so
+
+53
+00:03:50,610 --> 00:03:54,670
+gradually expanded the set of teams on
+areas that we've been applying these
+
+54
+00:03:54,669 --> 00:03:58,539
+kinds of problems and you see the
+breadth
+
+55
+00:03:58,539 --> 00:04:03,689
+different kinds of areas it's not like
+it's only computer vision problems so
+
+56
+00:04:03,689 --> 00:04:08,150
+that's that's kinda nice we're
+continuing to grow which is good and
+
+57
+00:04:08,150 --> 00:04:12,920
+part of the reason for that broad
+spectrum of things is that you can
+
+58
+00:04:12,919 --> 00:04:18,229
+really think of that as these nice
+really universal system that you can put
+
+59
+00:04:18,230 --> 00:04:21,359
+lots of different kinds of inputs into
+you lots get lots of different kinds of
+
+60
+00:04:21,358 --> 00:04:22,129
+outputs
+
+61
+00:04:22,129 --> 00:04:27,300
+out of them with you know slight
+differences in the model you try but in
+
+62
+00:04:27,300 --> 00:04:32,270
+general the same fundamental techniques
+work pretty well across all these
+
+63
+00:04:32,269 --> 00:04:36,990
+different domains and i'd give our
+results as a true you've heard about in
+
+64
+00:04:36,990 --> 00:04:40,400
+this class in lots of different areas
+now pretty much any computer vision
+
+65
+00:04:40,399 --> 00:04:46,219
+problem any speech problem these days
+starting to be more the case in lots of
+
+66
+00:04:46,220 --> 00:04:51,880
+language understanding areas lots of
+kind of other areas of science like drug
+
+67
+00:04:51,879 --> 00:04:54,519
+discovery are starting to have
+interesting role models that are better
+
+68
+00:04:54,519 --> 00:05:05,930
+than alternate yeah I like them they're
+good along the way we've kind of built
+
+69
+00:05:05,930 --> 00:05:10,040
+two different generations of our
+underlying system software for training
+
+70
+00:05:10,040 --> 00:05:14,640
+and deploying their lips the first was
+called disbelief republish paper about
+
+71
+00:05:14,639 --> 00:05:20,479
+your nips 2012 it had the advantage of
+their was really scalable like the first
+
+72
+00:05:20,480 --> 00:05:23,759
+one of the first uses we put to it was
+doing some unsupervised training I'll
+
+73
+00:05:23,759 --> 00:05:27,319
+tell you about a minute which used
+16,000 course to training they don't
+
+74
+00:05:27,319 --> 00:05:31,209
+have a lot of parameters is good for
+production use but it wasn't super
+
+75
+00:05:31,209 --> 00:05:35,819
+flexible for research like it was kinda
+hard to express kind of weird or more
+
+76
+00:05:35,819 --> 00:05:38,949
+esoteric kinds of models reinforcement
+learning algorithms be hard to express
+
+77
+00:05:38,949 --> 00:05:43,349
+and it had this kind of much more later
+driven approach with up-and-down
+
+78
+00:05:43,350 --> 00:05:48,770
+messages and it worked well for what it
+did but we kind of took a step back
+
+79
+00:05:48,769 --> 00:05:52,639
+about a year and a little bit ago and
+started building our second generation
+
+80
+00:05:52,639 --> 00:05:57,339
+system tends to flow which is based on
+what we learned the first generation and
+
+81
+00:05:57,339 --> 00:06:02,289
+what we learned from work and other sort
+of available open source packages and
+
+82
+00:06:02,290 --> 00:06:06,620
+rethink its retained a lot of good
+features in disbelief but also made it
+
+83
+00:06:06,620 --> 00:06:13,329
+pretty flexible for a wide variety of
+research is open source it which I got
+
+84
+00:06:13,329 --> 00:06:19,120
+heard about one of the really nice
+properties have known that so I grabbed
+
+85
+00:06:19,120 --> 00:06:23,459
+this from a particular paper cuz it had
+graphs on both scaling the sides of
+
+86
+00:06:23,459 --> 00:06:27,819
+training data and how accuracy increases
+and also scaling the size of the neural
+
+87
+00:06:27,819 --> 00:06:30,279
+net and how accuracy increases
+
+88
+00:06:30,279 --> 00:06:33,109
+exact details aren't important you can
+find these kinds of trends and hundreds
+
+89
+00:06:33,110 --> 00:06:37,509
+of papers but one of the really nice
+properties is if you have more data and
+
+90
+00:06:37,509 --> 00:06:42,180
+you can make your model bigger generally
+killing both of those things and even
+
+91
+00:06:42,180 --> 00:06:47,019
+better than scaling just one of them you
+need a really big model in order to
+
+92
+00:06:47,019 --> 00:06:49,810
+capture kind of a more subtle trends
+that appear in larger and larger
+
+93
+00:06:49,810 --> 00:06:54,180
+datasets you know any known that will
+capture kind of obvious trends or
+
+94
+00:06:54,180 --> 00:06:57,370
+obvious kinda patterns but the more
+subtle ones are ones where you need a
+
+95
+00:06:57,370 --> 00:07:04,189
+bigger model to capture and if that
+extra she saw him too salty and that
+
+96
+00:07:04,189 --> 00:07:09,579
+requires a lot more competition so we
+focus a lot on scaling the computation
+
+97
+00:07:09,579 --> 00:07:17,689
+we need and be able to train big models
+on big data sets to one of the first
+
+98
+00:07:17,689 --> 00:07:22,699
+things we did in this project was we
+said oh I'm surprised learning gonna be
+
+99
+00:07:22,699 --> 00:07:28,879
+really important and we had a big focus
+on that initially quickly and others
+
+100
+00:07:28,879 --> 00:07:34,870
+said what would happen if we did
+unsupervised learning of random you to
+
+101
+00:07:34,870 --> 00:07:38,519
+print so the idea is Rena take ten
+million random youtube frame single
+
+102
+00:07:38,519 --> 00:07:42,990
+frames from a bunch of random videos and
+we're going to essentially training data
+
+103
+00:07:42,990 --> 00:07:47,418
+recorder everyone knows what color is
+that sounds like a family multi-level
+
+104
+00:07:47,418 --> 00:07:51,788
+auto encoder you know and this one we're
+just trying to reconstruct the image now
+
+105
+00:07:51,788 --> 00:07:54,459
+on we're trying to reconstruct the
+representation here from repetition
+
+106
+00:07:54,459 --> 00:08:01,629
+there and so on and we used sixteen
+thousand cars we didn't have GPUs in the
+
+107
+00:08:01,629 --> 00:08:07,459
+datacenter the time so we compensated
+with light throwing more CPUs at it we
+
+108
+00:08:07,459 --> 00:08:11,870
+used a sink a cutie which will talk
+about a minute for optimization actually
+
+109
+00:08:11,870 --> 00:08:17,189
+had a lot of parameters cuz it was not
+convolutional this was prior to come we
+
+110
+00:08:17,189 --> 00:08:20,199
+should be all the rage so he said well
+we'll have a local receptive fields but
+
+111
+00:08:20,199 --> 00:08:24,168
+they won't become delusional and will
+learn like separate representation for
+
+112
+00:08:24,168 --> 00:08:28,269
+this part of the image in this part of
+the image which is kind of an
+
+113
+00:08:28,269 --> 00:08:31,038
+interesting twist I think it'd be
+actually an interesting experiment to
+
+114
+00:08:31,038 --> 00:08:37,330
+redo this work but with convolutional
+opera sharing I'll be kind of cool in
+
+115
+00:08:37,330 --> 00:08:40,590
+any case the representation he learned
+the top after like nine layers
+
+116
+00:08:40,590 --> 00:08:45,580
+of these non convolutional local
+receptive field $60,000 on the top level
+
+117
+00:08:45,580 --> 00:08:50,750
+and one of the things we thought might
+happen is it would learn kind of
+
+118
+00:08:50,750 --> 00:08:54,799
+high-level feature detectors so in
+particular printing in pixels but it
+
+119
+00:08:54,799 --> 00:08:58,929
+couldn't learn high-level concepts we
+had a dataset that was half faces and
+
+120
+00:08:58,929 --> 00:09:04,349
+have not faces and we found looked
+around for neurons that were good
+
+121
+00:09:04,350 --> 00:09:08,120
+selectors of whether or not the image
+but estimates contained a face and we
+
+122
+00:09:08,120 --> 00:09:13,850
+found several such neurons the best one
+that are those are some of the sample
+
+123
+00:09:13,850 --> 00:09:19,610
+images that caused that neuron to get
+the most excited and then if you look
+
+124
+00:09:19,610 --> 00:09:24,240
+around for what stimulus will cause the
+neuron to get the most excited there's
+
+125
+00:09:24,240 --> 00:09:32,669
+creepy face guy and that kind of
+interesting like we did had no labels on
+
+126
+00:09:32,669 --> 00:09:38,399
+the image in the dataset at all that
+we're training and a neuron in this
+
+127
+00:09:38,399 --> 00:09:43,029
+model has picked up on the fact that
+faces are things I'm gonna get excited
+
+128
+00:09:43,029 --> 00:09:48,399
+when I see kind of a Caucasian face from
+head on its YouTube so we also have a
+
+129
+00:09:48,399 --> 00:09:55,179
+cat now on a dataset with have captain
+have not kept in this is average tabby I
+
+130
+00:09:55,179 --> 00:10:03,019
+call them and then you can take that
+unsupervised model and and start a
+
+131
+00:10:03,019 --> 00:10:07,659
+supervised training tasks in particular
+at this time we were i training on the
+
+132
+00:10:07,659 --> 00:10:11,669
+image next twenty thousand class task
+which is not the one the most damage
+
+133
+00:10:11,669 --> 00:10:14,939
+that results are reported on that one
+thousand classes is trying to
+
+134
+00:10:14,940 --> 00:10:21,490
+distinguish any made from one of 20 to
+20,000 classes it's much harder task and
+
+135
+00:10:21,490 --> 00:10:26,340
+then we trained and then looked around
+at what kinds of images cause different
+
+136
+00:10:26,340 --> 00:10:29,300
+popular routes to get excited you see
+they're picking up on very high-level
+
+137
+00:10:29,299 --> 00:10:33,819
+concepts you know yellow flowers only or
+waterfowl
+
+138
+00:10:34,620 --> 00:10:41,080
+I like and this retraining actually
+increase the state to be hard accuracy
+
+139
+00:10:41,080 --> 00:10:44,080
+on that particular task for amount at
+the time
+
+140
+00:10:45,129 --> 00:10:50,500
+then we kind of lost our excitement
+about unsupervised learning because
+
+141
+00:10:50,500 --> 00:10:54,860
+supervised learning to cook so darn well
+and so we started working with a speech
+
+142
+00:10:54,860 --> 00:11:00,100
+team who at the time was had a
+non-parole Matt based acoustic
+
+143
+00:11:00,100 --> 00:11:06,570
+essentially trying to go from a small
+segment of audio data like a hundred and
+
+144
+00:11:06,570 --> 00:11:09,420
+fifty millisecond time you try to
+predict what sound does being uttered in
+
+145
+00:11:09,419 --> 00:11:17,809
+the middle 10 milliseconds and so we
+just decided to try a layer fully
+
+146
+00:11:17,809 --> 00:11:21,879
+connected nomads and then predict one of
+fourteen thousand try phones at the top
+
+147
+00:11:22,549 --> 00:11:27,939
+I'm at work family while basically could
+train it pretty quickly and it gave a
+
+148
+00:11:27,940 --> 00:11:31,530
+huge reduction a moderate like this is
+one of the people on speech team said
+
+149
+00:11:31,529 --> 00:11:34,339
+that like the biggest single improvement
+they've seen in their 20 years of
+
+150
+00:11:34,340 --> 00:11:47,970
+research and that launched as part of
+the Android based search system 2012 so
+
+151
+00:11:47,970 --> 00:11:51,990
+one of the things we often do is find
+that we have a lot of data for some
+
+152
+00:11:51,990 --> 00:11:57,149
+tasks but not very many very much data
+from the tasks and so for that we often
+
+153
+00:11:57,149 --> 00:12:02,949
+deploy systems that make you sad
+multitask and transfer learning in
+
+154
+00:12:02,950 --> 00:12:09,030
+various ways so let's look at an example
+where we use this in speech so obviously
+
+155
+00:12:09,029 --> 00:12:13,110
+with English we have a lot of data and
+we got a really nice slow word or it
+
+156
+00:12:13,110 --> 00:12:17,350
+lowers that are for Portuguese on the
+other hand about time we didn't have
+
+157
+00:12:17,350 --> 00:12:21,310
+that much training today we had $100
+purchase until the word error rate is a
+
+158
+00:12:21,309 --> 00:12:27,129
+lot worse which is bad so one of the
+first and most simple things you can do
+
+159
+00:12:27,129 --> 00:12:30,620
+which is kind of what you do when you
+take a model has been pre trained on
+
+160
+00:12:30,620 --> 00:12:33,509
+imaging that and apply to some other
+problem we don't have as much data as
+
+161
+00:12:33,509 --> 00:12:37,610
+you just start training with those
+weights by them totally random nights
+
+162
+00:12:37,610 --> 00:12:41,700
+I'm not actually improves your word
+error rate for Portuguese if it does
+
+163
+00:12:41,700 --> 00:12:45,210
+there's enough similarities in the kinds
+of features you want for speech in
+
+164
+00:12:45,210 --> 00:12:50,570
+general regardless of language no more
+complicated thing you can do is actually
+
+165
+00:12:50,570 --> 00:12:55,390
+jointly train models that share of
+entrepreneurs across all languages or in
+
+166
+00:12:55,389 --> 00:12:56,360
+this case all
+
+167
+00:12:56,360 --> 00:13:04,680
+all European languages I think it's what
+we used and so they are you see we're
+
+168
+00:13:04,679 --> 00:13:07,939
+jointly training on this data and we
+actually got a pretty significant
+
+169
+00:13:07,940 --> 00:13:13,310
+improvement even over the just copying
+the date of the Portuguese model but
+
+170
+00:13:13,309 --> 00:13:17,739
+surprisingly we actually got a small
+improvement English because in total
+
+171
+00:13:17,740 --> 00:13:20,889
+across all the other languages we
+actually almost double the amount of
+
+172
+00:13:20,889 --> 00:13:25,399
+training data we were able to use you
+miss model compared to just English
+
+173
+00:13:25,399 --> 00:13:30,379
+alarm so basically like languages
+without much dated all improved a lot
+
+174
+00:13:30,379 --> 00:13:35,850
+languages with a lot of data improved
+even a little bit and then we had a
+
+175
+00:13:35,850 --> 00:13:39,350
+language-specific top layer little
+little bit of fiddling to figure out
+
+176
+00:13:39,350 --> 00:13:44,620
+does it make some tough to language
+specific top players 1 I'll believe
+
+177
+00:13:44,620 --> 00:13:47,620
+these are the kinds of human guided
+choices you are making
+
+178
+00:13:48,269 --> 00:13:53,149
+that's the production speech models
+involved a lot from those really simple
+
+179
+00:13:53,149 --> 00:13:57,778
+feedforward models used now I last came
+to deal with time to mention the
+
+180
+00:13:57,778 --> 00:14:02,490
+compilation of allusions to make them in
+very into different frequencies so there
+
+181
+00:14:02,490 --> 00:14:06,769
+was a paper published here you know you
+don't necessarily need to understand all
+
+182
+00:14:06,769 --> 00:14:11,459
+the details but there's a lot of more
+complexity in the kind of model and it's
+
+183
+00:14:11,458 --> 00:14:15,088
+it's using much more sophisticated her
+current models and computational models
+
+184
+00:14:15,089 --> 00:14:22,100
+a recent trend has been met you can use
+alice is completely and and so rather
+
+185
+00:14:22,100 --> 00:14:26,730
+than having an acoustic model and then a
+language model that kind of takes the
+
+186
+00:14:26,730 --> 00:14:30,550
+output of the acoustic model of an
+estranged somewhat separately you can go
+
+187
+00:14:30,549 --> 00:14:34,879
+directly from audio waveforms to
+producing transcript to character at a
+
+188
+00:14:34,879 --> 00:14:38,120
+time and I think that's going to be a
+really big trend
+
+189
+00:14:38,809 --> 00:14:44,169
+both in speech and more generally in a
+lot of heating systems you often have
+
+190
+00:14:44,169 --> 00:14:49,338
+today a lot of systems are kind of
+composed of a bunch of subsystems each
+
+191
+00:14:49,339 --> 00:14:54,350
+perhaps with some she learned pieces and
+some kind of hand coded pieces and then
+
+192
+00:14:54,350 --> 00:14:58,000
+I usually a big pile of goo decode to
+glue it all together and
+
+193
+00:14:58,509 --> 00:15:04,600
+and often although separately developed
+pieces have impediments optimization
+
+194
+00:15:04,600 --> 00:15:08,800
+right like you optimize your subsystem
+in the context of symmetric by that
+
+195
+00:15:08,799 --> 00:15:12,699
+metric might not be the right thing for
+the final task you care about which
+
+196
+00:15:12,700 --> 00:15:22,370
+might be transcribed correctly so having
+a much bigger single system like a
+
+197
+00:15:22,370 --> 00:15:25,649
+single neural Apple goes directly from
+audio waveform all the way to the end
+
+198
+00:15:25,649 --> 00:15:29,929
+objective you care about prescription
+and that you cannot optimize end-to-end
+
+199
+00:15:29,929 --> 00:15:34,579
+through and there's not a lot of hand
+written code in the middle that is going
+
+200
+00:15:34,580 --> 00:15:37,440
+to be a big trend I think you'll see
+that here you'll see that I'm missing
+
+201
+00:15:37,440 --> 00:15:46,250
+translation a lot of other kinds of
+demands so who's all competitions we
+
+202
+00:15:46,250 --> 00:15:48,919
+have tons of vision problems that we've
+been using various kinds of
+
+203
+00:15:48,919 --> 00:15:54,849
+computational models for you know the
+big excitement around convolutional
+
+204
+00:15:54,850 --> 00:15:59,220
+neural nets well first it started with
+young and check reading competition that
+
+205
+00:15:59,220 --> 00:16:05,110
+kind of like subsided for a while and
+then Alex Kozinski yo yo sup favor and
+
+206
+00:16:05,110 --> 00:16:10,200
+check for him to paper in 2012 which
+light blue the other competitors out of
+
+207
+00:16:10,200 --> 00:16:16,470
+the water in the image net 2012
+challenge using a non that I think put
+
+208
+00:16:16,470 --> 00:16:20,500
+those things on everyone's map again
+saying well we should we should be using
+
+209
+00:16:20,500 --> 00:16:24,399
+these things for vision cuz they work
+really well and the next year
+
+210
+00:16:24,399 --> 00:16:28,100
+something like twenty twenty of the
+entries or something you know not
+
+211
+00:16:28,100 --> 00:16:34,550
+threads previously it was just Alex
+we've had a bunch of people at Google
+
+212
+00:16:34,549 --> 00:16:38,529
+looking at various kinds of
+architectures for doing better and
+
+213
+00:16:38,529 --> 00:16:41,829
+better image that consultations on the
+inspection architecture has like this
+
+214
+00:16:41,830 --> 00:16:45,889
+complicated model of like different size
+competitions that are all kind of
+
+215
+00:16:45,889 --> 00:16:50,419
+concatenated together and then you can't
+replicate those models a bunch of times
+
+216
+00:16:50,419 --> 00:16:51,319
+and
+
+217
+00:16:51,320 --> 00:16:55,810
+you end up with a very deep known at
+that turned out to be quite good at it
+
+218
+00:16:56,789 --> 00:17:01,870
+condition there's been some slight
+additions to that and slight changes to
+
+219
+00:17:01,870 --> 00:17:07,740
+make it even more accurate you know I
+have you seen a slight like that in like
+
+220
+00:17:07,740 --> 00:17:17,120
+okay so I I was lazy susan only took my
+slides from a folder thing I ever told
+
+221
+00:17:17,119 --> 00:17:19,549
+the story about Andre sitting down on
+him labeling
+
+222
+00:17:19,549 --> 00:17:26,559
+ok signing Andrei decided he was helping
+to administer the image that contest he
+
+223
+00:17:26,559 --> 00:17:31,269
+would sit down and subject himself 200
+hours of training training training
+
+224
+00:17:31,269 --> 00:17:38,099
+tough split and like this at an
+Australian Shepherd Dog I don't know and
+
+225
+00:17:38,099 --> 00:17:41,449
+yes I can convince one of the lab mates
+to do it but they weren't intelligence
+
+226
+00:17:41,450 --> 00:17:45,309
+are heated about a hundred and twenty
+hours of training on images
+
+227
+00:17:45,980 --> 00:17:52,380
+and his lab may get tired after 12 hours
+or something so he got 5.1 percent error
+
+228
+00:17:52,380 --> 00:17:55,380
+made got I think 12%
+
+229
+00:17:56,269 --> 00:18:12,918
+human error but without rain badly all
+over the weekend
+
+230
+00:18:12,919 --> 00:18:19,690
+back at one hundred and twelve hours
+later whatever anyway here is a great
+
+231
+00:18:19,690 --> 00:18:23,220
+blog post about it I encourage you to
+check it out he has a lot of parameters
+
+232
+00:18:23,220 --> 00:18:34,279
+so typical humans are like you know 80
+trillion connection that many 201 one
+
+233
+00:18:34,279 --> 00:18:37,918
+point about these models as the models
+of a small number of parameters fit well
+
+234
+00:18:37,919 --> 00:18:43,440
+on my mobile devices so I'm doesn't fit
+while on a mobile phone but the general
+
+235
+00:18:43,440 --> 00:18:47,029
+trend other than andre is like smaller
+numbers of parameters compared to Alex
+
+236
+00:18:47,029 --> 00:18:52,509
+mostly Alex net had like these two giant
+fully connected layers of the top that
+
+237
+00:18:52,509 --> 00:18:57,000
+giant but a lot of parameters and later
+worked just kind of get away with it was
+
+238
+00:18:57,000 --> 00:19:02,220
+the most part and so they've used you
+know a small number of parameters but
+
+239
+00:19:02,220 --> 00:19:07,829
+more floating point operations per use
+compositional parameters mark which is
+
+240
+00:19:07,829 --> 00:19:12,379
+good for putting them on funds we
+released as part of the tensor flow
+
+241
+00:19:12,380 --> 00:19:18,549
+update up retrain adoption model which
+you can use there's an editorial about
+
+242
+00:19:18,548 --> 00:19:24,089
+it there is Chris Harper although we
+think its military uniform which is not
+
+243
+00:19:24,089 --> 00:19:29,859
+terribly inaccurate one of the nice
+things about these models as they're
+
+244
+00:19:29,859 --> 00:19:32,589
+really good at doing very fine-grained
+consultations I think one of the things
+
+245
+00:19:32,589 --> 00:19:35,959
+that is an Andres blog is that the
+computer models are actually much much
+
+246
+00:19:35,960 --> 00:19:40,880
+better than people at distinguishing
+exact breeds of dogs but humans are
+
+247
+00:19:40,880 --> 00:19:42,179
+better at
+
+248
+00:19:42,179 --> 00:19:49,150
+often picking out a small you know if if
+the label is ping pong ball and it's
+
+249
+00:19:49,150 --> 00:19:52,190
+like a giant senior people playing ping
+pong humans are better at that
+
+250
+00:19:52,829 --> 00:20:00,250
+models tend to focus on things with more
+pixels if you train models with the
+
+251
+00:20:00,250 --> 00:20:01,109
+right kind of data
+
+252
+00:20:01,109 --> 00:20:05,019
+you know generalize while these scenes
+look nothing alike but they actually you
+
+253
+00:20:05,019 --> 00:20:08,690
+know we'll both get labeled as me love
+your training data is represented well
+
+254
+00:20:08,690 --> 00:20:14,710
+they make an acceptable errors which
+kinda nineties no it's not a snake but
+
+255
+00:20:14,710 --> 00:20:19,230
+you understand why am I just said that
+and I know it's not a dog but I actually
+
+256
+00:20:19,230 --> 00:20:25,190
+had to think carefully if the front
+animal there is a is a donkey and I'm
+
+257
+00:20:25,190 --> 00:20:27,490
+still not entirely sure
+
+258
+00:20:27,490 --> 00:20:37,900
+any votes so one of the production uses
+we've put these kinds of models kiryas
+
+259
+00:20:37,900 --> 00:20:42,850
+Google photo search so we launched
+Google photo product and you can search
+
+260
+00:20:42,849 --> 00:20:46,539
+the photos that you've uploaded without
+talking about all you just type ocean
+
+261
+00:20:46,539 --> 00:20:51,639
+and all of a sudden oliver ocean
+Photoshop so for example this user
+
+262
+00:20:51,640 --> 00:20:56,870
+posted publicly hey I posted a
+screenshot hey I didn't take these
+
+263
+00:20:56,869 --> 00:21:04,879
+statues of Buddha showed up for city
+driving you know this is a tough because
+
+264
+00:21:04,880 --> 00:21:09,520
+it got a lot of textured compared to
+most Utahns so we're pretty pleased to
+
+265
+00:21:09,519 --> 00:21:18,339
+retrieve macrophage others we have a lot
+of kind of other kinds of more specific
+
+266
+00:21:18,339 --> 00:21:21,730
+visual tasks like essentially one of the
+things we want to do in our Street View
+
+267
+00:21:21,730 --> 00:21:25,819
+imagery of these cars the driver in the
+world and take pictures of all the roads
+
+268
+00:21:25,819 --> 00:21:29,609
+and street scenes and then we want to be
+able to read all the texts that we find
+
+269
+00:21:29,609 --> 00:21:34,909
+so first you have to find the text and
+well one of the first thing you want to
+
+270
+00:21:34,910 --> 00:21:39,720
+do is find all the addresses and maps
+and months ago that you wanna like read
+
+271
+00:21:39,720 --> 00:21:43,829
+all the other texts so you can see that
+it doesn't we have a model that does a
+
+272
+00:21:43,829 --> 00:21:47,799
+pretty good job of predicting that a
+pixel level which which pixels contain
+
+273
+00:21:47,799 --> 00:21:53,819
+text or not and does pretty well in
+
+274
+00:21:53,819 --> 00:21:58,289
+well first of all finds lots of tax in
+the training data had different kinds of
+
+275
+00:21:58,289 --> 00:22:03,019
+characters that represented so it has no
+problem recognizing Chinese characters
+
+276
+00:22:03,019 --> 00:22:08,569
+English characters are Roman Latin
+characters it does pretty well like
+
+277
+00:22:08,569 --> 00:22:12,889
+different colors of of tax two different
+fonts and sizes and some of them are
+
+278
+00:22:12,890 --> 00:22:17,200
+very close to the cameras are very far
+away and i was just and this is data
+
+279
+00:22:17,970 --> 00:22:24,809
+from just human labeled drawn polygons
+around pieces of text and then they
+
+280
+00:22:24,809 --> 00:22:27,809
+transcribed it and then we have an OCR
+model we also print
+
+281
+00:22:30,880 --> 00:22:34,500
+we've been kind of gradually releasing
+other kinds of products we just launched
+
+282
+00:22:34,500 --> 00:22:39,799
+cloud vision of ATI's you can do lots of
+things like label images this is meant
+
+283
+00:22:39,799 --> 00:22:44,859
+for people who don't necessarily wanna
+want or how machine learning expertise I
+
+284
+00:22:44,859 --> 00:22:48,349
+just kind of want to do cool stuff with
+images you want to go to you know say
+
+285
+00:22:48,349 --> 00:22:54,990
+only that they're running seemed to do
+the OCR and find taxed in any image
+
+286
+00:22:54,990 --> 00:22:58,650
+uploads you just basically given an
+emergency a bike Toronto CRM label
+
+287
+00:22:58,650 --> 00:23:03,820
+generation of this image and if it goes
+to people have been pretty happy with
+
+288
+00:23:03,819 --> 00:23:06,689
+that
+
+289
+00:23:06,690 --> 00:23:10,220
+internally people have been thinking of
+more creative uses of how to use
+
+290
+00:23:10,220 --> 00:23:13,600
+computer vision essentially now that
+computer vision sort of really actually
+
+291
+00:23:13,599 --> 00:23:19,819
+works compared to five years ago this is
+something that our our our geo team that
+
+292
+00:23:19,819 --> 00:23:23,250
+process and satellite imagery put
+together and released which is basically
+
+293
+00:23:23,250 --> 00:23:28,740
+a way of predicting the slope of roofs
+from multiple satellite views of that
+
+294
+00:23:28,740 --> 00:23:32,769
+country you'd like have you know every
+few months new satellite imagery here
+
+295
+00:23:32,769 --> 00:23:36,099
+until we have multiple views of the same
+location and we can predict what the
+
+296
+00:23:36,099 --> 00:23:40,109
+slope of the roof is given all those
+different views of the same location and
+
+297
+00:23:40,109 --> 00:23:43,589
+how much sun exposure to get out and
+then predict you know if you were to
+
+298
+00:23:43,589 --> 00:23:48,490
+install solar panels anyhow how much
+energy could you generated by getting
+
+299
+00:23:48,490 --> 00:23:53,930
+kinda cool you know it's like a small
+random things you can do not a vision
+
+300
+00:23:53,930 --> 00:24:03,160
+works ok so this class has been mostly
+mostly about vision so I'm gonna talk
+
+301
+00:24:03,160 --> 00:24:08,029
+now about other kinds of problems like
+language understanding one of the most
+
+302
+00:24:08,029 --> 00:24:16,779
+important problems is search obviously
+so we care a lot about surgery and in
+
+303
+00:24:16,779 --> 00:24:20,700
+particular if I do the query car parts
+for sale I'd like to determine which of
+
+304
+00:24:20,700 --> 00:24:25,400
+these two documents is more relevant and
+you just look at the service forms of
+
+305
+00:24:25,400 --> 00:24:28,019
+the word that first document looks
+pretty darn relevant
+
+306
+00:24:28,019 --> 00:24:34,609
+like lots of the words occur autorad but
+actually the second document is much
+
+307
+00:24:34,609 --> 00:24:41,189
+more relevant given that and we'd like
+to be able to understand that so how
+
+308
+00:24:41,190 --> 00:24:47,269
+much have you talked about embedding
+model awesome so you know about the
+
+309
+00:24:47,269 --> 00:24:47,879
+medics
+
+310
+00:24:47,880 --> 00:24:54,680
+embedding defendants to so I will go
+quickly but basically you want to
+
+311
+00:24:54,680 --> 00:24:58,200
+represent words or things in
+high-dimensional things that are sparse
+
+312
+00:24:58,200 --> 00:25:03,559
+map them into a dense case some hundred
+dimension 11,000 dimensional space so
+
+313
+00:25:03,559 --> 00:25:11,440
+that you can now have things that are
+near each other and have similar
+
+314
+00:25:11,440 --> 00:25:15,029
+meanings will end up near each other in
+the high-dimensional spaces so for
+
+315
+00:25:15,029 --> 00:25:17,769
+example you might porpoises and dolphins
+to be very near each other in the
+
+316
+00:25:17,769 --> 00:25:20,099
+high-dimensional space because they're
+quite similar words and have some
+
+317
+00:25:20,099 --> 00:25:23,099
+meetings they share the same time the
+purpose
+
+318
+00:25:24,909 --> 00:25:27,420
+ok
+
+319
+00:25:27,420 --> 00:25:32,620
+and SeaWorld you be kind of nearby and
+Cameron parents to be pretty far away
+
+320
+00:25:32,619 --> 00:25:39,069
+and you can train embedding to modernize
+one is to have it kind of is the first
+
+321
+00:25:39,069 --> 00:25:42,519
+thing you do when you're feeding get
+into and out of steam and even simpler
+
+322
+00:25:42,519 --> 00:25:47,859
+thing is a technique my former colleague
+too much nickel off came up with the be
+
+323
+00:25:47,859 --> 00:25:51,969
+published paper about where essentially
+it's called the word to make model and
+
+324
+00:25:51,970 --> 00:25:55,870
+essentially you pick up window of words
+maybe twenty words why did you pick the
+
+325
+00:25:55,869 --> 00:26:00,119
+center word and then you pick another
+random where do try to use the embedding
+
+326
+00:26:00,119 --> 00:26:06,419
+representation of that center word to
+predict a man you can train that hoping
+
+327
+00:26:06,420 --> 00:26:11,230
+the backdrop essentially you adjust the
+weights muscle flex classifier and then
+
+328
+00:26:11,230 --> 00:26:17,190
+in turn you through backpropagation you
+you make little adjustments to the
+
+329
+00:26:17,190 --> 00:26:20,830
+embedding representation of that center
+word so that next time you'll be able to
+
+330
+00:26:20,829 --> 00:26:25,919
+better predict the word parts from
+automobile and actually works right like
+
+331
+00:26:25,920 --> 00:26:29,930
+one of the really nice things about
+abetting the is given enough training
+
+332
+00:26:29,930 --> 00:26:34,070
+did you got really phenomenal weapons
+visions of words so these are the
+
+333
+00:26:34,069 --> 00:26:39,759
+nearest neighbors for these three
+different words or phrases as vocabulary
+
+334
+00:26:39,759 --> 00:26:44,319
+items in this particular on the tiger
+shark you can think of his 11 embedding
+
+335
+00:26:44,319 --> 00:26:48,480
+vector and these are the nearest
+neighbors say it it got the center of
+
+336
+00:26:48,480 --> 00:26:55,529
+sharpness car is interesting right like
+you see why this is useful for search
+
+337
+00:26:55,529 --> 00:27:01,000
+because you have things that people
+often hand coded information retrieval
+
+338
+00:27:01,000 --> 00:27:07,079
+systems like plurals and stemming and
+like some kind of simple synonyms but
+
+339
+00:27:07,079 --> 00:27:10,750
+here he just seemed like oh I know car
+automobile pickup truck racing car
+
+340
+00:27:10,750 --> 00:27:15,470
+passenger car dealership is kind of
+related you just see that has this this
+
+341
+00:27:15,470 --> 00:27:19,200
+right concept of a knife Kenneth smooth
+representation of car rather than
+
+342
+00:27:19,200 --> 00:27:26,509
+explicitly only the latter see our match
+that and it turns out that if you
+
+343
+00:27:26,509 --> 00:27:29,980
+trained using the word avec approach
+that directions turn out to be
+
+344
+00:27:29,980 --> 00:27:35,730
+meaningful and mental spaces so not only
+is proximity interesting but directions
+
+345
+00:27:35,730 --> 00:27:38,730
+are interesting so it turns out if you
+look at
+
+346
+00:27:39,720 --> 00:27:43,860
+capital and country pairs you go
+
+347
+00:27:43,859 --> 00:27:47,288
+roughly the same direction and distance
+to get from a country with corresponding
+
+348
+00:27:47,288 --> 00:27:56,029
+capital or vice versa for any country
+capital Paris and you also can you see
+
+349
+00:27:56,029 --> 00:27:59,298
+some semblance of other structures is
+the embeddings map down to two
+
+350
+00:27:59,298 --> 00:28:05,889
+dimensions the principal components
+analysis so and you see kind of
+
+351
+00:28:05,890 --> 00:28:12,788
+interesting structures around verb
+tenses regardless of the firm which
+
+352
+00:28:12,788 --> 00:28:18,210
+means you can solve analogies like queen
+is decaying as well mister man by doing
+
+353
+00:28:18,210 --> 00:28:21,279
+some simple fact arithmetic say you're
+literally just looking at the embedding
+
+354
+00:28:21,279 --> 00:28:26,029
+vector and then adding the difference to
+get to that point approximately the
+
+355
+00:28:26,029 --> 00:28:35,269
+point so we've been in collaboration
+with the search team we launched kind of
+
+356
+00:28:35,269 --> 00:28:40,668
+one of the biggest search ranking
+changes in the last few years we called
+
+357
+00:28:40,669 --> 00:28:44,640
+it rang bringing essentially just a deep
+know that but uses embeddings and a
+
+358
+00:28:44,640 --> 00:28:50,059
+bunch of players to give you a score for
+how relevant this document is for this
+
+359
+00:28:50,058 --> 00:28:51,730
+particular
+
+360
+00:28:51,730 --> 00:28:58,308
+and it's the third most important for
+train travel miles out of hundreds of
+
+361
+00:28:58,308 --> 00:29:07,259
+that so-called smart reply was a little
+cooperation with the Gmail team were
+
+362
+00:29:07,259 --> 00:29:11,259
+essentially replying to mail on your
+phone kind of sucks cuz typing is hard
+
+363
+00:29:11,259 --> 00:29:16,429
+and so we wanted to have a system where
+often you can predict what would be a
+
+364
+00:29:16,429 --> 00:29:21,900
+good reply just looking at the message
+so we have a small network the predicts
+
+365
+00:29:21,900 --> 00:29:26,970
+is that a likely to be something that I
+can have a short terse response to see
+
+366
+00:29:26,970 --> 00:29:30,380
+if you ask them i activate a much bigger
+
+367
+00:29:30,380 --> 00:29:35,409
+model and this is a message one of my
+colleagues received a project that from
+
+368
+00:29:35,409 --> 00:29:37,720
+his brother he said we want to invite
+you to join us for an early Thanksgiving
+
+369
+00:29:37,720 --> 00:29:43,220
+probable bob we've been your favorite
+dish RCP next week so then the model
+
+370
+00:29:43,220 --> 00:29:48,100
+predicts countess and will be there or
+sorry won't be able to make it
+
+371
+00:29:49,660 --> 00:29:54,810
+great if you get a lot of email it's
+fantastic although your replies will be
+
+372
+00:29:54,809 --> 00:29:58,169
+somewhat curse of them which is nice
+
+373
+00:30:02,250 --> 00:30:07,329
+you know we can do interesting things
+like this is a mobile app that actually
+
+374
+00:30:07,329 --> 00:30:11,779
+runs in airplane mode so it's actually
+running the models on the phone and it's
+
+375
+00:30:11,779 --> 00:30:19,430
+actually got a lot of interesting things
+entirely realized so you're essentially
+
+376
+00:30:19,430 --> 00:30:25,670
+using the camera image for detecting
+text in your finding what the words are
+
+377
+00:30:25,670 --> 00:30:28,830
+doing OCR on it here then running it
+through a translation model you can
+
+378
+00:30:28,829 --> 00:30:31,980
+figure it in a particular about this is
+just cycling through different languages
+
+379
+00:30:31,980 --> 00:30:38,779
+but normally you'd set on Spanish money
+but only show you Spanish but the thing
+
+380
+00:30:38,779 --> 00:30:43,460
+that in realizes there's actually an
+interesting fun selection problem like
+
+381
+00:30:43,460 --> 00:30:49,210
+choose what I want to show you the
+output so kind of call good if you're
+
+382
+00:30:49,210 --> 00:30:50,410
+traveling
+
+383
+00:30:50,410 --> 00:30:55,590
+interesting place I'm actually going to
+Korea untiring so I am i'm looking
+
+384
+00:30:55,589 --> 00:31:04,549
+forward to using my translator up as
+they don't be so one of the things we do
+
+385
+00:31:04,549 --> 00:31:09,000
+a bit of work on is reducing insurance
+costs there's like nothing worse than
+
+386
+00:31:09,000 --> 00:31:15,789
+this feeling that wow my model is so
+awesome with great it's just sad dreams
+
+387
+00:31:15,789 --> 00:31:18,309
+my phone's battery in Germany
+
+388
+00:31:18,309 --> 00:31:22,769
+or you know I can't afford the
+temptation to run it at you know I keep
+
+389
+00:31:22,769 --> 00:31:27,039
+you in my data center even though I have
+gotten machines so there's lots of
+
+390
+00:31:27,039 --> 00:31:31,720
+tricks you can use in particular the
+simplest wanna news in for instance
+
+391
+00:31:31,720 --> 00:31:39,430
+generally much more forgiving of even
+much lower precision computation dan
+
+392
+00:31:39,430 --> 00:31:44,120
+training so far in France we usually
+find we can quantized all the way to get
+
+393
+00:31:44,119 --> 00:31:48,319
+through even less a bit too sista nice
+quality but cheap you'd like to deal
+
+394
+00:31:48,319 --> 00:31:52,139
+with really you could do six that's
+prolly but that doesn't help that much
+
+395
+00:31:52,140 --> 00:31:57,930
+that gives you like a nice Forex memory
+reduction in storing the parameters and
+
+396
+00:31:57,930 --> 00:32:01,850
+also give you for a competition
+efficiency cuz you can use CPU vector
+
+397
+00:32:01,849 --> 00:32:08,809
+instructions to 24 multiplies instead of
+1:30 but why suddenly got to tell you
+
+398
+00:32:08,809 --> 00:32:13,879
+about kind of a cuter more exotic way of
+getting more efficiency out of a mobile
+
+399
+00:32:13,880 --> 00:32:14,310
+phone
+
+400
+00:32:14,309 --> 00:32:19,169
+the technique called distillation that
+jeffrey hinton organelles and I worked
+
+401
+00:32:19,170 --> 00:32:24,910
+on so suppose you have a really really
+giant model the problem I just described
+
+402
+00:32:24,910 --> 00:32:30,660
+this fantastic model you really pleased
+with maybe of an ensemble of those and
+
+403
+00:32:30,660 --> 00:32:36,430
+now you want a smaller cheaper model at
+almost the same actors so here it is
+
+404
+00:32:36,430 --> 00:32:41,480
+your giant expensive model you feed the
+same agenda gives you fantastic
+
+405
+00:32:41,480 --> 00:32:47,630
+predictions like . 95 Jaguar I'm pretty
+sure and I'm definitely sure that's not
+
+406
+00:32:47,630 --> 00:32:48,530
+a car
+
+407
+00:32:48,529 --> 00:32:57,769
+10-4 car window for you I'm heading to
+bed it could be a lion right so that's
+
+408
+00:32:57,769 --> 00:33:02,900
+what I really accurate model do tell the
+main idea unfortunately we later
+
+409
+00:33:02,900 --> 00:33:07,380
+discovered the rich Caruana in 2006 had
+published a similar idea in a paper
+
+410
+00:33:07,380 --> 00:33:13,310
+called model compression so the ensemble
+for your giant accurate model implements
+
+411
+00:33:13,309 --> 00:33:18,669
+this interesting function from
+input-output so if you forget the fact
+
+412
+00:33:18,670 --> 00:33:22,720
+that there's some structure there and
+you just try to use the information
+
+413
+00:33:22,720 --> 00:33:27,500
+that's contained in that function how
+can we transfer the knowledge in that
+
+414
+00:33:27,500 --> 00:33:30,730
+really accurate function into a smaller
+
+415
+00:33:30,730 --> 00:33:36,339
+intention of the function so when you're
+training a model typically what you do
+
+416
+00:33:36,339 --> 00:33:40,740
+is you feat an image like this and then
+you give it targets to try to the chief
+
+417
+00:33:40,740 --> 00:33:47,109
+and you give it the target one Jaguar
+Land Rover everything else I'm gonna
+
+418
+00:33:47,109 --> 00:33:52,819
+call that a hard target so that's kind
+of the ideal your model is striving to
+
+419
+00:33:52,819 --> 00:33:56,298
+achieve and you give it you know
+hundreds of thousands or millions of
+
+420
+00:33:56,298 --> 00:34:00,918
+training images in a drive to
+approximate all these factors from the
+
+421
+00:34:00,919 --> 00:34:05,160
+differences in actual fact it doesn't
+quite do that cuz he gives you this nice
+
+422
+00:34:05,160 --> 00:34:09,990
+public probability distribution over
+different images over different classes
+
+423
+00:34:09,989 --> 00:34:17,579
+for the same marriage so let's take our
+giant expensive model and one of the
+
+424
+00:34:17,579 --> 00:34:22,079
+things we can do is we can actually
+soften that distribution of it and this
+
+425
+00:34:22,079 --> 00:34:30,940
+is what jeffrey hinton calls dark
+knowledge but if you soften this by
+
+426
+00:34:30,940 --> 00:34:34,500
+essentially dividing all the logistic
+units by a temperature to you might be
+
+427
+00:34:34,500 --> 00:34:38,820
+like five or ten or something you then
+get a softer representation of this
+
+428
+00:34:38,820 --> 00:34:44,159
+probability distribution where you say
+okay at the Jaguar but also kinda hedge
+
+429
+00:34:44,159 --> 00:34:48,950
+about the little and call it a bit of a
+lion maybe even less of a cow still call
+
+430
+00:34:48,949 --> 00:34:56,878
+it definitely not a car and that's
+something you can then years and this
+
+431
+00:34:56,878 --> 00:35:00,139
+fall distribution made a lot more
+information about the image about the
+
+432
+00:35:00,139 --> 00:35:04,429
+function of being implemented by this
+large ensemble ensemble is trying to
+
+433
+00:35:04,429 --> 00:35:08,169
+head to bed soon do a really good job on
+giving you a probability probability
+
+434
+00:35:08,170 --> 00:35:15,559
+distribution over that image so then you
+can train the small model for normally
+
+435
+00:35:15,559 --> 00:35:19,070
+when you train just training hard
+targets but instead you can train on
+
+436
+00:35:19,070 --> 00:35:25,640
+some combination of the hard targets
+plus the soft targets and the training
+
+437
+00:35:25,639 --> 00:35:32,089
+objectives gonna try to Matt Matt should
+some function of those two things so
+
+438
+00:35:32,090 --> 00:35:37,579
+this works surprisingly well so here's
+an experiment we did on a large speech
+
+439
+00:35:37,579 --> 00:35:42,039
+model so we started by the model the
+classified 58.9 percent of his friends
+
+440
+00:35:42,039 --> 00:35:46,190
+correctly that's our big accurate model
+and now we're going to use that horrible
+
+441
+00:35:46,190 --> 00:35:50,829
+to provide soft targets for smaller
+model they also get to see the hard
+
+442
+00:35:50,829 --> 00:35:57,690
+target and we're gonna train that only
+3% of the data so the new model with the
+
+443
+00:35:57,690 --> 00:36:04,599
+soft targets kept almost that accuracy
+57% am just hard targets
+
+444
+00:36:05,210 --> 00:36:12,800
+drastically over fits 44.5% accurate and
+then go south so soft targets are really
+
+445
+00:36:12,800 --> 00:36:17,700
+really good regularize and the other
+thing is that because the stock targets
+
+446
+00:36:17,699 --> 00:36:21,739
+have so much information them compared
+to just a single one imagines arose you
+
+447
+00:36:21,739 --> 00:36:27,889
+train much much faster you get to that
+accuracy in like a week short about the
+
+448
+00:36:27,889 --> 00:36:33,358
+time that that's pretty nice and you can
+do this approach with light drying
+
+449
+00:36:33,358 --> 00:36:37,889
+ensembles napping into one size model
+about ensemble you can do from a large
+
+450
+00:36:37,889 --> 00:36:45,269
+bottle into a smaller one somewhat
+under-appreciated technique ok let's see
+
+451
+00:36:45,269 --> 00:36:51,980
+so one of the things we did when we
+thought about building tons of flour was
+
+452
+00:36:51,980 --> 00:36:56,309
+we kind of took a step back for more
+aware and we said what do you really
+
+453
+00:36:56,309 --> 00:36:59,259
+want to research system so you want a
+lot of different things and it's kind of
+
+454
+00:36:59,260 --> 00:37:04,740
+hard to balance all of the things I but
+really one of the things you really care
+
+455
+00:37:04,739 --> 00:37:08,489
+about a few researcher is either the
+expression I wanna be able to take any
+
+456
+00:37:08,489 --> 00:37:12,589
+old research idea and try it out
+
+457
+00:37:15,119 --> 00:37:37,219
+it was considerably smaller like instead
+of thousand wide fully connected layers
+
+458
+00:37:37,219 --> 00:37:43,409
+it was like 600 or 500 y which is
+actually a big difference but checking
+
+459
+00:37:43,409 --> 00:37:51,399
+that paper for the details I'm probably
+misremembered right and then you want to
+
+460
+00:37:51,400 --> 00:37:55,490
+be able to take your research idea a lot
+and running quickly you want to be able
+
+461
+00:37:55,489 --> 00:38:00,689
+to run it probably on both data centers
+and iPhones nice to be able to reproduce
+
+462
+00:38:00,690 --> 00:38:04,269
+things and you want to go from a good
+research idea to a production system
+
+463
+00:38:04,269 --> 00:38:10,730
+without having to rewrite and some other
+system that's how we kind of the main
+
+464
+00:38:10,730 --> 00:38:15,659
+things we were considering Wendling
+counterflow open source it as as you're
+
+465
+00:38:15,659 --> 00:38:25,519
+aware that our first emotion is flexible
+so the core bits of tender flow are we
+
+466
+00:38:25,519 --> 00:38:30,769
+have a notion of different devices it is
+portable that runs on a much different
+
+467
+00:38:30,769 --> 00:38:34,340
+operating systems we have this core
+graphics solution engine and then on top
+
+468
+00:38:34,340 --> 00:38:37,700
+of that we have different friends were
+you expressed the kinds of competitions
+
+469
+00:38:37,699 --> 00:38:41,819
+are trying to do we have a C++ friend
+and which most people don't use in my
+
+470
+00:38:41,820 --> 00:38:45,700
+mind we have the Piton friend I'm sure
+most of you are probably more so they
+
+471
+00:38:45,699 --> 00:38:49,339
+don't have to wear most men but there's
+nothing preventing people from putting
+
+472
+00:38:49,340 --> 00:38:55,750
+other languages I wanted to be fairly
+language neutral so there is some work
+
+473
+00:38:55,750 --> 00:38:58,269
+going on to put ago friend on there
+
+474
+00:38:58,269 --> 00:39:03,980
+other kinds of languages and you wanna
+be able to take that model and running
+
+475
+00:39:03,980 --> 00:39:09,440
+on a pretty wide variety of different
+platforms the basic computational model
+
+476
+00:39:09,440 --> 00:39:12,710
+is the ground I don't know how much
+talked about this in your overview of
+
+477
+00:39:12,710 --> 00:39:17,179
+ten little bit ok so this graph things
+that flow along the edges or tenders for
+
+478
+00:39:17,179 --> 00:39:25,469
+arbitrary and dimensional arrays with a
+primitive type like Procter into unlike
+
+479
+00:39:25,469 --> 00:39:29,269
+pure data flow models there's actually
+stayed in this crassly you have things
+
+480
+00:39:29,269 --> 00:39:33,219
+like diocese which is a variable and
+then you have operations again update
+
+481
+00:39:33,219 --> 00:39:37,019
+things that happen system state can go
+through the whole graph compute some
+
+482
+00:39:37,019 --> 00:39:45,329
+gradient and then adjust the bias is
+based on gradient graph goes through a
+
+483
+00:39:45,329 --> 00:39:50,809
+series of stages one important stage is
+deciding given a whole bunch of
+
+484
+00:39:50,809 --> 00:39:55,670
+computational devices and McGrath where
+are we in a run each of the different
+
+485
+00:39:55,670 --> 00:40:01,369
+node in the graph terms of computation
+for example here we might have a CPU and
+
+486
+00:40:01,369 --> 00:40:06,650
+blue and I GPU card and green and we
+might want to run the graph in such a
+
+487
+00:40:06,650 --> 00:40:13,160
+way that although that's a competition
+happens on the GPU so actually as an
+
+488
+00:40:13,159 --> 00:40:17,259
+aside this placement decisions are kind
+of tricky we allow users to provide him
+
+489
+00:40:17,260 --> 00:40:22,760
+the guide this a bit and then given the
+hints which are not necessarily hard
+
+490
+00:40:22,760 --> 00:40:26,750
+constraints on the new black device but
+might be something like you should
+
+491
+00:40:26,750 --> 00:40:33,300
+really try to run this on a GPU or place
+it on task seven and I don't care what
+
+492
+00:40:33,300 --> 00:40:40,200
+device and then we want to basically
+minimize the time for the graph subject
+
+493
+00:40:40,199 --> 00:40:44,159
+all kinds of other constraints like the
+memory we have available on each keep
+
+494
+00:40:44,159 --> 00:40:51,199
+you Carter on CPUs I think it'd be
+interesting actually use at home at with
+
+495
+00:40:51,199 --> 00:40:54,639
+some reinforcement learning because you
+can actually measure an objective here
+
+496
+00:40:54,639 --> 00:40:58,759
+of you know if I place this note and
+this known in this note in this way how
+
+497
+00:40:58,760 --> 00:41:02,500
+fast is my graph and I think that would
+be pretty interesting reinforcement
+
+498
+00:41:02,500 --> 00:41:02,929
+learning
+
+499
+00:41:02,929 --> 00:41:09,139
+problem 13 made decisions over to place
+things then we insert the sending
+
+500
+00:41:09,139 --> 00:41:12,500
+receive nodes which essentially
+encapsulate all the communication system
+
+501
+00:41:12,500 --> 00:41:16,800
+so basically you want to move it answer
+from one place to another the send nodal
+
+502
+00:41:16,800 --> 00:41:21,200
+kind of just hold onto the tensor until
+they receive no checks and they've
+
+503
+00:41:21,199 --> 00:41:26,669
+really love that data for that and you
+do this for all the edges of the Cross
+
+504
+00:41:26,670 --> 00:41:32,150
+device boundaries and you have different
+implications of sending receive Paris
+
+505
+00:41:32,150 --> 00:41:36,220
+depending on the device see how for
+example if the GPUs are on the same
+
+506
+00:41:36,219 --> 00:41:39,779
+machine you can often do our DNA
+directly from one GPU memory to be there
+
+507
+00:41:39,780 --> 00:41:44,410
+if they're on different machines and you
+across machine RBC your network might
+
+508
+00:41:44,409 --> 00:41:50,868
+support RDMA across the network and I
+case you would just use directly reach
+
+509
+00:41:50,869 --> 00:41:56,920
+into the southern GPU memory on the
+southern machine and credit you can
+
+510
+00:41:56,920 --> 00:42:00,210
+define new operations and colonels
+pretty easily
+
+511
+00:42:00,210 --> 00:42:06,920
+such an interface is essentially how you
+run the graph can typically you run he
+
+512
+00:42:06,920 --> 00:42:10,940
+set up a graph once and then you run a
+lot so that allows us to kind of have
+
+513
+00:42:10,940 --> 00:42:17,068
+the system do a lot of optimization and
+decisions about essentially how it wants
+
+514
+00:42:17,068 --> 00:42:22,199
+to place competition no then perhaps do
+some experiments on like does it make
+
+515
+00:42:22,199 --> 00:42:26,068
+more sense to put it here here because
+it's can advertise that overlap from
+
+516
+00:42:26,068 --> 00:42:30,969
+author bryan calls the single process
+configuration everything runs and one
+
+517
+00:42:30,969 --> 00:42:35,509
+process and it's just sort of simple
+procedure calls in a distributed setting
+
+518
+00:42:35,510 --> 00:42:38,440
+there's a client process a master
+process and then a bunch of workers that
+
+519
+00:42:38,440 --> 00:42:43,608
+have devices and the Masterton clients
+as I'd like to run the subgraph the
+
+520
+00:42:43,608 --> 00:42:47,568
+master says okay that means I need to
+talk to process wanted to tell them to
+
+521
+00:42:47,568 --> 00:42:54,808
+do stuff you can feed in fact data and
+that means that I might sort of have a
+
+522
+00:42:54,809 --> 00:42:59,619
+more complex graph but I only need to
+run little bits of it cause I only need
+
+523
+00:42:59,619 --> 00:43:05,440
+to run the part to the computation that
+the output throughout our
+
+524
+00:43:05,940 --> 00:43:14,940
+are needed based on a story we focus a
+lot on being able to scale this
+
+525
+00:43:14,940 --> 00:43:19,099
+distributed environment we actually one
+of the biggest things when we first open
+
+526
+00:43:19,099 --> 00:43:23,210
+source center for a week hadn't quite
+carved apart a open source mobile
+
+527
+00:43:23,210 --> 00:43:28,269
+distributed implementation so that was
+good how this your number 23 which got
+
+528
+00:43:28,269 --> 00:43:33,259
+filed within like a day of our release
+that hey where's the distributed version
+
+529
+00:43:33,260 --> 00:43:39,839
+we did the initial released last
+Thursday so that's good it'll get better
+
+530
+00:43:39,838 --> 00:43:43,619
+packaging but at the moment you can kind
+of and configure multiple processes with
+
+531
+00:43:43,619 --> 00:43:48,710
+the names of the other process he's
+involved IP addresses importance we're
+
+532
+00:43:48,710 --> 00:43:55,150
+gonna package that I'm better and next
+couple of weeks but that's good and the
+
+533
+00:43:55,150 --> 00:43:59,250
+whole reason to have that is that you
+want much better turnaround time for
+
+534
+00:43:59,250 --> 00:44:05,889
+experiments so if you're in the mode
+where your training and experiment
+
+535
+00:44:05,889 --> 00:44:09,769
+iteration is kind of minutes or hours
+that's really really good if you're in
+
+536
+00:44:09,769 --> 00:44:15,159
+the mode of like multiple weeks that's
+kind of hopeless like more than a month
+
+537
+00:44:15,159 --> 00:44:19,279
+you you generally want to do it or if
+you do you're like oh my travels done
+
+538
+00:44:19,280 --> 00:44:26,130
+why did I do that again so we really
+emphasize a lot in our group just being
+
+539
+00:44:26,130 --> 00:44:31,269
+able to make it to people can do
+experiments as fast as is reasonable
+
+540
+00:44:33,920 --> 00:44:39,250
+so the two main things we do our model
+parallels amid a problem I'll talk about
+
+541
+00:44:39,250 --> 00:44:46,588
+both you've talked about this a little
+bit or ok so the best way you can
+
+542
+00:44:46,588 --> 00:44:52,279
+decrease 9 training time is decreased to
+stop time so one of the really nice
+
+543
+00:44:52,280 --> 00:44:56,329
+properties most laptops there's lots and
+lots of inherent parallelism right like
+
+544
+00:44:56,329 --> 00:44:59,329
+if you think about a computational model
+there's lots of parallelism
+
+545
+00:45:00,539 --> 00:45:04,119
+each of the layers because all the
+spatial positions are mostly independent
+
+546
+00:45:04,119 --> 00:45:06,280
+you can just run around them
+
+547
+00:45:06,280 --> 00:45:10,680
+in parallel on different devices the
+problem is figure out how to communicate
+
+548
+00:45:10,679 --> 00:45:17,889
+how to distribute that computation in
+such a way that doesn't kill you if you
+
+549
+00:45:17,889 --> 00:45:21,389
+think help you someone is local
+conductivity like convolutional neural
+
+550
+00:45:21,389 --> 00:45:25,299
+mats have this nice property that
+they're generally looking like a five by
+
+551
+00:45:25,300 --> 00:45:31,070
+five patch of data below them and they
+don't need anything else and the neuron
+
+552
+00:45:31,070 --> 00:45:35,289
+next to it as a whole lot of overlap
+with the data it needs for for that
+
+553
+00:45:35,289 --> 00:45:41,099
+first neuron UCAV towers with little or
+no connectivity between the towers so
+
+554
+00:45:41,099 --> 00:45:46,179
+every few layers you might communicate a
+little bit but mostly you don't accept
+
+555
+00:45:46,179 --> 00:45:50,399
+paper did that so essentially had two
+separate hours that mostly ran into
+
+556
+00:45:50,400 --> 00:45:55,880
+penalty on GPUs to different CPUs and
+occasionally exchanged some information
+
+557
+00:45:55,880 --> 00:45:59,220
+you get a specialized parts of the model
+attractive woman for some example
+
+558
+00:45:59,219 --> 00:46:06,759
+there's lots of ways to exploit
+parallelism so when you're just naively
+
+559
+00:46:06,760 --> 00:46:10,630
+compiling matrix multiply code with gcc
+or something it a lot probably already
+
+560
+00:46:10,630 --> 00:46:16,880
+take advantage of instruction
+parallelism present on Intel CPUs scores
+
+561
+00:46:16,880 --> 00:46:23,420
+you can use Thread heroism and things
+that way across devices communicating
+
+562
+00:46:23,420 --> 00:46:27,760
+between the abusers often pretty limited
+to you have like a factor of 30 to 40
+
+563
+00:46:27,760 --> 00:46:31,950
+better band trip to the local team
+member you can you do to like another
+
+564
+00:46:31,949 --> 00:46:36,750
+GPU cards memory on the same machine and
+across machine down in general even
+
+565
+00:46:36,750 --> 00:46:41,519
+worse so pretty important to kind of
+keep as much data local as you can and
+
+566
+00:46:41,519 --> 00:46:48,159
+avoid eating too much but model
+parallels in the basic idea is you're
+
+567
+00:46:48,159 --> 00:46:51,929
+just going to partition the
+computational model somehow maybe
+
+568
+00:46:51,929 --> 00:47:01,710
+especially like this maybe layer by
+layer and then in this case for example
+
+569
+00:47:01,710 --> 00:47:05,730
+the only communication I need to do is
+that this boundary you know some of the
+
+570
+00:47:05,730 --> 00:47:09,039
+data from petition to have needed for
+the input of that partition one but
+
+571
+00:47:09,039 --> 00:47:16,949
+mostly all that is local the other
+techniques you can use for speeding up
+
+572
+00:47:16,949 --> 00:47:21,419
+convergence is data parallelism some a
+case you're going to use many different
+
+573
+00:47:21,420 --> 00:47:24,608
+replicas of the same model structure and
+they're all going to collaborate to
+
+574
+00:47:24,608 --> 00:47:30,949
+update parameters so in some shared set
+of servers that hold the parameters
+
+575
+00:47:30,949 --> 00:47:36,629
+state speedups depend a lot on the kind
+of model could be 10 to 40 X speed up
+
+576
+00:47:36,630 --> 00:47:42,720
+450 replicas sparse models with like
+really large embeddings for every
+
+577
+00:47:42,719 --> 00:47:44,769
+vocabulary word known to man
+
+578
+00:47:44,769 --> 00:47:48,469
+generally you can't report more
+parallelism cuz most updates only update
+
+579
+00:47:48,469 --> 00:47:53,129
+a handful of the embedding entries have
+a sentence has like 10 unique words in
+
+580
+00:47:53,130 --> 00:47:57,630
+it out of a million and you can have
+millions and millions are thousands of
+
+581
+00:47:57,630 --> 00:48:03,088
+replicas doing lots of work so the basic
+idea and data parallelism is you have
+
+582
+00:48:03,088 --> 00:48:07,019
+these different model replicas are gonna
+have the centralized system that keeps
+
+583
+00:48:07,019 --> 00:48:10,519
+track of the parameters that may not
+just be a single machine and maybe a lot
+
+584
+00:48:10,519 --> 00:48:16,338
+of machines because you need a lot of
+network bandwidth sometimes to keep all
+
+585
+00:48:16,338 --> 00:48:19,900
+these model replica standard parameters
+so that might you know in our big setup
+
+586
+00:48:19,900 --> 00:48:24,950
+that my behind and 27 machines been
+stopped and then you know you might have
+
+587
+00:48:24,949 --> 00:48:29,259
+five and replicas of the models down
+there and before every model replica
+
+588
+00:48:29,260 --> 00:48:34,430
+doesn't match its gonna grab the
+parameters so it says okay you hundred
+
+589
+00:48:34,429 --> 00:48:39,179
+and twenty-seven machines give me the
+parameters and then it does a
+
+590
+00:48:39,179 --> 00:48:44,289
+combination of around the mini badge and
+because I would agree it should be it
+
+591
+00:48:44,289 --> 00:48:47,869
+doesn't apply to rate of time degrading
+back to the parameters servers routers
+
+592
+00:48:47,869 --> 00:48:52,829
+servers then update the current
+parameter values and then before the
+
+593
+00:48:52,829 --> 00:48:58,039
+next step we did the same thing really
+network intensive depending on your
+
+594
+00:48:58,039 --> 00:49:01,690
+model things that help here are modeled
+the don't have very many parameters
+
+595
+00:49:01,690 --> 00:49:06,068
+competitions are really nice in that
+respect Ella standardise in that respect
+
+596
+00:49:06,068 --> 00:49:11,250
+because you're essentially than reusing
+every parameter lock them up the time so
+
+597
+00:49:11,250 --> 00:49:16,929
+you're already using you know however
+bigger batch size is on the model of
+
+598
+00:49:16,929 --> 00:49:20,088
+your child's 228 you're gonna bring
+pressure over you can use a hundred and
+
+599
+00:49:20,088 --> 00:49:23,900
+twenty eight times for all the columns
+in the match but have a convolutional
+
+600
+00:49:23,900 --> 00:49:28,970
+model now you're gonna get an additional
+factor of reuse of maybe like $10 in
+
+601
+00:49:28,969 --> 00:49:30,019
+different positions
+
+602
+00:49:30,019 --> 00:49:34,769
+in a layer that you're going to use it
+an analysis p.m. if you unroll a hundred
+
+603
+00:49:34,769 --> 00:49:41,460
+times steps you can reuse it a hundred
+times just for the unrolling those kinds
+
+604
+00:49:41,460 --> 00:49:47,220
+of things that have model have lots of
+computation and fewer parameters to sort
+
+605
+00:49:47,219 --> 00:49:50,109
+of Dr that competition generally will
+work better and did a parallel
+
+606
+00:49:50,110 --> 00:49:57,340
+environments now there's an obvious
+issue depending on how you do those so
+
+607
+00:49:57,340 --> 00:50:00,720
+one way you can do this is completely
+asynchronously every model replicas just
+
+608
+00:50:00,719 --> 00:50:05,459
+sitting in a loop and setting the
+parameters doing a mini badge heating
+
+609
+00:50:05,460 --> 00:50:09,210
+radiant sending it up there and if you
+do that asynchronously then the gradient
+
+610
+00:50:09,210 --> 00:50:13,710
+computes may be completely stale with
+respect to the where the parameters are
+
+611
+00:50:13,710 --> 00:50:17,030
+now right now is computed it with his
+back to this parameter value but
+
+612
+00:50:17,030 --> 00:50:20,810
+meanwhile 10 other applicants have made
+called the parameters to meander over
+
+613
+00:50:20,809 --> 00:50:27,529
+here and now you apply the gradient that
+you thought was for here this makes the
+
+614
+00:50:27,530 --> 00:50:31,080
+additions incredibly uncomfortable there
+already uncomfortable cuz it's
+
+615
+00:50:31,079 --> 00:50:38,619
+completely non conduct problems but the
+good news is it worked up to a certain
+
+616
+00:50:38,619 --> 00:50:43,670
+level it would be really good understand
+the conditions under which you know this
+
+617
+00:50:43,670 --> 00:50:48,059
+works and theoretical basis but in
+practice it does seem to work pretty
+
+618
+00:50:48,059 --> 00:50:51,710
+well the other thing you can do is do
+this completely synchronously so you can
+
+619
+00:50:51,710 --> 00:50:55,800
+have one driving loop that sounds ok
+everyone go they all get the parameters
+
+620
+00:50:55,800 --> 00:50:58,610
+they all compute gradients and then you
+wait for the gradients to show up and do
+
+621
+00:50:58,610 --> 00:51:03,820
+something with a great effort to them
+around her and that effectively just
+
+622
+00:51:03,820 --> 00:51:09,269
+looks like a giant batch are replicas
+that looks like you know our times each
+
+623
+00:51:09,269 --> 00:51:14,300
+individual ones batch size which
+sometimes works you kind of get
+
+624
+00:51:14,300 --> 00:51:18,950
+diminishing returns from larger and
+larger batch sizes but the more training
+
+625
+00:51:18,949 --> 00:51:21,169
+examples you have
+
+626
+00:51:21,170 --> 00:51:26,159
+more tolerant you are a bigger bite
+sized generally have a trillion training
+
+627
+00:51:26,159 --> 00:51:30,420
+examples you know about the size of a
+thousand ok you have a million training
+
+628
+00:51:30,420 --> 00:51:36,068
+examples outside of a thousand not so
+great right
+
+629
+00:51:36,639 --> 00:51:41,289
+think I said Lewis there's even more
+complicated choices are you can have
+
+630
+00:51:41,289 --> 00:51:52,650
+like a descriptive ends in Europe right
+I said that the current models are good
+
+631
+00:51:52,650 --> 00:51:57,829
+they reuse the parameters a lot so data
+parallelism is actually really really
+
+632
+00:51:57,829 --> 00:52:02,740
+important for almost all of our models
+that's how we get to the point of
+
+633
+00:52:02,739 --> 00:52:10,669
+training models in like half a day or a
+day generally so you know you see some
+
+634
+00:52:10,670 --> 00:52:19,180
+of the rough kind of setup for use and
+here's an example training graph of
+
+635
+00:52:19,179 --> 00:52:25,489
+image net model one GPU 10 GB used 52
+views and there's the kind of speed up
+
+636
+00:52:25,489 --> 00:52:26,239
+yet
+
+637
+00:52:26,239 --> 00:52:29,759
+like sometimes these graphs are
+receiving like the difference between 10
+
+638
+00:52:29,760 --> 00:52:34,220
+and 50 years doesn't seem that big like
+lines are kind of close to each other
+
+639
+00:52:34,219 --> 00:52:39,489
+soldiers but in actual fact the
+difference between 10 and 50 is like a
+
+640
+00:52:39,489 --> 00:52:43,798
+factor of four point want something so
+that doesn't look like a factor 4.1
+
+641
+00:52:43,798 --> 00:52:51,920
+difference does it but it is yeah the
+way you do it as you would like without
+
+642
+00:52:51,920 --> 00:52:59,150
+one crisis point six and seven thousand
+crisis point ok
+
+643
+00:52:59,150 --> 00:53:04,490
+so let me show you some of the slight
+tweaks you make to tender for models to
+
+644
+00:53:04,489 --> 00:53:08,149
+exploit these different kinds of
+parallelism one of the things we wanted
+
+645
+00:53:08,150 --> 00:53:13,280
+was for these kinds of parallelism
+notions to be pretty easy to express so
+
+646
+00:53:13,280 --> 00:53:17,500
+one of the things I like about 20 mins
+it maps pretty well to the kind of
+
+647
+00:53:17,500 --> 00:53:22,949
+things you might see in a research paper
+so it's not talk to read all that but
+
+648
+00:53:22,949 --> 00:53:30,189
+it's not too different than what you
+would see you should never be kinda nice
+
+649
+00:53:30,190 --> 00:53:37,940
+like a simple stem cell this is the
+sequence to sequence model that only a
+
+650
+00:53:37,940 --> 00:53:43,079
+subsidiary organ all the quickly
+published in its 2014 we're essentially
+
+651
+00:53:43,079 --> 00:53:47,849
+trying to take an input sequence and map
+it turned out that sequence this is a
+
+652
+00:53:47,849 --> 00:53:51,679
+really big area of research it turns out
+these kinds of models are applicable for
+
+653
+00:53:51,679 --> 00:53:56,849
+lots and lots of kinds of problems
+there's lots of different groups doing
+
+654
+00:53:56,849 --> 00:54:07,369
+interesting inactive work in this area
+so here's just some examples of recent
+
+655
+00:54:07,369 --> 00:54:13,269
+work in the last year and a half in this
+area from what the different labs around
+
+656
+00:54:13,269 --> 00:54:17,630
+the world you've already talked about it
+
+657
+00:54:17,630 --> 00:54:26,320
+caption call just so instead of a
+sequence you can put in pixels are you
+
+658
+00:54:26,320 --> 00:54:31,890
+put in pixels you went through CNN
+that's your initial state and then you
+
+659
+00:54:31,889 --> 00:54:34,889
+can generate captions pretty amazing
+
+660
+00:54:36,030 --> 00:54:42,019
+35 years ago contributor to that I was I
+don't think so not for a while Harry R
+
+661
+00:54:42,019 --> 00:54:46,730
+you can actually do and then I say it's
+a generative model so you can generate
+
+662
+00:54:46,730 --> 00:54:51,320
+different sentences by exploring the
+distribution you know I think both of us
+
+663
+00:54:51,320 --> 00:54:56,870
+are not captains it's not quite a
+sophisticated of the human one don't
+
+664
+00:54:56,869 --> 00:55:01,230
+often see this one of the things is
+
+665
+00:55:01,230 --> 00:55:07,639
+if you if you train the model little bit
+it's really important to her trainer
+
+666
+00:55:07,639 --> 00:55:13,210
+model to convergence because light
+that's not so bad but if you train that
+
+667
+00:55:13,210 --> 00:55:17,070
+model longer the same model just got a
+lot better
+
+668
+00:55:21,079 --> 00:55:25,139
+same thing here right training that is
+sitting on the tracks yes that's true
+
+669
+00:55:25,139 --> 00:55:30,909
+but that ones better but she still see
+the human has a lot more sophistication
+
+670
+00:55:30,909 --> 00:55:35,480
+right like they know that they're
+crossed the tracks near a depot that's
+
+671
+00:55:35,480 --> 00:55:42,199
+sort of a more subtle thing that the
+model to pick up on another kind of cute
+
+672
+00:55:42,199 --> 00:55:48,750
+using you can actually use them to solve
+all kinds of cool graph problems so or
+
+673
+00:55:48,750 --> 00:55:56,440
+even yalls mara Fortunato and FTP this
+work which you start with a ton of
+
+674
+00:55:56,440 --> 00:56:03,059
+points and then you try to predict the
+traveling salesman for that works best
+
+675
+00:56:03,059 --> 00:56:11,559
+for the convex hull or Delonte
+triangulation of grass gonna call you
+
+676
+00:56:11,559 --> 00:56:14,199
+know it's just a secret the sequence
+problem for you feat in the sequence of
+
+677
+00:56:14,199 --> 00:56:18,129
+points and then the output is the right
+set of points for whatever problem you
+
+678
+00:56:18,130 --> 00:56:21,130
+care about
+
+679
+00:56:21,780 --> 00:56:28,519
+reply ok so I'll scams so once you have
+that Alice p.m. cellco that I showed you
+
+680
+00:56:28,519 --> 00:56:35,530
+on there you can enroll in time twenty
+time steps let's say you wanted four
+
+681
+00:56:35,530 --> 00:56:37,680
+layers per time step instead of one
+
+682
+00:56:37,679 --> 00:56:42,389
+well you would make a little bit of
+change your code and you do that now you
+
+683
+00:56:42,389 --> 00:56:47,690
+have four layers of computations 2011 of
+the things you might want to do is run
+
+684
+00:56:47,690 --> 00:56:51,840
+each of those layers on a different GPU
+so that's the change would make you tons
+
+685
+00:56:51,840 --> 00:56:56,869
+of occurred to do that and that allows
+you to have a model like this so this is
+
+686
+00:56:56,869 --> 00:57:01,289
+my sequins these are the different deep
+jealousy I'm layers I have per time step
+
+687
+00:57:01,289 --> 00:57:08,190
+and after the first little bit I can
+start getting more and more GPUs kind of
+
+688
+00:57:08,190 --> 00:57:10,349
+involved in the process
+
+689
+00:57:10,349 --> 00:57:15,579
+and you essentially pipeline the entire
+thing there's a giant soft packs at the
+
+690
+00:57:15,579 --> 00:57:19,710
+top of you can split across keep you
+pretty easily do that to model
+
+691
+00:57:19,710 --> 00:57:25,500
+parallelism right we've now got six GPUs
+in this picture we actually use a split
+
+692
+00:57:25,500 --> 00:57:30,909
+that soft max cross-border abuses and
+man it so every replica would be a GPU
+
+693
+00:57:30,909 --> 00:57:36,109
+cards on the same machine all kind of
+humming along and then you might use
+
+694
+00:57:36,110 --> 00:57:37,849
+data parallelism in addition to that
+
+695
+00:57:37,849 --> 00:57:45,989
+to train a bunch of AGP card replicas to
+train quickly we have this notion of QS
+
+696
+00:57:45,989 --> 00:57:50,509
+he can kind of have her photographs the
+do a bunch of stuff and then suffered an
+
+697
+00:57:50,510 --> 00:57:55,860
+EQ and then later you have another bit
+of time to photograph that starts with D
+
+698
+00:57:55,860 --> 00:58:00,789
+hearings and stuff and then a dozen
+things so one and one example is you
+
+699
+00:58:00,789 --> 00:58:04,650
+might want to prefetch inputs and then
+why do the JPEG decoding to convert them
+
+700
+00:58:04,650 --> 00:58:09,240
+into sort of arrays and maybe do some
+whitening and cropping a random
+
+701
+00:58:09,239 --> 00:58:16,149
+selection of men's stuff like you and
+then you can then dq on a different GPU
+
+702
+00:58:16,150 --> 00:58:22,769
+cards or something we also can group
+similar examples for translation work we
+
+703
+00:58:22,769 --> 00:58:27,869
+actually bucket by length of sentence so
+that your batch has a bunch of examples
+
+704
+00:58:27,869 --> 00:58:32,449
+that are all roughly the same sentence
+length all 13 216 words sentences or
+
+705
+00:58:32,449 --> 00:58:37,539
+something that just means we even need
+only execute exactly that many unrolled
+
+706
+00:58:37,539 --> 00:58:42,210
+steps rather than you know arbitrary
+next sentence length good for
+
+707
+00:58:42,210 --> 00:58:46,099
+randomization challenged members
+shuffling cue is just a whole bunch of
+
+708
+00:58:46,099 --> 00:58:49,099
+examples and then get random ones out
+
+709
+00:58:55,130 --> 00:59:02,269
+data parallelism right so again we want
+to be able to have many replicas of this
+
+710
+00:59:02,269 --> 00:59:09,309
+thing and so you make a modest amount of
+changes to your we're not quite as happy
+
+711
+00:59:09,309 --> 00:59:13,769
+with this amount of change but this is
+kind of what you do there's a supervisor
+
+712
+00:59:13,769 --> 00:59:19,429
+that has a bunch of things you now say
+there's pressure devices and prepare the
+
+713
+00:59:19,429 --> 00:59:25,509
+session and then each one of these
+rounds a local loop and you not keep
+
+714
+00:59:25,510 --> 00:59:28,000
+track of how many steps have been
+applied globally across all the
+
+715
+00:59:28,000 --> 00:59:32,500
+different replicas and soon is the
+cumulative sum of all those is big
+
+716
+00:59:32,500 --> 00:59:38,829
+enough for a synchronous training looks
+kinda like that three separate client
+
+717
+00:59:38,829 --> 00:59:43,929
+dreads driving three separate replicas
+all with parameters so one of the big
+
+718
+00:59:43,929 --> 00:59:47,119
+implications from disbelief to tend to
+flow if we don't have the separate
+
+719
+00:59:47,119 --> 00:59:54,359
+parameters server notion we have answers
+and variables variables that contained
+
+720
+00:59:54,360 --> 00:59:59,590
+answers and they're just other parts of
+the graph and typically you map them
+
+721
+00:59:59,590 --> 01:00:04,250
+onto a small set of devices they're
+gonna hold you parameters but it's all
+
+722
+01:00:04,250 --> 01:00:07,269
+kind of unified in the same framework
+whether I'm sending it to answer that
+
+723
+01:00:07,269 --> 01:00:12,829
+parameters or activations or whatever
+doesn't matter this is kind of a
+
+724
+01:00:12,829 --> 01:00:16,750
+synchronous do you have one client and I
+just split my batch across three
+
+725
+01:00:16,750 --> 01:00:22,989
+replicas and had the gradient and apply
+them know might turn out to be pretty
+
+726
+01:00:22,989 --> 01:00:31,239
+tolerant of reduced precision so convert
+to FB 16 there's actually and I Tripoli
+
+727
+01:00:31,239 --> 01:00:36,869
+standard for 16 to 14 points now putting
+point I use now most CPU don't quite
+
+728
+01:00:36,869 --> 01:00:42,719
+support that yet so we implemented our
+own sixteen-bit format which is
+
+729
+01:00:42,719 --> 01:00:45,719
+essentially we have a 32 bit floating be
+lopped off to buy to me
+
+730
+01:00:47,429 --> 01:00:55,889
+and you should kind of new stochastic
+public but we don't so sort of ok it's
+
+731
+01:00:55,889 --> 01:01:01,389
+just know if any concurred converted to
+32 bit on the other side by filling in
+
+732
+01:01:01,389 --> 01:01:15,098
+for it it's very sleepy roof friendly
+paper while still model and data
+
+733
+01:01:15,099 --> 01:01:19,500
+parallelism in conjunction bind really
+likes you train models quickly and
+
+734
+01:01:19,500 --> 01:01:24,639
+that's what this is all really about is
+being able to take a research idea try
+
+735
+01:01:24,639 --> 01:01:28,250
+it out on a large dataset is
+representative of a problem you care
+
+736
+01:01:28,250 --> 01:01:29,000
+about
+
+737
+01:01:29,000 --> 01:01:34,199
+figure out that work figure out the next
+set of experiments as it's pretty easy
+
+738
+01:01:34,199 --> 01:01:38,039
+to express intensive load the data
+profile somewhere not too happy with for
+
+739
+01:01:38,039 --> 01:01:44,889
+a synchronous parallelism but in general
+it's not too bad we have open source
+
+740
+01:01:44,889 --> 01:01:49,480
+center flow because we think that'll
+make it easier to share research writing
+
+741
+01:01:49,480 --> 01:01:56,338
+is we think you know having lots of
+people using the system outside of
+
+742
+01:01:56,338 --> 01:01:59,849
+Google was there is a good thing to
+improve it and bring ideas that we don't
+
+743
+01:01:59,849 --> 01:02:05,200
+necessarily how it makes it pretty easy
+to deploy machine learning systems into
+
+744
+01:02:05,199 --> 01:02:09,298
+real products because you can go from
+our research idea into something running
+
+745
+01:02:09,298 --> 01:02:13,059
+on a phone relatively easily the
+community of tens of users outside
+
+746
+01:02:13,059 --> 01:02:16,609
+Google is growing which is nice how
+they're doing all kinds of cool things I
+
+747
+01:02:16,608 --> 01:02:21,130
+picked a few random examples of things
+people have done that are posted and get
+
+748
+01:02:21,130 --> 01:02:28,769
+how this is one that's like Andre has
+this discontent at Daylesford runs in
+
+749
+01:02:28,769 --> 01:02:32,920
+your browser using javascript and one of
+the things he has a little game he's
+
+750
+01:02:32,920 --> 01:02:38,798
+reinforcement learning the yellow dot
+learns to get learns to eat the real
+
+751
+01:02:38,798 --> 01:02:42,769
+urgency the Green Dot to avoid the red
+dots so someone reimplemented that in
+
+752
+01:02:42,769 --> 01:02:47,059
+terms of flow and actually added orange
+dots are really bad
+
+753
+01:02:50,650 --> 01:02:54,550
+someone implemented this really nice
+paper from University of Tilburg in the
+
+754
+01:02:54,550 --> 01:02:59,590
+Max Planck Institute only be seen this
+work are you take an image a picture and
+
+755
+01:02:59,590 --> 01:03:05,269
+typically a painting and then renders
+that picture in the style of that paper
+
+756
+01:03:05,269 --> 01:03:14,820
+and you end up with the cool stuff like
+that bad you know there's a character
+
+757
+01:03:14,820 --> 01:03:19,550
+and model here outside the popular sort
+of higher-level library to make it
+
+758
+01:03:19,550 --> 01:03:25,640
+easier to express mail mats someone
+implemented the neural captioning model
+
+759
+01:03:25,639 --> 01:03:31,099
+in terms of low there's our effort
+underway to translated into Mandarin
+
+760
+01:03:31,099 --> 01:03:39,349
+cool great last thing I will talk about
+the brain residency programs we've
+
+761
+01:03:39,349 --> 01:03:44,349
+started this program a bit of an
+experiment this year and so this is more
+
+762
+01:03:44,349 --> 01:03:47,769
+as an FYI for next year cause or
+applications are closed rectory
+
+763
+01:03:47,769 --> 01:03:53,420
+selecting our final candidates this week
+and then the idea is the people will
+
+764
+01:03:53,420 --> 01:03:57,789
+spend a year in our group doing deep
+learning research and the hope is
+
+765
+01:03:57,789 --> 01:04:02,750
+they'll come out and have published a
+couple of papers on archiver submitted
+
+766
+01:04:02,750 --> 01:04:08,039
+to Companies is and learn a lot about
+doing sort of interesting machine
+
+767
+01:04:08,039 --> 01:04:16,170
+learning research and now we're looking
+for people for next year obviously about
+
+768
+01:04:16,170 --> 01:04:24,670
+our strong in you know anyone taking the
+class will reopen applications in the
+
+769
+01:04:24,670 --> 01:04:25,990
+fall
+
+770
+01:04:25,989 --> 01:04:34,439
+graduating like next year opportunity
+there you go there's a bunch more
+
+771
+01:04:34,440 --> 01:04:36,909
+reading there
+
+772
+01:04:36,909 --> 01:04:42,949
+start your cuz I did a lot of work in
+the white paper to make the whole set of
+
+773
+01:04:42,949 --> 01:04:52,169
+references clickable and then click your
+way through 250 other figures ok so I
+
+774
+01:04:52,170 --> 01:04:53,820
+have been done early
+
+775
+01:04:53,820 --> 01:04:56,820
+hundred and sixty-five
+
+776
+01:05:02,730 --> 01:05:31,599
+yes so those kind of things are actually
+tricky and we have an actually a pretty
+
+777
+01:05:31,599 --> 01:05:37,329
+extensive detailed process for things
+that are you know talking about you're
+
+778
+01:05:37,329 --> 01:05:43,119
+using a user's private data for these
+kinds of things so smart reply
+
+779
+01:05:43,119 --> 01:05:47,559
+essentially all the replies that word
+that it ever will generate are things
+
+780
+01:05:47,559 --> 01:05:52,710
+that have been said by thousands of
+users so the input to the model for
+
+781
+01:05:52,710 --> 01:05:57,380
+training is an email which is typically
+not about how the people at but the only
+
+782
+01:05:57,380 --> 01:06:02,480
+things will ever suggest are things that
+are generated in response by you know
+
+783
+01:06:02,480 --> 01:06:07,670
+suspicion number of unique users to
+protect the privacy of users that put
+
+784
+01:06:07,670 --> 01:06:10,710
+kind of things you're thinking about
+when designing products like cotton and
+
+785
+01:06:10,710 --> 01:06:16,400
+is actually a lot of Karen thought going
+into you know we think this will be a
+
+786
+01:06:16,400 --> 01:06:22,119
+great feature but how can we do this in
+a way that ensures the people's privacy
+
+787
+01:06:22,119 --> 01:06:25,119
+is protected
+
+788
+01:06:52,670 --> 01:07:30,108
+as much as we probably should have
+assured it's just kind of been one of
+
+789
+01:07:30,108 --> 01:07:32,548
+the things on the back burner compared
+to all the other things we've been
+
+790
+01:07:32,548 --> 01:07:37,679
+working on I do think the notion of
+specialists so I didn't talk about that
+
+791
+01:07:37,679 --> 01:07:42,489
+at all but essentially we had a model
+that was sort of arbitrary image that
+
+792
+01:07:42,489 --> 01:07:46,868
+classification model like JFT which is
+like seventeen thousand losses or
+
+793
+01:07:46,869 --> 01:07:51,220
+something it's an internal data that we
+trained a good general model that could
+
+794
+01:07:51,219 --> 01:07:57,539
+deal with all those classes and then we
+found interesting confuse computable
+
+795
+01:07:57,539 --> 01:08:01,719
+classes that are algorithmically like
+all the kinds of mushrooms in the world
+
+796
+01:08:01,719 --> 01:08:06,539
+and we were trained specialists on data
+set there were enriched ribbed only
+
+797
+01:08:06,539 --> 01:08:11,909
+mushroom data primarily and an
+occasional random images and we could
+
+798
+01:08:11,909 --> 01:08:16,179
+train fifty such models that reach good
+at different kinds of things and get
+
+799
+01:08:16,179 --> 01:08:24,440
+pretty significant accuracy increases at
+the time we we were able to distill it
+
+800
+01:08:24,439 --> 01:08:27,588
+into a single model pretty well we
+haven't really pursued that too much
+
+801
+01:08:27,588 --> 01:08:31,899
+turned out just the mechanics have been
+training fifty separate models and then
+
+802
+01:08:31,899 --> 01:08:34,899
+distilling them as a bit unwieldy
+
+803
+01:08:38,170 --> 01:09:20,630
+14 exploration and further research has
+as you say this clearly demonstrates
+
+804
+01:09:20,630 --> 01:09:25,920
+that we're i mean it's a different
+objectives were telling the model to do
+
+805
+01:09:25,920 --> 01:09:31,048
+right we're telling it to use this hard
+label or use this hard label and also
+
+806
+01:09:31,048 --> 01:09:36,189
+get this incredibly rich gradient which
+says like here's a hundred other signals
+
+807
+01:09:36,189 --> 01:09:41,379
+information so in some sense an unfair
+comparison right you're telling it a lot
+
+808
+01:09:41,380 --> 01:09:46,829
+more stuff about every example my case
+so sometimes it's not so much an
+
+809
+01:09:46,829 --> 01:09:49,119
+operation feeling it's maybe we should
+be Fig
+
+810
+01:09:49,119 --> 01:09:53,960
+figuring out how to feed preacher
+signals than just a single binary label
+
+811
+01:09:53,960 --> 01:09:59,569
+to our models I think that's probably an
+interesting area to pursue I we thought
+
+812
+01:09:59,569 --> 01:10:05,349
+about ideas of having a big ensemble of
+models all training collectively and
+
+813
+01:10:05,350 --> 01:10:08,449
+sort of exchanging information in the
+form of their predictions are rather
+
+814
+01:10:08,448 --> 01:10:12,779
+than in their parameters as I might be
+much cheaper more network friendly way
+
+815
+01:10:12,779 --> 01:10:19,099
+of of collaboratively training on a
+really big did you train and 1% of the
+
+816
+01:10:19,100 --> 01:10:22,100
+day or something and swap predictions
+
+817
+01:10:39,729 --> 01:10:49,779
+yeah I mean I think all these kind of
+radios are worth pursuing the captioning
+
+818
+01:10:49,779 --> 01:10:55,039
+workers interesting but it tends to you
+tend to have many fewer labels with
+
+819
+01:10:55,039 --> 01:11:02,550
+captions then we have images with sort
+of hard labels like Jeter Jaguar at
+
+820
+01:11:02,550 --> 01:11:06,810
+least that are prepared in a clean way I
+think actually I'm aware there's a lot
+
+821
+01:11:06,810 --> 01:11:11,539
+of images with sentences written about
+in the trick is identifying which
+
+822
+01:11:11,539 --> 01:11:26,430
+sentences about which image problem some
+problems you know you don't need to
+
+823
+01:11:26,430 --> 01:11:29,510
+really train on mine like speech
+recognition is a good example it's not
+
+824
+01:11:29,510 --> 01:11:35,670
+like human vocal cords change that often
+the words you say change a little bit so
+
+825
+01:11:35,670 --> 01:11:38,670
+we redistributions tend to be not very
+stationary
+
+826
+01:11:39,640 --> 01:11:45,460
+like the words everyone collectively
+says tomorrow are pretty similar to ones
+
+827
+01:11:45,460 --> 01:11:50,640
+they say today but subtly different like
+Long Island Chocolate Festival might
+
+828
+01:11:50,640 --> 01:11:55,220
+suddenly become more and more prominent
+over the next two weeks and those kinds
+
+829
+01:11:55,220 --> 01:11:58,930
+of things you know you need to be
+cognizant of the fact that you want to
+
+830
+01:11:58,930 --> 01:12:03,079
+capture those kinds of effects and one
+of the ways to do it is to train your
+
+831
+01:12:03,079 --> 01:12:07,380
+model and a minor sometime he doesn't
+need to be so online but you like
+
+832
+01:12:07,380 --> 01:12:10,770
+getting an example and immediately
+update your model but you know the
+
+833
+01:12:10,770 --> 01:12:16,180
+pentium problem every five minutes or
+ten minutes or hour or day is sufficient
+
+834
+01:12:16,180 --> 01:12:23,940
+for most problems but it is pretty
+important to do that for non-stationary
+
+835
+01:12:23,939 --> 01:12:28,949
+problems like ads or search queries or
+things that change over time like that
+
+836
+01:12:28,949 --> 01:12:33,738
+right
+
+837
+01:12:33,738 --> 01:12:42,428
+the third most important I can't say yes
+
+838
+01:12:45,819 --> 01:12:57,170
+yeah I mean noise in training datasets
+actually happens all the time greats
+
+839
+01:12:57,170 --> 01:13:01,340
+like even if you look at the image that
+examples occasionally you'll come across
+
+840
+01:13:01,340 --> 01:13:02,328
+one in your life
+
+841
+01:13:02,328 --> 01:13:06,670
+actually I was just sitting in a meeting
+with some people who are working on
+
+842
+01:13:06,670 --> 01:13:10,929
+visualization techniques and one of the
+things that were visualizing was see far
+
+843
+01:13:10,929 --> 01:13:14,779
+input data and they had this kind of
+core presentation of all the C four
+
+844
+01:13:14,779 --> 01:13:18,920
+examples all mapped onto like
+four-by-four pixels each one month on
+
+845
+01:13:18,920 --> 01:13:22,819
+their screen for sixty thousand images
+and Mike you could kind of pick things
+
+846
+01:13:22,819 --> 01:13:28,219
+out and select them toward and here's
+one that liked the model predicted with
+
+847
+01:13:28,219 --> 01:13:33,948
+high confidence but it got wrong and it
+said her plane as the model that
+
+848
+01:13:33,948 --> 01:13:40,518
+airplane and you look at the image and
+it's an airplane and the label is not
+
+849
+01:13:40,519 --> 01:13:49,690
+heavily you like I understand why I
+gotta run so it's you know you want to
+
+850
+01:13:49,689 --> 01:13:53,288
+make sure your dataset is as clean as
+possible cuz training and noisy data is
+
+851
+01:13:53,288 --> 01:13:56,488
+generally not as good as
+
+852
+01:13:56,488 --> 01:14:00,819
+cleaned it out but on the other hand
+expending too much effort to clean that
+
+853
+01:14:00,819 --> 01:14:06,969
+it is often more more effort than its
+worth to kind of do some filtering kinds
+
+854
+01:14:06,969 --> 01:14:12,788
+of things you don't throw out the
+obvious bad stuff and generally more
+
+855
+01:14:12,788 --> 01:14:15,788
+noisy data is often better than less
+clean it up
+
+856
+01:14:18,739 --> 01:14:28,649
+depends on the problem but only about
+one thing to try and then if you're
+
+857
+01:14:28,649 --> 01:14:34,159
+unhappy with the result then investigate
+why the question
+
+858
+01:14:34,159 --> 01:14:39,210
+okay thank you
+
