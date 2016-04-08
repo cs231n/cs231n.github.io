@@ -1,199 +1,198 @@
-﻿1
+1
 00:00:00,000 --> 00:00:03,899
-there's more seats on the side
+There's more seats on the side.
 
 2
 00:00:03,899 --> 00:00:19,868
-people are walking in late so just to
-make sure you're in cs2 31 and deep
+people are walking in late.
+So, just to make sure you're in cs231n
 
 3
 00:00:19,868 --> 00:00:23,969
-learning on your network class for
-visual recognition any money in the
+Deep Learning Neural network class for
+visual recognition.
 
 4
 00:00:23,969 --> 00:00:33,549
-wrong class good I so welcome and happy
-new year happy first day of winter break
+Anybody in the wrong class? OK, good.
+Alright. So, welcome and happy new year, happy first day of the winter break.
 
 5
 00:00:33,549 --> 00:00:41,069
-so the classiest 231 and this is the
-second offering of this class when we
+So, this class CS231n.
+This is the second offering of this class
 
 6
 00:00:41,070 --> 00:00:48,738
-have literally doubled our enrollment
-from 480 people last time we offered to
+when we have literally doubled our enrollment
+from 180 people last time we offered to
 
 7
 00:00:48,738 --> 00:00:55,939
-about 350 of you sign up a couple of
-words to to to make us all legally
+about 350 of you signed up.
+Just a couple of words to make us all legally
 
 8
 00:00:55,939 --> 00:01:02,570
-covered way our video recording this
-class so you know if you're
+covered, we are video recording this class.
+So, you know if you're
 
 9
 00:01:02,570 --> 00:01:10,680
 uncomfortable about this for today just
-go behind that camera or go to the
+go behind that camera or go to the corner that
 
 10
 00:01:10,680 --> 00:01:18,280
-cameras litter but we are going to send
+camera's not gonna turn, but we are going to send
 out forms for you to fill out in terms
 
 11
 00:01:18,280 --> 00:01:25,228
-of allowing video recording so that's
-that's just one bit of housekeeping so
+of allowing video recording.
+So, that's just one bit of housekeeping.
 
 12
 00:01:25,228 --> 00:01:32,200
-alright when they fail him a professor
-at the computer science department so
+So, alright. My name is Fei-Fei Li, a professor
+at the computer science department.
 
 13
 00:01:32,200 --> 00:01:37,960
-this class and co-teaching with through
+So, this class, I'm co-teaching with two
 senior graduate students and one of them
 
 14
-00:01:37,959 --> 00:01:45,839
-is areas under a profit greatly we have
-what I don't think Andre needs too much
+00:01:37,961 --> 00:01:45,839
+is here. He's Andre Karpathy. Andre can you just say hi to everybody?
+We have.. I don't think Andre needs too much
 
 15
 00:01:45,840 --> 00:01:48,659
-introduction all of you know his work
+introduction. A lot of you probably know his work,
 
 16
 00:01:48,659 --> 00:01:53,960
-follow his blog his Twitter follower
+follow his blog, his Twitter follower.
 
 17
-00:01:53,959 --> 00:02:02,509
-under has way more followers than I do
-very popular Justin Johnson is still
+00:01:53,961 --> 00:02:02,509
+Andre has way more followers than I do.
+So, he's very popular. And also Justin Johnson who is still
 
 18
 00:02:02,510 --> 00:02:08,200
 traveling internationally but will be
-back in a few days so andre land just so
+back in a few days. So, Andre and Justin
 
 19
-00:02:08,199 --> 00:02:14,509
-we'll be picking up the bulk of the
-lecture teaching today I'll be giving
+00:02:08,201 --> 00:02:14,509
+will be picking up the bulk of the
+lecture teaching, and today I'll be giving
 
 20
 00:02:14,509 --> 00:02:20,039
-her structure but as you probably can
-see that I'm expecting the newborn ratio
+a first lecture but as you probably can
+see that I'm expecting a newborn very soon,
 
 21
 00:02:20,039 --> 00:02:28,239
-speaking of weeks so you'll see more of
-undrained Justin in lecture time we will
+speaking of weeks, so you'll see more of
+Andre and Justin in lecture time. We will
 
 22
 00:02:28,239 --> 00:02:34,189
-also introduce a whole team of TACE
-towards the end of this lecture again
+also introduce a whole team of TAs
+towards the end of this lecture.
 
 23
 00:02:34,189 --> 00:02:38,959
-people who are looking for seats you go
-out of that before and come back there's
+Again, people who are looking for seats you go
+out of that door and come back. There's
 
 24
 00:02:38,959 --> 00:02:47,039
-a whole bunch of seats on the side so so
-this for this lecture we're going to
+a whole bunch of seats on the side.
+So, for this lecture, we're going to
 
 25
 00:02:47,039 --> 00:02:53,519
-give the introduction of the class what
-kind of problems we work on and the
+give the introduction of the class,
+what kind of problems we work on and the
 
 26
 00:02:53,519 --> 00:03:03,530
-tools will be learning so again welcome
-to see us 231 and this is a vision in
+tools will be learning. So, again, welcome
+to CS231n. This is a vision class.
 
 27
 00:03:03,530 --> 00:03:09,140
-class it's based on a very specific
-modeling architecture called your
+It's based on a very specific
+modeling architecture called neural network
 
 28
-00:03:09,139 --> 00:03:16,000
-network and the more specifically mostly
-a convolution on your network and a lot
+00:03:09,141 --> 00:03:16,000
+and the more specifically, mostly
+on the Convolutional Neural Network
 
 29
 00:03:16,000 --> 00:03:23,799
-of you hear this term maybe through a
-popular Press article we we or or or
+and a lot of you hear this term, maybe through a
+popular press article or
 
 30
 00:03:23,799 --> 00:03:34,239
-coverage we've had to call this the deep
-learning network growing field of
+coverage we tend to call this the deep
+learning network. Vision is one of the fastest growing field of
 
 31
 00:03:34,239 --> 00:03:40,920
-artificial intelligence in fact the
-school has estimated and and we are
+artificial intelligence.
+In fact, CISCO has estimated it and we are
 
 32
-00:03:40,919 --> 00:03:50,018
-underway for of this by 2016 which we
+00:03:40,921 --> 00:03:50,018
+day 4 of this by 2016 which we
 already have arrived more than 85% of
 
 33
 00:03:50,019 --> 00:03:56,230
-the internet cyberspace data is in the
-form of pixels
+the Internet cyberspace data is in the form of pixels
 
 34
-00:03:56,229 --> 00:04:05,329
-or what they call multimedia so so we
-basically have entered an age of vision
+00:03:56,231 --> 00:04:05,329
+or what they call Multimedia.
+So, we basically have entered at age of vision
 
 35
 00:04:05,330 --> 00:04:12,530
-of images and video calls why why is
-this so while partly to a large extent
+of images and videos.
+Why is this so, well partially to a large extent
 
 36
 00:04:12,530 --> 00:04:20,858
-is speakers of the explosion of both the
+is because of the explosion of both the
 Internet as a carrier of data as well as
 
 37
 00:04:20,858 --> 00:04:25,930
-answers we have more sensors that the
-number of people on Thurs these days
+sensors. We have more sensors than the
+number of people on the Earth these days.
 
 38
 00:04:25,930 --> 00:04:32,000
-every one of you is carrying some kind
-of smart phones digital cameras and and
+Every one of you is carrying some kind
+of smart phones, digital cameras and
 
 39
 00:04:32,000 --> 00:04:37,879
-and and you know cars around on the
-street with cameras so so the soldiers
+you know, cars running on the
+street with cameras. So, the sensors
 
 40
 00:04:37,879 --> 00:04:46,500
 have really enabled the explosion of
-visual data on the internet but visual
+visual data on the Internet but visual
 
 41
 00:04:46,500 --> 00:04:55,209
@@ -202,47 +201,46 @@ data to harness so if you have heard my
 
 42
 00:04:55,209 --> 00:05:07,810
-previous talks and and some other parks
-by the dark matter of the Internet
+previous talks and some other talks
+by Computer Vision professors, we call this the dark matter of the Internet
 
 43
 00:05:07,810 --> 00:05:13,879
-why is this the dark matter just like
-the universe is closest to 85% dark
+why is this the dark matter? Just like
+the universe consist of to 85% dark
 
 44
 00:05:13,879 --> 00:05:19,409
-matter dark energy is these matters that
-energy that is very hard to observe week
+matter. Dark energy is these matters that
+energy that is very hard to observe.
 
 45
 00:05:19,410 --> 00:05:25,919
-and weekend by mathematical models in
-the universe internet these are the
+we can infer it by mathematical models in
+the universe. On the Internet these are the
 
 46
-00:05:25,918 --> 00:05:30,649
+00:05:25,920 --> 00:05:30,649
 matters pixel data the other data that
 we don't know we have a hard time
 
 47
 00:05:30,649 --> 00:05:36,239
-grasping the continent's here's one very
-very simple suspects for you to consider
+grasping the contents here's one very
+very simple aspects for you to consider
 
 48
 00:05:36,240 --> 00:05:39,090
 so today
 
 49
-00:05:39,089 --> 00:05:49,560
+00:05:39,091 --> 00:05:49,560
 YouTube servers every 60 seconds we'll
-have more than $150 of videos uploaded
+have more than 150 hours of videos uploaded
 
 50
 00:05:49,560 --> 00:05:54,089
-onto YouTube servers for every 60
-seconds
+onto YouTube servers for every 60 seconds
 
 51
 00:05:54,089 --> 00:06:02,739
