@@ -38,24 +38,24 @@ CNN은 입력이 이미지로 이뤄져 있다는 특징을 살려 좀 더 합�
 <div class="fig figcenter fighighlight">
   <img src="{{site.baseurl}}/assets/nn1/neural_net2.jpeg" width="40%">
   <img src="{{site.baseurl}}/assets/cnn/cnn.jpeg" width="48%" style="border-left: 1px solid black;">
-  <div class="figcaption">Left: A regular 3-layer Neural Network. Right: A ConvNet arranges its neurons in three dimensions (width, height, depth), as visualized in one of the layers. Every layer of a ConvNet transforms the 3D input volume to a 3D output volume of neuron activations. In this example, the red input layer holds the image, so its width and height would be the dimensions of the image, and the depth would be 3 (Red, Green, Blue channels).</div>
+  <div class="figcaption">좌: 일반 3-레이어 신경망. 우: 그림과 같이 CNN은 뉴런들을 3차원으로 배치한다. CNN의 모든 레이어는 3차원 입력 볼륨을 3차원 출력 볼륨으로 변환 (transform) 시킨다. 이 예제에서 붉은 색으로 나타난 입력 레이어는 이미지를 입력으로 받으므로, 이 레이어의 가로/세로/채널은 각각 이미지의 가로/세로/3(Red,Green,Blue) 이다.</div>
 </div>
 
-> A ConvNet is made up of Layers. Every Layer has a simple API: It transforms an input 3D volume to an output 3D volume with some differentiable function that may or may not have parameters.
+> CNN은 여러 레이어로 이루어져 있다. 각각의 레이어는 3차원의 볼륨을 입력으로 받고 미분 가능한 함수를 거쳐 3차원의 볼륨을 출력하는  간단한 기능을 한다.
 
 <a name='layers'></a>
 
-### Layers used to build ConvNets
+### CNN을 이루는 레이어들
 
-As we described above, every layer of a ConvNet transforms one volume of activations to another through a differentiable function. We use three main types of layers to build ConvNet architectures: **Convolutional Layer**, **Pooling Layer**, and **Fully-Connected Layer** (exactly as seen in regular Neural Networks). We will stack these layers to form a full ConvNet **architecture**.
+위에서 다룬 것과 같이, CNN의 각 레이어는 미분 가능한 변환 함수를 통해 하나의 액티베이션 볼륨을 또다른 액티베이션 볼륨으로 변환 (transform) 시킨다. CNN 아키텍쳐에서는 크게 컨볼루셔널 레이어, 풀링 레이어, Fully-connected 레이어라는 3개 종류의 레이어가 사용된다. 전체 CNN 아키텍쳐는 이 3 종류의 레이어들을 쌓아 만들어진다.
 
-*Example Architecture: Overview*. We will go into more details below, but a simple ConvNet for CIFAR-10 classification could have the architecture [INPUT - CONV - RELU - POOL - FC]. In more detail:
+*예제: 아래에서 더 자세하게 배우겠지만, CIFAR-10 데이터를 다루기 위한 간단한 CNN은 [INPUT-CONV-RELU-POOL-FC]로 구축할 수 있다.
 
-- INPUT [32x32x3] will hold the raw pixel values of the image, in this case an image of width 32, height 32, and with three color channels R,G,B.
-- CONV layer will compute the output of neurons that are connected to local regions in the input, each computing a dot product between their weights and the region they are connected to in the input volume. This may result in volume such as [32x32x12].
-- RELU layer will apply an elementwise activation function, such as the $$max(0,x)$$ thresholding at zero. This leaves the size of the volume unchanged ([32x32x12]).
-- POOL layer will perform a downsampling operation along the spatial dimensions (width, height), resulting in volume such as [16x16x12].
-- FC (i.e. fully-connected) layer will compute the class scores, resulting in volume of size [1x1x10], where each of the 10 numbers correspond to a class score, such as among the 10 categories of CIFAR-10. As with ordinary Neural Networks and as the name implies, each neuron in this layer will be connected to all the numbers in the previous volume.
+- INPUT 입력 이미지가 가로32, 세로32, 그리고 RGB 채널을 가지는 경우 입력의 크기는 [32x32x3].
+- CONV 레이어는 입력 이미지의 일부 영역과 연결되어 있으며, 이 연결된 영역과 자신의 가중치의 내적 연산 (dot product) 을 계산하게 된다. 결과 볼륨은 [32x32x12]와 같은 크기를 갖게 된다.
+- RELU 레이어는 max(0,x)와 같이 각 요소에 적용되는 액티베이션 함수 (activation function)이다. 이 레이어는 볼륨의 크기를 변화시키지 않는다 ([32x32x12])
+- POOL 레이어는 (가로,세로) 차원에 대해 다운샘플링 (downsampling)을 수행해 [16x16x12]와 같이 줄어든 볼륨을 출력한다.
+- FC (fully-connected) 레이어는 클래스 점수들을 계산해 [1x1x10]의 크기를 갖는 볼륨을 출력한다. 10개 숫자들은 10개 카테고리에 대한 클래스 점수에 해당한다. 레이어의 이름에서 유추 가능하듯, 이 레이어는 이전 볼륨의 모든 요소와 연결되어 있다.
 
 In this way, ConvNets transform the original image layer by layer from the original pixel values to the final class scores. Note that some layers contain parameters and other don't. In particular, the CONV/FC layers perform transformations that are a function of not only the activations in the input volume, but also of the parameters (the weights and biases of the neurons). On the other hand, the RELU/POOL layers will implement a fixed function. The parameters in the CONV/FC layers will be trained with gradient descent so that the class scores that the ConvNet computes are consistent with the labels in the training set for each image.
 
