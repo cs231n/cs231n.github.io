@@ -47,11 +47,11 @@ $$
   <img src="{{site.baseurl}}/assets/svm_one.jpg">
   <img src="{{site.baseurl}}/assets/svm_all.jpg">
   <div class="figcaption">
-    멀티클래스Loss function landscape for the Multiclass SVM (without regularization) for one single example (left,middle) and for a hundred examples (right) in CIFAR-10. Left: one-dimensional loss by only varying <b>a</b>. Middle, Right: two-dimensional loss slice, Blue = low loss, Red = high loss. Notice the piecewise-linear structure of the loss function. The losses for multiple examples are combined with average, so the bowl shape on the right is the average of many piece-wise linear bowls (such as the one in the middle).
+    Regularization 없는 멀티클래스 SVM의 손실함수(Loss function)의 지형을 CIFAR-10 데이타의 1개의 예시(왼쪽, 가운데)와 여러 개의 예시(오른쪽)에 적용시켜 그려본 그림들. 왼쪽: 여러 <b>a</b>값에 따른 1차원 손실(loss) 곡선. 가운데, 오른쪽: 2차원 손실(loss) 평면, 파란색은 낮은 손실(loss)를 뜻하고, 빨간색은 높은 손실(=loss)를 뜻한다. 손실함수(Loss function)가 부분적으로 선형(piecewise linear)인 것이 특징이다. 특히, 오른쪽 그림은 여러 예시를 통해 구한 손실(loss)들을 평균낸 것인데, 밥공기 모양인 것이 특징이다. 이는 가운데 그림 같은 각진 모양의 밥공기 여러 개를 평균낸 모양인 셈이다.
   </div>
 </div>
 
-We can explain the piecewise-linear structure of the loss function by examing the math. For a single example we have:
+부분적으로 선형(piecewise linear)은 손실함수(Loss function)의 구조를 수식을 통해 설명할 수 있다. 예시가 하나인 경우에 다음과 같이 쓸 수 있다.
 
 $$
 L_i = \sum_{j\neq y_i} \left[ \max(0, w_j^Tx_i - w_{y_i}^Tx_i + 1) \right]
