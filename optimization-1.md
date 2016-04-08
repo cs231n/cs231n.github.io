@@ -14,7 +14,7 @@ Table of Contents:
 - [그라디언트(Gradient) 계산](#gradcompute)
   - [Finite Differences를 이용한 수치적인 방법](#numerical)
   - [미분을 이용한 해석적인 방법](#analytic)
-- [그라디언트(Gradient) 하강(Descent)](#gd)
+- [그라디언트 하강(Gradient Descent)](#gd)
 - [요약](#summary)
 
 <a name='intro'></a>
@@ -24,7 +24,7 @@ Table of Contents:
 이전 섹션에서 이미지 분류(image classification)을 할 때에 있어 두 가지의 핵심요쇼를 소개했습니다.
 
 1. 원 이미지의 픽셀들을 넣으면 분류 스코어(class score)를 계산해주는 모수화된(parameterized) **스코어 함수(score function)** (예를 들어,  선형 함수).
-2. 학습(training) 데이타에 어떤 특정 모수(parameter)들을 가지고 스코어 함수(score function)를 적용시켰을 때, 실제 class와 얼마나 잘 일치하는지에 따라 그 특정 모수(parameter)들의 질을 측정하는 **손실 함수(loss function)**. 여러 종류의 손실함수(예를 들어, Softmax/SVM)가 있다.
+2. 학습(training) 데이타에 어떤 특정 모수(parameter/weight)들을 가지고 스코어 함수(score function)를 적용시켰을 때, 실제 class와 얼마나 잘 일치하는지에 따라 그 특정 모수(parameter/weight)들의 질을 측정하는 **손실 함수(loss function)**. 여러 종류의 손실함수(예를 들어, Softmax/SVM)가 있다.
 
 구체적으로 말하자면, 다음과 같은 형식을 가진 선형함수 $f(x_i, W) =  W x_i $를 스코어 함수(score function)로 쓸 때,  지난 번에 다룬 바와 같이 SVM은 다음과 같은 수식으로 표현할 수 있다.:
 
@@ -32,22 +32,22 @@ $$
 L = \frac{1}{N} \sum_i \sum_{j\neq y_i} \left[ \max(0, f(x_i; W)_j - f(x_i; W)_{y_i} + 1) \right] + \alpha R(W)
 $$
 
-예시 $x_i$에 대한 예측값이 실제 값(레이블, labels) $y_i$과 같도록 설정된 모수(parameter) $W$는 손실(loss)값 $L$ 또한 매우 낮게 나온다는 것을 알아보았다. 이제 세번째이자 마지막 핵심요소인 **최적화(optimization)**에 대해서 알아보자. 최적화(optimization)는 손실함수(loss function)을 최소화시카는 모수(parameter, $W$)들을 찾는 과정을 뜻한다.
+예시 $x_i$에 대한 예측값이 실제 값(레이블, labels) $y_i$과 같도록 설정된 모수(parameter/weight) $W$는 손실(loss)값 $L$ 또한 매우 낮게 나온다는 것을 알아보았다. 이제 세번째이자 마지막 핵심요소인 **최적화(optimization)**에 대해서 알아보자. 최적화(optimization)는 손실함수(loss function)을 최소화시카는 모수(parameter/weight, $W$)들을 찾는 과정을 뜻한다.
 
 **예고:** 이 세 가지 핵심요소가 어떻게 상호작용하는지 이해한 후에는, 첫번째 요소(모수화된 함수)로 다시 돌아가서 선형함수보다 더 복잡한 형태로 확장시켜볼 것이다.  처음엔 신경망(Neural Networks), 다음엔 컨볼루션 신경망(Convolutional Neural Networks). 손실함수(loss function)와 최적화(optimization) 과정은 거의 변화가 없을 것이다..
 
 <a name='vis'></a>
 
-### Visualizing the loss function
+### 손실함수(loss function)의 시각화
 
-The loss functions we'll look at in this class are usually defined over very high-dimensional spaces (e.g. in CIFAR-10 a linear classifier weight matrix is of size [10 x 3073] for a total of 30,730 parameters), making them difficult to visualize. However, we can still gain some intuitions about one by slicing through the high-dimensional space along rays (1 dimension), or along planes (2 dimensions). For example, we can generate a random weight matrix $W$ (which corresponds to a single point in the space), then march along a ray and record the loss function value along the way. That is, we can generate a random direction $W_1$ and compute the loss along this direction by evaluating $L(W + a W_1)$ for different values of $a$. This process generates a simple plot with the value of $a$ as the x-axis and the value of the loss function as the y-axis. We can also carry out the same procedure with two dimensions by evaluating the loss $ L(W + a W_1 + b W_2) $ as we vary $a, b$. In a plot, $a, b$ could then correspond to the x-axis and the y-axis, and the value of the loss function can be visualized with a color:
+이 강의에서 우리가 다루는 손실함수(loss function)들은 대체로 고차원 공간에서 정의된다. 예를 들어, CIFAR-10의 선형분류기(linear classifier)의 경우 모수(parameter/weight) 행렬은 크기가 [10 x 3073]이고 총 30,730개의 모수(parameter/weight)가 있다. 따라서, 시각화하기가 어려운 면이 있다. 하지만, 고차원 공간을 1차원 직선이나 2차원 평면으로 잘라서 보면 약간의 직관을 얻을 수 있다. 예를 들어, 무작위로 모수(parameter/weight) 행렬 $W$을 하나 뽑는다고 가정해보자. (이는 사실 고차원 공간의 한 점인 셈이다.) 이제 이 점을 직선 하나를 따라 이동시키면서 손실함수(loss function)를 기록해보자. 즉, 무작위로 뽑은 방향 $W_1$을 잡고, 이 방향을 따라 가면서 손실함수(loss function)를 계산하는데, 구체적으로 말하면 $L(W + a W_1)$에 여러 개의 $a$ 값(역자 주: 1차원 스칼라)을 넣어 계산해보는 것이다. 이 과정을 통해 우리는 $a$ 값을 x축, 손실함수(loss function) 값을 y축에 놓고 간단한 그래프를 그릴 수 있다. 또한 이 비슷한 것을 2차원으로도 할 수 있다. 여러 $a, b$값에 따라  $ L(W + a W_1 + b W_2) $을 계산하고(역자 주: $W_2$ 역시 $W_1$과 같은 식으로 뽑은 무작위 방향), $a, b$는 각각 x축과 y축에, 손실함수(loss function) 값 색을 이용해 그리면 된다.
 
 <div class="fig figcenter fighighlight">
   <img src="{{site.baseurl}}/assets/svm1d.png">
   <img src="{{site.baseurl}}/assets/svm_one.jpg">
   <img src="{{site.baseurl}}/assets/svm_all.jpg">
   <div class="figcaption">
-    Loss function landscape for the Multiclass SVM (without regularization) for one single example (left,middle) and for a hundred examples (right) in CIFAR-10. Left: one-dimensional loss by only varying <b>a</b>. Middle, Right: two-dimensional loss slice, Blue = low loss, Red = high loss. Notice the piecewise-linear structure of the loss function. The losses for multiple examples are combined with average, so the bowl shape on the right is the average of many piece-wise linear bowls (such as the one in the middle).
+    멀티클래스Loss function landscape for the Multiclass SVM (without regularization) for one single example (left,middle) and for a hundred examples (right) in CIFAR-10. Left: one-dimensional loss by only varying <b>a</b>. Middle, Right: two-dimensional loss slice, Blue = low loss, Red = high loss. Notice the piecewise-linear structure of the loss function. The losses for multiple examples are combined with average, so the bowl shape on the right is the average of many piece-wise linear bowls (such as the one in the middle).
   </div>
 </div>
 
