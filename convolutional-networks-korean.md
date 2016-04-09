@@ -57,30 +57,30 @@ CNN은 입력이 이미지로 이뤄져 있다는 특징을 살려 좀 더 합�
 - POOL 레이어는 (가로,세로) 차원에 대해 다운샘플링 (downsampling)을 수행해 [16x16x12]와 같이 줄어든 볼륨을 출력한다.
 - FC (fully-connected) 레이어는 클래스 점수들을 계산해 [1x1x10]의 크기를 갖는 볼륨을 출력한다. 10개 숫자들은 10개 카테고리에 대한 클래스 점수에 해당한다. 레이어의 이름에서 유추 가능하듯, 이 레이어는 이전 볼륨의 모든 요소와 연결되어 있다.
 
-In this way, ConvNets transform the original image layer by layer from the original pixel values to the final class scores. Note that some layers contain parameters and other don't. In particular, the CONV/FC layers perform transformations that are a function of not only the activations in the input volume, but also of the parameters (the weights and biases of the neurons). On the other hand, the RELU/POOL layers will implement a fixed function. The parameters in the CONV/FC layers will be trained with gradient descent so that the class scores that the ConvNet computes are consistent with the labels in the training set for each image.
+이와 같이, CNN은 픽셀 값으로 이뤄진 원본 이미지를 각 레이어를 거치며 클래스 점수로 변환 (transform) 시킨다. 한 가지 기억할 것은, 어떤 레이어는 모수 (parameter)를 갖지만 어떤 레이어는 모수를 갖지 않는다는 것이다. 특히 CONV/FC 레이어들은 단순히 입력 볼륨만이 아니라 가중치(weight)와 바이어스(bias) 또한 포함하는 액티베이션(activation) 함수이다. 반면 RELU/POOL 레이어들은 고정된 함수이다. CONV/FC 레이어의 모수 (parameter)들은 각 이미지에 대한 클래스 점수가 해당 이미지의 레이블과 같아지도록 그라디언트 디센트 (gradient descent)로 학습된다.
 
-In summary:
+요약해보면:
 
-- A ConvNet architecture is a list of Layers that transform the image volume into an output volume (e.g. holding the class scores)
-- There are a few distinct types of Layers (e.g. CONV/FC/RELU/POOL are by far the most popular)
-- Each Layer accepts an input 3D volume and transforms it to an output 3D volume through a differentiable function
-- Each Layer may or may not have parameters (e.g. CONV/FC do, RELU/POOL don't)
-- Each Layer may or may not have additional hyperparameters (e.g. CONV/FC/POOL do, RELU doesn't)
+- CNN 아키텍쳐는 여러 레이어를 통해 입력 이미지 볼륨을 출력 볼륨 ( 클래스 점수 )으로 변환시켜 준다.
+- CNN은 몇 가지 종류의 레이어로 구성되어 있다. CONV/FC/RELU/POOL 레이어가 현재 가장 많이 쓰인다.
+- 각 레이어는 3차원의 입력 볼륨을 미분 가능한 함수를 통해 3차원 출력 볼륨으로 변환시킨다.
+- 모수(parameter)가 있는 레이어도 있고 그렇지 않은 레이어도 있다 (FC/CONV는 모수를 갖고 있고, RELU/POOL 등은 모수가 없음).
+- 초모수 (hyperparameter)가 있는 레이어도 있고 그렇지 않은 레이어도 있다 (CONV/FC/POOL 레이어는 초모수를 가지며 RELU는 가지지 않음).
 
 <div class="fig figcenter fighighlight">
   <img src="{{site.baseurl}}/assets/cnn/convnet.jpeg" width="100%">
   <div class="figcaption">
-    The activations of an example ConvNet architecture. The initial volume stores the raw image pixels and the last volume stores the class scores. Each volume of activations along the processing path is shown as a column. Since it's difficult to visualize 3D volumes, we lay out each volume's slices in rows. The last layer volume holds the scores for each class, but here we only visualize the sorted top 5 scores, and print the labels of each one. The full <a href="http://cs231n.stanford.edu/">web-based demo</a> is shown in the header of our website. The architecture shown here is a tiny VGG Net, which we will discuss later.
+    CNN 아키텍쳐의 액티베이션 (activation) 예제. 첫 볼륨은 로우 이미지(raw image)를 다루며, 마지막 볼륨은 클래스 점수들을 출력한다. 입/출력 사이의 액티베이션들은 그림의 각 열에 나타나 있다. 3차원 볼륨을 시각적으로 나타내기가 어렵기 때문에 각 행마다 볼륨들의 일부만 나타냈다. 마지막 레이어는 모든 클래스에 대한 점수를 나타내지만 여기에서는 상위 5개 클래스에 대한 점수와 레이블만 표시했다. <a href="http://cs231n.stanford.edu/">전체 웹 데모</a>는 우리의 웹사이트 상단에 있다. 여기에서 사용된 아키텍쳐는 작은 VGG Net이다. 
   </div>
 </div>
 
-We now describe the individual layers and the details of their hyperparameters and their connectivities.
+이제 각각의 레이어에 대해 초모수(hyperparameter)나 연결성 (connectivity) 등의 세부 사항들을 알아보도록 하자.
 
 <a name='conv'></a>
 
-#### Convolutional Layer
+#### 컨볼루셔널 레이어 (이하 CONV)
 
-The Conv layer is the core building block of a Convolutional Network, and its output volume can be interpreted as holding neurons arranged in a 3D volume. We now discuss the details of the neuron connectivities, their arrangement in space, and their parameter sharing scheme.
+CONV 레이어는 CNN을 이루는 핵심 요소이다. CONV 레이어의 출력은 3차원으로 정렬된 뉴런들로 해석될 수 있다. 이제부터는 뉴런들의 연결성 (connectivity), 그들의 공간상의 배치, 그리고 모수 공유(parameter sharing) 에 대해 알아보자.
 
 **Overview and Intuition.** The CONV layer's parameters consist of a set of learnable filters. Every filter is small spatially (along width and height), but extends through the full depth of the input volume.  During the forward pass, we slide (more precisely, convolve) each filter across the width and height of the input volume, producing a 2-dimensional activation map of that filter. As we slide the filter, across the input, we are computing the dot product between the entries of the filter and the input. Intuitively, the network will learn filters that activate when they see some specific type of feature at some spatial position in the input. Stacking these activation maps for all filters along the depth dimension forms the full output volume. Every entry in the output volume can thus also be interpreted as an output of a neuron that looks at only a small region in the input and shares parameters with neurons in the same activation map (since these numbers all result from applying the same filter). We now dive into the details of this process.
 
