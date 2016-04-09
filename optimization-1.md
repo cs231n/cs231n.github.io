@@ -91,7 +91,7 @@ $$
 
 #### 전략 #1: 첫번째 매우 나쁜 방법: 무작위 탐색 (Random search)
 
-Since it is so simple to check how good a given set of parameters **W** is, the first (very bad) idea that may come to mind is to simply try out many different random weights and keep track of what works best. This procedure might look as follows:
+Since it is so simple to check how good a given set of parameters 주어진 모수(parameter/weight) **W**이 얼마나 좋은지를 측정하는 것은 매우 간단하기 때문에, 처음 떠오르는 (매우 나쁜) 생각은, 단순히 무작위로 모수(parameter/weight)을 골라서 넣어보고 넣어 본 값들 중 제일 좋은 값을 기록하는 것이다. 그 과정은 다음과 같다.
 
 ~~~python
 # assume X_train is the data where each column is an example (e.g. 3073 x 50,000)
@@ -118,7 +118,7 @@ for num in xrange(1000):
 # ... (trunctated: continues for 1000 lines)
 ~~~
 
-In the code above, we see that we tried out several random weight vectors **W**, and some of them work better than others. We can take the best weights **W** found by this search and try it out on the test set:
+위의 코드에서, 여러 개의 무작위 모수(parameter/weight) **W**를 넣어봤고, 그 중 몇몇은 다른 것들보다 좋았다. 그래서 그 중 제일 좋은 모수(parameter/weight) **W**을 테스트 데이터에 넣어보면 된다.
 
 ~~~python
 # Assume X_test is [3073 x 10000], Y_test [10000 x 1]
@@ -130,13 +130,13 @@ np.mean(Yte_predict == Yte)
 # returns 0.1555
 ~~~
 
-With the best **W** this gives an accuracy of about **15.5%**. Given that guessing classes completely at random achieves only 10%, that's not a very bad outcome for a such a brain-dead random search solution!
+이 방법으로 얻은 최선의 **W**는 정확도 **15.5%**이다. 완전 무작위 찍기가 단 10%의 정확도를 보이므로, 무식한 방법 치고는 그리 나쁜 것은 아니다.
 
-**Core idea: iterative refinement**. Of course, it turns out that we can do much better. The core idea is that finding the best set of weights **W** is a very difficult or even impossible problem (especially once **W** contains weights for entire complex neural networks), but the problem of refining a specific set of weights **W** to be slightly better is significantly less difficult. In other words, our approach will be to start with a random **W** and then iteratively refine it, making it slightly better each time.
+**핵심 아이디어: 반복적 향상**. 물론 이보다 더 좋은 방법들이 있다. 여기서 핵심 아이디어는, 최선의 모수(parameter/weight) **W**을 찾는 것은 매우 어렵거나 때로는 불가능한 문제(특히 복잡한 신경망(neural network) 전체를 구현할 경우)이지만, 어떤 주어진 모수(parameter/weight) **W**을 조금 개선시키는 일은 훨씬 덜 힘들다는 점이다. 다시 말해, 우리의 접근법은 무작위로 뽑은 **W**에서 출발해서 매번 조금씩 개선시키는 것을 반복하는 것이다.
 
-> Our strategy will be to start with random weights and iteratively refine them over time to get lower loss
+> 우리의 전략은 무작위로 뽑은 모수(parameter/weight)으로부터 시작해서 반복적으로 조금씩 개선시켜 손실(loss)을 낮추는 것이다.
 
-**Blindfolded hiker analogy.** One analogy that you may find helpful going forward is to think of yourself as hiking on a hilly terrain with a blindfold on, and trying to reach the bottom. In the example of CIFAR-10, the hills are 30,730-dimensional, since the dimensions of **W** are 3073 x 10. At every point on the hill we achieve a particular loss (the height of the terrain).
+**눈가리고 등산하는 것에 비유.** 앞으로 도움이 될만한 비유는, 경사진 지형에서 눈가리개를 하고 점점 아래로 내려오는 자기 자신을 생각해보는 것이다. CIFAR-10의 예시에서, 그 언덕들은 (**W**가 3073 x 10 차원이므로) 30,730차원이다. 언덕의 각 지점에는 특정 손실값(loss), 즉, 지형의 고도가 주어진다.
 
 <a name='opt2'></a>
 
