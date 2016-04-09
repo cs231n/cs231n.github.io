@@ -14,7 +14,7 @@ Table of Contents:
 - [그라디언트(Gradient) 계산](#gradcompute)
   - [Finite Differences를 이용한 수치적인 방법](#numerical)
   - [미분을 이용한 해석적인 방법](#analytic)
-- [그라디언트(Gradient) 하강(Descent)](#gd)
+- [그라디언트 하강(Gradient Descent)](#gd)
 - [요약](#summary)
 
 <a name='intro'></a>
@@ -24,7 +24,7 @@ Table of Contents:
 이전 섹션에서 이미지 분류(image classification)을 할 때에 있어 두 가지의 핵심요쇼를 소개했습니다.
 
 1. 원 이미지의 픽셀들을 넣으면 분류 스코어(class score)를 계산해주는 모수화된(parameterized) **스코어 함수(score function)** (예를 들어,  선형 함수).
-2. 학습(training) 데이타에 어떤 특정 모수(parameter)들을 가지고 스코어 함수(score function)를 적용시켰을 때, 실제 class와 얼마나 잘 일치하는지에 따라 그 특정 모수(parameter)들의 질을 측정하는 **손실 함수(loss function)**. 여러 종류의 손실함수(예를 들어, Softmax/SVM)가 있다.
+2. 학습(training) 데이타에 어떤 특정 모수(parameter/weight)들을 가지고 스코어 함수(score function)를 적용시켰을 때, 실제 class와 얼마나 잘 일치하는지에 따라 그 특정 모수(parameter/weight)들의 질을 측정하는 **손실 함수(loss function)**. 여러 종류의 손실함수(예를 들어, Softmax/SVM)가 있다.
 
 구체적으로 말하자면, 다음과 같은 형식을 가진 선형함수 $f(x_i, W) =  W x_i $를 스코어 함수(score function)로 쓸 때,  지난 번에 다룬 바와 같이 SVM은 다음과 같은 수식으로 표현할 수 있다.:
 
@@ -32,32 +32,32 @@ $$
 L = \frac{1}{N} \sum_i \sum_{j\neq y_i} \left[ \max(0, f(x_i; W)_j - f(x_i; W)_{y_i} + 1) \right] + \alpha R(W)
 $$
 
-예시 $x_i$에 대한 예측값이 실제 값(레이블, labels) $y_i$과 같도록 설정된 모수(parameter) $W$는 손실(loss)값 $L$ 또한 매우 낮게 나온다는 것을 알아보았다. 이제 세번째이자 마지막 핵심요소인 **최적화(optimization)**에 대해서 알아보자. 최적화(optimization)는 손실함수(loss function)을 최소화시카는 모수(parameter, $W$)들을 찾는 과정을 뜻한다.
+예시 $x_i$에 대한 예측값이 실제 값(레이블, labels) $y_i$과 같도록 설정된 모수(parameter/weight) $W$는 손실(loss)값 $L$ 또한 매우 낮게 나온다는 것을 알아보았다. 이제 세번째이자 마지막 핵심요소인 **최적화(optimization)**에 대해서 알아보자. 최적화(optimization)는 손실함수(loss function)을 최소화시카는 모수(parameter/weight, $W$)들을 찾는 과정을 뜻한다.
 
 **예고:** 이 세 가지 핵심요소가 어떻게 상호작용하는지 이해한 후에는, 첫번째 요소(모수화된 함수)로 다시 돌아가서 선형함수보다 더 복잡한 형태로 확장시켜볼 것이다.  처음엔 신경망(Neural Networks), 다음엔 컨볼루션 신경망(Convolutional Neural Networks). 손실함수(loss function)와 최적화(optimization) 과정은 거의 변화가 없을 것이다..
 
 <a name='vis'></a>
 
-### Visualizing the loss function
+### 손실함수(loss function)의 시각화
 
-The loss functions we'll look at in this class are usually defined over very high-dimensional spaces (e.g. in CIFAR-10 a linear classifier weight matrix is of size [10 x 3073] for a total of 30,730 parameters), making them difficult to visualize. However, we can still gain some intuitions about one by slicing through the high-dimensional space along rays (1 dimension), or along planes (2 dimensions). For example, we can generate a random weight matrix $W$ (which corresponds to a single point in the space), then march along a ray and record the loss function value along the way. That is, we can generate a random direction $W_1$ and compute the loss along this direction by evaluating $L(W + a W_1)$ for different values of $a$. This process generates a simple plot with the value of $a$ as the x-axis and the value of the loss function as the y-axis. We can also carry out the same procedure with two dimensions by evaluating the loss $ L(W + a W_1 + b W_2) $ as we vary $a, b$. In a plot, $a, b$ could then correspond to the x-axis and the y-axis, and the value of the loss function can be visualized with a color:
+이 강의에서 우리가 다루는 손실함수(loss function)들은 대체로 고차원 공간에서 정의된다. 예를 들어, CIFAR-10의 선형분류기(linear classifier)의 경우 모수(parameter/weight) 행렬은 크기가 [10 x 3073]이고 총 30,730개의 모수(parameter/weight)가 있다. 따라서, 시각화하기가 어려운 면이 있다. 하지만, 고차원 공간을 1차원 직선이나 2차원 평면으로 잘라서 보면 약간의 직관을 얻을 수 있다. 예를 들어, 무작위로 모수(parameter/weight) 행렬 $W$을 하나 뽑는다고 가정해보자. (이는 사실 고차원 공간의 한 점인 셈이다.) 이제 이 점을 직선 하나를 따라 이동시키면서 손실함수(loss function)를 기록해보자. 즉, 무작위로 뽑은 방향 $W_1$을 잡고, 이 방향을 따라 가면서 손실함수(loss function)를 계산하는데, 구체적으로 말하면 $L(W + a W_1)$에 여러 개의 $a$ 값(역자 주: 1차원 스칼라)을 넣어 계산해보는 것이다. 이 과정을 통해 우리는 $a$ 값을 x축, 손실함수(loss function) 값을 y축에 놓고 간단한 그래프를 그릴 수 있다. 또한 이 비슷한 것을 2차원으로도 할 수 있다. 여러 $a, b$값에 따라  $ L(W + a W_1 + b W_2) $을 계산하고(역자 주: $W_2$ 역시 $W_1$과 같은 식으로 뽑은 무작위 방향), $a, b$는 각각 x축과 y축에, 손실함수(loss function) 값 색을 이용해 그리면 된다.
 
 <div class="fig figcenter fighighlight">
   <img src="{{site.baseurl}}/assets/svm1d.png">
   <img src="{{site.baseurl}}/assets/svm_one.jpg">
   <img src="{{site.baseurl}}/assets/svm_all.jpg">
   <div class="figcaption">
-    Loss function landscape for the Multiclass SVM (without regularization) for one single example (left,middle) and for a hundred examples (right) in CIFAR-10. Left: one-dimensional loss by only varying <b>a</b>. Middle, Right: two-dimensional loss slice, Blue = low loss, Red = high loss. Notice the piecewise-linear structure of the loss function. The losses for multiple examples are combined with average, so the bowl shape on the right is the average of many piece-wise linear bowls (such as the one in the middle).
+    Regularization 없는 멀티클래스 SVM의 손실함수(Loss function)의 지형을 CIFAR-10 데이타의 1개의 예시(왼쪽, 가운데)와 여러 개의 예시(오른쪽)에 적용시켜 그려본 그림들. 왼쪽: 여러 <b>a</b>값에 따른 1차원 손실(loss) 곡선. 가운데, 오른쪽: 2차원 손실(loss) 평면, 파란색은 낮은 손실(loss)를 뜻하고, 빨간색은 높은 손실(=loss)를 뜻한다. 손실함수(Loss function)가 부분적으로 선형(piecewise linear)인 것이 특징이다. 특히, 오른쪽 그림은 여러 예시를 통해 구한 손실(loss)들을 평균낸 것인데, 밥공기 모양인 것이 특징이다. 이는 가운데 그림 같은 각진 모양의 밥공기 여러 개를 평균낸 모양인 셈이다.
   </div>
 </div>
 
-We can explain the piecewise-linear structure of the loss function by examing the math. For a single example we have:
+부분적으로 선형(piecewise linear)은 손실함수(Loss function)의 구조를 수식을 통해 설명할 수 있다. 예시가 하나인 경우에 다음과 같이 쓸 수 있다.
 
 $$
 L_i = \sum_{j\neq y_i} \left[ \max(0, w_j^Tx_i - w_{y_i}^Tx_i + 1) \right]
 $$
 
-It is clear from the equation that the data loss for each example is a sum of (zero-thresholded due to the $\max(0,-)$ function) linear functions of $W$. Moreover, each row of $W$ (i.e. $w_j$) sometimes has a positive sign in front of it (when it corresponds to a wrong class for an example), and sometimes a negative sign (when it corresponds to the correct class for that example). To make this more explicit, consider a simple dataset that contains three 1-dimensional points and three classes. The full SVM loss (without regularization) becomes:
+수식에서 명백히 볼 수 있듯이, 각 예시의 손실(loss)값은 ($\max(0,-)$ 함수로 인해 0에서 막혀있는) $W$의 선형함수들의 합으로 표현된다. $W$의 각 행(즉, $w_j$) 앞에는 때때로 (잘못된 분류일 때, 즉, $j\neq y_i$인 경우) 플러스가 붙고, 때때로 (옳은 분류일 때) 마이너스가 붙는다. 더 명확히 표현하자면, 3개의 1차원 점들과 3개의 클래스가 있다고 해보자. Regularization 없는 총 SVM 손실(loss)은 다음과 같다.
 
 $$
 \begin{align}
@@ -68,30 +68,30 @@ L = & (L_0 + L_1 + L_2)/3
 \end{align}
 $$
 
-Since these examples are 1-dimensional, the data $x_i$ and weights $w_j$ are numbers. Looking at, for instance, $w_0$, some terms above are linear functions of $w_0$ and each is clamped at zero. We can visualize this as follows:
+이 예시들이 1차원이기 때문에, 데이타 $x_i$와 모수(parameter/weight) $w_j$는 숫자(역자 주: 즉, 스칼라. 따라서 위 수식에서 전치행렬을 뜻하는 $T$ 표시는 필요없음)이다. 예를 들어 $w_0$ 를 보면, 몇몇 항들은 $w_0$의 선형함수이고 각각은 0에서 꺾인다. 이를 다음과 같이 시각화할 수 있다.
 
 <div class="fig figcenter fighighlight">
   <img src="{{site.baseurl}}/assets/svmbowl.png">
   <div class="figcaption">
-    1-dimensional illustration of the data loss. The x-axis is a single weight and the y-axis is the loss. The data loss is a sum of multiple terms, each of which is either independent of a particular weight, or a linear function of it that is thresholded at zero. The full SVM data loss is a 30,730-dimensional version of this shape.
+    손실(loss)를 1차원으로 표현한 그림. x축은 모수(parameter/weight) 하나이고, y축은 손실(loss)이다. 손실(loss)는 여러 항들의 합인데, 그 각각은 특정 모수(parameter/weight)값과 무관하거나, 0에 막혀있는 그 모수(parameter/weight)의 선형함수이다. 전체 SVM 손실은 이 모양의 30,730차원 버전이다.
   </div>
 </div>
 
-As an aside, you may have guessed from its bowl-shaped appearance that the SVM cost function is an example of a [convex function](http://en.wikipedia.org/wiki/Convex_function) There is a large amount of literature devoted to efficiently minimizing these types of functions, and you can also take a Stanford class on the topic ( [convex optimization](http://stanford.edu/~boyd/cvxbook/) ). Once we extend our score functions $f$ to Neural Networks our objective functions will become non-convex, and the visualizations above will not feature bowls but complex, bumpy terrains.
+옆길로 새면, 아마도 밥공기 모양을 보고 SVM 손실함수(loss function)이 일종의 [볼록함수](http://en.wikipedia.org/wiki/Convex_function)라고 생각했을 것이다. 이런 형태의 함수를 효율적으로 최소화하는 문제에 대한 엄청난 양의 연구 성과들이 있다. 스탠포드 강좌 중에서도 이 주제를 다룬 것도 있다. ( [볼록함수 최적화](http://stanford.edu/~boyd/cvxbook/) ). 이 점수함수(score function) $f$를 신경망(neural networks)로 확장시키면, 목적함수(역자 주: 손실함수(loss function))은 더이상 볼록함수가 아니게 되고, 위와 같은 시각화를 해봐도 밥공기 모양 대신 울퉁불퉁하고 복잡한 모양이 보일 것이다.
 
-*Non-differentiable loss functions*. As a technical note, you can also see that the *kinks* in the loss function (due to the max operation) technically make the loss function non-differentiable because at these kinks the gradient is not defined. However, the [subgradient](http://en.wikipedia.org/wiki/Subderivative) still exists and is commonly used instead. In this class will use the terms *subgradient* and *gradient* interchangeably.
+*미분이 불가능한 손실함수(loss functions)*. 기술적인 설명을 덧붙이자면, $\max(0,-)$ 함수 때문에 손실함수(loss functionn)에 *꺾임*이 생기는데, 이 때문에 손실함수(loss functions)는 미분이 불가능해진다. 왜냐하면, 그 꺾이는 부분에서 미분 혹은 그라디언트가 존재하지 않기 때문이다. 하지만, [서브그라디언트(subgradient)](http://en.wikipedia.org/wiki/Subderivative)가 존재하고, 대체로 이를 그라디언트(gradient) 대신 이용한다. 앞으로 이 강의에서는 *그라디언트(gradient)*와 *서브그라디언트(subgradient)*를 구분하지 않고 쓸 것이다. 
 
-<a name='optimization'></a>
+<a name='최적화'></a>
 
-### Optimization
+### 최적화
 
-To reiterate, the loss function lets us quantify the quality of any particular set of weights **W**. The goal of optimization is to find **W** that minimizes the loss function. We will now motivate and slowly develop an approach to optimizing the loss function. For those of you coming to this class with previous experience, this section might seem odd since the working example we'll use (the SVM loss) is a convex problem, but keep in mind that our goal is to eventually optimize Neural Networks where we can't easily use any of the tools developed in the Convex Optimization literature.
+정리하면, 손실함수(loss function)는 모수(parameter/weight) **W** 행렬의 질을 측정한다. 최적화의 목적은 이 손실함수(loss function)을 최소화시키는 **W**을 찾아내는 것이다. 다음 단락부터 손실함수(loss function)을 최적화하는 방법에 대해서 찬찬히 살펴볼 것이다. 이전에 경험이 있는 사람들이 보면 이 섹션은 좀 이상하다고 생각할지 모르겠다. 왜냐하면, 여기서 쓰인 예제 (즉, SVM 손실(loss))가 볼록함수이기 때문이다. 하지만, 우리의 궁극적인 목적은 신경망(neural networks)를 최적화시키는 것이고, 여기에는 볼록함수 최적화를 위해 고안된 방법들이 쉽사리 통히지 않는다.
 
 <a name='opt1'></a>
 
-#### Strategy #1: A first very bad idea solution: Random search
+#### 전략 #1: 첫번째 매우 나쁜 방법: 무작위 탐색 (Random search)
 
-Since it is so simple to check how good a given set of parameters **W** is, the first (very bad) idea that may come to mind is to simply try out many different random weights and keep track of what works best. This procedure might look as follows:
+주어진 모수(parameter/weight) **W**이 얼마나 좋은지를 측정하는 것은 매우 간단하기 때문에, 처음 떠오르는 (매우 나쁜) 생각은, 단순히 무작위로 모수(parameter/weight)을 골라서 넣어보고 넣어 본 값들 중 제일 좋은 값을 기록하는 것이다. 그 과정은 다음과 같다.
 
 ~~~python
 # assume X_train is the data where each column is an example (e.g. 3073 x 50,000)
@@ -118,7 +118,7 @@ for num in xrange(1000):
 # ... (trunctated: continues for 1000 lines)
 ~~~
 
-In the code above, we see that we tried out several random weight vectors **W**, and some of them work better than others. We can take the best weights **W** found by this search and try it out on the test set:
+위의 코드에서, 여러 개의 무작위 모수(parameter/weight) **W**를 넣어봤고, 그 중 몇몇은 다른 것들보다 좋았다. 그래서 그 중 제일 좋은 모수(parameter/weight) **W**을 테스트 데이터에 넣어보면 된다.
 
 ~~~python
 # Assume X_test is [3073 x 10000], Y_test [10000 x 1]
@@ -130,13 +130,13 @@ np.mean(Yte_predict == Yte)
 # returns 0.1555
 ~~~
 
-With the best **W** this gives an accuracy of about **15.5%**. Given that guessing classes completely at random achieves only 10%, that's not a very bad outcome for a such a brain-dead random search solution!
+이 방법으로 얻은 최선의 **W**는 정확도 **15.5%**이다. 완전 무작위 찍기가 단 10%의 정확도를 보이므로, 무식한 방법 치고는 그리 나쁜 것은 아니다.
 
-**Core idea: iterative refinement**. Of course, it turns out that we can do much better. The core idea is that finding the best set of weights **W** is a very difficult or even impossible problem (especially once **W** contains weights for entire complex neural networks), but the problem of refining a specific set of weights **W** to be slightly better is significantly less difficult. In other words, our approach will be to start with a random **W** and then iteratively refine it, making it slightly better each time.
+**핵심 아이디어: 반복적 향상**. 물론 이보다 더 좋은 방법들이 있다. 여기서 핵심 아이디어는, 최선의 모수(parameter/weight) **W**을 찾는 것은 매우 어렵거나 때로는 불가능한 문제(특히 복잡한 신경망(neural network) 전체를 구현할 경우)이지만, 어떤 주어진 모수(parameter/weight) **W**을 조금 개선시키는 일은 훨씬 덜 힘들다는 점이다. 다시 말해, 우리의 접근법은 무작위로 뽑은 **W**에서 출발해서 매번 조금씩 개선시키는 것을 반복하는 것이다.
 
-> Our strategy will be to start with random weights and iteratively refine them over time to get lower loss
+> 우리의 전략은 무작위로 뽑은 모수(parameter/weight)으로부터 시작해서 반복적으로 조금씩 개선시켜 손실(loss)을 낮추는 것이다.
 
-**Blindfolded hiker analogy.** One analogy that you may find helpful going forward is to think of yourself as hiking on a hilly terrain with a blindfold on, and trying to reach the bottom. In the example of CIFAR-10, the hills are 30,730-dimensional, since the dimensions of **W** are 3073 x 10. At every point on the hill we achieve a particular loss (the height of the terrain).
+**눈가리고 하산하는 것에 비유.** 앞으로 도움이 될만한 비유는, 경사진 지형에서 눈가리개를 하고 점점 아래로 내려오는 자기 자신을 생각해보는 것이다. CIFAR-10의 예시에서, 그 언덕들은 (**W**가 3073 x 10 차원이므로) 30,730차원이다. 언덕의 각 지점에는 특정 손실값(loss), 즉, 지형의 고도가 주어진다.
 
 <a name='opt2'></a>
 
