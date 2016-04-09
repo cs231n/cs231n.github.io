@@ -57,7 +57,7 @@ $$
 L_i = \sum_{j\neq y_i} \left[ \max(0, w_j^Tx_i - w_{y_i}^Tx_i + 1) \right]
 $$
 
-It is clear from the equation that the data loss for each example is a sum of (zero-thresholded due to the $\max(0,-)$ function) linear functions of $W$. Moreover, each row of $W$ (i.e. $w_j$) sometimes has a positive sign in front of it (when it corresponds to a wrong class for an example), and sometimes a negative sign (when it corresponds to the correct class for that example). To make this more explicit, consider a simple dataset that contains three 1-dimensional points and three classes. The full SVM loss (without regularization) becomes:
+수식에서 명백히 볼 수 있듯이, 각 예시의 손실(loss)값은 ($\max(0,-)$ 함수로 인해 0에서 막혀있는) $W$의 선형함수들의 합으로 표현된다. $W$의 각 행(즉, $w_j$) 앞에는 때때로 (잘못된 분류일 때, 즉, $j\neq y_i$인 경우) 플러스가 붙고, 때때로 (옳은 분류일 때) 마이너스가 붙는다. 더 명확히 표현하자면, 3개의 1차원 점들과 3개의 클래스가 있다고 해보자. Regularization 없는 총 SVM 손실(loss)은 다음과 같다.
 
 $$
 \begin{align}
@@ -68,28 +68,28 @@ L = & (L_0 + L_1 + L_2)/3
 \end{align}
 $$
 
-Since these examples are 1-dimensional, the data $x_i$ and weights $w_j$ are numbers. Looking at, for instance, $w_0$, some terms above are linear functions of $w_0$ and each is clamped at zero. We can visualize this as follows:
+이 예시들이 1차원이기 때문에, 데이타 $x_i$와 모수(parameter/weight) $w_j$는 숫자(역자 주: 즉, 스칼라. 따라서 위 수식에서 전치행렬을 뜻하는 $T$ 표시는 필요없음)이다. 예를 들어 $w_0$ 를 보면, 몇몇 항들은 $w_0$의 선형함수이고 각각은 0에서 꺾인다. 이를 다음과 같이 시각화할 수 있다.
 
 <div class="fig figcenter fighighlight">
   <img src="{{site.baseurl}}/assets/svmbowl.png">
   <div class="figcaption">
-    1-dimensional illustration of the data loss. The x-axis is a single weight and the y-axis is the loss. The data loss is a sum of multiple terms, each of which is either independent of a particular weight, or a linear function of it that is thresholded at zero. The full SVM data loss is a 30,730-dimensional version of this shape.
+    손실(loss)를 1차원으로 표현한 그림. x축은 모수(parameter/weight) 하나이고, y축은 손실(loss)이다. 손실(loss)는 여러 항들의 합인데, 그 각각은 특정 모수(parameter/weight)값과 무관하거나, 0에 막혀있는 그 모수(parameter/weight)의 선형함수이다. 전체 SVM 손실은 이 모양의 30,730차원 버전이다.
   </div>
 </div>
 
-As an aside, you may have guessed from its bowl-shaped appearance that the SVM cost function is an example of a [convex function](http://en.wikipedia.org/wiki/Convex_function) There is a large amount of literature devoted to efficiently minimizing these types of functions, and you can also take a Stanford class on the topic ( [convex optimization](http://stanford.edu/~boyd/cvxbook/) ). Once we extend our score functions $f$ to Neural Networks our objective functions will become non-convex, and the visualizations above will not feature bowls but complex, bumpy terrains.
+옆길로 새면, 아마도 밥공기 모양을 보고 SVM 손실함수(loss function)이 일종의 [볼록함수](http://en.wikipedia.org/wiki/Convex_function)라고 생각했을 것이다. 이런 형태의 함수를 효율적으로 최소화하는 문제에 대한 엄청난 양의 연구 성과들이 있다. 스탠포드 강좌 중에서도 이 주제를 다룬 것도 있다. ( [볼록함수 최적화](http://stanford.edu/~boyd/cvxbook/) ). 이 점수함수(score function) $f$를 신경망(neural networks)로 확장시키면, 목적함수(역자 주: 손실함수(loss function))은 더이상 볼록함수가 아니게 되고, 위와 같은 시각화를 해봐도 밥공기 모양 대신 울퉁불퉁하고 복잡한 모양이 보일 것이다.
 
-*Non-differentiable loss functions*. As a technical note, you can also see that the *kinks* in the loss function (due to the max operation) technically make the loss function non-differentiable because at these kinks the gradient is not defined. However, the [subgradient](http://en.wikipedia.org/wiki/Subderivative) still exists and is commonly used instead. In this class will use the terms *subgradient* and *gradient* interchangeably.
+*미분이 불가능한 손실함수(loss functions)*. 기술적인 설명을 덧붙이자면, $\max(0,-)$ 함수 때문에 손실함수(loss functionn)에 *꺾임*이 생기는데, 이 때문에 손실함수(loss functions)는 미분이 불가능해진다. 왜냐하면, 그 꺾이는 부분에서 미분 혹은 그라디언트가 존재하지 않기 때문이다. 하지만, [서브그라디언트(subgradient)](http://en.wikipedia.org/wiki/Subderivative)가 존재하고, 대체로 이를 그라디언트(gradient) 대신 이용한다. 앞으로 이 강의에서는 *그라디언트(gradient)*와 *서브그라디언트(subgradient)*를 구분하지 않고 쓸 것이다. 
 
-<a name='optimization'></a>
+<a name='최적화'></a>
 
-### Optimization
+### 최적화
 
-To reiterate, the loss function lets us quantify the quality of any particular set of weights **W**. The goal of optimization is to find **W** that minimizes the loss function. We will now motivate and slowly develop an approach to optimizing the loss function. For those of you coming to this class with previous experience, this section might seem odd since the working example we'll use (the SVM loss) is a convex problem, but keep in mind that our goal is to eventually optimize Neural Networks where we can't easily use any of the tools developed in the Convex Optimization literature.
+정리하면, 손실함수(loss function)는 모수(parameter/weight) **W** 행렬의 질을 측정한다. 최적화의 목적은 이 손실함수(loss function)을 최소화시키는 **W**을 찾아내는 것이다. 다음 단락부터 손실함수(loss function)을 최적화하는 방법에 대해서 찬찬히 살펴볼 것이다. 이전에 경험이 있는 사람들이 보면 이 섹션은 좀 이상하다고 생각할지 모르겠다. 왜냐하면, 여기서 쓰인 예제 (즉, SVM 손실(loss))가 볼록함수이기 때문이다. 하지만, 우리의 궁극적인 목적은 신경망(neural networks)를 최적화시키는 것이고, 여기에는 볼록함수 최적화를 위해 고안된 방법들이 쉽사리 통히지 않는다.
 
 <a name='opt1'></a>
 
-#### Strategy #1: A first very bad idea solution: Random search
+#### 전략 #1: 첫번째 매우 나쁜 방법: 무작위 탐색 (Random search)
 
 Since it is so simple to check how good a given set of parameters **W** is, the first (very bad) idea that may come to mind is to simply try out many different random weights and keep track of what works best. This procedure might look as follows:
 
