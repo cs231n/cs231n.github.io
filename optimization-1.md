@@ -91,7 +91,7 @@ $$
 
 #### 전략 #1: 첫번째 매우 나쁜 방법: 무작위 탐색 (Random search)
 
-Since it is so simple to check how good a given set of parameters 주어진 모수(parameter/weight) **W**이 얼마나 좋은지를 측정하는 것은 매우 간단하기 때문에, 처음 떠오르는 (매우 나쁜) 생각은, 단순히 무작위로 모수(parameter/weight)을 골라서 넣어보고 넣어 본 값들 중 제일 좋은 값을 기록하는 것이다. 그 과정은 다음과 같다.
+주어진 모수(parameter/weight) **W**이 얼마나 좋은지를 측정하는 것은 매우 간단하기 때문에, 처음 떠오르는 (매우 나쁜) 생각은, 단순히 무작위로 모수(parameter/weight)을 골라서 넣어보고 넣어 본 값들 중 제일 좋은 값을 기록하는 것이다. 그 과정은 다음과 같다.
 
 ~~~python
 # assume X_train is the data where each column is an example (e.g. 3073 x 50,000)
