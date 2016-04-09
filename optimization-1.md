@@ -26,13 +26,13 @@ Table of Contents:
 1. 원 이미지의 픽셀들을 넣으면 분류 스코어(class score)를 계산해주는 모수화된(parameterized) **스코어 함수(score function)** (예를 들어,  선형 함수).
 2. 학습(training) 데이타에 어떤 특정 모수(parameter/weight)들을 가지고 스코어 함수(score function)를 적용시켰을 때, 실제 class와 얼마나 잘 일치하는지에 따라 그 특정 모수(parameter/weight)들의 질을 측정하는 **손실 함수(loss function)**. 여러 종류의 손실함수(예를 들어, Softmax/SVM)가 있다.
 
-구체적으로 말하자면, 다음과 같은 형식을 가진 선형함수 $f(x_i, W) =  W x_i $를 스코어 함수(score function)로 쓸 때,  지난 번에 다룬 바와 같이 SVM은 다음과 같은 수식으로 표현할 수 있다.:
+구체적으로 말하자면, 다음과 같은 형식을 가진 선형함수 $$ f(x_i, W) =  W x_i $$를 스코어 함수(score function)로 쓸 때,  지난 번에 다룬 바와 같이 SVM은 다음과 같은 수식으로 표현할 수 있다.:
 
 $$
 L = \frac{1}{N} \sum_i \sum_{j\neq y_i} \left[ \max(0, f(x_i; W)_j - f(x_i; W)_{y_i} + 1) \right] + \alpha R(W)
 $$
 
-예시 $x_i$에 대한 예측값이 실제 값(레이블, labels) $y_i$과 같도록 설정된 모수(parameter/weight) $W$는 손실(loss)값 $L$ 또한 매우 낮게 나온다는 것을 알아보았다. 이제 세번째이자 마지막 핵심요소인 **최적화(optimization)**에 대해서 알아보자. 최적화(optimization)는 손실함수(loss function)을 최소화시카는 모수(parameter/weight, $W$)들을 찾는 과정을 뜻한다.
+예시 $x_i$에 대한 예측값이 실제 값(레이블, labels) $$y_i$$과 같도록 설정된 모수(parameter/weight) $$W$$는 손실(loss)값 $$L$$ 또한 매우 낮게 나온다는 것을 알아보았다. 이제 세번째이자 마지막 핵심요소인 **최적화(optimization)**에 대해서 알아보자. 최적화(optimization)는 손실함수(loss function)을 최소화시카는 모수(parameter/weight, $$W$$)들을 찾는 과정을 뜻한다.
 
 **예고:** 이 세 가지 핵심요소가 어떻게 상호작용하는지 이해한 후에는, 첫번째 요소(모수화된 함수)로 다시 돌아가서 선형함수보다 더 복잡한 형태로 확장시켜볼 것이다.  처음엔 신경망(Neural Networks), 다음엔 컨볼루션 신경망(Convolutional Neural Networks). 손실함수(loss function)와 최적화(optimization) 과정은 거의 변화가 없을 것이다..
 
@@ -40,7 +40,7 @@ $$
 
 ### 손실함수(loss function)의 시각화
 
-이 강의에서 우리가 다루는 손실함수(loss function)들은 대체로 고차원 공간에서 정의된다. 예를 들어, CIFAR-10의 선형분류기(linear classifier)의 경우 모수(parameter/weight) 행렬은 크기가 [10 x 3073]이고 총 30,730개의 모수(parameter/weight)가 있다. 따라서, 시각화하기가 어려운 면이 있다. 하지만, 고차원 공간을 1차원 직선이나 2차원 평면으로 잘라서 보면 약간의 직관을 얻을 수 있다. 예를 들어, 무작위로 모수(parameter/weight) 행렬 $W$을 하나 뽑는다고 가정해보자. (이는 사실 고차원 공간의 한 점인 셈이다.) 이제 이 점을 직선 하나를 따라 이동시키면서 손실함수(loss function)를 기록해보자. 즉, 무작위로 뽑은 방향 $W_1$을 잡고, 이 방향을 따라 가면서 손실함수(loss function)를 계산하는데, 구체적으로 말하면 $L(W + a W_1)$에 여러 개의 $a$ 값(역자 주: 1차원 스칼라)을 넣어 계산해보는 것이다. 이 과정을 통해 우리는 $a$ 값을 x축, 손실함수(loss function) 값을 y축에 놓고 간단한 그래프를 그릴 수 있다. 또한 이 비슷한 것을 2차원으로도 할 수 있다. 여러 $a, b$값에 따라  $ L(W + a W_1 + b W_2) $을 계산하고(역자 주: $W_2$ 역시 $W_1$과 같은 식으로 뽑은 무작위 방향), $a, b$는 각각 x축과 y축에, 손실함수(loss function) 값 색을 이용해 그리면 된다.
+이 강의에서 우리가 다루는 손실함수(loss function)들은 대체로 고차원 공간에서 정의된다. 예를 들어, CIFAR-10의 선형분류기(linear classifier)의 경우 모수(parameter/weight) 행렬은 크기가 [10 x 3073]이고 총 30,730개의 모수(parameter/weight)가 있다. 따라서, 시각화하기가 어려운 면이 있다. 하지만, 고차원 공간을 1차원 직선이나 2차원 평면으로 잘라서 보면 약간의 직관을 얻을 수 있다. 예를 들어, 무작위로 모수(parameter/weight) 행렬 $W$을 하나 뽑는다고 가정해보자. (이는 사실 고차원 공간의 한 점인 셈이다.) 이제 이 점을 직선 하나를 따라 이동시키면서 손실함수(loss function)를 기록해보자. 즉, 무작위로 뽑은 방향 $$W_1$$을 잡고, 이 방향을 따라 가면서 손실함수(loss function)를 계산하는데, 구체적으로 말하면 $$L(W + a W_1)$$에 여러 개의 $$a$$ 값(역자 주: 1차원 스칼라)을 넣어 계산해보는 것이다. 이 과정을 통해 우리는 $$a$$ 값을 x축, 손실함수(loss function) 값을 y축에 놓고 간단한 그래프를 그릴 수 있다. 또한 이 비슷한 것을 2차원으로도 할 수 있다. 여러 $$a, b$$값에 따라  $$ L(W + a W_1 + b W_2) $$을 계산하고(역자 주: $$W_2$$ 역시 $$W_1$$과 같은 식으로 뽑은 무작위 방향), $$a, b$$는 각각 x축과 y축에, 손실함수(loss function) 값 색을 이용해 그리면 된다.
 
 <div class="fig figcenter fighighlight">
   <img src="{{site.baseurl}}/assets/svm1d.png">
@@ -57,7 +57,7 @@ $$
 L_i = \sum_{j\neq y_i} \left[ \max(0, w_j^Tx_i - w_{y_i}^Tx_i + 1) \right]
 $$
 
-수식에서 명백히 볼 수 있듯이, 각 예시의 손실(loss)값은 ($\max(0,-)$ 함수로 인해 0에서 막혀있는) $W$의 선형함수들의 합으로 표현된다. $W$의 각 행(즉, $w_j$) 앞에는 때때로 (잘못된 분류일 때, 즉, $j\neq y_i$인 경우) 플러스가 붙고, 때때로 (옳은 분류일 때) 마이너스가 붙는다. 더 명확히 표현하자면, 3개의 1차원 점들과 3개의 클래스가 있다고 해보자. Regularization 없는 총 SVM 손실(loss)은 다음과 같다.
+수식에서 명백히 볼 수 있듯이, 각 예시의 손실(loss)값은 ($$\max(0,-)$$ 함수로 인해 0에서 막혀있는) $$W$$의 선형함수들의 합으로 표현된다. $$W$$의 각 행(즉, $$w_j$$) 앞에는 때때로 (잘못된 분류일 때, 즉, $$j\neq y_i$$인 경우) 플러스가 붙고, 때때로 (옳은 분류일 때) 마이너스가 붙는다. 더 명확히 표현하자면, 3개의 1차원 점들과 3개의 클래스가 있다고 해보자. Regularization 없는 총 SVM 손실(loss)은 다음과 같다.
 
 $$
 \begin{align}
@@ -68,7 +68,7 @@ L = & (L_0 + L_1 + L_2)/3
 \end{align}
 $$
 
-이 예시들이 1차원이기 때문에, 데이타 $x_i$와 모수(parameter/weight) $w_j$는 숫자(역자 주: 즉, 스칼라. 따라서 위 수식에서 전치행렬을 뜻하는 $T$ 표시는 필요없음)이다. 예를 들어 $w_0$ 를 보면, 몇몇 항들은 $w_0$의 선형함수이고 각각은 0에서 꺾인다. 이를 다음과 같이 시각화할 수 있다.
+이 예시들이 1차원이기 때문에, 데이타 $$x_i$$와 모수(parameter/weight) $$w_j$$는 숫자(역자 주: 즉, 스칼라. 따라서 위 수식에서 전치행렬을 뜻하는 $$T$$ 표시는 필요없음)이다. 예를 들어 $$w_0$$ 를 보면, 몇몇 항들은 $$w_0$$의 선형함수이고 각각은 0에서 꺾인다. 이를 다음과 같이 시각화할 수 있다.
 
 <div class="fig figcenter fighighlight">
   <img src="{{site.baseurl}}/assets/svmbowl.png">
@@ -77,9 +77,9 @@ $$
   </div>
 </div>
 
-옆길로 새면, 아마도 밥공기 모양을 보고 SVM 손실함수(loss function)이 일종의 [볼록함수](http://en.wikipedia.org/wiki/Convex_function)라고 생각했을 것이다. 이런 형태의 함수를 효율적으로 최소화하는 문제에 대한 엄청난 양의 연구 성과들이 있다. 스탠포드 강좌 중에서도 이 주제를 다룬 것도 있다. ( [볼록함수 최적화](http://stanford.edu/~boyd/cvxbook/) ). 이 점수함수(score function) $f$를 신경망(neural networks)로 확장시키면, 목적함수(역자 주: 손실함수(loss function))은 더이상 볼록함수가 아니게 되고, 위와 같은 시각화를 해봐도 밥공기 모양 대신 울퉁불퉁하고 복잡한 모양이 보일 것이다.
+옆길로 새면, 아마도 밥공기 모양을 보고 SVM 손실함수(loss function)이 일종의 [볼록함수](http://en.wikipedia.org/wiki/Convex_function)라고 생각했을 것이다. 이런 형태의 함수를 효율적으로 최소화하는 문제에 대한 엄청난 양의 연구 성과들이 있다. 스탠포드 강좌 중에서도 이 주제를 다룬 것도 있다. ( [볼록함수 최적화](http://stanford.edu/~boyd/cvxbook/) ). 이 점수함수(score function) $$f$$를 신경망(neural networks)로 확장시키면, 목적함수(역자 주: 손실함수(loss function))은 더이상 볼록함수가 아니게 되고, 위와 같은 시각화를 해봐도 밥공기 모양 대신 울퉁불퉁하고 복잡한 모양이 보일 것이다.
 
-*미분이 불가능한 손실함수(loss functions)*. 기술적인 설명을 덧붙이자면, $\max(0,-)$ 함수 때문에 손실함수(loss functionn)에 *꺾임*이 생기는데, 이 때문에 손실함수(loss functions)는 미분이 불가능해진다. 왜냐하면, 그 꺾이는 부분에서 미분 혹은 그라디언트가 존재하지 않기 때문이다. 하지만, [서브그라디언트(subgradient)](http://en.wikipedia.org/wiki/Subderivative)가 존재하고, 대체로 이를 그라디언트(gradient) 대신 이용한다. 앞으로 이 강의에서는 *그라디언트(gradient)*와 *서브그라디언트(subgradient)*를 구분하지 않고 쓸 것이다. 
+*미분이 불가능한 손실함수(loss functions)*. 기술적인 설명을 덧붙이자면, $$\max(0,-)$$ 함수 때문에 손실함수(loss functionn)에 *꺾임*이 생기는데, 이 때문에 손실함수(loss functions)는 미분이 불가능해진다. 왜냐하면, 그 꺾이는 부분에서 미분 혹은 그라디언트가 존재하지 않기 때문이다. 하지만, [서브그라디언트(subgradient)](http://en.wikipedia.org/wiki/Subderivative)가 존재하고, 대체로 이를 그라디언트(gradient) 대신 이용한다. 앞으로 이 강의에서는 *그라디언트(gradient)*와 *서브그라디언트(subgradient)*를 구분하지 않고 쓸 것이다.
 
 <a name='최적화'></a>
 
@@ -142,7 +142,7 @@ np.mean(Yte_predict == Yte)
 
 #### Strategy #2: Random Local Search
 
-The first strategy you may think of is to to try to extend one foot in a random direction and then take a step only if it leads downhill. Concretely, we will start out with a random $W$, generate random perturbations $ \delta W $ to it and if the loss at the perturbed $W + \delta W$ is lower, we will perform an update. The code for this procedure is as follows:
+The first strategy you may think of is to to try to extend one foot in a random direction and then take a step only if it leads downhill. Concretely, we will start out with a random $$W$$, generate random perturbations $$ \delta W $$ to it and if the loss at the perturbed $$W + \delta W$$ is lower, we will perform an update. The code for this procedure is as follows:
 
 ~~~python
 W = np.random.randn(10, 3073) * 0.001 # generate random starting W
