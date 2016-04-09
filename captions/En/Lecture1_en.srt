@@ -221,8 +221,8 @@ the universe. On the Internet these are the
 
 46
 00:05:25,920 --> 00:05:30,649
-matters pixel data the other data that
-we don't know we have a hard time
+matters pixel data are the data that we don't know.
+We have a hard time
 
 47
 00:05:30,649 --> 00:05:36,239
@@ -244,57 +244,56 @@ onto YouTube servers for every 60 seconds
 
 51
 00:05:54,089 --> 00:06:02,739
-think about the amount of data there is
-no way that human eyes can sift through
+Think about the amount of data.
+There is no way that human eyes can sift through
 
 52
 00:06:02,740 --> 00:06:07,829
-this massive amount of data and make it
-a lot Asians
+this massive amount of data and make it annotations,
 
 53
 00:06:07,829 --> 00:06:14,009
-labeling it and and and and described
-the contacts soul singer from the
+labeling it, and describe the contents.
+So, think from the
 
 54
 00:06:14,009 --> 00:06:20,980
-perspective of the YouTube team or or
-Google company if they want to help us
+perspective of the YouTube team or Google company.
+If they want to help us
 
 55
 00:06:20,980 --> 00:06:25,640
-to search index managed and of course
-for their purpose
+to search, index, manage,
+and of course for their purpose,
 
 56
-00:06:25,639 --> 00:06:31,529
-advertisement or or whatever manipulate
-the content of the data were at a loss
+00:06:25,641 --> 00:06:31,529
+put advertisement or whatever manipulate
+the content of the data, we're at a loss,
 
 57
 00:06:31,529 --> 00:06:38,919
-because nobody can take this the only
-hope we can do this is true vision
+because nobody can hand-annotate this.
+The only hope we can do this is through vision
 
 58
 00:06:38,920 --> 00:06:44,640
-technology to be able to label the
-objects financings vinyl frames
+technology. To be able to label the
+objects, find the scenes, find the frames,
 
 59
-00:06:44,639 --> 00:06:50,349
-you know lo que where basketball video
-were Kobe Bryant's making like that
+00:06:44,641 --> 00:06:50,349
+you know, locate where that basketball video
+were Kobe Bryant is making like that
 
 60
 00:06:50,350 --> 00:06:57,320
-awesome shot and social these are the
-problems we are facing today that the
+awesome shot. So, these are the
+problems that we are facing today that the
 
 61
-00:06:57,319 --> 00:07:02,860
-massive amount of data and the the
+00:06:57,321 --> 00:07:02,860
+massive amount of data and the
 challenges of the dark matter so
 
 62
