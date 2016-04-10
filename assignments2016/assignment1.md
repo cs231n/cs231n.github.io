@@ -25,10 +25,10 @@ Terminal에는 우리의 수업을 위한 서브도메인이 만들어져 있습
 [여기](http://vision.stanford.edu/teaching/cs231n/winter1516_assignment1.zip)에서 압축파일을 다운받고 다음을 따르세요.
 
 **[선택 1] Use Anaconda:**
-과학, 수학, 공학, 데이터 분석을 위한 다양하고 유명한 패키지들을 담고있는 [Anaconda](https://www.continuum.io/downloads)를 사용하여 설치하는 것이 즐겨 쓰이는 방법입니다. 설치가 다 되면 모든 요구사항을 넘기고 바로 숙제를 시작해도 좋습니다.
+과학, 수학, 공학, 데이터 분석을 위한 대부분의 주요 패키지들을 담고있는 [Anaconda](https://www.continuum.io/downloads)를 사용하여 설치하는 것이 흔히 사용하는 방법입니다. 설치가 다 되면 모든 요구사항(dependency)을 넘기고 바로 숙제를 시작해도 좋습니다.
 
-**[선택 2] Manual install, virtual environment:**
-만약 Anaconda 대신 좀 더 일반적이고 위험한 방법을 택하고 싶다면 프로젝트를 위한 [virtual environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/)를 만들 수 있습니다. 만약 virtual environment를 사용하지 않는다면 모든 코드가 컴퓨터에 전역적으로 종속되게 설치됩니다. virtual environment의 설정은 아래를 참조하세요.
+**[선택 2] 수동 설치, virtual environment:**
+만약 Anaconda 대신 좀 더 일반적이면서 까다로운 방법을 택하고 싶다면 이번 과제를 위한 [virtual environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/)를 만들 수 있습니다. 만약 virtual environment를 사용하지 않는다면 모든 코드가 컴퓨터에 전역적으로 종속되게 설치됩니다. Virtual environment의 설정은 아래를 참조하세요.
 
 ~~~bash
 cd assignment1
@@ -40,42 +40,42 @@ pip install -r requirements.txt  # dependencies 설치합니다.
 deactivate                       # virtual environment를 종료합니다.
 ~~~
 
-**Download data:**
-먼저 숙제를 시작하기전에 CIFAR-10 dataset를 다운로드해야 합니다. 아래를 `assignment1` 폴더에서 실행하세요:
+**데이터셋 다운로드:**
+먼저 숙제를 시작하기전에 CIFAR-10 dataset를 다운로드해야 합니다. 아래 코드를 `assignment1` 폴더에서 실행하세요:
 
 ~~~bash
 cd cs231n/datasets
 ./get_datasets.sh
 ~~~
 
-**Start IPython:**
+**IPython 시작:**
 CIFAR-10 data를 받았다면, `assignment1` 폴더의 IPython notebook server를 시작할 수 있습니다. IPython에 친숙하지 않다면 작성해둔 [IPython tutorial](/ipython-tutorial)를 읽어보는 것을 권장합니다.
 
-**NOTE:** OSX에서 virtual environment를 실행하면, matplotlib 에러가 날 수 있습니다([이 문제에 관한 이슈](http://matplotlib.org/faq/virtualenv_faq.html)).  IPython server를 `assignment1`폴더의 `start_ipython_osx.sh`라고 실행하면 이 문제를 피해갈 수 있습니다; 이 스크립트는 virtual environment가 `.env`라고 되어있다고 가정하고 작성되었습니다.
+**NOTE:** OSX에서 virtual environment를 실행하면, matplotlib 에러가 날 수 있습니다([이 문제에 관한 이슈](http://matplotlib.org/faq/virtualenv_faq.html)).  IPython 서버를 `assignment1`폴더의 `start_ipython_osx.sh`로 실행하면 이 문제를 피해갈 수 있습니다; 이 스크립트는 virtual environment가 `.env`라고 되어있다고 가정하고 작성되었습니다.로
 
 ### 과제 제출:
-로컬 환경이나 Terminal에서 숙제를 마쳤다면 `collectSubmission.sh`스크립트를 실행합니다; 이 스크립트는 `assignment1.zip`파일을 만듭니다. 이 파일을 [the coursework](https://coursework.stanford.edu/portal/site/W16-CS-231N-01/)에 업로드하세요.
+로컬 환경이나 Terminal에 상관없이, 이번 숙제를 마쳤다면 `collectSubmission.sh`스크립트를 실행하세요. 이 스크립트는 `assignment1.zip`파일을 만듭니다. 이 파일을 [the coursework](https://coursework.stanford.edu/portal/site/W16-CS-231N-01/)에 업로드하세요.
 
 
 ### Q1: k-Nearest Neighbor 분류기 (20 points)
 
-IPython Notebook **knn.ipynb**이 kNN 분류기를 구현하는 것을 안내합니다.
+IPython Notebook **knn.ipynb**이 kNN 분류기를 구현하는 방법을 안내합니다.
 
 ### Q2: Support Vector Machine 훈련 (25 points)
 
-IPython Notebook **svm.ipynb**이 SVM 분류기를 구현하는 것을 안내합니다.
+IPython Notebook **svm.ipynb**이 SVM 분류기를 구현하는 방법을 안내합니다.
 
 ### Q3: Softmax 분류기 실행하기 (20 points)
 
-IPython Notebook **softmax.ipynb**이 Softmax 분류기를 구현하는 것을 안내합니다.
+IPython Notebook **softmax.ipynb**이 Softmax 분류기를 구현하는 방법을 안내합니다.
 
 ### Q4: Two-Layer Neural Network (25 points)
 
-IPython Notebook **two_layer_net.ipynb**이 two-layer neural network 분류기를 구현하는 것을 안내합니다.
+IPython Notebook **two_layer_net.ipynb**이 two-layer neural network 분류기를 구현하는 방법을 안내합니다
 
 ### Q5: 이미지 특징을 고차원으로 표현하기 (10 points)
 
-IPython Notebook **features.ipynb**을 사용하여 단순한 이미지 픽셀(화소)보다 고차원의 표현이 효과적인지 검사합니다.
+IPython Notebook **features.ipynb**을 사용하여 단순한 이미지 픽셀(화소)보다 고차원의 표현이 효과적인지 검사해 볼 것입니다.
 
 ### Q6: 추가 과제: 뭔가 더 해보세요! (+10 points)
 이번 과제와 관련된 다른 것들을 작성한 코드로 분석하고 연구해보세요. 예를 들어, 질문하고 싶은 흥미로운 질문이 있나요? 통찰력 있는 시각화를 작성할 수 있나요? 아니면 다른 재미있는 살펴볼 거리가 있나요? 또는 손실 함수(loss function)을 조금씩 변형해가며 실험해볼 수도 있을 것입니다. 만약 다른 멋있는 것을 시도해본다면 추가로 10 points를 얻을 수 있고 강의에 수행한 결과가 실릴 수 있습니다.

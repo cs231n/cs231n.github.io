@@ -1,0 +1,3 @@
+build/*
+im2col_cython.c
+im2col_cython.so
