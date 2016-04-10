@@ -5,8 +5,8 @@ permalink: /assignments2016/assignment1/
 ---
 이번 숙제에서 여러분은 간단한 이미지 분류 파이프라인을 k-Nearest neighbor 또는 SVM/Softmax 분류기에 기반하여 넣는 방법을 연습할 수 있습니다. 이번 숙제의 목표는 다음과 같습니다.
 
-- **이미지 분류 파이프라인**의 기초와 데이터기반 접근법에 대해 이해합니다. 
-- 학습/확인/테스트의 분할과 **초모수 튜닝**를 위해 검증 데이터를 사용하는 것에 관해 이해합니다.
+- **이미지 분류 파이프라인**의 기초와 데이터기반 접근법에 대해 이해합니다.
+- 학습/확인/테스트의 분할과 **hyperparameter 튜닝**를 위해 검증 데이터를 사용하는 것에 관해 이해합니다.
 - 효율적으로 작성된 **벡터화**된 numpy 코드로 proficiency을 나타나게 합니다.
 - k-Nearest Neighbor (**kNN**) 분류기를 구현하고 적용해봅니다.
 - Multiclass Support Vector Machine (**SVM**) 분류기를 구현하고 적용해봅니다.
@@ -59,7 +59,7 @@ CIFAR-10 data를 받았다면, `assignment1` 폴더의 IPython notebook server�
 
 ### Q1: k-Nearest Neighbor 분류기 (20 points)
 
-IPython Notebook **knn.ipynb**이 kNN 분류기를 구현하는 것을 안내합니다. 
+IPython Notebook **knn.ipynb**이 kNN 분류기를 구현하는 것을 안내합니다.
 
 ### Q2: Support Vector Machine 훈련 (25 points)
 
