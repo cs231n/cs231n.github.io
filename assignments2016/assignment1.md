@@ -5,27 +5,27 @@ permalink: /assignments2016/assignment1/
 ---
 이번 숙제에서 여러분은 간단한 이미지 분류 파이프라인을 k-Nearest neighbor 또는 SVM/Softmax 분류기에 기반하여 넣는 방법을 연습할 수 있습니다. 이번 숙제의 목표는 다음과 같습니다.
 
-- **이미지 분류 파이프라인**의 기초와 데이터 중심의 접근방식에 대해 이해합니다. 
-- 학습/확인/테스트의 분할과 **hyperparameter tuning**를 위해 검증 데이터를 사용하는 것에 관해 이해합니다.
+- **이미지 분류 파이프라인**의 기초와 데이터기반 접근법에 대해 이해합니다. 
+- 학습/확인/테스트의 분할과 **초모수 튜닝**를 위해 검증 데이터를 사용하는 것에 관해 이해합니다.
 - 효율적으로 작성된 **벡터화**된 numpy 코드로 proficiency을 나타나게 합니다.
-- k-Nearest Neighbor (**kNN**) 분류기를 수행하고 적용해봅니다.
-- Multiclass Support Vector Machine (**SVM**) 분류기를 수행하고 적용해봅니다.
-- **Softmax** 분류기를 수행하고 적용해봅니다.
-- **Two layer neural network** 분류기를 수행하고 적용해봅니다.
+- k-Nearest Neighbor (**kNN**) 분류기를 구현하고 적용해봅니다.
+- Multiclass Support Vector Machine (**SVM**) 분류기를 구현하고 적용해봅니다.
+- **Softmax** 분류기를 구현하고 적용해봅니다.
+- **Two layer neural network** 분류기를 구현하고 적용해봅니다.
 - 위 분류기들의 장단점과 차이에 대해 이해합니다.
-- 성능향상을 위해 raw pixels보다 **higher-level representations**을 사용하는 이유에 관하여 이해합니다. (색상 히스토그램, 그라데이션의 히스토그램 특징)
+- 성능향상을 위해 단순히 이미지 픽셀(화소)보다 더 고차원의 표현(**higher-level representations**)을 사용하는 이유에 관하여 이해합니다. (색상 히스토그램, 그라데이션의 히스토그램(HOG) 특징)
 
 ## 설치
-여러분은 다음 두가지 방법으로 숙제를 수행할 수 있습니다: Terminal.com을 이용한 가상 환경 또는 로컬 환경.
+여러분은 다음 두가지 방법으로 숙제를 시작할 수 있습니다: Terminal.com을 이용한 가상 환경 또는 로컬 환경.
 
 ### Termianl에서의 가상 환경.
-Terminal에는 우리의 수업을 위한 서브도메인이 만들어져 있습니다. [www.stanfordterminalcloud.com](https://www.stanfordterminalcloud.com) 계정을 등록하세요. 이번 숙제에 대한 스냅샷은 [여기](https://www.stanfordterminalcloud.com/snapshot/49f5a1ea15dc424aec19155b3398784d57c55045435315ce4f8b96b62819ef65)에서 찾아볼 수 있습니다. 만약 수업에 등록되었다면, TA(see Piazza for more information)에게 이 수업을 위한 Terminal 예산을 요구할 수 있습니다. 처음 스냅샷을 실행시키면, 수업을 위한 모든 것이 설치되어 있어서 바로 숙제를 수행할 수 있습니다. [여기](/terminal-tutorial)에 Terminal을 위한 간단한 튜토리얼을 작성해 뒀습니다.
+Terminal에는 우리의 수업을 위한 서브도메인이 만들어져 있습니다. [www.stanfordterminalcloud.com](https://www.stanfordterminalcloud.com) 계정을 등록하세요. 이번 숙제에 대한 스냅샷은 [여기](https://www.stanfordterminalcloud.com/snapshot/49f5a1ea15dc424aec19155b3398784d57c55045435315ce4f8b96b62819ef65)에서 찾아볼 수 있습니다. 만약 수업에 등록되었다면, TA(see Piazza for more information)에게 이 수업을 위한 Terminal 예산을 요구할 수 있습니다. 처음 스냅샷을 실행시키면, 수업을 위한 모든 것이 설치되어 있어서 바로 숙제를 시작할 수 있습니다. [여기](/terminal-tutorial)에 Terminal을 위한 간단한 튜토리얼을 작성해 뒀습니다.
 
 ### 로컬 환경
 [여기](http://vision.stanford.edu/teaching/cs231n/winter1516_assignment1.zip)에서 압축파일을 다운받고 다음을 따르세요.
 
 **[선택 1] Use Anaconda:**
-과학, 수학, 공학, 데이터 분석을 위한 다양하고 유명한 패키지들을 담고있는 [Anaconda](https://www.continuum.io/downloads)를 사용하여 설치하는 것이 즐겨 쓰이는 방법입니다. 설치가 다 되면 모든 요구사항을 넘기고 바로 숙제를 수행해도 좋습니다.
+과학, 수학, 공학, 데이터 분석을 위한 다양하고 유명한 패키지들을 담고있는 [Anaconda](https://www.continuum.io/downloads)를 사용하여 설치하는 것이 즐겨 쓰이는 방법입니다. 설치가 다 되면 모든 요구사항을 넘기고 바로 숙제를 시작해도 좋습니다.
 
 **[선택 2] Manual install, virtual environment:**
 만약 Anaconda 대신 좀 더 일반적이고 위험한 방법을 택하고 싶다면 프로젝트를 위한 [virtual environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/)를 만들 수 있습니다. 만약 virtual environment를 사용하지 않는다면 모든 코드가 컴퓨터에 전역적으로 종속되게 설치됩니다. virtual environment의 설정은 아래를 참조하세요.
@@ -41,7 +41,7 @@ deactivate                       # virtual environment를 종료합니다.
 ~~~
 
 **Download data:**
-먼저 숙제를 수행하기전에 CIFAR-10 dataset를 다운로드해야 합니다. 아래를 `assignment1` 폴더에서 실행하세요:
+먼저 숙제를 시작하기전에 CIFAR-10 dataset를 다운로드해야 합니다. 아래를 `assignment1` 폴더에서 실행하세요:
 
 ~~~bash
 cd cs231n/datasets
@@ -59,23 +59,23 @@ CIFAR-10 data를 받았다면, `assignment1` 폴더의 IPython notebook server�
 
 ### Q1: k-Nearest Neighbor 분류기 (20 points)
 
-IPython Notebook **knn.ipynb**이 kNN 분류기를 수행하는 것을 안내합니다. 
+IPython Notebook **knn.ipynb**이 kNN 분류기를 구현하는 것을 안내합니다. 
 
 ### Q2: Support Vector Machine 훈련 (25 points)
 
-IPython Notebook **svm.ipynb**이 SVM 분류기를 수행하는 것을 안내합니다.
+IPython Notebook **svm.ipynb**이 SVM 분류기를 구현하는 것을 안내합니다.
 
 ### Q3: Softmax 분류기 실행하기 (20 points)
 
-IPython Notebook **softmax.ipynb**이 Softmax 분류기를 수행하는 것을 안내합니다.
+IPython Notebook **softmax.ipynb**이 Softmax 분류기를 구현하는 것을 안내합니다.
 
 ### Q4: Two-Layer Neural Network (25 points)
 
-IPython Notebook **two_layer_net.ipynb**이 two-layer neural network 분류기를 수행하는 것을 안내합니다.
+IPython Notebook **two_layer_net.ipynb**이 two-layer neural network 분류기를 구현하는 것을 안내합니다.
 
-### Q5: Higher Level Representations: 이미지 특징 (10 points)
+### Q5: 이미지 특징을 고차원으로 표현하기 (10 points)
 
-IPython Notebook **features.ipynb**을 사용하여 higher-level representations이 raw pixel보다 개선이 이루어졌는지 검사합니다.
+IPython Notebook **features.ipynb**을 사용하여 단순한 이미지 픽셀(화소)보다 고차원의 표현이 효과적인지 검사합니다.
 
 ### Q6: 추가 과제: 뭔가 더 해보세요! (+10 points)
 이번 과제와 관련된 다른 것들을 작성한 코드로 분석하고 연구해보세요. 예를 들어, 질문하고 싶은 흥미로운 질문이 있나요? 통찰력 있는 시각화를 작성할 수 있나요? 아니면 다른 재미있는 살펴볼 거리가 있나요? 또는 손실 함수(loss function)을 조금씩 변형해가며 실험해볼 수도 있을 것입니다. 만약 다른 멋있는 것을 시도해본다면 추가로 10 points를 얻을 수 있고 강의에 수행한 결과가 실릴 수 있습니다.
