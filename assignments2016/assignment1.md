@@ -78,4 +78,4 @@ IPython Notebook **two_layer_net.ipynb**이 two-layer neural network 분류기�
 IPython Notebook **features.ipynb**을 사용하여 higher-level representations이 raw pixel보다 개선이 이루어졌는지 검사합니다.
 
 ### Q6: 추가 과제: 뭔가 더 해보세요! (+10 points)
-이번 과제와 관련된 다른 것들을 작성한 코드로 분석하고 연구해보세요. 예를 들어, 질문하고 싶은 흥미로운 질문이 있나요? 통찰력 있는 시각화를 작성할 수 있나요? 아니면 다른 재미있는 살펴볼 거리가 있나요? Or maybe you can experiment with a spin on the loss function 만약 다른 멋있는 것을 시도해본다면 추가로 10 points를 얻을 수 있고 강의에 수행한 결과가 실릴 수 있습니다.
+이번 과제와 관련된 다른 것들을 작성한 코드로 분석하고 연구해보세요. 예를 들어, 질문하고 싶은 흥미로운 질문이 있나요? 통찰력 있는 시각화를 작성할 수 있나요? 아니면 다른 재미있는 살펴볼 거리가 있나요? 또는 손실 함수(loss function)을 조금씩 변형해가며 실험해볼 수도 있을 것입니다. 만약 다른 멋있는 것을 시도해본다면 추가로 10 points를 얻을 수 있고 강의에 수행한 결과가 실릴 수 있습니다.
