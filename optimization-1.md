@@ -49,7 +49,7 @@ The loss functions we'll look at in this class are usually defined over very hig
   </div>
 </div>
 
-We can explain the piecewise-linear structure of the loss function by examing the math. For a single example we have:
+We can explain the piecewise-linear structure of the loss function by examining the math. For a single example we have:
 
 $$
 L\_i = \sum\_{j\neq y\_i} \left[ \max(0, w\_j^Tx\_i - w\_{y\_i}^Tx\_i + 1) \right]
@@ -137,7 +137,7 @@ With the best **W** this gives an accuracy of about **15.5%**. Given that guessi
 <a name='opt2'></a>
 #### Strategy #2: Random Local Search
 
-The first strategy you may think of is to to try to extend one foot in a random direction and then take a step only if it leads downhill. Concretely, we will start out with a random \\(W\\), generate random perturbations \\( \delta W \\) to it and if the loss at the perturbed \\(W + \delta W\\) is lower, we will perform an update. The code for this procedure is as follows:
+The first strategy you may think of is to try to extend one foot in a random direction and then take a step only if it leads downhill. Concretely, we will start out with a random \\(W\\), generate random perturbations \\( \delta W \\) to it and if the loss at the perturbed \\(W + \delta W\\) is lower, we will perform an update. The code for this procedure is as follows:
 
 ```python
 W = np.random.randn(10, 3073) * 0.001 # generate random starting W
@@ -268,7 +268,7 @@ for step_size_log in [-10, -9, -8, -7, -6, -5,-4,-3,-2,-1]:
 <a name='analytic'></a>
 #### Computing the gradient analytically with Calculus
 
-The numerical gradient is very simple to compute using the finite difference approximation, but the downside is that it is approximate (since we have to pick a small value of *h*, while the true gradient is defined as the limit as *h* goes to zero), and that it is very computationally expensive to compute. The second way to compute the gradient is analytically using Calculus, which allows us to derive a direct formula for the gradient (no approximations) that is also very fast to compute. However, unlike the numerical gradient it can be more error prone to implement, which is why in practice it is very common to compute the analytic gradient and compare it to the numerical gradient to check the correctnes of your implementation. This is called a **gradient check**.
+The numerical gradient is very simple to compute using the finite difference approximation, but the downside is that it is approximate (since we have to pick a small value of *h*, while the true gradient is defined as the limit as *h* goes to zero), and that it is very computationally expensive to compute. The second way to compute the gradient is analytically using Calculus, which allows us to derive a direct formula for the gradient (no approximations) that is also very fast to compute. However, unlike the numerical gradient it can be more error prone to implement, which is why in practice it is very common to compute the analytic gradient and compare it to the numerical gradient to check the correctness of your implementation. This is called a **gradient check**.
 
 Lets use the example of the SVM loss function for a single datapoint:
 
@@ -341,5 +341,5 @@ In this section,
 - We discussed the tradeoffs between computing the **numerical** and **analytic** gradient. The numerical gradient is simple but it is approximate and expensive to compute. The analytic gradient is exact, fast to compute but more error-prone since it requires the derivation of the gradient with math. Hence, in practice we always use the analytic gradient and then perform a **gradient check**, in which its implementation is compared to the numerical gradient.
 - We introduced the **Gradient Descent** algorithm which iteratively computes the gradient and performs a parameter update in loop.
 
-**Coming up:** The core takeaway from this section is that the ability to compute the gradient of a loss function with respect to its weights (and have some intuitive understanding of it) is the most important skill needed to design, train and understand neural networks. In the next section we will develop proficiency in computing the gradient analytically using the chain rule, otherwise also refered to as **backpropagation**. This will allow us to efficiently optimize relatively arbitrary loss functions that express all kinds of Neural Networks, including Convolutional Neural Networks.
+**Coming up:** The core takeaway from this section is that the ability to compute the gradient of a loss function with respect to its weights (and have some intuitive understanding of it) is the most important skill needed to design, train and understand neural networks. In the next section we will develop proficiency in computing the gradient analytically using the chain rule, otherwise also referred to as **backpropagation**. This will allow us to efficiently optimize relatively arbitrary loss functions that express all kinds of Neural Networks, including Convolutional Neural Networks.
 
