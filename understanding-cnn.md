@@ -29,7 +29,7 @@ Several approaches for understanding and visualizing Convolutional Networks have
   <img src="/assets/cnnvis/filt1.jpeg" width="49%">
   <img src="/assets/cnnvis/filt2.jpeg" width="49%">
   <div class="figcaption">
-    Typical-looking filters on the first CONV layer (left), and the 2nd CONV layer (right) of a trained AlexNet. Notice that the first-layer weights are very nice and smooth, indicating nicely converged network. The color/grayscale features are clustered because the AlexNet contains two separate streams of processing, and an apparent consequence of this architecture is that one stream develops high-frequency grayscale features and the other low-frequency color features. The 2nd CONV layer weights are not as interpretible, but it is apparent that they are still smooth, well-formed, and absent of noisy patterns.
+    Typical-looking filters on the first CONV layer (left), and the 2nd CONV layer (right) of a trained AlexNet. Notice that the first-layer weights are very nice and smooth, indicating nicely converged network. The color/grayscale features are clustered because the AlexNet contains two separate streams of processing, and an apparent consequence of this architecture is that one stream develops high-frequency grayscale features and the other low-frequency color features. The 2nd CONV layer weights are not as interpretable, but it is apparent that they are still smooth, well-formed, and absent of noisy patterns.
   </div>
 </div>
 
@@ -44,7 +44,7 @@ Another visualization technique is to take a large dataset of images, feed them 
   </div>
 </div>
 
-One problem with this approach is that ReLU neurons do not necessarily have any semantic meaning by themselves. Rather, it is more appropriate to think of multiple ReLU neurons as the basis vectors of some space that represents in image patches. In other words, the visualization is showing the patches at the edge of the cloud of representations, along the (arbitrary) axes that correspond to the filter weights. This can also be seen by the fact that neurons in a ConvNet operate linearly over the input space, so any arbitrary rotation of that space is a no-op. This point was further argued in [Intriguing properties of neural networks](http://arxiv.org/abs/1312.6199) by Szegedy et al., where they perform a similar visualization along aribtrary directions in the representation space.
+One problem with this approach is that ReLU neurons do not necessarily have any semantic meaning by themselves. Rather, it is more appropriate to think of multiple ReLU neurons as the basis vectors of some space that represents in image patches. In other words, the visualization is showing the patches at the edge of the cloud of representations, along the (arbitrary) axes that correspond to the filter weights. This can also be seen by the fact that neurons in a ConvNet operate linearly over the input space, so any arbitrary rotation of that space is a no-op. This point was further argued in [Intriguing properties of neural networks](http://arxiv.org/abs/1312.6199) by Szegedy et al., where they perform a similar visualization along arbitrary directions in the representation space.
 
 ### Embedding the codes with t-SNE 
 
