@@ -4,27 +4,27 @@ mathjax: true
 permalink: /classification/
 ---
 
-This is an introductory lecture designed to introduce people from outside of Computer Vision to the Image Classification problem, and the data-driven approach. The Table of Contents:
+본 강의노트는 컴퓨터비전 외의 분야를 공부하던 사람들에게 Image Classification(이미지 분류) 문제와,  data-driven approach(데이터 기반 방법론)을 소개한다. 목차는 다음과 같다.
 
-- [Intro to Image Classification, data-driven approach, pipeline](#intro)
-- [Nearest Neighbor Classifier](#nn)
-  - [k-Nearest Neighbor](#knn)
-- [Validation sets, Cross-validation, hyperparameter tuning](#val)
-- [Pros/Cons of Nearest Neighbor](#procon)
-- [Summary](#summary)
-- [Summary: Applying kNN in practice](#summaryapply)
-- [Further Reading](#reading)
+- [Image Classification(이미지 분류), data-driven approach(데이터 기반 방법론), pipeline(파이프라인)](#intro)
+- [Nearest Neighbor 분류기](#nn)
+  - [k-Nearest Neighbor 알고리즘](#knn)
+- [Validation sets, Cross-validation, hyperparameter 튜닝](#val)
+- [Nearest Neighbor의 장단점](#procon)
+- [요약](#summary)
+- [요약: 실제 문제에 kNN 적용하기](#summaryapply)
+- [읽을 자료](#reading)
 
 <a name='intro'></a>
-## Image Classification
 
-**Motivation**. In this section we will introduce the Image Classification problem, which is the task of assigning an input image one label from a fixed set of categories. This is one of the core problems in Computer Vision that, despite its simplicity, has a large variety of practical applications. Moreover, as we will see later in the course, many other seemingly distinct Computer Vision tasks (such as object detection, segmentation) can be reduced to image classification.
+## Image Classification, 이미지 분류
 
-**Example**. For example, in the image below an image classification model takes a single image and assigns probabilities to 4 labels, *{cat, dog, hat, mug}*. As shown in the image, keep in mind that to a computer an image is represented as one large 3-dimensional array of numbers. In this example, the cat image is 248 pixels wide, 400 pixels tall, and has three color channels Red,Green,Blue (or RGB for short). Therefore, the image consists of 248 x 400 x 3 numbers, or a total of 297,600 numbers. Each number is an integer that ranges from 0 (black) to 255 (white). Our task is to turn this quarter of a million numbers into a single label, such as *"cat"*.
+**동기**. 이 섹션에서는 이미지 분류 문제에 대해 다룰 것이다. 이미지 분류 문제란, 입력 이미지를 미리 정해진 카테고리 중 하나인 라벨로 분류하는 문제다. 문제 정의는 매우 간단하지만 다양한 활용 가능성이 있는 컴퓨터 비전 분야의 핵심적인 문제 중의 하나이다. 강의의 나중 파트에서도 살펴보겠지만, 이미지 분류와 멀어보이는 다른 컴퓨터 비전 분야의 여러 문제들 (물체 검출, 영상 분할 등)이 영상 분류 문제를 푸는 것으로 인해 해결될 수 있다.
 
+**예시**. 예를 들어, 아래 그림의 이미지 분류 모델은 하나의 이미지와 4개의 분류가능한 라벨 *{cat, dog, hat, mug}*  이 있다. 그림에서 보다시피, 컴퓨터에서 이미지는 3차원 배열로 표현된다. 이 예시에서 고양이 이미지는 가로 248픽셀(모니터의 화면을 구성하는 최소 단위, 역자 주), 세로 400픽셀로 구성되어 있고 3개의 색상 채널이 있는데 각각 Red, Green, Blue(RGB)로 불린다. 따라서 이 이미지는 248 x 400 x 3개(총 297,500개)의 픽셀로 구성되어 있다. 각 픽셀의 값은 0~255 범위의 정수값이다. 이미지 분류 문제는 이 수많은 값들을 *"cat"* 이라는 하나의 라벨로 변경하는 것이다.
 <div class="fig figcenter fighighlight">
-  <img src="/assets/classify.png">
-  <div class="figcaption">The task in Image Classification is to predict a single label (or a distribution over labels as shown here to indicate our confidence) for a given image. Images are 3-dimensional arrays of integers from 0 to 255, of size Width x Height x 3. The 3 represents the three color channels Red, Green, Blue.</div>
+  <img src="{{site.baseurl}}/assets/classify.png">
+  <div class="figcaption">이미지 분류는 이미지가 주어졌을 때 그에 대한 라벨(각 라벨에 대한 신뢰도를 표시하는 분류)을 예측하는 일이다. 이미지는 0~255 정수 범위의 값을 가지는 Width(너비) x Height(높이) x 3의 크기의 3차원 배열이다. 3은 Red, Green, Blue로 구성된 3개의 채널을 의미한다.</div>
 </div>
 
 **Challenges**. Since this task of recognizing a visual concept (e.g. cat) is relatively trivial for a human to perform, it is worth considering the challenges involved from the perspective of a Computer Vision algorithm. As we present (an inexhaustive) list of challenges below, keep in mind the raw representation of images as a 3-D array of brightness values:
