@@ -294,112 +294,112 @@ problems that we are facing today that the
 61
 00:06:57,321 --> 00:07:02,860
 massive amount of data and the
-challenges of the dark matter so
+challenges of the dark matter.
 
 62
 00:07:02,860 --> 00:07:07,379
-comfortable vision as a field that
+So, computer vision is a field that
 touches upon many other fields of
 
 63
 00:07:07,379 --> 00:07:12,740
-studies so I am sure that even City
-heater sitting here
+studies. So, I am sure that even sitting here,
 
 64
 00:07:12,740 --> 00:07:18,050
-mania vehicle from computer size but
-many of you come from biology psychology
+many of you come from computer science, but
+many of you come from biology, psychology,
 
 65
 00:07:18,050 --> 00:07:24,389
 are specializing in natural language
-processing or graphics for robotics or
+processing or graphics or robotics or
 
 66
 00:07:24,389 --> 00:07:30,680
-or you know medical imaging and so on so
-I love field computer vision is really a
+or you know medical imaging and so on.
+So, as a field, computer vision is really a
 
 67
 00:07:30,680 --> 00:07:37,329
-truly interdisciplinary field what the
-problems we work on the models we use
+truly interdisciplinary field.
+What the problems we work on, the models we use
 
 68
 00:07:37,329 --> 00:07:43,849
-such as engineering physics biology
-psychology compare size of mathematics
+touches an engineering, physics, biology,
+psychology computer science and mathematics.
 
 69
 00:07:43,850 --> 00:07:51,030
-so just a little bit of a more personal
-touch I am the director of the division
+So just a little bit of a more personal touch,
+I am the director of the computer vision lab
 
 70
-00:07:51,029 --> 00:07:58,589
-lab stuff in our lab will I work with
-graduate students and postdocs and even
+00:07:51,031 --> 00:07:58,589
+at the Stanford. In our lab,
+I work with graduate students and post-docs and even
 
 71
 00:07:58,589 --> 00:08:04,669
-under ladders students on the number of
+under-graduate students on the number of
 topics and most dear to our own research
 
 72
 00:08:04,670 --> 00:08:10,540
-who some of them you know the great just
-come from my lab
+who some of them, you know,
+Andre, Justin come from my lab.
 
 73
 00:08:10,540 --> 00:08:17,780
-number of two years come from my lab we
-work on machine learning which is part
+A number of TAs come from my lab.
+we work on machine learning which is part
 
 74
-00:08:17,779 --> 00:08:26,109
-of a superset of deep learning we work a
-lot of science and neuroscience as well
+00:08:17,781 --> 00:08:26,109
+of a superset of deep learning.
+We work a lot on cognitive science and neuroscience as well
 
 75
 00:08:26,110 --> 00:08:31,270
-as the intersection between an LPN
-speech so that's that's the kind of
+as the intersection between an NLP and
+speech. so that's that's the kind of
 
 76
 00:08:31,269 --> 00:08:40,399
-landscape of computer vision research
-that my lab works so also to put things
+landscape of computer vision research that my lab works.
+So, also to put things
 
 77
 00:08:40,399 --> 00:08:45,600
-in a little more perspective what other
-computer vision classes now we offer
+in a little more perspective, what other
+computer vision classes that we offer
 
 78
 00:08:45,600 --> 00:08:51,050
-here at stuff or through the computer
-science department are clearly you're in
+here at Stanford through the computer science department.
+Clearly, you're in
 
 79
 00:08:51,049 --> 00:08:59,629
-this class es 21 so you some of you who
+this class CS231n.
+So, some of you who
 have never taken computer vision
 
 80
 00:08:59,629 --> 00:09:06,220
-probably heard of commuters and for the
-first time probably should have already
+probably heard of computer vision for the first time.
+probably should have already
 
 81
 00:09:06,220 --> 00:09:14,730
-done vs 131 that's a cool class of
-previous quarter we offer and then and
+done CS131. That's an intro class of
+previous quarter we offered.
 
 82
 00:09:14,730 --> 00:09:19,779
-then next quarter which normally is
-offer this quarter but this year as a
+and then next quarter which normally is
+offered this quarter but this year as a
 
 83
 00:09:19,779 --> 00:09:25,069
@@ -408,18 +408,19 @@ graduate-level computer vision class
 
 84
 00:09:25,070 --> 00:09:31,840
-'cause cs2 30180 offered by professors
-so he'll suffer si who works in robotic
+called CS231a offered by professor
+Silvio Savarese who works in robotic
 
 85
 00:09:31,840 --> 00:09:47,230
-3d vision and a lot of you ask the
-question that this classiest 231 versus
+3D vision and a lot of you ask the
+question that do these replace each other?
+CS231n versus
 
 86
 00:09:47,230 --> 00:09:56,639
-the S two thirty 18 and the other is
-know if you're interested in a broader
+CS231a and the answer is no.
+if you're interested in a broader
 
 87
 00:09:56,639 --> 00:10:03,220
@@ -428,53 +429,53 @@ vision as well as some of the
 
 88
 00:10:03,220 --> 00:10:11,009
-fundamental fundamental topics that come
-that relay 223 division robotic vision
+fundamental topics that comes
+that related to 3D vision, robotic vision
 
 89
 00:10:11,009 --> 00:10:17,269
 and visual recognition you should
-consider taking in 23188 that is the
+consider taking 231a. That is the
 
 90
 00:10:17,269 --> 00:10:26,039
-more general class 231 end which will go
+more general class. 231n which will go
 into starting today more deeply focuses
 
 91
 00:10:26,039 --> 00:10:33,329
-on a specific Ando of both problem and
-model model is your network and the
+on a specific ando of both problem and
+model. Model is neural network and the
 
 92
 00:10:33,330 --> 00:10:38,580
-undertow is visual recognition mostly
+ando is visual recognition mostly,
 but of course they have a little bit of
 
 93
-00:10:38,580 --> 00:10:47,990
-overlap but that's the major difference
-next next quarter we also have possibly
+00:10:38, 580 --> 00:10:47,990
+overlap but that's the major difference.
+Next quarter, we also have possibly
 
 94
 00:10:47,990 --> 00:10:55,590
-a couple of a couple of advanced seminar
+a couple of advanced seminar
 level class but that's still in the
 
 95
 00:10:55,590 --> 00:11:01,649
-formations so you just have to check the
-syllabus so that's the kind of curcumin
+formations so you just have to check the syllabus.
+So, that's the kind of computer
 
 96
 00:11:01,649 --> 00:11:11,409
-division curricula we offer this year at
-Stanford in question so far yes
+vision curriculum we offer this year at
+Stanford. Any question so far? Yes
 
 97
 00:11:11,409 --> 00:11:20,879
-131 is not a strict requirement for this
-class but you also see that if you've
+131 is not a strict requirement for this class,
+but you should see that if you've
 
 98
 00:11:20,879 --> 00:11:25,570
@@ -483,16 +484,16 @@ first time I suggest you find a way to
 
 99
 00:11:25,570 --> 00:11:33,830
-catch up because this class has shrooms
-a basic level of understanding of of
+catch up because this class assumes
+a basic level of understanding of
 
 100
 00:11:33,830 --> 00:11:42,560
-computer vision you can browse the notes
+computer vision. You can browse the notes
 and so on
 
 101
-00:11:42,559 --> 00:11:49,619
+00:11:42,561 --> 00:11:49,619
 today is that I will give a very brief
 broad stroke history of computer vision
 
