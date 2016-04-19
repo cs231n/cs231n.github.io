@@ -489,22 +489,22 @@ a basic level of understanding of
 
 100
 00:11:33,830 --> 00:11:42,560
-computer vision. You can browse the notes
-and so on
+computer vision.
+ You can browse the notes and so on.
 
 101
 00:11:42,561 --> 00:11:49,619
-today is that I will give a very brief
+Okay, so the rest of today is that I will give a very brief
 broad stroke history of computer vision
 
 102
 00:11:49,620 --> 00:11:55,519
-and then we'll talk about 231 and a
+and then we'll talk about 231n
 little bit in terms of the organization
 
 103
 00:11:55,519 --> 00:12:01,409
-of the class they really care about in
+of the class. I actually really care about sharing
 with you this brief history of computer
 
 104
@@ -515,37 +515,38 @@ here primarily because of your interest
 105
 00:12:07,480 --> 00:12:11,990
 in this really interesting tool called
-deeply and this is the purpose of this
+deep learning and this is the purpose of this
 
 106
 00:12:11,990 --> 00:12:16,370
-class will offer you an in-depth look
+class.
+We're offering you an in-depth look
 and then
 
 107
 00:12:16,370 --> 00:12:22,470
 and just journey through the of the what
-this deeply model is but without
+this deep learning model is but without
 
 108
 00:12:22,470 --> 00:12:28,050
-understanding the problem domain without
-thinking deeply about what this problem
+understanding the problem domain, without
+thinking deeply about what this problem is,
 
 109
-00:12:28,049 --> 00:12:37,849
-is it's very hard for you to to go out
+00:12:28,051 --> 00:12:37,849
+it's very hard for you to to go out
 to be an inventor of the next model that
 
 110
 00:12:37,850 --> 00:12:43,320
-really solve the big problems vision or
+really solves the big problem in vision or
 to be you know developing developing
 
 111
 00:12:43,320 --> 00:12:52,379
-making impactful work in solving a heart
-problem and also in general problem
+making impactful work in solving a hard
+problem. and also in general problem
 
 112
 00:12:52,379 --> 00:12:58,860
@@ -554,17 +555,17 @@ themselves are never never fully
 
 113
 00:12:58,860 --> 00:13:00,129
-decoupled
+decoupled.
 
 114
 00:13:00,129 --> 00:13:05,360
-inform each other and you'll see through
+They inform each other and you'll see through
 the history of deep learning a little
 
 115
 00:13:05,360 --> 00:13:13,000
 bit that the coalition on your network
-architecture come from the meat to solve
+architecture come from the need to solve
 
 116
 00:13:13,000 --> 00:13:15,289
@@ -572,7 +573,7 @@ a vision problem
 
 117
 00:13:15,289 --> 00:13:23,449
-vision problem helps the the planning
+vision problem helps the the deep learning
 algorithm to evolve and I'm back and
 
 118
@@ -582,17 +583,17 @@ know I want you to finish this course I
 
 119
 00:13:29,350 --> 00:13:34,300
-feel proud that you're still enough
-vision and of deep learning so you you
+feel proud that you're student of
+computer vision and of deep learning so you you
 
 120
-00:13:34,299 --> 00:13:39,528
-have this bullshit all set and the
+00:13:34,301 --> 00:13:39,528
+have this both tool-set and the
 in-depth understanding of how to use the
 
 121
 00:13:39,528 --> 00:13:46,750
-tools to to to to tackle important
+tool-set to to to to tackle important
 problems so it's a brief history but
 
 122
