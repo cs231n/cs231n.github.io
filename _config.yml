@@ -8,5 +8,12 @@ twitter_username: cs231n
 github_username:  cs231n
 
 # Build settings
-markdown: redcarpet
+markdown: kramdown
 permalink: pretty
+
+highlighter: rouge
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
+
