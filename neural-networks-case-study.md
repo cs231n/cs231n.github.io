@@ -19,6 +19,7 @@ Table of Contents:
 In this section we'll walk through a complete implementation of a toy Neural Network in 2 dimensions. We'll first implement a simple linear classifier and then extend the code to a 2-layer Neural Network. As we'll see, this extension is surprisingly simple and very few changes are necessary.
 
 <a name='data'></a>
+
 ## Generating some data
 
 Lets generate a classification dataset that is not easily linearly separable. Our favorite example is the spiral dataset, which can be generated as follows:
@@ -49,9 +50,11 @@ plt.scatter(X[:, 0], X[:, 1], c=y, s=40, cmap=plt.cm.Spectral)
 Normally we would want to preprocess the dataset so that each feature has zero mean and unit standard deviation, but in this case the features are already in a nice range from -1 to 1, so we skip this step.
 
 <a name='linear'></a>
+
 ## Training a Softmax Linear Classifier
 
 <a name='init'></a>
+
 ### Initialize the parameters
 
 Lets first train a Softmax classifier on this classification dataset. As we saw in the previous sections, the Softmax classifier has a linear score function and uses the cross-entropy loss. The parameters of the linear classifier consist of a weight matrix `W` and a bias vector `b` for each class. Lets first initialize these parameters to be random numbers:
@@ -65,6 +68,7 @@ b = np.zeros((1,K))
 Recall that we `D = 2` is the dimensionality and `K = 3` is the number of classes. 
 
 <a name='scores'></a>
+
 ### Compute the class scores
 
 Since this is a linear classifier, we can compute all class scores very simply in parallel with a single matrix multiplication:
@@ -77,20 +81,21 @@ scores = np.dot(X, W) + b
 In this example we have 300 2-D points, so after this multiplication the array `scores` will have size [300 x 3], where each row gives the class scores corresponding to the 3 classes (blue, red, yellow).
 
 <a name='loss'></a>
+
 ### Compute the loss
 
 The second key ingredient we need is a loss function, which is a differentiable objective that quantifies our unhappiness with the computed class scores. Intuitively, we want the correct class to have a higher score than the other classes. When this is the case, the loss should be low and otherwise the loss should be high. There are many ways to quantify this intuition, but in this example lets use the cross-entropy loss that is associated with the Softmax classifier. Recall that if \\(f\\) is the array of class scores for a single example (e.g. array of 3 numbers here), then the Softmax classifier computes the loss for that example as:
 
 $$
-L\_i = -\log\left(\frac{e^{f\_{y\_i}}}{ \sum\_j e^{f\_j} }\right)
+L_i = -\log\left(\frac{e^{f_{y_i}}}{ \sum_j e^{f_j} }\right)
 $$
 
-We can see that the Softmax classifier interprets every element of \\(f\\) as holding the (unnormalized) log probabilities of the three classes. We exponentiate these to get (unnormalized) probabilities, and then normalize them to get probabilites. Therefore, the expression inside the log is the normalized probability of the correct class. Note how this expression works: this quantity is always between 0 and 1. When the probability of the correct class is very small (near 0), the loss will go towards (postiive) infinity. Conversely, when the correct class probability goes towards 1, the loss will go towards zero because \\(log(1) = 0\\). Hence, the expression for \\(L\_i\\) is low when the correct class probability is high, and it's very high when it is low. 
+We can see that the Softmax classifier interprets every element of \\(f\\) as holding the (unnormalized) log probabilities of the three classes. We exponentiate these to get (unnormalized) probabilities, and then normalize them to get probabilites. Therefore, the expression inside the log is the normalized probability of the correct class. Note how this expression works: this quantity is always between 0 and 1. When the probability of the correct class is very small (near 0), the loss will go towards (postiive) infinity. Conversely, when the correct class probability goes towards 1, the loss will go towards zero because \\(log(1) = 0\\). Hence, the expression for \\(L_i\\) is low when the correct class probability is high, and it's very high when it is low. 
 
 Recall also that the full Softmax classifier loss is then defined as the average cross-entropy loss over the training examples and the regularization:
 
 $$
-L =  \underbrace{ \frac{1}{N} \sum\_i L\_i }\_\text{data loss} + \underbrace{ \frac{1}{2} \lambda \sum\_k\sum\_l W\_{k,l}^2 }\_\text{regularization loss} \\\\
+L =  \underbrace{ \frac{1}{N} \sum_i L_i }_\text{data loss} + \underbrace{ \frac{1}{2} \lambda \sum_k\sum_l W_{k,l}^2 }_\text{regularization loss} \\\\
 $$
 
 Given the array of `scores` we've computed above, we can compute the loss. First, the way to obtain the probabilities is straight forward:
@@ -120,21 +125,22 @@ loss = data_loss + reg_loss
 In this code, the regularization strength \\(\lambda\\) is stored inside the `reg`. The convenience factor of `0.5` multiplying the regularization will become clear in a second. Evaluating this in the beginning (with random parameters) might give us `loss = 1.1`, which is `np.log(1.0/3)`, since with small initial random weights all probabilities assigned to all classes are about one third. We now want to make the loss as low as possible, with `loss = 0` as the absolute lower bound. But the lower the loss is, the higher are the probabilities assigned to the correct classes for all examples.
 
 <a name='grad'></a>
+
 ### Computing the Analytic Gradient with Backpropagation
 
 We have a way of evaluating the loss, and now we have to minimize it. We'll do so with gradient descent. That is, we start with random parameters (as shown above), and evaluate the gradient of the loss function with respect to the parameters, so that we know how we should change the parameters to decrease the loss. Lets introduce the intermediate variable \\(p\\), which is a vector of the (normalized) probabilities. The loss for one example is:
 
 $$
-p\_k = \frac{e^{f\_k}}{ \sum\_j e^{f\_j} } \hspace{1in} L\_i =-\log\left(p\_{y\_i}\right)
+p_k = \frac{e^{f_k}}{ \sum_j e^{f_j} } \hspace{1in} L_i =-\log\left(p_{y_i}\right)
 $$
 
-We now wish to understand how the computed scores inside \\(f\\) should change to decrease the loss \\(L\_i\\) that this example contributes to the full objective. In other words, we want to derive the gradient \\( \partial L\_i / \partial f\_k \\). The loss \\(L\_i\\) is computed from \\(p\\), which in turn depends on \\(f\\). It's a fun exercise to the reader to use the chain rule to derive the gradient, but it turns out to be extremely simple and interpretible in the end, after a lot of things cancel out:
+We now wish to understand how the computed scores inside \\(f\\) should change to decrease the loss \\(L_i\\) that this example contributes to the full objective. In other words, we want to derive the gradient \\( \partial L_i / \partial f_k \\). The loss \\(L_i\\) is computed from \\(p\\), which in turn depends on \\(f\\). It's a fun exercise to the reader to use the chain rule to derive the gradient, but it turns out to be extremely simple and interpretible in the end, after a lot of things cancel out:
 
 $$
-\frac{\partial L\_i }{ \partial f\_k } = p\_k - \mathbb{1}(y\_i = k)
+\frac{\partial L_i }{ \partial f_k } = p_k - \mathbb{1}(y_i = k)
 $$
 
-Notice how elegant and simple this expression is. Suppose the probabilities we computed were `p = [0.2, 0.3, 0.5]`, and that the correct class was the middle one (with probability 0.3). According to this derivation the gradient on the scores would be `df = [0.2, -0.7, 0.5]`. Recalling what the interpretation of the gradient, we see that this result is highly intuitive: increasing the first or last element of the score vector `f` (the scores of the incorrect classes) leads to an *increased* loss (due to the positive signs +0.2 and +0.5) - and increasing the loss is bad, as expected. However, increasing the score of the correct class has *negative* influence on the loss. The gradient of -0.7 is telling us that increasing the correct class score would lead to a decrease of the loss \\(L\_i\\), which makes sense. 
+Notice how elegant and simple this expression is. Suppose the probabilities we computed were `p = [0.2, 0.3, 0.5]`, and that the correct class was the middle one (with probability 0.3). According to this derivation the gradient on the scores would be `df = [0.2, -0.7, 0.5]`. Recalling what the interpretation of the gradient, we see that this result is highly intuitive: increasing the first or last element of the score vector `f` (the scores of the incorrect classes) leads to an *increased* loss (due to the positive signs +0.2 and +0.5) - and increasing the loss is bad, as expected. However, increasing the score of the correct class has *negative* influence on the loss. The gradient of -0.7 is telling us that increasing the correct class score would lead to a decrease of the loss \\(L_i\\), which makes sense. 
 
 All of this boils down to the following code. Recall that `probs` stores the probabilities of all classes (as rows) for each example. To get the gradient on the scores, which we call `dscores`, we proceed as follows:
 
@@ -155,6 +161,7 @@ dW += reg*W # don't forget the regularization gradient
 Where we see that we have backpropped through the matrix multiply operation, and also added the contribution from the regularization. Note that the regularization gradient has the very simple form `reg*W` since we used the constant `0.5` for its loss contribution (i.e. \\(\frac{d}{dw} ( \frac{1}{2} \lambda w^2) = \lambda w\\). This is a common convenience trick that simplifies the gradient expression.
 
 <a name='update'></a>
+
 ### Performing a parameter update
 
 Now that we've evaluated the gradient we know how every parameter influences the loss function. We will now perform a parameter update in the *negative* gradient direction to *decrease* the loss:
@@ -166,6 +173,7 @@ b += -step_size * db
 ```
 
 <a name='together'></a>
+
 ### Putting it all together: Training a Softmax Classifier
 
 Putting all of this together, here is the full code for training a Softmax classifier with Gradient descent:
@@ -260,6 +268,7 @@ This prints **49%**. Not very good at all, but also not surprising given that th
 </div>
 
 <a name='net'></a>
+
 ## Training a Neural Network
 
 Clearly, a linear classifier is inadequate for this dataset and we would like to use a Neural Network. One additional hidden layer will suffice for this toy data. We will now need two sets of weights and biases (for the first and second layers):

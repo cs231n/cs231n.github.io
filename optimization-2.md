@@ -16,17 +16,19 @@ Table of Contents:
 - [Summary](#summary)
 
 <a name='intro'></a>
+
 ### Introduction
 
 **Motivation**. In this section we will develop expertise with an intuitive understanding of **backpropagation**, which is a way of computing gradients of expressions through recursive application of **chain rule**. Understanding of this process and its subtleties is critical for you to understand, and effectively develop, design and debug Neural Networks.
 
 **Problem statement**. The core problem studied in this section is as follows: We are given some function \\(f(x)\\) where \\(x\\) is a vector of inputs and we are interested in computing the gradient of \\(f\\) at \\(x\\) (i.e. \\(\nabla f(x)\\) ).
 
-**Motivation**. Recall that the primary reason we are interested in this problem is that in the specific case of Neural Networks, \\(f\\) will correspond to the loss function ( \\(L\\) ) and the inputs \\(x\\) will consist of the training data and the neural network weights. For example, the loss could be the SVM loss function and the inputs are both the training data \\((x\_i,y\_i), i=1 \ldots N\\) and the weights and biases \\(W,b\\). Note that (as is usually the case in Machine Learning) we think of the training data as given and fixed, and of the weights as variables we have control over. Hence, even though we can easily use backpropagation to compute the gradient on the input examples \\(x\_i\\), in practice we usually only compute the gradient for the parameters (e.g. \\(W,b\\)) so that we can use it to perform a parameter update. However, as we will see later in the class the gradient on \\(x\_i\\) can still be useful sometimes, for example for purposes of visualization and interpreting what the Neural Network might be doing.
+**Motivation**. Recall that the primary reason we are interested in this problem is that in the specific case of Neural Networks, \\(f\\) will correspond to the loss function ( \\(L\\) ) and the inputs \\(x\\) will consist of the training data and the neural network weights. For example, the loss could be the SVM loss function and the inputs are both the training data \\((x_i,y_i), i=1 \ldots N\\) and the weights and biases \\(W,b\\). Note that (as is usually the case in Machine Learning) we think of the training data as given and fixed, and of the weights as variables we have control over. Hence, even though we can easily use backpropagation to compute the gradient on the input examples \\(x_i\\), in practice we usually only compute the gradient for the parameters (e.g. \\(W,b\\)) so that we can use it to perform a parameter update. However, as we will see later in the class the gradient on \\(x_i\\) can still be useful sometimes, for example for purposes of visualization and interpreting what the Neural Network might be doing.
 
 If you are coming to this class and you're comfortable with deriving gradients with chain rule, we would still like to encourage you to at least skim this section, since it presents a rarely developed view of backpropagation as backward flow in real-valued circuits and any insights you'll gain may help you throughout the class.
 
 <a name='grad'></a>
+
 ### Simple expressions and interpretation of the gradient
 
 Lets start simple so that we can develop the notation and conventions for more complex expressions. Consider a simple multiplication function of two numbers \\(f(x,y) = x y\\). It is a matter of simple calculus to derive the partial derivative for either input:
@@ -59,10 +61,11 @@ $$
 f(x,y) = \max(x, y) \hspace{0.5in} \rightarrow \hspace{0.5in} \frac{\partial f}{\partial x} = \mathbb{1}(x >= y) \hspace{0.5in} \frac{\partial f}{\partial y} = \mathbb{1}(y >= x)
 $$
 
-That is, the (sub)gradient is 1 on the input that was larger and 0 on the other input. Intuitively, if the inputs are \\(x = 4,y = 2\\), then the max is 4, and the function is not sensitive to the setting of \\(y\\). That is, if we were to increase it by a tiny amount \\(h\\), the function would keep outputting 4, and therefore the gradient is zero: there is no effect. Of course, if we were to change \\(y\\) by a large amount (e.g. larger than 2), then the value of \\(f\\) would change, but the derivatives tell us nothing about the effect of such large changes on the inputs of a function; They are only informative for tiny, infinitesimally small changes on the inputs, as indicated by the \\(\lim\_{h \rightarrow 0}\\) in its definition.
+That is, the (sub)gradient is 1 on the input that was larger and 0 on the other input. Intuitively, if the inputs are \\(x = 4,y = 2\\), then the max is 4, and the function is not sensitive to the setting of \\(y\\). That is, if we were to increase it by a tiny amount \\(h\\), the function would keep outputting 4, and therefore the gradient is zero: there is no effect. Of course, if we were to change \\(y\\) by a large amount (e.g. larger than 2), then the value of \\(f\\) would change, but the derivatives tell us nothing about the effect of such large changes on the inputs of a function; They are only informative for tiny, infinitesimally small changes on the inputs, as indicated by the \\(\lim_{h \rightarrow 0}\\) in its definition.
 
 
 <a name='backprop'></a>
+
 ### Compound expressions with chain rule
 
 Lets now start to consider more complicated expressions that involve multiple composed functions, such as \\(f(x,y,z) = (x + y) z\\). This expression is still simple enough to differentiate directly, but we'll take a particular approach to it that will be helpful with understanding the intuition behind backpropagation. In particular, note that this expression can be broken down into two expressions: \\(q = x + y\\) and \\(f = q z\\). Moreover, we know how to compute the derivatives of both expressions separately, as seen in the previous section. \\(f\\) is just multiplication of \\(q\\) and \\(z\\), so \\(\frac{\partial f}{\partial q} = z, \frac{\partial f}{\partial z} = q\\), and \\(q\\) is addition of \\(x\\) and \\(y\\) so \\( \frac{\partial q}{\partial x} = 1, \frac{\partial q}{\partial y} = 1 \\). However, we don't necessarily care about the gradient on the intermediate value \\(q\\) - the value of \\(\frac{\partial f}{\partial q}\\) is not useful. Instead, we are ultimately interested in the gradient of \\(f\\) with respect to its inputs \\(x,y,z\\). The **chain rule** tells us that the correct way to "chain" these gradient expressions together is through multiplication. For example, \\(\frac{\partial f}{\partial x} = \frac{\partial f}{\partial q} \frac{\partial q}{\partial x} \\). In practice this is simply a multiplication of the two numbers that hold the two gradients. Lets see this with an example:
@@ -98,6 +101,7 @@ This computation can also be nicely visualized with a circuit diagram:
 </div>
 
 <a name='intuitive'></a>
+
 ### Intuitive understanding of backpropagation
 
 Notice that backpropagation is a beautifully local process. Every gate in a circuit diagram gets some inputs and can right away compute two things: 1. its output value and 2. the *local* gradient of its inputs with respect to its output value. Notice that the gates can do this completely independently without being aware of any of the details of the full circuit that they are embedded in. However, once the forward pass is over, during backpropagation the gate will eventually learn about the gradient of its output value on the final output of the entire circuit. Chain rule says that the gate should take that gradient and multiply it into every gradient it normally computes for all of its inputs.
@@ -109,12 +113,13 @@ Lets get an intuition for how this works by referring again to the example. The 
 Backpropagation can thus be thought of as gates communicating to each other (through the gradient signal) whether they want their outputs to increase or decrease (and how strongly), so as to make the final output value higher.
 
 <a name='sigmoid'></a>
+
 ### Modularity: Sigmoid example
 
 The gates we introduced above are relatively arbitrary. Any kind of differentiable function can act as a gate, and we can group multiple gates into a single gate, or decompose a function into multiple gates whenever it is convenient. Lets look at another expression that illustrates this point:
 
 $$
-f(w,x) = \frac{1}{1+e^{-(w\_0x\_0 + w\_1x\_1 + w\_2)}}
+f(w,x) = \frac{1}{1+e^{-(w_0x_0 + w_1x_1 + w_2)}}
 $$
 
 as we will see later in the class, this expression describes a 2-dimensional neuron (with inputs **x** and weights **w**) that uses the *sigmoid activation* function. But for now lets think of this very simply as just a function from inputs *w,x* to a single number. The function is made up of multiple gates. In addition to the ones described already above (add, mul, max), there are four more:
@@ -124,7 +129,7 @@ f(x) = \frac{1}{x}
 \hspace{1in} \rightarrow \hspace{1in} 
 \frac{df}{dx} = -1/x^2 
 \\\\
-f\_c(x) = c + x
+f_c(x) = c + x
 \hspace{1in} \rightarrow \hspace{1in} 
 \frac{df}{dx} = 1 
 \\\\
@@ -132,12 +137,12 @@ f(x) = e^x
 \hspace{1in} \rightarrow \hspace{1in} 
 \frac{df}{dx} = e^x
 \\\\
-f\_a(x) = ax
+f_a(x) = ax
 \hspace{1in} \rightarrow \hspace{1in} 
 \frac{df}{dx} = a
 $$
 
-Where the functions \\(f\_c, f\_a\\) translate the input by a constant of \\(c\\) and scale the input by a constant of \\(a\\), respectively. These are technically special cases of addition and multiplication, but we introduce them as (new) unary gates here since we do need the gradients for the constants. \\(c,a\\). The full circuit then looks as follows:
+Where the functions \\(f_c, f_a\\) translate the input by a constant of \\(c\\) and scale the input by a constant of \\(a\\), respectively. These are technically special cases of addition and multiplication, but we introduce them as (new) unary gates here since we do need the gradients for the constants. \\(c,a\\). The full circuit then looks as follows:
 
 <div class="fig figleft fighighlight">
 <svg width="799" height="306"><g transform="scale(0.8)"><defs><marker id="arrowhead" refX="6" refY="2" markerWidth="6" markerHeight="4" orient="auto"><path d="M 0,0 V 4 L6,2 Z"></path></marker></defs><line x1="50" y1="30" x2="90" y2="30" stroke="black" stroke-width="1"></line><text x="55" y="24" font-size="16" fill="green">2.00</text><text x="55" y="47" font-size="16" fill="red">-0.20</text><text x="45" y="24" font-size="16" text-anchor="end" fill="black">w0</text><line x1="50" y1="100" x2="90" y2="100" stroke="black" stroke-width="1"></line><text x="55" y="94" font-size="16" fill="green">-1.00</text><text x="55" y="117" font-size="16" fill="red">0.39</text><text x="45" y="94" font-size="16" text-anchor="end" fill="black">x0</text><line x1="50" y1="170" x2="90" y2="170" stroke="black" stroke-width="1"></line><text x="55" y="164" font-size="16" fill="green">-3.00</text><text x="55" y="187" font-size="16" fill="red">-0.39</text><text x="45" y="164" font-size="16" text-anchor="end" fill="black">w1</text><line x1="50" y1="240" x2="90" y2="240" stroke="black" stroke-width="1"></line><text x="55" y="234" font-size="16" fill="green">-2.00</text><text x="55" y="257" font-size="16" fill="red">-0.59</text><text x="45" y="234" font-size="16" text-anchor="end" fill="black">x1</text><line x1="50" y1="310" x2="90" y2="310" stroke="black" stroke-width="1"></line><text x="55" y="304" font-size="16" fill="green">-3.00</text><text x="55" y="327" font-size="16" fill="red">0.20</text><text x="45" y="304" font-size="16" text-anchor="end" fill="black">w2</text><line x1="170" y1="65" x2="210" y2="65" stroke="black" stroke-width="1"></line><text x="175" y="59" font-size="16" fill="green">-2.00</text><text x="175" y="82" font-size="16" fill="red">0.20</text><circle cx="130" cy="65" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="130" y="75" font-size="20" fill="black" text-anchor="middle">*</text><line x1="90" y1="30" x2="110" y2="65" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="90" y1="100" x2="110" y2="65" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="150" y1="65" x2="170" y2="65" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="170" y1="205" x2="210" y2="205" stroke="black" stroke-width="1"></line><text x="175" y="199" font-size="16" fill="green">6.00</text><text x="175" y="222" font-size="16" fill="red">0.20</text><circle cx="130" cy="205" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="130" y="215" font-size="20" fill="black" text-anchor="middle">*</text><line x1="90" y1="170" x2="110" y2="205" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="90" y1="240" x2="110" y2="205" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="150" y1="205" x2="170" y2="205" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="290" y1="135" x2="330" y2="135" stroke="black" stroke-width="1"></line><text x="295" y="129" font-size="16" fill="green">4.00</text><text x="295" y="152" font-size="16" fill="red">0.20</text><circle cx="250" cy="135" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="250" y="140" font-size="20" fill="black" text-anchor="middle">+</text><line x1="210" y1="65" x2="230" y2="135" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="210" y1="205" x2="230" y2="135" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="270" y1="135" x2="290" y2="135" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="410" y1="222" x2="450" y2="222" stroke="black" stroke-width="1"></line><text x="415" y="216" font-size="16" fill="green">1.00</text><text x="415" y="239" font-size="16" fill="red">0.20</text><circle cx="370" cy="222" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="370" y="227" font-size="20" fill="black" text-anchor="middle">+</text><line x1="330" y1="135" x2="350" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="90" y1="310" x2="350" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="390" y1="222" x2="410" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="530" y1="222" x2="570" y2="222" stroke="black" stroke-width="1"></line><text x="535" y="216" font-size="16" fill="green">-1.00</text><text x="535" y="239" font-size="16" fill="red">-0.20</text><circle cx="490" cy="222" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="490" y="227" font-size="20" fill="black" text-anchor="middle">*-1</text><line x1="450" y1="222" x2="470" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="510" y1="222" x2="530" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="650" y1="222" x2="690" y2="222" stroke="black" stroke-width="1"></line><text x="655" y="216" font-size="16" fill="green">0.37</text><text x="655" y="239" font-size="16" fill="red">-0.53</text><circle cx="610" cy="222" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="610" y="227" font-size="20" fill="black" text-anchor="middle">exp</text><line x1="570" y1="222" x2="590" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="630" y1="222" x2="650" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="770" y1="222" x2="810" y2="222" stroke="black" stroke-width="1"></line><text x="775" y="216" font-size="16" fill="green">1.37</text><text x="775" y="239" font-size="16" fill="red">-0.53</text><circle cx="730" cy="222" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="730" y="227" font-size="20" fill="black" text-anchor="middle">+1</text><line x1="690" y1="222" x2="710" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="750" y1="222" x2="770" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="890" y1="222" x2="930" y2="222" stroke="black" stroke-width="1"></line><text x="895" y="216" font-size="16" fill="green">0.73</text><text x="895" y="239" font-size="16" fill="red">1.00</text><circle cx="850" cy="222" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="850" y="227" font-size="20" fill="black" text-anchor="middle">1/x</text><line x1="810" y1="222" x2="830" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="870" y1="222" x2="890" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line></g></svg>
@@ -177,6 +182,7 @@ dw = [x[0] * ddot, x[1] * ddot, 1.0 * ddot] # backprop into w
 The point of this section is that the details of how the backpropagation is performed, and which parts of the forward function we think of as gates, is a matter of convenience. It helps to be aware of which parts of the expression have easy local gradients, so that they can be chained together with the least amount of code and effort. 
 
 <a name='staged'></a>
+
 ### Backprop in practice: Staged computation
 
 Lets see this with another example. Suppose that we have a function of the form:
@@ -235,6 +241,7 @@ Notice a few things:
 **Gradients add up at forks**. The forward expression involves the variables **x,y** multiple times, so when we perform backpropagation we must be careful to use `+=` instead of `=` to accumulate the gradient on these variables (otherwise we would overwrite it). This follows the *multivariable chain rule* in Calculus, which states that if a variable branches out to different parts of the circuit, then the gradients that flow back to it will add.
 
 <a name='patterns'></a>
+
 ### Patterns in backward flow
 
 It is interesting to note that in many cases the backward-flowing gradient can be interpreted on an intuitive level. For example, the three most commonly used gates in neural networks (*add,mul,max*), all have very simple interpretations in terms of how they act during backpropagation. Consider this example circuit:
@@ -255,9 +262,10 @@ The **max gate** routes the gradient. Unlike the add gate which distributed the 
 
 The **multiply gate** is a little less easy to interpret. Its local gradients are the input values (except switched), and this is multiplied by the gradient on its output during the chain rule. In the example above, the gradient on **x** is -8.00, which is -4.00 x 2.00. 
 
-*Unintuitive effects and their consequences*. Notice that if one of the inputs to the multiply gate is very small and the other is very big, then the multiply gate will do something slightly unintuitive: it will assign a relatively huge gradient to the small input and a tiny gradient to the large input. Note that in linear classifiers where the weights are dot producted \\(w^Tx\_i\\) (multiplied) with the inputs, this implies that the scale of the data has an effect on the magnitude of the gradient for the weights. For example, if you multiplied all input data examples \\(x\_i\\) by 1000 during preprocessing, then the gradient on the weights will be 1000 times larger, and you'd have to lower the learning rate by that factor to compensate. This is why preprocessing matters a lot, sometimes in subtle ways! And having intuitive understanding for how the gradients flow can help you debug some of these cases.
+*Unintuitive effects and their consequences*. Notice that if one of the inputs to the multiply gate is very small and the other is very big, then the multiply gate will do something slightly unintuitive: it will assign a relatively huge gradient to the small input and a tiny gradient to the large input. Note that in linear classifiers where the weights are dot producted \\(w^Tx_i\\) (multiplied) with the inputs, this implies that the scale of the data has an effect on the magnitude of the gradient for the weights. For example, if you multiplied all input data examples \\(x_i\\) by 1000 during preprocessing, then the gradient on the weights will be 1000 times larger, and you'd have to lower the learning rate by that factor to compensate. This is why preprocessing matters a lot, sometimes in subtle ways! And having intuitive understanding for how the gradients flow can help you debug some of these cases.
 
 <a name='mat'></a>
+
 ### Gradients for vectorized operations
 
 The above sections were concerned with single variables, but all concepts extend in a straight-forward manner to matrix and vector operations. However, one must pay closer attention to dimensions and transpose operations.
@@ -281,6 +289,7 @@ dX = W.T.dot(dD)
 **Work with small, explicit examples**. Some people may find it difficult at first to derive the gradient updates for some vectorized expressions. Our recommendation is to explicitly write out a minimal vectorized example, derive the gradient on paper and then generalize the pattern to its efficient, vectorized form.
 
 <a name='summary'></a>
+
 ### Summary
 
 - We developed intuition for what the gradients mean, how they flow backwards in the circuit, and how they communicate which part of the circuit should increase or decrease and with what force to make the final output higher.

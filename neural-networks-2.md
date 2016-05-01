@@ -14,11 +14,13 @@ Table of Contents:
 - [Summary](#summary)
 
 <a name='intro'></a>
+
 ## Setting up the data and the model
 
 In the previous section we introduced a model of a Neuron, which computes a dot product following a non-linearity, and Neural Networks that arrange neurons into layers. Together, these choices define the new form of the **score function**, which we have extended from the simple linear mapping that we have seen in the Linear Classification section. In particular, a Neural Network performs a sequence of linear mappings with interwoven non-linearities. In this section we will discuss additional design choices regarding data preprocessing, weight initialization, and loss functions.
 
 <a name='datapre'></a>
+
 ### Data Preprocessing
 
 There are three common forms of data preprocessing a data matrix `X`, where we will assume that `X` is of size `[N x D]` (`N` is the number of data, `D` is their dimensionality).
@@ -88,6 +90,7 @@ We can also try to visualize these transformations with CIFAR-10 images. The tra
 **Common pitfall**. An important point to make about the preprocessing is that any preprocessing statistics (e.g. the data mean) must only be computed on the training data, and then applied to the validation / test data. E.g. computing the mean and subtracting it from every image across the entire dataset and then splitting the data into train/val/test splits would be a mistake. Instead, the mean must be computed only over the training data and then subtracted equally from all splits (train/val/test).
 
 <a name='init'></a>
+
 ### Weight Initialization
 
 We have seen how to construct a Neural Network architecture, and how to preprocess the data. Before we can begin to train the network we have to initialize its parameters.
@@ -100,21 +103,21 @@ We have seen how to construct a Neural Network architecture, and how to preproce
 
 **Calibrating the variances with 1/sqrt(n)**. One problem with the above suggestion is that the distribution of the outputs from a randomly initialized neuron has a variance that grows with the number of inputs. It turns out that we can normalize the variance of each neuron's output to 1 by scaling its weight vector by the square root of its *fan-in* (i.e. its number of inputs). That is, the recommended heuristic is to initialize each neuron's weight vector as: `w = np.random.randn(n) / sqrt(n)`, where `n` is the number of its inputs. This ensures that all neurons in the network initially have approximately the same output distribution and empirically improves the rate of convergence.
 
-The sketch of the derivation is as follows: Consider the inner product \\(s = \sum\_i^n w\_i x\_i\\) between the weights \\(w\\) and input \\(x\\), which gives the raw activation of a neuron before the non-linearity. We can examine the variance of \\(s\\):
+The sketch of the derivation is as follows: Consider the inner product \\(s = \sum_i^n w_i x_i\\) between the weights \\(w\\) and input \\(x\\), which gives the raw activation of a neuron before the non-linearity. We can examine the variance of \\(s\\):
 
 $$
 \begin{align}
-\text{Var}(s) &= \text{Var}(\sum\_i^n w\_ix\_i) \\\\
-&= \sum\_i^n \text{Var}(w\_ix\_i) \\\\
-&= \sum\_i^n [E(w\_i)]^2\text{Var}(x\_i) + E[(x\_i)]^2\text{Var}(w\_i) + \text{Var}(x\_i)\text{Var}(w\_i) \\\\
-&= \sum\_i^n \text{Var}(x\_i)\text{Var}(w\_i) \\\\
+\text{Var}(s) &= \text{Var}(\sum_i^n w_ix_i) \\\\
+&= \sum_i^n \text{Var}(w_ix_i) \\\\
+&= \sum_i^n [E(w_i)]^2\text{Var}(x_i) + E[(x_i)]^2\text{Var}(w_i) + \text{Var}(x_i)\text{Var}(w_i) \\\\
+&= \sum_i^n \text{Var}(x_i)\text{Var}(w_i) \\\\
 &= \left( n \text{Var}(w) \right) \text{Var}(x)
 \end{align}
 $$
 
-where in the first 2 steps we have used [properties of variance](http://en.wikipedia.org/wiki/Variance). In third step we assumed zero mean inputs and weights, so \\(E[x\_i] = E[w\_i] = 0\\). Note that this is not generally the case: For example ReLU units will have a positive mean. In the last step we assumed that all \\(w\_i, x\_i\\) are identically distributed. From this derivation we can see that if we want \\(s\\) to have the same variance as all of its inputs \\(x\\), then during initialization we should make sure that the variance of every weight \\(w\\) is \\(1/n\\). And since \\(\text{Var}(aX) = a^2\text{Var}(X)\\) for a random variable \\(X\\) and a scalar \\(a\\), this implies that we should draw from unit gaussian and then scale it by \\(a = \sqrt{1/n}\\), to make its variance \\(1/n\\). This gives the initialization `w = np.random.randn(n) / sqrt(n)`.
+where in the first 2 steps we have used [properties of variance](http://en.wikipedia.org/wiki/Variance). In third step we assumed zero mean inputs and weights, so \\(E[x_i] = E[w_i] = 0\\). Note that this is not generally the case: For example ReLU units will have a positive mean. In the last step we assumed that all \\(w_i, x_i\\) are identically distributed. From this derivation we can see that if we want \\(s\\) to have the same variance as all of its inputs \\(x\\), then during initialization we should make sure that the variance of every weight \\(w\\) is \\(1/n\\). And since \\(\text{Var}(aX) = a^2\text{Var}(X)\\) for a random variable \\(X\\) and a scalar \\(a\\), this implies that we should draw from unit gaussian and then scale it by \\(a = \sqrt{1/n}\\), to make its variance \\(1/n\\). This gives the initialization `w = np.random.randn(n) / sqrt(n)`.
 
-A similar analysis is carried out in [Understanding the difficulty of training deep feedforward neural networks](http://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf) by Glorot et al. In this paper, the authors end up recommending an initialization of the form \\( \text{Var}(w) = 2/(n\_{in} + n \_{out}) \\) where \\(n\_{in}, n\_{out}\\) are the number of units in the previous layer and the next layer. This is motivated by based on a compromise and an equivalent analysis of the backpropagated gradients. A more recent paper on this topic, [Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification](http://arxiv-web3.library.cornell.edu/abs/1502.01852) by He et al., derives an initialization specifically for ReLU neurons, reaching the conclusion that the variance of neurons in the network should be \\(2.0/n\\). This gives the initialization `w = np.random.randn(n) * sqrt(2.0/n)`, and is the current recommendation for use in practice in the specific case of neural networks with ReLU neurons.
+A similar analysis is carried out in [Understanding the difficulty of training deep feedforward neural networks](http://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf) by Glorot et al. In this paper, the authors end up recommending an initialization of the form \\( \text{Var}(w) = 2/(n_{in} + n _{out}) \\) where \\(n_{in}, n_{out}\\) are the number of units in the previous layer and the next layer. This is motivated by based on a compromise and an equivalent analysis of the backpropagated gradients. A more recent paper on this topic, [Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification](http://arxiv-web3.library.cornell.edu/abs/1502.01852) by He et al., derives an initialization specifically for ReLU neurons, reaching the conclusion that the variance of neurons in the network should be \\(2.0/n\\). This gives the initialization `w = np.random.randn(n) * sqrt(2.0/n)`, and is the current recommendation for use in practice in the specific case of neural networks with ReLU neurons.
 
 **Sparse initialization**. Another way to address the uncalibrated variances problem is to set all weight matrices to zero, but to break symmetry every neuron is randomly connected (with weights sampled from a small gaussian as above) to a fixed number of neurons below it. A typical number of neurons to connect to may be as small as 10.
 
@@ -123,18 +126,20 @@ A similar analysis is carried out in [Understanding the difficulty of training d
 **In practice**, the current recommendation is to use ReLU units and use the `w = np.random.randn(n) * sqrt(2.0/n)`, as discussed in [He et al.](http://arxiv-web3.library.cornell.edu/abs/1502.01852). 
 
 <a name='batchnorm'></a>
+
 **Batch Normalization**. A recently developed technique by Ioffe and Szegedy called [Batch Normalization](http://arxiv.org/abs/1502.03167) alleviates a lot of headaches with properly initializing neural networks by explicitly forcing the activations throughout a network to take on a unit gaussian distribution at the beginning of the training. The core observation is that this is possible because normalization is a simple differentiable operation. In the implementation, applying this technique usually amounts to insert the BatchNorm layer immediately after fully connected layers (or convolutional layers, as we'll soon see), and before non-linearities. We do not expand on this technique here because it is well described in the linked paper, but note that it has become a very common practice to use Batch Normalization in neural networks. In practice networks that use Batch Normalization are significantly more robust to bad initialization. Additionally, batch normalization can be interpreted as doing preprocessing at every layer of the network, but integrated into the network itself in a differentiably manner. Neat!
 
 <a name='reg'></a>
+
 ### Regularization
 
 There are several ways of controlling the capacity of Neural Networks to prevent overfitting:
 
 **L2 regularization** is perhaps the most common form of regularization. It can be implemented by penalizing the squared magnitude of all parameters directly in the objective. That is, for every weight \\(w\\) in the network, we add the term \\(\frac{1}{2} \lambda w^2\\) to the objective, where \\(\lambda\\) is the regularization strength. It is common to see the factor of \\(\frac{1}{2}\\) in front because then the gradient of this term with respect to the parameter \\(w\\) is simply \\(\lambda w\\) instead of \\(2 \lambda w\\). The L2 regularization has the intuitive interpretation of heavily penalizing peaky weight vectors and preferring diffuse weight vectors. As we discussed in the Linear Classification section, due to multiplicative interactions between weights and inputs this has the appealing property of encouraging the network to use all of its inputs a little rather that some of its inputs a lot. Lastly, notice that during gradient descent parameter update, using the L2 regularization ultimately means that every weight is decayed linearly: `W += -lambda * W` towards zero.
 
-**L1 regularization** is another relatively common form of regularization, where for each weight \\(w\\) we add the term \\(\lambda  \mid w \mid\\) to the objective. It is possible to combine the L1 regularization with the L2 regularization: \\(\lambda\_1 \mid w \mid + \lambda\_2 w^2\\) (this is called [Elastic net regularization](http://web.stanford.edu/~hastie/Papers/B67.2%20%282005%29%20301-320%20Zou%20&%20Hastie.pdf)). The L1 regularization has the intriguing property that it leads the weight vectors to become sparse during optimization (i.e. very close to exactly zero). In other words, neurons with L1 regularization end up using only a sparse subset of their most important inputs and become nearly invariant to the "noisy" inputs. In comparison, final weight vectors from L2 regularization are usually diffuse, small numbers. In practice, if you are not concerned with explicit feature selection, L2 regularization can be expected to give superior performance over L1.
+**L1 regularization** is another relatively common form of regularization, where for each weight \\(w\\) we add the term \\(\lambda  \mid w \mid\\) to the objective. It is possible to combine the L1 regularization with the L2 regularization: \\(\lambda_1 \mid w \mid + \lambda_2 w^2\\) (this is called [Elastic net regularization](http://web.stanford.edu/~hastie/Papers/B67.2%20%282005%29%20301-320%20Zou%20&%20Hastie.pdf)). The L1 regularization has the intriguing property that it leads the weight vectors to become sparse during optimization (i.e. very close to exactly zero). In other words, neurons with L1 regularization end up using only a sparse subset of their most important inputs and become nearly invariant to the "noisy" inputs. In comparison, final weight vectors from L2 regularization are usually diffuse, small numbers. In practice, if you are not concerned with explicit feature selection, L2 regularization can be expected to give superior performance over L1.
 
-**Max norm constraints**. Another form of regularization is to enforce an absolute upper bound on the magnitude of the weight vector for every neuron and use projected gradient descent to enforce the constraint. In practice, this corresponds to performing the parameter update as normal, and then enforcing the constraint by clamping the weight vector \\(\vec{w}\\) of every neuron to satisfy \\(\Vert \vec{w} \Vert\_2 < c\\). Typical values of \\(c\\) are on orders of 3 or 4. Some people report improvements when using this form of regularization. One of its appealing properties is that network cannot "explode" even when the learning rates are set too high because the updates are always bounded.
+**Max norm constraints**. Another form of regularization is to enforce an absolute upper bound on the magnitude of the weight vector for every neuron and use projected gradient descent to enforce the constraint. In practice, this corresponds to performing the parameter update as normal, and then enforcing the constraint by clamping the weight vector \\(\vec{w}\\) of every neuron to satisfy \\(\Vert \vec{w} \Vert_2 < c\\). Typical values of \\(c\\) are on orders of 3 or 4. Some people report improvements when using this form of regularization. One of its appealing properties is that network cannot "explode" even when the learning rates are set too high because the updates are always bounded.
 
 **Dropout** is an extremely effective, simple and recently introduced regularization technique by Srivastava et al. in [Dropout: A Simple Way to Prevent Neural Networks from Overfitting](http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf) (pdf) that complements the other methods (L1, L2, maxnorm). While training, dropout is implemented by only keeping a neuron active with some probability \\(p\\) (a hyperparameter), or setting it to zero otherwise.
 
@@ -220,31 +225,32 @@ There has a been a large amount of research after the first introduction of drop
 **In practice**: It is most common to use a single, global L2 regularization strength that is cross-validated. It is also common to combine this with dropout applied after all layers. The value of \\(p = 0.5\\) is a reasonable default, but this can be tuned on validation data.
 
 <a name='losses'></a>
+
 ### Loss functions
 
-We have discussed the regularization loss part of the objective, which can be seen as penalizing some measure of complexity of the model. The second part of an objective is the *data loss*, which in a supervised learning problem measures the compatibility between a prediction (e.g. the class scores in classification) and the ground truth label. The data loss takes the form of an average over the data losses for every individual example. That is, \\(L = \frac{1}{N} \sum\_i L\_i\\) where \\(N\\) is the number of training data. Lets abbreviate \\(f = f(x\_i; W)\\) to be the activations of the output layer in a Neural Network. There are several types of problems you might want to solve in practice:
+We have discussed the regularization loss part of the objective, which can be seen as penalizing some measure of complexity of the model. The second part of an objective is the *data loss*, which in a supervised learning problem measures the compatibility between a prediction (e.g. the class scores in classification) and the ground truth label. The data loss takes the form of an average over the data losses for every individual example. That is, \\(L = \frac{1}{N} \sum_i L_i\\) where \\(N\\) is the number of training data. Lets abbreviate \\(f = f(x_i; W)\\) to be the activations of the output layer in a Neural Network. There are several types of problems you might want to solve in practice:
 
 **Classification** is the case that we have so far discussed at length. Here, we assume a dataset of examples and a single correct label (out of a fixed set) for each example. One of two most commonly seen cost functions in this setting are the SVM (e.g. the Weston Watkins formulation):
 
 $$
-L\_i = \sum\_{j\neq y\_i} \max(0, f\_j - f\_{y\_i} + 1)
+L_i = \sum_{j\neq y_i} \max(0, f_j - f_{y_i} + 1)
 $$
 
-As we briefly alluded to, some people report better performance with the squared hinge loss (i.e. instead using \\(\max(0, f\_j - f\_{y\_i} + 1)^2\\)). The second common choice is the Softmax classifier that uses the cross-entropy loss:
+As we briefly alluded to, some people report better performance with the squared hinge loss (i.e. instead using \\(\max(0, f_j - f_{y_i} + 1)^2\\)). The second common choice is the Softmax classifier that uses the cross-entropy loss:
 
 $$
-L\_i = -\log\left(\frac{e^{f\_{y\_i}}}{ \sum\_j e^{f\_j} }\right)
+L_i = -\log\left(\frac{e^{f_{y_i}}}{ \sum_j e^{f_j} }\right)
 $$
 
 **Problem: Large number of classes**. When the set of labels is very large (e.g. words in English dictionary, or ImageNet which contains 22,000 categories), it may be helpful to use *Hierarchical Softmax* (see one explanation [here](http://arxiv.org/pdf/1310.4546.pdf) (pdf)). The hierarchical softmax decomposes labels into a tree. Each label is then represented as a path along the tree, and a Softmax classifier is trained at every node of the tree to disambiguate between the left and right branch. The structure of the tree strongly impacts the performance and is generally problem-dependent.
 
-**Attribute classification**. Both losses above assume that there is a single correct answer \\(y\_i\\). But what if \\(y\_i\\) is a binary vector where every example may or may not have a certain attribute, and where the attributes are not exclusive? For example, images on Instagram can be thought of as labeled with a certain subset of hashtags from a large set of all hashtags, and an image may contain multiple. A sensible approach in this case is to build a binary classifier for every single attribute independently. For example, a binary classifier for each category independently would take the form:
+**Attribute classification**. Both losses above assume that there is a single correct answer \\(y_i\\). But what if \\(y_i\\) is a binary vector where every example may or may not have a certain attribute, and where the attributes are not exclusive? For example, images on Instagram can be thought of as labeled with a certain subset of hashtags from a large set of all hashtags, and an image may contain multiple. A sensible approach in this case is to build a binary classifier for every single attribute independently. For example, a binary classifier for each category independently would take the form:
 
 $$
-L\_i = \sum\_j \max(0, 1 - y\_{ij} f\_j)
+L_i = \sum_j \max(0, 1 - y_{ij} f_j)
 $$
 
-where the sum is over all categories \\(j\\), and \\(y\_{ij}\\) is either +1 or -1 depending on whether the i-th example is labeled with the j-th attribute, and the score vector \\(f\_j\\) will be positive when the class is predicted to be present and negative otherwise. Notice that loss is accumulated if a positive example has score less than +1, or when a negative example has score greater than -1. 
+where the sum is over all categories \\(j\\), and \\(y_{ij}\\) is either +1 or -1 depending on whether the i-th example is labeled with the j-th attribute, and the score vector \\(f_j\\) will be positive when the class is predicted to be present and negative otherwise. Notice that loss is accumulated if a positive example has score less than +1, or when a negative example has score greater than -1. 
 
 An alternative to this loss would be to train a logistic regression classifier for every attribute independently. A binary logistic regression classifier has only two classes (0,1), and calculates the probability of class 1 as:
 
@@ -255,30 +261,30 @@ $$
 Since the probabilities of class 1 and 0 sum to one, the probability for class 0 is \\(P(y = 0 \mid x; w, b) = 1 - P(y = 1 \mid x; w,b)\\). Hence, an example is classified as a positive example (y = 1) if \\(\sigma (w^Tx + b) > 0.5\\), or equivalently if the score \\(w^Tx +b > 0\\). The loss function then maximizes the log likelihood of this probability. You can convince yourself that this simplifies to:
 
 $$
-L\_i = \sum\_j y\_{ij} \log(\sigma(f\_j)) + (1 - y\_{ij}) \log(1 - \sigma(f\_j))
+L_i = \sum_j y_{ij} \log(\sigma(f_j)) + (1 - y_{ij}) \log(1 - \sigma(f_j))
 $$
 
-where the labels \\(y\_{ij}\\) are assumed to be either 1 (positive) or 0 (negative), and \\(\sigma(\cdot)\\) is the sigmoid function. The expression above can look scary but the gradient on \\(f\\) is in fact extremely simple and intuitive: \\(\partial{L\_i} / \partial{f\_j} = y\_{ij} - \sigma(f\_j)\\) (as you can double check yourself by taking the derivatives).
+where the labels \\(y_{ij}\\) are assumed to be either 1 (positive) or 0 (negative), and \\(\sigma(\cdot)\\) is the sigmoid function. The expression above can look scary but the gradient on \\(f\\) is in fact extremely simple and intuitive: \\(\partial{L_i} / \partial{f_j} = y_{ij} - \sigma(f_j)\\) (as you can double check yourself by taking the derivatives).
 
 **Regression** is the task of predicting real-valued quantities, such as the price of houses or the length of something in an image. For this task, it is common to compute the loss between the predicted quantity and the true answer and then measure the L2 squared norm, or L1 norm of the difference. The L2 norm squared would compute the loss for a single example of the form:
 
 $$
-L\_i = \Vert f - y\_i \Vert\_2^2
+L_i = \Vert f - y_i \Vert_2^2
 $$
 
 The reason the L2 norm is squared in the objective is that the gradient becomes much simpler, without changing the optimal parameters since squaring is a monotonic operation. The L1 norm would be formulated by summing the absolute value along each dimension:
 
 $$
-L\_i = \Vert f - y\_i \Vert\_1 = \sum\_j \mid f\_j - (y\_i)\_j \mid
+L_i = \Vert f - y_i \Vert_1 = \sum_j \mid f_j - (y_i)_j \mid
 $$
 
-where the sum \\(\sum\_j\\) is a sum over all dimensions of the desired prediction, if there is more than one quantity being predicted. Looking at only the j-th dimension of the i-th example and denoting the difference between the true and the predicted value by \\(\delta\_{ij}\\), the gradient for this dimension (i.e. \\(\partial{L\_i} / \partial{f\_j}\\)) is easily derived to be either \\(\delta\_{ij}\\) with the L2 norm, or \\(sign(\delta\_{ij})\\). That is, the gradient on the score will either be directly proportional to the difference in the error, or it will be fixed and only inherit the sign of the difference.
+where the sum \\(\sum_j\\) is a sum over all dimensions of the desired prediction, if there is more than one quantity being predicted. Looking at only the j-th dimension of the i-th example and denoting the difference between the true and the predicted value by \\(\delta_{ij}\\), the gradient for this dimension (i.e. \\(\partial{L_i} / \partial{f_j}\\)) is easily derived to be either \\(\delta_{ij}\\) with the L2 norm, or \\(sign(\delta_{ij})\\). That is, the gradient on the score will either be directly proportional to the difference in the error, or it will be fixed and only inherit the sign of the difference.
 
 *Word of caution*: It is important to note that the L2 loss is much harder to optimize than a more stable loss such as Softmax. Intuitively, it requires a very fragile and specific property from the network to output exactly one correct value for each input (and its augmentations). Notice that this is not the case with Softmax, where the precise value of each score is less important: It only matters that their magnitudes are appropriate. Additionally, the L2 loss is less robust because outliers can introduce huge gradients. When faced with a regression problem, first consider if it is absolutely inadequate to quantize the output into bins. For example, if you are predicting star rating for a product, it might work much better to use 5 independent classifiers for ratings of 1-5 stars instead of a regression loss. Classification has the additional benefit that it can give you a distribution over the regression outputs, not just a single output with no indication of its confidence. If you're certain that classification is not appropriate, use the L2 but be careful: For example, the L2 is more fragile and applying dropout in the network (especially in the layer right before the L2 loss) is not a great idea.
 
 > When faced with a regression task, first consider if it is absolutely necessary. Instead, have a strong preference to discretizing your outputs to bins and perform classification over them whenever possible.
 
-**Structured prediction**. The structured loss refers to a case where the labels can be arbitrary structures such as graphs, trees, or other complex objects. Usually it is also assumed that the space of structures is very large and not easily enumerable. The basic idea behind the structured SVM loss is to demand a margin between the correct structure \\(y\_i\\) and the highest-scoring incorrect structure. It is not common to solve this problem as a simple unconstrained optimization problem with gradient descent. Instead, special solvers are usually devised so that the specific simplifying assumptions of the structure space can be taken advantage of. We mention the problem briefly but consider the specifics to be outside of the scope of the class.
+**Structured prediction**. The structured loss refers to a case where the labels can be arbitrary structures such as graphs, trees, or other complex objects. Usually it is also assumed that the space of structures is very large and not easily enumerable. The basic idea behind the structured SVM loss is to demand a margin between the correct structure \\(y_i\\) and the highest-scoring incorrect structure. It is not common to solve this problem as a simple unconstrained optimization problem with gradient descent. Instead, special solvers are usually devised so that the specific simplifying assumptions of the structure space can be taken advantage of. We mention the problem briefly but consider the specifics to be outside of the scope of the class.
 
 <a name='summary'></a>
 

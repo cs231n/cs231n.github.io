@@ -64,6 +64,7 @@ Table of contents:
   - [Images](#matplotlib-images)
 
 <a name='python'></a>
+
 ## Python
 
 Python is a high-level, dynamically typed multiparadigm programming language.
@@ -96,6 +97,7 @@ You can check your Python version at the command line by running
 `python --version`.
 
 <a name='python-basic'></a>
+
 ### Basic data types
 
 Like most languages, Python has a number of basic types including integers,
@@ -168,10 +170,12 @@ print '  world '.strip()  # Strip leading and trailing whitespace; prints "world
 You can find a list of all string methods [in the documentation](https://docs.python.org/2/library/stdtypes.html#string-methods).
 
 <a name='python-containers'></a>
+
 ### Containers
 Python includes several built-in container types: lists, dictionaries, sets, and tuples.
 
 <a name='python-lists'></a>
+
 #### Lists
 A list is the Python equivalent of an array, but is resizeable
 and can contain elements of different types:
@@ -255,6 +259,7 @@ print even_squares  # Prints "[0, 4, 16]"
 ```
 
 <a name='python-dicts'></a>
+
 #### Dictionaries
 A dictionary stores (key, value) pairs, similar to a `Map` in Java or
 an object in Javascript. You can use it like this:
@@ -304,6 +309,7 @@ print even_num_to_square  # Prints "{0: 0, 2: 4, 4: 16}"
 ```
 
 <a name='python-sets'></a>
+
 #### Sets
 A set is an unordered collection of distinct elements. As a simple example, consider
 the following:
@@ -347,6 +353,7 @@ print nums  # Prints "set([0, 1, 2, 3, 4, 5])"
 ```
 
 <a name='python-tuples'></a>
+
 #### Tuples
 A tuple is an (immutable) ordered list of values.
 A tuple is in many ways similar to a list; one of the most important differences is that
@@ -363,6 +370,7 @@ print d[(1, 2)]  # Prints "1"
 [The documentation](https://docs.python.org/2/tutorial/datastructures.html#tuples-and-sequences) has more information about tuples.
 
 <a name='python-functions'></a>
+
 ### Functions
 Python functions are defined using the `def` keyword. For example:
 
@@ -396,6 +404,7 @@ There is a lot more information about Python functions
 [in the documentation](https://docs.python.org/2/tutorial/controlflow.html#defining-functions).
 
 <a name='python-classes'></a>
+
 ### Classes
 
 The syntax for defining classes in Python is straightforward:
@@ -422,6 +431,7 @@ You can read a lot more about Python classes
 [in the documentation](https://docs.python.org/2/tutorial/classes.html).
 
 <a name='numpy'></a>
+
 ## Numpy
 
 [Numpy](http://www.numpy.org/) is the core library for scientific computing in Python.
@@ -430,6 +440,7 @@ arrays. If you are already familiar with MATLAB, you might find
 [this tutorial useful](http://wiki.scipy.org/NumPy_for_Matlab_Users) to get started with Numpy.
 
 <a name='numpy-arrays'></a>
+
 ### Arrays
 A numpy array is a grid of values, all of the same type, and is indexed by a tuple of
 nonnegative integers. The number of dimensions is the *rank* of the array; the *shape*
@@ -481,6 +492,7 @@ You can read about other methods of array creation
 [in the documentation](http://docs.scipy.org/doc/numpy/user/basics.creation.html#arrays-creation).
 
 <a name='numpy-array-indexing'></a>
+
 ### Array indexing
 Numpy offers several ways to index into arrays.
 
@@ -631,6 +643,7 @@ if you want to know more you should
 [read the documentation](http://docs.scipy.org/doc/numpy/reference/arrays.indexing.html).
 
 <a name='numpy-datatypes'></a>
+
 ### Datatypes
 Every numpy array is a grid of elements of the same type.
 Numpy provides a large set of numeric datatypes that you can use to construct arrays.
@@ -654,6 +667,7 @@ You can read all about numpy datatypes
 [in the documentation](http://docs.scipy.org/doc/numpy/reference/arrays.dtypes.html).
 
 <a name='numpy-math'></a>
+
 ### Array math
 Basic mathematical functions operate elementwise on arrays, and are available
 both as operator overloads and as functions in the numpy module:
@@ -763,6 +777,7 @@ Numpy provides many more functions for manipulating arrays; you can see the full
 
 
 <a name='numpy-broadcasting'></a>
+
 ### Broadcasting
 Broadcasting is a powerful mechanism that allows numpy to work with arrays of different
 shapes when performing arithmetic operations. Frequently we have a smaller array and a
@@ -916,6 +931,7 @@ know about numpy, but is far from complete. Check out the
 to find out much more about numpy.
 
 <a name='scipy'></a>
+
 ## SciPy
 Numpy provides a high-performance multidimensional array and basic tools to
 compute with and manipulate these arrays.
@@ -929,6 +945,7 @@ The best way to get familiar with SciPy is to
 We will highlight some parts of SciPy that you might find useful for this class.
 
 <a name='scipy-image'></a>
+
 ### Image operations
 SciPy provides some basic functions to work with images.
 For example, it has functions to read images from disk into numpy arrays,
@@ -967,12 +984,14 @@ imsave('assets/cat_tinted.jpg', img_tinted)
 </div>
 
 <a name='scipy-matlab'></a>
+
 ### MATLAB files
 The functions `scipy.io.loadmat` and `scipy.io.savemat` allow you to read and
 write MATLAB files. You can read about them
 [in the documentation](http://docs.scipy.org/doc/scipy/reference/io.html).
 
 <a name='scipy-dist'></a>
+
 ### Distance between points
 SciPy defines some useful functions for computing distances between sets of points.
 
@@ -1007,12 +1026,14 @@ across two sets of points; you can read about it
 [in the documentation](http://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.cdist.html).
 
 <a name='matplotlib'></a>
+
 ## Matplotlib
 [Matplotlib](http://matplotlib.org/) is a plotting library. 
 In this section give a brief introduction to the `matplotlib.pyplot` module,
 which provides a plotting system similar to that of MATLAB.
 
 <a name='matplotlib-plot'></a>
+
 ### Plotting
 The most important function in matplotlib is `plot`,
 which allows you to plot 2D data. Here is a simple example:
@@ -1065,6 +1086,7 @@ You can read much more about the `plot` function
 [in the documentation](http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot).
 
 <a name='matplotlib-subplots'></a>
+
 ### Subplots
 You can plot different things in the same figure using the `subplot` function.
 Here is an example:
@@ -1103,6 +1125,7 @@ You can read much more about the `subplot` function
 [in the documentation](http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.subplot).
 
 <a name='matplotlib-images'></a>
+
 ### Images
 You can use the `imshow` function to show images. Here is an example:
 
