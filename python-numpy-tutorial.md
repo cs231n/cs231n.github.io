@@ -340,7 +340,7 @@ in which you visit the elements of the set:
 animals = {'cat', 'dog', 'fish'}
 for idx, animal in enumerate(animals):
     print '#%d: %s' % (idx + 1, animal)
-# Prints "#1: fish", "#2: dog", "#3: cat"
+# Prints "#1: fish", "#2: dog", "#3: cat", each on its own line
 ```
 
 **Set comprehensions:**
@@ -385,7 +385,7 @@ def sign(x):
 
 for x in [-1, 0, 1]:
     print sign(x)
-# Prints "negative", "zero", "positive"
+# Prints "negative", "zero", "positive", each on its own line
 ```
 
 We will often define functions to take optional keyword arguments, like this:
