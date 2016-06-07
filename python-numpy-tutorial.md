@@ -907,7 +907,7 @@ print x + v
 # [[ 5  6  7]
 #  [ 9 10 11]]
 print (x.T + w).T
-# Another solution is to reshape w to be a row vector of shape (2, 1);
+# Another solution is to reshape w to be a column vector of shape (2, 1);
 # we can then broadcast it directly against x to produce the same
 # output.
 print x + np.reshape(w, (2, 1))
