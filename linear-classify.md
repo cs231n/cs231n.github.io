@@ -338,14 +338,15 @@ where the probabilites are now more diffuse. Moreover, in the limit where the we
 
 ### Interactive web demo
 
-<a href="http://vision.stanford.edu/teaching/cs231n/linear-classify-demo" style="text-decoration:none;">
-<div class="fig figcenter fighighlight">
-  <img src="/assets/classifydemo.jpeg">
-  <div class="figcaption">We have written an interactive web demo to help your intuitions with linear classifiers. The demo visualizes the loss functions discussed in this section using a toy 3-way classification on 2D data. The demo also jumps ahead a bit and performs the optimization, which we will discuss in full detail in the next section.
-  </div>
+<div>
+  <a href="http://vision.stanford.edu/teaching/cs231n/linear-classify-demo" style="text-decoration:none;">
+    <div class="fig figcenter fighighlight">
+      <img src="/assets/classifydemo.jpeg">
+      <div class="figcaption">We have written an interactive web demo to help your intuitions with linear classifiers. The demo visualizes the loss functions discussed in this section using a toy 3-way classification on 2D data. The demo also jumps ahead a bit and performs the optimization, which we will discuss in full detail in the next section.
+      </div>
+    </div>
+  </a>
 </div>
-</a>
-
 
 <a name='summary'></a>
 
