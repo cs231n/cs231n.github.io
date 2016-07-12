@@ -90,7 +90,7 @@ $$
 L_i = -\log\left(\frac{e^{f_{y_i}}}{ \sum_j e^{f_j} }\right)
 $$
 
-We can see that the Softmax classifier interprets every element of \\(f\\) as holding the (unnormalized) log probabilities of the three classes. We exponentiate these to get (unnormalized) probabilities, and then normalize them to get probabilites. Therefore, the expression inside the log is the normalized probability of the correct class. Note how this expression works: this quantity is always between 0 and 1. When the probability of the correct class is very small (near 0), the loss will go towards (postiive) infinity. Conversely, when the correct class probability goes towards 1, the loss will go towards zero because \\(log(1) = 0\\). Hence, the expression for \\(L_i\\) is low when the correct class probability is high, and it's very high when it is low. 
+We can see that the Softmax classifier interprets every element of \\(f\\) as holding the (unnormalized) log probabilities of the three classes. We exponentiate these to get (unnormalized) probabilities, and then normalize them to get probabilites. Therefore, the expression inside the log is the normalized probability of the correct class. Note how this expression works: this quantity is always between 0 and 1. When the probability of the correct class is very small (near 0), the loss will go towards (positive) infinity. Conversely, when the correct class probability goes towards 1, the loss will go towards zero because \\(log(1) = 0\\). Hence, the expression for \\(L_i\\) is low when the correct class probability is high, and it's very high when it is low.
 
 Recall also that the full Softmax classifier loss is then defined as the average cross-entropy loss over the training examples and the regularization:
 
