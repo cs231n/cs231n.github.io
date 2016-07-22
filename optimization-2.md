@@ -82,9 +82,11 @@ f = q * z # f becomes -12
 # first backprop through f = q * z
 dfdz = q # df/dz = q, so gradient on z becomes 3
 dfdq = z # df/dq = z, so gradient on q becomes -4
+dqdx = 1.0
+dqdy = 1.0
 # now backprop through q = x + y
-dfdx = 1.0 * dfdq # dq/dx = 1. And the multiplication here is the chain rule!
-dfdy = 1.0 * dfdq # dq/dy = 1
+dfdx = dfdq * dqdx  # The multiplication here is the chain rule!
+dfdy = dfdq * dqdy  
 ```
 
 At the end we are left with the gradient in the variables `[dfdx,dfdy,dfdz]`, which tell us the sensitivity of the variables `x,y,z` on `f`!. This is the simplest example of backpropagation. Going forward, we will want to use a more concise notation so that we don't have to keep writing the `df` part. That is, for example instead of `dfdq` we would simply write `dq`, and always assume that the gradient is with respect to the final output.
