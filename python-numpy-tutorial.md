@@ -204,8 +204,8 @@ print nums         # Prints "[0, 1, 2, 3, 4]"
 print nums[2:4]    # Get a slice from index 2 to 4 (exclusive); prints "[2, 3]"
 print nums[2:]     # Get a slice from index 2 to the end; prints "[2, 3, 4]"
 print nums[:2]     # Get a slice from the start to index 2 (exclusive); prints "[0, 1]"
-print nums[:]      # Get a slice of the whole list; prints ["0, 1, 2, 3, 4]"
-print nums[:-1]    # Slice indices can be negative; prints ["0, 1, 2, 3]"
+print nums[:]      # Get a slice of the whole list; prints "[0, 1, 2, 3, 4]"
+print nums[:-1]    # Slice indices can be negative; prints "[0, 1, 2, 3]"
 nums[2:4] = [8, 9] # Assign a new sublist to a slice
 print nums         # Prints "[0, 1, 8, 9, 4]"
 ```
