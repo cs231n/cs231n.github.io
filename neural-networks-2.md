@@ -49,7 +49,7 @@ The (i,j) element of the data covariance matrix contains the *covariance* betwee
 U,S,V = np.linalg.svd(cov)
 ```
 
-where the columns of `U` are the eigenvectors and `S` is a 1-D array of the singular values (which are equal to the eigenvalues squared since `cov` is symmetric and positive semi-definite). To decorrelate the data, we project the original (but zero-centered) data into the eigenbasis:
+where the columns of `U` are the eigenvectors and `S` is a 1-D array of the singular values. To decorrelate the data, we project the original (but zero-centered) data into the eigenbasis:
 
 ```python
 Xrot = np.dot(X, U) # decorrelate the data
