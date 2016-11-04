@@ -295,6 +295,8 @@ where the `*` indicates repetition, and the `POOL?` indicates an optional poolin
 
 **Recent departures.** It should be noted that the conventional paradigm of a linear list of layers has recently been challanged, in Google's Inception architectures and also in current (state of the art) Residual Networks from Microsoft Research Asia. Both of these (see details below in case studies section) feature more intricate and different connectivity structures.
 
+**In practice: use whatever works best on ImageNet**. If you're feeling a bit of a fatigue in thinking about the architectural decisions, you'll be pleased to know that in 90% or more of applications you should not have to worry about these. I like to summarize this point as "*don't be a hero*": Instead of rolling your own architecture for a problem, you should look at whatever architecture currently works best on ImageNet, download a pretrained model and finetune it on your data. You should rarely ever have to train a ConvNet from scratch or design one from scratch. I also made this point at the [Deep Learning school](https://www.youtube.com/watch?v=u6aEYuemt0M).
+
 <a name='layersizepat'></a>
 
 #### Layer Sizing Patterns
