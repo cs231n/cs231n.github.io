@@ -288,6 +288,8 @@ dX = W.T.dot(dD)
 
 **Work with small, explicit examples**. Some people may find it difficult at first to derive the gradient updates for some vectorized expressions. Our recommendation is to explicitly write out a minimal vectorized example, derive the gradient on paper and then generalize the pattern to its efficient, vectorized form.
 
+Erik Learned-Miller has also written up a longer related document on taking matrix/vector derivatives which you might find helpful. [Find it here](http://cs231n.stanford.edu/vecDerivs.pdf).
+
 <a name='summary'></a>
 
 ### Summary
