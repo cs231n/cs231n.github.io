@@ -99,7 +99,7 @@ Every activation function (or *non-linearity*) takes a single number and perform
 <div class="fig figcenter fighighlight">
   <img src="/assets/nn1/relu.jpeg" width="40%">
   <img src="/assets/nn1/alexplot.jpeg" width="40%" style="border-left: 1px solid black;">
-  <div class="figcaption"><b>Left:</b> Rectified Linear Unit (ReLU) activation function, which is zero when x &lt 0 and then linear with slope 1 when x &gt 0. <b>Right:</b> A plot from <a href="http://www.cs.toronto.edu/~fritz/absps/imagenet.pdf">Krizhevsky et al.</a> (pdf) paper indicating the 6x improvement in convergence with the ReLU unit compared to the tanh unit.</div>
+  <div class="figcaption"><b>Left:</b> Rectified Linear Unit (ReLU) activation function, which is zero when x &lt; 0 and then linear with slope 1 when x &gt; 0. <b>Right:</b> A plot from <a href="http://www.cs.toronto.edu/~fritz/absps/imagenet.pdf">Krizhevsky et al.</a> (pdf) paper indicating the 6x improvement in convergence with the ReLU unit compared to the tanh unit.</div>
 </div>
 
 **ReLU.** The Rectified Linear Unit has become very popular in the last few years. It computes the function \\(f(x) = \max(0, x)\\). In other words, the activation is simply thresholded at zero (see image above on the left). There are several pros and cons to using the ReLUs: 
