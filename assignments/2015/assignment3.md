@@ -1,7 +1,7 @@
 ---
 layout: page
 mathjax: true
-permalink: /assignment3/
+permalink: assignments2015/assignment3/
 ---
 
 In the previous assignment, you implemented and trained your own ConvNets.
