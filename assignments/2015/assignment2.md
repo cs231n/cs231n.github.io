@@ -17,7 +17,7 @@ You can work on the assignment in one of two ways: locally on your own machine, 
 
 ### Working locally
 **Get the code:**
-[Download the starter code here](http://vision.stanford.edu/teaching/cs231n/assignment2.zip).
+[Download the starter code here](http://cs231n.stanford.edu/assignments/2015/assignment2.zip).
 
 **[Optional] virtual environment:**
 Once you have unzipped the starter code, you might want to create a

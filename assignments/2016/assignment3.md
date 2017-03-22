@@ -30,7 +30,7 @@ boot up the snapshot everything will be installed for you, and you will be ready
 
 ### Working locally
 Get the code as a zip file
-[here](http://cs231n.stanford.edu/winter1516_assignment3.zip).
+[here](http://cs231n.stanford.edu/assignments/2016/winter1516_assignment3.zip).
 As for the dependencies:
 
 **[Option 1] Use Anaconda:**

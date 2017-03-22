@@ -24,7 +24,7 @@ You can work on the assignment in one of two ways: locally on your own machine, 
 Terminal has created a separate subdomain to serve our class, [www.stanfordterminalcloud.com](https://www.stanfordterminalcloud.com). Register your account there. The Assignment 1 snapshot can then be found [here](https://www.stanfordterminalcloud.com/snapshot/49f5a1ea15dc424aec19155b3398784d57c55045435315ce4f8b96b62819ef65). If you're registered in the class you can contact the TA (see Piazza for more information) to request Terminal credits for use on the assignment. Once you boot up the snapshot everything will be installed for you, and you'll be ready to start on your assignment right away. We've written a small tutorial on Terminal [here](/terminal-tutorial).
 
 ### Working locally
-Get the code as a zip file [here](http://vision.stanford.edu/teaching/cs231n/winter1516_assignment1.zip). As for the dependencies:
+Get the code as a zip file [here](http://cs231n.stanford.edu/assignments/2016/winter1516_assignment1.zip). As for the dependencies:
 
 **[Option 1] Use Anaconda:**
 The preferred approach for installing all the assignment dependencies is to use [Anaconda](https://www.continuum.io/downloads), which is a Python distribution that includes many of the most popular Python packages for science, math, engineering and data analysis. Once you install it you can skip all mentions of requirements and you're ready to go directly to working on the assignment.
