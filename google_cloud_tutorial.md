@@ -64,5 +64,13 @@ jupyter-notebook --no-browser --port=\<PORT-NUMBER\>
 
 I usually use 7000 or 8000 for \<PORT-NUMBER\>
 
+Then open another console on your local machine and run the following command:
+\<DIRECTORY-WHERE-GOOGLE-CLOUD-IS-INSTALLED\>/bin/gcloud compute ssh --zone=us-west 1-b --ssh-flag=”-D” --ssh-flag=”1080” --ssh-flag=”-N” --ssh-flag=”-n” \<YOUR-INSTANCE-NAME\>
+
+On your local browser, if you go to http://localhost:\<PORT-NUMBER\>, you should see something like the screen below. You should now be able to start working on your assignments.
+
+<div class='fig figcenter fighighlight'>
+  <img src='/assets/launching-screen.png'>
+</div>
 
 
