@@ -51,6 +51,7 @@ Now that you have created your virtual GCE, you want to be able to connect to it
 To connect to your GCE instance enter the following command: 
 
 \<DIRECTORY-WHERE-GOOGLE-CLOUD-IS-INSTALLED\>/bin/gcloud compute ssh --zone=us-west 1-b \<YOUR-INSTANCE-NAME\>
+
 The assignments will be under a folder XXX. 
 
 
