@@ -32,7 +32,7 @@ To change the name of your project, click on “Manage project settings” on th
 You will launch virtual instances for assignments using our disk image containing each assignment’s starter code and pre-configured with the environments necessary for each assignment. To launch a virtual instance, go to the “Compute Engine” menu in the left column of your dashboard and click on VM instances (see screenshot below).
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/launching-screen.png'>
+  <img src='/assets/cloud-instance-dashboard-screen.png'>
 </div>
 
 Click on the “CREATE INSTANCE” blue button at the top. You will see a page that looks like the one below. 
