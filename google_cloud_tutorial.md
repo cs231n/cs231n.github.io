@@ -27,21 +27,32 @@ Click the appropriate “yes” or “no” button for the first option, and che
 <div class='fig figcenter fighighlight'>
   <img src='/assets/launching-screen.png'>
 </div>
+
 To change the name of your project, click on “Manage project settings” on the “Project info” button and save your changes. 
 You will launch virtual instances for assignments using our disk image containing each assignment’s starter code and pre-configured with the environments necessary for each assignment. To launch a virtual instance, go to the “Compute Engine” menu in the left column of your dashboard and click on VM instances (see screenshot below).
+
 <div class='fig figcenter fighighlight'>
   <img src='/assets/launching-screen.png'>
 </div>
+
 Click on the “CREATE INSTANCE” blue button at the top. You will see a page that looks like the one below. 
+
 <div class='fig figcenter fighighlight'>
   <img src='/assets/launching-screen.png'>
 </div>
+
 Make sure that the Zone is set to be us-west1-b (for assignments where you need to use GPU instances). Under “Machine type” pick the “8 vCPUs” option. Click on the “customize” under “Machine type” and make sure that the number of cores is set to 8 and the number of GPUs is set to however many you need (we will not be using GPUs in assignment 1). Click on the “Change” button under “Boot disk”, choose “Custom images” and check “cs231n-caffe-torch-keras-lasagne” to use our custom image as your boot disk. Click on the blue “Create” button at the bottom of the page. You should have now successfully started a Google Compute Instance, it might take a few minutes to start. Your screen should look something like the one below:
+
 <div class='fig figcenter fighighlight'>
   <img src='/assets/launching-screen.png'>
 </div>
+
 Now that you have created your virtual GCE, you want to be able to connect to it from your computer. The rest of this tutorial goes over how to do that using the command line. First, download the Google Cloud SDK that is appropriate for your platform from here and follow their installation instructions.
 To connect to your GCE instance enter the following command: 
+
+\<DIRECTORY-WHERE-GOOGLE-CLOUD-IS-INSTALLED\>/bin/gcloud compute ssh --zone=us-west 1-b \<YOUR-INSTANCE-NAME\>
+The assignments will be under a folder XXX. 
+
 
 
 
