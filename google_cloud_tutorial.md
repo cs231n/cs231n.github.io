@@ -72,7 +72,7 @@ Then open another console on your local machine and run the following command:
 On your local browser, if you go to http://localhost:\<PORT-NUMBER\>, you should see something like the screen below. You should now be able to start working on your assignments.
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/juypter-screen.png'>
+  <img src='/assets/jupyter-screen.png'>
 </div>
 
 
