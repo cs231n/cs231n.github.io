@@ -25,7 +25,7 @@ If you already have a gmail account, it will direct you to a signup page which l
 Click the appropriate “yes” or “no” button for the first option, and check “yes” for the latter two options after you have read the required agreements. Press the blue “Agree and continue” button to continue to the next page to enter the requested information (your name, billing address and credit card information). Once you have entered the required information, press the blue “Start my free trial” button. You will be greeted by a page like this: 
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/launching-screen.png'>
+  <img src='/assets/cloud-dashboard-screen.png'>
 </div>
 
 To change the name of your project, click on “Manage project settings” on the “Project info” button and save your changes. 
