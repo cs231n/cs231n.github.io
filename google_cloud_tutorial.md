@@ -54,7 +54,7 @@ To connect to your GCE instance enter the following command:
 
 The assignments will be under a folder XXX. 
 
-#Using Jupyter Notebook with Google Compute Engine# 
+# Using Jupyter Notebook with Google Compute Engine # 
 
 Many of the assignments will involve using Jupyter Notebook. Below, we discuss how to run Jupyter Notebook from your GCE instance and use it on your local browser. First ssh into your GCE instance using the instructions above. cd into the assignment directory by running the following command:
 
