@@ -52,7 +52,7 @@ To connect to your GCE instance enter the following command:
 
 \<DIRECTORY-WHERE-GOOGLE-CLOUD-IS-INSTALLED\>/bin/gcloud compute ssh --zone=us-west 1-b \<YOUR-INSTANCE-NAME\>
 
-The assignments will be under a folder XXX. 
+The assignments will be under a folder \<TODO\>/assignment**X**. where **X** is the assignment number (1, 2 or 3).
 
 # Using Jupyter Notebook with Google Compute Engine # 
 Many of the assignments will involve using Jupyter Notebook. Below, we discuss how to run Jupyter Notebook from your GCE instance and use it on your local browser. First ssh into your GCE instance using the instructions above. cd into the assignment directory by running the following command:
