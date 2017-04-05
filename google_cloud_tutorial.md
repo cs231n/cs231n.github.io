@@ -19,7 +19,7 @@ First, if you don't have a Google Cloud account already, create one by going to 
 
 If you already have a gmail account, it will direct you to a signup page which looks like the following.
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/cloud-free.png'>
+  <img src='/assets/cloud-for-free.png'>
 </div>
 
 Click the appropriate “yes” or “no” button for the first option, and check “yes” for the latter two options after you have read the required agreements. Press the blue “Agree and continue” button to continue to the next page to enter the requested information (your name, billing address and credit card information). Once you have entered the required information, press the blue “Start my free trial” button. You will be greeted by a page like this: 
