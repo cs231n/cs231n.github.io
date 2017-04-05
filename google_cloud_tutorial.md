@@ -1,3 +1,9 @@
+---
+layout: page
+title: Google Cloud Tutorial
+permalink: /gce-tutorial/
+---
+
 For the class project and assignments, we offer an option to use Google Compute Engine for developing and testing your 
 implementations. This tutorial lists the necessary steps of working on the assignments using Google Cloud. 
 For each assignment, we will provide you with an image containing the starter code and all dependencies that you need to 
@@ -6,3 +12,7 @@ provided images for the assignments. **We do not currently distribute Google Clo
 are welcome to use this snapshot on your own budget.**
 
 First, if you don't have a Google Cloud account already, create one by going to the [Google Cloud homepage](https://cloud.google.com/?utm_source=google&utm_medium=cpc&utm_campaign=2015-q2-cloud-na-gcp-skws-freetrial-en&gclid=CP2e4PPpiNMCFU9bfgodGHsA1A "Title"), and clicking on the blue “TRY IT FREE” button. If you are not logged into gmail, you will see a page that looks like the one below. Sign into your gmail account or create a new one if you do not already have an account. 
+
+<div class='fig figcenter fighighlight'>
+  <img src='/assets/launching-screen.png'>
+</div>
