@@ -94,6 +94,7 @@ Now, to connect to your GCE instance through SSH follow the instructions under "
 To connect to your instances using SSH:
 
 1. Find the external IP for the GCE instance that you want to connect to (see screenshot below):
+
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-external-ip.png'>
 </div>
