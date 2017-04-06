@@ -109,9 +109,13 @@ Writing default config to:\<PATH_TO_CONFIG_FILE\>
 where \<PATH_TO_CONFIG_FILE\> is the path to the configuration file. Mine was written to /home/timnitgebru/.jupyter/jupyter_notebook_config.py
 
 Using your favorite editor (vim, emacs etc...) add the following lines to \<PATH_TO_CONFIG_FILE\>:
+
 c = get_config()
+
 c.NotebookApp.ip = '*'
+
 c.NotebookApp.open_browser = False
+
 c.NotebookApp.port = \<PORT-NUMBER\>
 
 I usually use 7000 or 8000 for \<PORT-NUMBER\>
