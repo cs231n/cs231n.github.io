@@ -105,20 +105,27 @@ The following instructions are excerpts from [this page](https://haroldsoh.com/2
 
 On your GCE instance check if you have a Jupyter configuration file:
 
+```
 ls ~/.jupyter/jupyter_notebook_config.py
+```
 
 If it doesn't exist, create one with: 
 
+```
 jupyter notebook --generate-config
+```
 
 You should see an output like:
 
+```
 Writing default config to:\<PATH_TO_CONFIG_FILE\>
+```
 
 where \<PATH_TO_CONFIG_FILE\> is the path to the configuration file. Mine was written to /home/timnitgebru/.jupyter/jupyter_notebook_config.py
 
 Using your favorite editor (vim, emacs etc...) add the following lines to \<PATH_TO_CONFIG_FILE\>:
 
+```
 c = get_config()
 
 c.NotebookApp.ip = '*'
@@ -126,6 +133,7 @@ c.NotebookApp.ip = '*'
 c.NotebookApp.open_browser = False
 
 c.NotebookApp.port = \<PORT-NUMBER\>
+```
 
 I usually use 7000 or 8000 for \<PORT-NUMBER\>. Save your changes and close the file. 
 
@@ -134,11 +142,15 @@ The instructions below assume that you have SSH'd into your GCE instance using t
 
 cd into the assignment directory by running the following command:
 
+```
 cd assignment**X** (where X is the assignment number).
+```
 
 Launch Jupyter notebook using:
 
+```
 jupyter-notebook --no-browser --port=\<PORT-NUMBER\> 
+```
 
 Where \<PORT-NUMBER\> is what you wrote in the prior section.
 
