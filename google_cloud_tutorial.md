@@ -3,7 +3,7 @@ layout: page
 title: Google Cloud Tutorial
 permalink: /gce-tutorial/
 ---
-#Google Cloud Tutorial#
+# Google Cloud Tutorial #
 
 For the class project and assignments, we offer an option to use Google Compute Engine for developing and testing your 
 implementations. This tutorial lists the necessary steps of working on the assignments using Google Cloud. 
