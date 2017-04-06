@@ -79,7 +79,7 @@ To Do this, click on the 3 line icon next to the "Google Cloud Platform" button 
   <img src='/assets/cloud-networking-external-ip.png'>
 </div>
 
-To have a static IP address, change **Type** to **Static**. Enter your preffered name for your static IP, mine is assignment-1 (see screenshot below). And click on Reserve. Remember to release the static IP address when you are done because according to [this page](https://jeffdelaney.me/blog/running-jupyter-notebook-google-cloud-platform/ "Title") Google charges a small fee for unused static IPs. **Type** should now be set to **Static**. 
+To have a static IP address, change **Type** from **Ephemeral** to **Static**. Enter your preffered name for your static IP, mine is assignment-1 (see screenshot below). And click on Reserve. Remember to release the static IP address when you are done because according to [this page](https://jeffdelaney.me/blog/running-jupyter-notebook-google-cloud-platform/ "Title") Google charges a small fee for unused static IPs. **Type** should now be set to **Static**. 
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-networking-external-ip-naming.png'>
