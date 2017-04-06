@@ -65,6 +65,8 @@ chmod 400 ~/.ssh/my-ssh-key
 
 3. Go to the metadata page for your project.
 
+You do this by clicking on the "Metadata" tab on the left column
+
 4. Click SSH Keys to show a list of project-wide public SSH keys.
 
 5. Click the Edit button so that you can modify the public SSH keys in your project.
