@@ -156,7 +156,7 @@ cd assignmentX
 Launch Jupyter notebook using:
 
 ```
-jupyter-notebook --no-browser --port=\<PORT-NUMBER\> 
+jupyter-notebook --no-browser --port=<PORT-NUMBER> 
 ```
 
 Where \<PORT-NUMBER\> is what you wrote in the prior section.
