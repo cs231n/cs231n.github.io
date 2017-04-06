@@ -104,7 +104,6 @@ jupyter-notebook --no-browser --port=\<PORT-NUMBER\>
 
 I usually use 7000 or 8000 for \<PORT-NUMBER\>
 
-
 On your local browser, if you go to http://\<YOUR-EXTERNAL-IP-ADDRESS>:\<PORT-NUMBER\>, you should see something like the screen below. My value for \<YOUR-EXTERNAL-IP-ADDRESS\> was 104.196.224.11 as mentioned above. You should now be able to start working on your assignments. 
 
 <div class='fig figcenter fighighlight'>
