@@ -5,13 +5,14 @@ permalink: /gce-tutorial/
 ---
 # Google Cloud Tutorial #
 
+## Create and Configure Your Account ##
 For the class project and assignments, we offer an option to use Google Compute Engine for developing and testing your 
 implementations. This tutorial lists the necessary steps of working on the assignments using Google Cloud. 
 For each assignment, we will provide you with an image containing the starter code and all dependencies that you need to 
 complete the assignment. This tutorial goes through how to set up your own Google Compute Engine (GCE) instance with the 
 provided images for the assignments. Each student will have $50 in credit throughout the quarter. When you sign up for the first time, you also receive $300 credits from Google by default. Please try to use the resources judiciously. But if $100 ends up not being enough, we will try to adjust this number as the quarter goes on.
 
-First, if you don't have a Google Cloud account already, create one by going to the [Google Cloud homepage](https://cloud.google.com/?utm_source=google&utm_medium=cpc&utm_campaign=2015-q2-cloud-na-gcp-skws-freetrial-en&gclid=CP2e4PPpiNMCFU9bfgodGHsA1A "Title") and clicking on "Compute." When you get to the next page, click on the blue “TRY IT FREE” button. If you are not logged into gmail, you will see a page that looks like the one below. Sign into your gmail account or create a new one if you do not already have an account. 
+First, if you don't have a Google Cloud account already, create one by going to the [Google Cloud homepage](https://cloud.google.com/?utm_source=google&utm_medium=cpc&utm_campaign=2015-q2-cloud-na-gcp-skws-freetrial-en&gclid=CP2e4PPpiNMCFU9bfgodGHsA1A "Title") and clicking on **Compute**. When you get to the next page, click on the blue **TRY IT FREE** button. If you are not logged into gmail, you will see a page that looks like the one below. Sign into your gmail account or create a new one if you do not already have an account. 
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-launching-screen.png'>
@@ -22,26 +23,26 @@ If you already have a gmail account, it will direct you to a signup page which l
   <img src='/assets/cloud-for-free.png'>
 </div>
 
-Click the appropriate “yes” or “no” button for the first option, and check “yes” for the latter two options after you have read the required agreements. Press the blue “Agree and continue” button to continue to the next page to enter the requested information (your name, billing address and credit card information). Once you have entered the required information, press the blue “Start my free trial” button. You will be greeted by a page like this: 
+Click the appropriate **yes** or **no** button for the first option, and check **yes** for the latter two options after you have read the required agreements. Press the blue **Agree and continue** button to continue to the next page to enter the requested information (your name, billing address and credit card information). Once you have entered the required information, press the blue **Start my free trial** button. You will be greeted by a page like this: 
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-dashboard-screen.png'>
 </div>
 
-To change the name of your project, click on “Manage project settings” on the “Project info” button and save your changes. 
-You will launch virtual instances for assignments using our disk image containing each assignment’s starter code and pre-configured with the environments necessary for each assignment. 
+To change the name of your project, click on **Manage project settings** on the **Project info** button and save your changes. 
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-instance-dashboard-screen.png'>
 </div>
 
-To launch a virtual instance, go to the “Compute Engine” menu on the left column of your dashboard and click on VM instances.  Then click on the blue "CREATE" button on the next page. This will take you to a page that looks like the screenshot below.
+## Launch a Virtual Instance ##
+To launch a virtual instance, go to the **Compute Engine** menu on the left column of your dashboard and click on VM instances.  Then click on the blue **CREATE** button on the next page. This will take you to a page that looks like the screenshot below.
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-create-instance-screen.png'>
 </div>
 
-Make sure that the Zone is set to be us-west1-b (for assignments where you need to use GPU instances). Under “Machine type” pick the “8 vCPUs” option. Click on the “customize” button under “Machine type” and make sure that the number of cores is set to 8 and the number of GPUs is set to 0 (we will not be using GPUs in assignment 1). Click on the “Change” button under “Boot disk”, choose "OS images", check "Ubuntu 16.04 LTS" and click on the blue "select" button. Check "Allow HTTP traffic" and "Allow HTTPS traffic". Click on "disk" and then "Disks" and uncheck "Delete boot disk when instance is deleted". Click on the blue “Create” button at the bottom of the page. You should have now successfully created a Google Compute Instance, it might take a few minutes to start running. Your screen should look something like the one below. When you want to stop running the instance, click on the blue stop button above. 
+Make sure that the Zone is set to be us-west1-b (for assignments where you need to use GPU instances). Under **Machine type** pick the **8 vCPUs** option. Click on the “customize” button under **Machine type** and make sure that the number of cores is set to 8 and the number of GPUs is set to 0 (we will not be using GPUs in assignment 1). Click on the **Change** button under **Boot disk**, choose **OS images**, check **Ubuntu 16.04 LTS** and click on the blue **select** button. Check **Allow HTTP traffic** and **Allow HTTPS traffic**. Click on **disk** and then **Disks** and uncheck **Delete boot disk when instance is deleted**. Click on the blue **Create** button at the bottom of the page. You should have now successfully created a Google Compute Instance, it might take a few minutes to start running. Your screen should look something like the one below. When you want to stop running the instance, click on the blue stop button above. 
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-instance-started.png'>
@@ -73,7 +74,7 @@ Change the Extenal IP address of your GCE instance to be static (see screenshot 
   <img src='/assets/cloud-external-ip.png'>
 </div>
 
-To Do this, click on the 3 line icon next to the "Google Cloud Platform" button on the top left corner of your screen, go to "Networking" and "External IP addresses" (see screenshot below).
+To Do this, click on the 3 line icon next to the **Google Cloud Platform** button on the top left corner of your screen, go to **Networking** and **External IP addresses** (see screenshot below).
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-networking-external-ip.png'>
