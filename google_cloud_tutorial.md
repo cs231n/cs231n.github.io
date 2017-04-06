@@ -47,71 +47,11 @@ Make sure that the Zone is set to be us-west1-b (for assignments where you need 
   <img src='/assets/cloud-instance-started.png'>
 </div>
 
-Now that you have created your virtual GCE, you want to be able to connect to it from your computer. The rest of this tutorial goes over how to do that using the command line. First, download the Google Cloud SDK that is appropriate for your platform from [here](https://cloud.google.com/sdk/docs/ "Title") and follow their installation instructions.
-
-Before you can ssh into your GCE instance using the command line, you first need to generate a new SSH key-pair and apply the public key to your project. Follow instructions under "Generating a new SSH key-pair" on [this page](https://cloud.google.com/compute/docs/instances/connecting-to-instance "Title") to generate an SSH key-pair. The process for Linux and OS X machines is copied and pasted from the website below:
-
-To generate a new SSH key-pair on Linux or OSX workstations:
-
-1. Open a terminal on your workstation and use the ssh-keygen command to generate a new key-pair. Specify the -C flag to add a comment with your Google username. The example creates a private key named my-ssh-key, and a public key file named my-ssh-key.pub.
-
-ssh-keygen -t rsa -f ~/.ssh/my-ssh-key -C [USERNAME]
-
-where [USERNAME] is the user on the instance for whom you will apply the key. If the user does not exist on the instance, Compute Engine automatically creates it using the username that you specify in this command.
-
-2. Restrict access to your my-ssh-key private key so that only you can read it and nobody can write to it.
-
-chmod 400 ~/.ssh/my-ssh-key
-
-3. Go to the metadata page for your project.
-
-You do this by clicking on the "Metadata" tab on the left column
-
-4. Click SSH Keys to show a list of project-wide public SSH keys.
-
-5. Click the Add SSH Keys button so that you can modify the public SSH keys in your project.
-
-6. Obtain the contents of the ~/.ssh/my-ssh-key.pub public key file with the cat command.
-
-cat ~/.ssh/my-ssh-key.pub
-
-The terminal shows your public key in the following form:
-
-ssh-rsa [KEY_VALUE] [USERNAME]
-where:
-
-[KEY_VALUE] is the generated public key value.
-
-[USERNAME] is your username.
-
-7. Copy the output from the cat command and paste it as a new item in the list of SSH keys.
-At the bottom of the SSH Keys page, click **Save** to save your new project-wide SSH key.
-
-The public key is now set to work across all of the instances in your project. 
-
-Now, to connect to your GCE instance through SSH follow the instructions under "Connecting using SSH on Linux or OSX workstations" on the same page. They are reproduced (with minor modifications) below:
-
-To connect to your instances using SSH:
-
-1. Find the external IP for the GCE instance that you want to connect to (see screenshot below):
-
-<div class='fig figcenter fighighlight'>
-  <img src='/assets/cloud-external-ip.png'>
-</div>
-
-2. Use the ssh command to connect to your instance. Specify your username and the external IP address for the instance that you want to connect to. Your username is the Google username that you use to access your project. For this example, the private key is at ~/.ssh/my-ssh-key.
-
-    ssh -i ~/.ssh/my-ssh-key [USERNAME]@[IP_ADDRESS]
-    
-    where:
-        [USERNAME] is your username
-        
-        [IP_ADDRESS] is the IP for your instance.
-
-If the connection is successful, you can use the terminal to run commands on your instance. When you are done, use the exit command to disconnect from the instance.
+Now that you have created your virtual GCE, you want to be able to connect to it from your computer. The rest of this tutorial goes over how to do that using the command line. First, download the Google Cloud SDK that is appropriate for your platform from [here](https://cloud.google.com/sdk/docs/ "Title") and follow their installation instructions. The easiest way to connect is using the gcloud compute command below. The tool takes care of authentication for you.
 
 \<DIRECTORY-WHERE-GOOGLE-CLOUD-IS-INSTALLED\>/bin/gcloud compute ssh --zone=us-west 1-b \<YOUR-INSTANCE-NAME\>
 
+See [this page](https://cloud.google.com/compute/docs/instances/connecting-to-instance "Title") for more detailed instructions.
 The assignments will be under a folder \<TODO\>/assignment**X**. where **X** is the assignment number (1, 2 or 3).
 
 # Using Jupyter Notebook with Google Compute Engine # 
