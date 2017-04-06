@@ -89,7 +89,22 @@ At the bottom of the SSH Keys page, click **Save** to save your new project-wide
 
 The public key is now set to work across all of the instances in your project. 
 
-Now, to connect to your GCE instance through SSH enter the following command: 
+Now, to connect to your GCE instance through SSH follow the instructions under "Connecting using SSH on Linux or OSX workstations" on the same page. They are reproduced (with minor modifications) below:
+
+To connect to your instances using SSH:
+
+1. Find the external IP for the GCE instance that you want to connect to. Go to the list of your instances. 
+
+2. Use the ssh command to connect to your instance. Specify your username and the external IP address for the instance that you want to connect to. Your username is the Google username that you use to access your project. For this example, the private key is at ~/.ssh/my-ssh-key.
+
+    ssh -i ~/.ssh/my-ssh-key [USERNAME]@[IP_ADDRESS]
+    
+    where:
+        [USERNAME] is your username
+        
+        [IP_ADDRESS] is the IP for your instance.
+
+If the connection is successful, you can use the terminal to run commands on your instance. When you are done, use the exit command to disconnect from the instance.
 
 \<DIRECTORY-WHERE-GOOGLE-CLOUD-IS-INSTALLED\>/bin/gcloud compute ssh --zone=us-west 1-b \<YOUR-INSTANCE-NAME\>
 
