@@ -160,10 +160,4 @@ On your local browser, if you go to http://\<YOUR-EXTERNAL-IP-ADDRESS>:\<PORT-NU
   <img src='/assets/jupyter-screen.png'>
 </div>
 
-To use the same setup again and avoid having to re-download this software, save your disk once you stop running your instance. Next time you start a new instance or res-start this instance, you can then boot from this disk.
-
-Don't forget to stop your instance when you are completely done (by clicking on the stop button at the top of the page showing your instances). 
-
-
-
-
+Don't forget to stop your instance when you are done (by clicking on the stop button at the top of the page showing your instances). You can restart your instance and the downloaded software will still be available. 
