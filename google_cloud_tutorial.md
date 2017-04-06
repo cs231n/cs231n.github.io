@@ -71,7 +71,7 @@ Then open another console on your local machine and run the following command:
 
 You can read [here](https://haroldsoh.com/2016/04/28/set-up-anaconda-ipython-tensorflow-julia-on-a-google-compute-engine-vm/ "Title") for more details.
 
-On your local browser, if you go to http://localhost:\<PORT-NUMBER\>, you should see something like the screen below. You should now be able to start working on your assignments.
+On your local browser, if you go to http://localhost:\<PORT-NUMBER\>, you should see something like the screen below. You should now be able to start working on your assignments. Don't forget to stop your instance when you are done (by clicking on the stop button at the top of the page showing your instances). 
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/jupyter-screen.png'>
