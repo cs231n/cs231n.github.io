@@ -121,7 +121,7 @@ c.NotebookApp.port = \<PORT-NUMBER\>
 I usually use 7000 or 8000 for \<PORT-NUMBER\>. Save your changes and close the file. 
 
 ## Launching and connecting to Jupyter Notebook ##
-The instructions below assume that you have SSH'd into your GCE instance using the instructions, have already downloaded and unzipped the current assignment folder into assignment**X** (where X is the assignment number), and have successfully configured Jupyter Notebook.
+The instructions below assume that you have SSH'd into your GCE instance using the prior instructions, have already downloaded and unzipped the current assignment folder into assignment**X** (where X is the assignment number), and have successfully configured Jupyter Notebook.
 
 cd into the assignment directory by running the following command:
 
