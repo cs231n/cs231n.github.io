@@ -91,8 +91,35 @@ Take note of your Static IP address (circled on the screenshot below). I used 10
   <img src='/assets/cloud-networking-external-ip-address.png'>
 </div>
 
+## Configuring Jupyter Notebook ##
+The following instructions are excerpts from [this page](https://haroldsoh.com/2016/04/28/set-up-anaconda-ipython-tensorflow-julia-on-a-google-compute-engine-vm/ "Title") that has more detailed instructions.
+
+On your GCE instance check if you have a Jupyter configuration file:
+
+ls ~/.jupyter/jupyter_notebook_config.py
+
+If it doesn't exist, create one with: 
+
+jupyter notebook --generate-config
+
+You should see an output like:
+
+Writing default config to:\<PATH_TO_CONFIG_FILE\>
+
+where \<PATH_TO_CONFIG_FILE\> is the path to the configuration file. Mine was written to /home/timnitgebru/.jupyter/jupyter_notebook_config.py
+
+Using your favorite editor (vim, emacs etc...) add the following lines to \<PATH_TO_CONFIG_FILE\>:
+c = get_config()
+c.NotebookApp.ip = '*'
+c.NotebookApp.open_browser = False
+c.NotebookApp.port = \<PORT-NUMBER\>
+
+I usually use 7000 or 8000 for \<PORT-NUMBER\>
+
+Save and close the file. 
+
 ## Launching and connecting to Jupyter Notebook ##
-The instructions below assume that you have SSH'd into your GCE instance using the instructions above and have already downloaded and unzipped the current assignment folder into assignment**X** (where X is the assignment number).
+The instructions below assume that you have SSH'd into your GCE instance using the instructions, have already downloaded and unzipped the current assignment folder into assignment**X** (where X is the assignment number), and have successfully configured Jupyter Notebook.
 
 cd into the assignment directory by running the following command:
 
@@ -102,7 +129,7 @@ Launch Jupyter notebook using:
 
 jupyter-notebook --no-browser --port=\<PORT-NUMBER\> 
 
-I usually use 7000 or 8000 for \<PORT-NUMBER\>
+Where \<PORT-NUMBER\> is what you wrote in the prior section.
 
 On your local browser, if you go to http://\<YOUR-EXTERNAL-IP-ADDRESS>:\<PORT-NUMBER\>, you should see something like the screen below. My value for \<YOUR-EXTERNAL-IP-ADDRESS\> was 104.196.224.11 as mentioned above. You should now be able to start working on your assignments. 
 
