@@ -41,7 +41,7 @@ Click on the “CREATE INSTANCE” blue button at the top. You will see a page t
   <img src='/assets/cloud-create-instance-screen.png'>
 </div>
 
-Make sure that the Zone is set to be us-west1-b (for assignments where you need to use GPU instances). Under “Machine type” pick the “8 vCPUs” option. Click on the “customize” under “Machine type” and make sure that the number of cores is set to 8 and the number of GPUs is set to however many you need (we will not be using GPUs in assignment 1). Click on the “Change” button under “Boot disk”, choose “Custom images” and check “cs231n-caffe-torch-keras-lasagne” to use our custom image as your boot disk. Click on the blue “Create” button at the bottom of the page. You should have now successfully started a Google Compute Instance, it might take a few minutes to start. Your screen should look something like the one below:
+Make sure that the Zone is set to be us-west1-b (for assignments where you need to use GPU instances). Under “Machine type” pick the “8 vCPUs” option. Click on the “customize” button under “Machine type” and make sure that the number of cores is set to 8 and the number of GPUs is set to however many you need (we will not be using GPUs in assignment 1). Click on the “Change” button under “Boot disk”, choose “Custom images” and check “cs231n-caffe-torch-keras-lasagne” to use our custom image as your boot disk. Click on the blue “Create” button at the bottom of the page. You should have now successfully started a Google Compute Instance, it might take a few minutes to start. Your screen should look something like the one below:
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-instance-started.png'>
