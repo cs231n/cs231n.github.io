@@ -69,7 +69,7 @@ You do this by clicking on the "Metadata" tab on the left column
 
 4. Click SSH Keys to show a list of project-wide public SSH keys.
 
-5. Click the Edit button so that you can modify the public SSH keys in your project.
+5. Click the Add SSH Keys button so that you can modify the public SSH keys in your project.
 
 6. Obtain the contents of the ~/.ssh/my-ssh-key.pub public key file with the cat command.
 
