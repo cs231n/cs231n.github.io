@@ -49,6 +49,8 @@ Make sure that the Zone is set to be us-west1-b (for assignments where you need 
 </div>
 
 Take note of your \<YOUR-INSTANCE-NAME\>, in this case, my instance name is instance-2. 
+
+## Connect to Your Virtual Instance and Download the Assignment ##
 Now that you have created your virtual GCE, you want to be able to connect to it from your computer. The rest of this tutorial goes over how to do that using the command line. First, download the Google Cloud SDK that is appropriate for your platform from [here](https://cloud.google.com/sdk/docs/ "Title") and follow their installation instructions. The easiest way to connect is using the gcloud compute command below. The tool takes care of authentication for you. On OS X, run:
 
 \<DIRECTORY-WHERE-GOOGLE-CLOUD-IS-INSTALLED\>/bin/gcloud compute ssh --zone=us-west 1-b \<YOUR-INSTANCE-NAME\>
@@ -59,11 +61,17 @@ Run the following command to download the current assignment onto your GCE:
 
 wget http://cs231n.stanford.edu/assignments/2016/winter1516_assignmentX.zip where **X** is the assignment number (1, 2 or 3).
 
+'''
 run sudo apt-get install unzip
+'''
 
 and 
 
-unzip winter1516_assignment**X**.zip to get the contents. You should now see a folder titled assignment**X**. 
+'''
+unzip winter1516_assignment**X**.zip
+'''
+
+to get the contents. You should now see a folder titled assignment**X**. 
 
 # Using Jupyter Notebook with Google Compute Engine # 
 Many of the assignments will involve using Jupyter Notebook. Below, we discuss how to run Jupyter Notebook from your GCE instance and use it on your local browser. 
