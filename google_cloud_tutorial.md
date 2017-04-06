@@ -53,7 +53,9 @@ Take note of your \<YOUR-INSTANCE-NAME\>, in this case, my instance name is inst
 ## Connect to Your Virtual Instance and Download the Assignment ##
 Now that you have created your virtual GCE, you want to be able to connect to it from your computer. The rest of this tutorial goes over how to do that using the command line. First, download the Google Cloud SDK that is appropriate for your platform from [here](https://cloud.google.com/sdk/docs/ "Title") and follow their installation instructions. The easiest way to connect is using the gcloud compute command below. The tool takes care of authentication for you. On OS X, run:
 
+```
 \<DIRECTORY-WHERE-GOOGLE-CLOUD-IS-INSTALLED\>/bin/gcloud compute ssh --zone=us-west 1-b \<YOUR-INSTANCE-NAME\>
+```
 
 See [this page](https://cloud.google.com/compute/docs/instances/connecting-to-instance "Title") for more detailed instructions. You are now ready to work on the assignments on Google Cloud. 
 
