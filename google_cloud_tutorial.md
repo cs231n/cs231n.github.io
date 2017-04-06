@@ -68,15 +68,15 @@ run sudo apt-get install unzip
 and 
 
 ```
-unzip winter1516_assignment**X**.zip
+unzip winter1516_assignmentX.zip
 ```
 
 to get the contents. You should now see a folder titled assignment**X**. 
 
-# Using Jupyter Notebook with Google Compute Engine # 
+## Using Jupyter Notebook with Google Compute Engine ##
 Many of the assignments will involve using Jupyter Notebook. Below, we discuss how to run Jupyter Notebook from your GCE instance and use it on your local browser. 
 
-## Getting a Static IP Address ##
+### Getting a Static IP Address ###
 Change the Extenal IP address of your GCE instance to be static (see screenshot below). 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-external-ip.png'>
@@ -100,7 +100,7 @@ Take note of your Static IP address (circled on the screenshot below). I used 10
   <img src='/assets/cloud-networking-external-ip-address.png'>
 </div>
 
-## Configuring Jupyter Notebook ##
+### Configuring Jupyter Notebook ###
 The following instructions are excerpts from [this page](https://haroldsoh.com/2016/04/28/set-up-anaconda-ipython-tensorflow-julia-on-a-google-compute-engine-vm/ "Title") that has more detailed instructions.
 
 On your GCE instance check if you have a Jupyter configuration file:
@@ -137,7 +137,7 @@ c.NotebookApp.port = \<PORT-NUMBER\>
 
 I usually use 7000 or 8000 for \<PORT-NUMBER\>. Save your changes and close the file. 
 
-## Launching and connecting to Jupyter Notebook ##
+### Launching and connecting to Jupyter Notebook ###
 The instructions below assume that you have SSH'd into your GCE instance using the prior instructions, have already downloaded and unzipped the current assignment folder into assignment**X** (where X is the assignment number), and have successfully configured Jupyter Notebook.
 
 cd into the assignment directory by running the following command:
