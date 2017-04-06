@@ -124,7 +124,7 @@ jupyter notebook --generate-config
 You should see an output like:
 
 ```
-Writing default config to:\<PATH_TO_CONFIG_FILE\>
+Writing default config to:<PATH_TO_CONFIG_FILE>
 ```
 
 where \<PATH_TO_CONFIG_FILE\> is the path to the configuration file. Mine was written to /home/timnitgebru/.jupyter/jupyter_notebook_config.py
