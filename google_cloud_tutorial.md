@@ -132,7 +132,7 @@ c.NotebookApp.ip = '*'
 
 c.NotebookApp.open_browser = False
 
-c.NotebookApp.port = \<PORT-NUMBER\>
+c.NotebookApp.port = <PORT-NUMBER>
 ```
 
 I usually use 7000 or 8000 for \<PORT-NUMBER\>. Save your changes and close the file. 
