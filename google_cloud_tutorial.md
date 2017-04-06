@@ -96,7 +96,7 @@ To connect to your instances using SSH:
 1. Find the external IP for the GCE instance that you want to connect to (see screenshot below):
 
 <div class='fig figcenter fighighlight'>
-  <img src='/assets/cloud-instance-started.png'>
+  <img src='/assets/cloud-external-ip.png'>
 </div>
 
 2. Use the ssh command to connect to your instance. Specify your username and the external IP address for the instance that you want to connect to. Your username is the Google username that you use to access your project. For this example, the private key is at ~/.ssh/my-ssh-key.
