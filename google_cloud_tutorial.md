@@ -61,7 +61,11 @@ See [this page](https://cloud.google.com/compute/docs/instances/connecting-to-in
 
 Run the following command to download the current assignment onto your GCE:
 
-wget http://cs231n.stanford.edu/assignments/2016/winter1516_assignmentX.zip where **X** is the assignment number (1, 2 or 3).
+```
+wget http://cs231n.stanford.edu/assignments/2016/winter1516_assignmentX.zip 
+```
+
+where **X** is the assignment number (1, 2 or 3).
 
 ```
 run sudo apt-get install unzip
@@ -145,8 +149,9 @@ The instructions below assume that you have SSH'd into your GCE instance using t
 cd into the assignment directory by running the following command:
 
 ```
-cd assignment**X** (where X is the assignment number).
+cd assignmentX 
 ```
+(where X is the assignment number).
 
 Launch Jupyter notebook using:
 
