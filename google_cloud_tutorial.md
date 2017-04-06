@@ -69,6 +69,8 @@ Then open another console on your local machine and run the following command:
 
 \<DIRECTORY-WHERE-GOOGLE-CLOUD-IS-INSTALLED\>/bin/gcloud compute ssh --zone=us-west 1-b --ssh-flag=”-D” --ssh-flag=”1080” --ssh-flag=”-N” --ssh-flag=”-n” \<YOUR-INSTANCE-NAME\>
 
+You can read [here](https://haroldsoh.com/2016/04/28/set-up-anaconda-ipython-tensorflow-julia-on-a-google-compute-engine-vm/ "Title") for more details.
+
 On your local browser, if you go to http://localhost:\<PORT-NUMBER\>, you should see something like the screen below. You should now be able to start working on your assignments.
 
 <div class='fig figcenter fighighlight'>
