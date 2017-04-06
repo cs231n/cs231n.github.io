@@ -49,7 +49,9 @@ Make sure that the Zone is set to be us-west1-b (for assignments where you need 
 
 Now that you have created your virtual GCE, you want to be able to connect to it from your computer. The rest of this tutorial goes over how to do that using the command line. First, download the Google Cloud SDK that is appropriate for your platform from [here](https://cloud.google.com/sdk/docs/ "Title") and follow their installation instructions.
 
-Before you can ssh into your GCE instance using the command line, you first need to generate a new SSH key-pair and apply the public key to your project. Follow instructions under "Generating a new SSH key-pair" on [this page](https://cloud.google.com/compute/docs/instances/connecting-to-instance "Title") to generate an SSH key-pair. For Linux and OS X, the steps are:
+Before you can ssh into your GCE instance using the command line, you first need to generate a new SSH key-pair and apply the public key to your project. Follow instructions under "Generating a new SSH key-pair" on [this page](https://cloud.google.com/compute/docs/instances/connecting-to-instance "Title") to generate an SSH key-pair. 
+
+
 
 To connect to your GCE instance enter the following command: 
 
