@@ -84,7 +84,7 @@ cd assignmentX
 ./google_cloud_download.sh
 ```
 
-You should now have all the software you need for assignment**X**.
+You will be prompted to enter Y/N at various times during the download. Press enter for every prompt. You should now have all the software you need for assignment**X**.
 
 ## Using Jupyter Notebook with Google Compute Engine ##
 Many of the assignments will involve using Jupyter Notebook. Below, we discuss how to run Jupyter Notebook from your GCE instance and use it on your local browser. 
