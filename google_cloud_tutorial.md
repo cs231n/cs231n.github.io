@@ -151,6 +151,7 @@ Mine was in /home/timnitgebru/.jupyter/jupyter_notebook_config.py
 If it doesn’t exist, create one:
 
 ```
+# Remember to activate your virtualenv ('source .env/bin/activate') so you can actually run jupyter :)
 jupyter notebook --generate-config
 ```
 
