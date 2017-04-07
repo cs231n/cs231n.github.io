@@ -66,10 +66,10 @@ Run the following command to download the current assignment onto your GCE:
 wget http://cs231n.stanford.edu/assignments/2016/winter1516_assignmentX.zip 
 ```
 
-where **X** is the assignment number (1, 2 or 3).
+where **X** is the assignment number (1, 2 or 3). Run:
 
 ```
-run sudo apt-get install unzip
+sudo apt-get install unzip
 ```
 
 and 
