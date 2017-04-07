@@ -17,20 +17,19 @@ In this assignment you will practice putting together a simple image classificat
 - get a basic understanding of performance improvements from using **higher-level representations** than raw pixels (e.g. color histograms, Histogram of Gradient (HOG) features)
 
 ## Setup
-You can work on the assignment in one of two ways: locally on your own machine, or on a virtual machine through Terminal.com. 
+You can work on the assignment in one of two ways: locally on your own machine, or on a virtual machine on Google Cloud. 
 
-### Working in the cloud on Terminal
+### Working in the cloud on Google Cloud (Recommended)
 
-Terminal has created a separate subdomain to serve our class, [www.stanfordterminalcloud.com](https://www.stanfordterminalcloud.com). Register your account there. The Assignment 1 snapshot can then be found [here](https://www.stanfordterminalcloud.com/snapshot/49f5a1ea15dc424aec19155b3398784d57c55045435315ce4f8b96b62819ef65). If you're registered in the class you can contact the TA (see Piazza for more information) to request Terminal credits for use on the assignment. Once you boot up the snapshot everything will be installed for you, and you'll be ready to start on your assignment right away. We've written a small tutorial on Terminal [here](/terminal-tutorial).
+As part of this course, you can use Google Cloud for your assignments. We recommend this route for anyone who is having trouble with installation set-up, or if you would like to use better CPU/GPU resources than you may have locally. Please see the set-up tutorial [here](http://cs231n.github.io/gce-tutorial/) for more details. :)
+
+**Note:** after following the instructions, you can skip the **Working locally** and go straight to **Download data** below.
 
 ### Working locally
-Get the code as a zip file [here](http://cs231n.stanford.edu/assignments/2016/winter1516_assignment1.zip). As for the dependencies:
+Get the code as a zip file [here](http://cs231n.stanford.edu/assignments/2017/spring1617_assignment1.zip). As for the dependencies:
 
-**[Option 1] Use Anaconda:**
-The preferred approach for installing all the assignment dependencies is to use [Anaconda](https://www.continuum.io/downloads), which is a Python distribution that includes many of the most popular Python packages for science, math, engineering and data analysis. Once you install it you can skip all mentions of requirements and you're ready to go directly to working on the assignment.
-
-**[Option 2] Manual install, virtual environment:**
-If you'd like to (instead of Anaconda) go with a more manual and risky installation route you will likely want to create a [virtual environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/) for the project. If you choose not to use a virtual environment, it is up to you to make sure that all dependencies for the code are installed globally on your machine. To set up a virtual environment, run the following:
+**Virtual environment:**
+If you decide to work locally, we recommend using [virtual environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/) for the project. If you choose not to use a virtual environment, it is up to you to make sure that all dependencies for the code are installed globally on your machine. To set up a virtual environment, run the following:
 
 ```bash
 cd assignment1
@@ -42,8 +41,10 @@ pip install -r requirements.txt  # Install dependencies
 deactivate                       # Exit the virtual environment
 ```
 
-**Download data:**
-Once you have the starter code, you will need to download the CIFAR-10 dataset.
+Note that every time you want to work on the assignment, you should run `source .env/bin/activate` (from within your `assignment1` folder) to re-activate the virtual environment, and `deactivate` again whenever you are done.
+
+### Download data:
+Once you have the starter code (regardless of which method you choose above), you will need to download the CIFAR-10 dataset.
 Run the following from the `assignment1` directory:
 
 ```bash
@@ -53,18 +54,27 @@ cd cs231n/datasets
 
 **Start IPython:**
 After you have the CIFAR-10 data, you should start the IPython notebook server from the
-`assignment1` directory. If you are unfamiliar with IPython, you should read our
+`assignment1` directory, with the `jupyter notebook` command. (See the [Google Cloud Tutorial](http://cs231n.github.io/gce-tutorial/) for any additional steps you may need to do for setting this up)
+
+If you are unfamiliar with IPython, you can refer to our
 [IPython tutorial](/ipython-tutorial).
 
-**NOTE:** If you are working in a virtual environment on OSX, you may encounter
-errors with matplotlib due to the [issues described here](http://matplotlib.org/faq/virtualenv_faq.html). You can work around this issue by starting the IPython server using the `start_ipython_osx.sh` script from the `assignment1` directory; the script assumes that your virtual environment is named `.env`.
+### Some Notes
+**NOTE 1:** This year, the `assignment1` code has been tested to be compatible with python versions `2.7`, `3.5`, `3.6` (it may work with other versions of `3.x`, but we won't be officially supporting them). You will need to make sure that during your `virtualenv` setup that the correct version of `python` is used. You can confirm your python version by (1) activating your virtualenv and (2) running `which python`. ***TODO:*** add more detail here?
+
+**NOTE 2:** If you are working in a virtual environment on OSX, you may *potentially* encounter
+errors with matplotlib due to the [issues described here](http://matplotlib.org/faq/virtualenv_faq.html). In our testing, it seems that this issue is no longer present with the most recent version of matplotlib, but if you do end up running into this issue you may have to use the `start_ipython_osx.sh` script from the `assignment1` directory (instead of `jupyter notebook` above) to launch your IPython notebook server. Note that you may have to modify some variables within the script to match your version of python/installation directory. The script assumes that your virtual environment is named `.env`.
 
 ### Submitting your work:
-Whether you work on the assignment locally or using Terminal, once you are done
+Whether you work on the assignment locally or using Google Cloud, once you are done
 working run the `collectSubmission.sh` script; this will produce a file called
-`assignment1.zip`. Upload this file to your dropbox on
+`assignment1.zip`. ***TODO:*** how do students submit this? Canvas? (if so, insert link to our course canvas page here)
+
+<!---
+Upload this file to your dropbox on
 [the coursework](https://coursework.stanford.edu/portal/site/W16-CS-231N-01/)
 page for the course.
+--->
 
 ### Q1: k-Nearest Neighbor classifier (20 points)
 
