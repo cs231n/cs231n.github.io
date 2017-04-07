@@ -4,27 +4,32 @@ title: IPython Tutorial
 permalink: /ipython-tutorial/
 ---
 
-In this class, we will use [IPython notebooks](http://ipython.org/) for the
-programming assignments. An IPython notebook lets you write and execute Python
-code in your web browser. IPython notebooks make it very easy to tinker with
-code and execute it in bits and pieces; for this reason IPython notebooks are
-widely used in scientific computing.
+***(Note: some of the screenshots here may be out-of-date. However, this should still prove
+useful as a quick intro, and for the general menu layout, etc.)***
 
-Installing and running IPython is easy. From the command line, the following
-will install IPython:
+In this class, we will use IPython notebooks (more recently known as 
+[Jupyter notebooks](https://jupyter.org/)) for the programming assignments. 
+An IPython notebook lets you write and execute Python code in your web browser. 
+IPython notebooks make it very easy to tinker with code and execute it in bits 
+and pieces; for this reason IPython notebooks are widely used in scientific 
+computing.
+
+*(Note: if your virtual environment installed correctly (as per the assignment handouts),
+then you shouldn't have to install from the install instructions on the website. Just
+remember to run `source .env/bin/activate` in your assignment folder.)*
+
+<!---
+Once you have it [installed](http://jupyter.org/install.html), start it with this command:
+--->
+
+Once you have it installed, start it with this command:
 
 ```
-pip install "ipython[notebook]"
+jupyter notebook
 ```
 
-Once you have IPython installed, start it with this command:
-
-```
-ipython notebook
-```
-
-Once IPython is running, point your web browser at http://localhost:8888 to
-start using IPython notebooks. If everything worked correctly, you should
+Once your notebook server is running, point your web browser at http://localhost:8888 to
+start using your notebooks. If everything worked correctly, you should
 see a screen like this, showing all available IPython notebooks in the current
 directory:
 
