@@ -7,7 +7,7 @@ permalink: /gce-tutorial/
 
 ## Create and Configure Your Account ##
 For the class project and assignments, we offer an option to use Google Compute Engine for developing and testing your 
-implementations. This tutorial lists the necessary steps of working on the assignments using Google Cloud. **Don't get intimidated by the steps, we made this tutorial detailed so that you are less likely to get stuck on a particular step.**
+implementations. This tutorial lists the necessary steps of working on the assignments using Google Cloud. **We expect this tutorial to take about an hour. Don't get intimidated by the steps, we tried to make the tutorial detailed so that you are less likely to get stuck on a particular step.**
 
 For each assignment, we will provide you with an image containing the starter code and all dependencies that you need to 
 complete the assignment. This tutorial goes through how to set up your own Google Compute Engine (GCE) instance with the 
