@@ -86,7 +86,7 @@ sudo apt-get install unzip
 and 
 
 ```
-unzip assignment1.zip
+unzip spring1617_assignment1.zip
 ```
 
 to get the contents. You should now see a folder titled assignment**X**.  To install the necessary dependencies, cd into the assignment directory and run the provided shell script: **(Note: you will need to hit the [*enter*] key at all the "[Y/n]" prompts)**
