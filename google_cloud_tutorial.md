@@ -5,6 +5,14 @@ permalink: /gce-tutorial/
 ---
 # Google Cloud Tutorial #
 
+## BEFORE WE BEGIN ##
+### BIG REMINDER: Make sure you stop your instances! ###
+(We know you won't read until the very bottom once your assignment is running, so we are printing this at the top too since it is ***super important***)
+
+Don't forget to ***stop your instance*** when you are done (by clicking on the stop button at the top of the page showing your instances), otherwise you will ***run out of credits*** and that will be very sad. :( 
+
+If you follow our instructions below correctly, you should be able to restart your instance and the downloaded software will still be available.
+
 ## Create and Configure Your Account ##
 For the class project and assignments, we offer an option to use Google Compute Engine for developing and testing your 
 implementations. This tutorial lists the necessary steps of working on the assignments using Google Cloud. **We expect this tutorial to take about an hour. Don't get intimidated by the steps, we tried to make the tutorial detailed so that you are less likely to get stuck on a particular step. Please tag all questions related to Google Cloud with google_cloud on Piazza.**
@@ -41,7 +49,7 @@ To launch a virtual instance, go to the **Compute Engine** menu on the left colu
   <img src='/assets/cloud-create-instance-screen.png'>
 </div>
 
-Make sure that the Zone is set to be us-west1-b (for assignments where you need to use GPU instances). Under **Machine type** pick the **8 vCPUs** option. Click on the **customize** button under **Machine type** and make sure that the number of cores is set to 8 and the number of GPUs is set to **None** (we will not be using GPUs in assignment 1 and this tutorial will be updated with instructions for GPU usage). Click on the **Change** button under **Boot disk**, choose **OS images**, check **Ubuntu 16.04 LTS** and click on the blue **select** button. Check **Allow HTTP traffic** and **Allow HTTPS traffic**. Click on **disk** and then **Disks** and uncheck **Delete boot disk when instance is deleted**. Click on the blue **Create** button at the bottom of the page. You should have now successfully created a Google Compute Instance, it might take a few minutes to start running. Your screen should look something like the one below. When you want to stop running the instance, click on the blue stop button above. 
+Make sure that the Zone is set to be us-west1-b (for assignments where you need to use GPU instances). Under **Machine type** pick the **8 vCPUs** option. Click on the **customize** button under **Machine type** and make sure that the number of cores is set to 8 and the number of GPUs is set to **None** (we will not be using GPUs in assignment 1 and this tutorial will be updated with instructions for GPU usage). Click on the **Change** button under **Boot disk**, choose **OS images**, check **Ubuntu 16.04 LTS** and click on the blue **select** button. Check **Allow HTTP traffic** and **Allow HTTPS traffic**. Click on **disk** and then **Disks** and uncheck **Delete boot disk when instance is deleted** (Note that the "Disks" option may be hiding under an expandable URL at the bottom of that webform). Click on the blue **Create** button at the bottom of the page. You should have now successfully created a Google Compute Instance, it might take a few minutes to start running. Your screen should look something like the one below. When you want to stop running the instance, click on the blue stop button above. 
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-instance-started.png'>
@@ -61,7 +69,7 @@ See [this page](https://cloud.google.com/compute/docs/instances/connecting-to-in
 Run the following command to download the current assignment onto your GCE:
 
 ```
-wget http://cs231n.stanford.edu/assignments/2016/winter1516_assignmentX.zip 
+wget http://cs231n.stanford.edu/assignments/2017/spring1617_assignment1.zip 
 ```
 
 where **X** is the assignment number (1, 2 or 3). Run:
@@ -73,13 +81,13 @@ sudo apt-get install unzip
 and 
 
 ```
-unzip assignmentX.zip
+unzip assignment1.zip
 ```
 
 to get the contents. You should now see a folder titled assignment**X**.  To install the necessary dependencies, cd into the assignment directory and run the provided shell script: **(Note: you will need to hit the [*enter*] key at all the "[Y/n]" prompts)**
 
 ```
-cd assignmentX 
+cd assignment1 
 ./setup_googlecloud.sh
 ```
 
@@ -155,7 +163,7 @@ If it doesn’t exist, create one:
 jupyter notebook --generate-config
 ```
 
-Using your favorite editor (vim, emacs etc...) add the following lines to the config file, (in my case: /home/timnitgebru/.jupyter/jupyter_notebook_config.py):
+Using your favorite editor (vim, emacs etc...) add the following lines to the config file, (e.g.: /home/timnitgebru/.jupyter/jupyter_notebook_config.py):
 
 ```
 c = get_config()
@@ -176,9 +184,9 @@ The instructions below assume that you have SSH'd into your GCE instance using t
 If you are not already in the assignment directory, cd into it by running the following command:
 
 ```
-cd assignmentX 
+cd assignment1 
 ```
-(where X is the assignment number). If you haven't already done so, activate your virtualenv by running:
+If you haven't already done so, activate your virtualenv by running:
 
 ```
 source .env/bin/activate
@@ -198,4 +206,6 @@ On your local browser, if you go to http://\<YOUR-EXTERNAL-IP-ADDRESS>:\<PORT-NU
   <img src='/assets/jupyter-screen.png'>
 </div>
 
+
+# BIG REMINDER: Make sure you stop your instances! #
 Don't forget to stop your instance when you are done (by clicking on the stop button at the top of the page showing your instances). You can restart your instance and the downloaded software will still be available. 
