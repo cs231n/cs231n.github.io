@@ -19,7 +19,7 @@ In this assignment you will practice putting together a simple image classificat
 ## Setup
 You can work on the assignment in one of two ways: locally on your own machine, or on a virtual machine on Google Cloud. 
 
-### Working in the cloud on Google Cloud (Recommended)
+### Working remotely on Google Cloud (Recommended)
 
 As part of this course, you can use Google Cloud for your assignments. We recommend this route for anyone who is having trouble with installation set-up, or if you would like to use better CPU/GPU resources than you may have locally. Please see the set-up tutorial [here](http://cs231n.github.io/gce-tutorial/) for more details. :)
 
@@ -52,11 +52,11 @@ cd cs231n/datasets
 ./get_datasets.sh
 ```
 
-**Start IPython:**
+### Start IPython:
 After you have the CIFAR-10 data, you should start the IPython notebook server from the
-`assignment1` directory, with the `jupyter notebook` command. (See the [Google Cloud Tutorial](http://cs231n.github.io/gce-tutorial/) for any additional steps you may need to do for setting this up)
+`assignment1` directory, with the `jupyter notebook` command. (See the [Google Cloud Tutorial](http://cs231n.github.io/gce-tutorial/) for any additional steps you may need to do for setting this up, if you are working remotely)
 
-If you are unfamiliar with IPython, you can refer to our
+If you are unfamiliar with IPython, you can also refer to our
 [IPython tutorial](/ipython-tutorial).
 
 ### Some Notes
