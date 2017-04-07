@@ -50,7 +50,7 @@ Make sure that the Zone is set to be us-west1-b (for assignments where you need 
 Take note of your \<YOUR-INSTANCE-NAME\>, in this case, my instance name is instance-2. 
 
 ## Connect to Your Virtual Instance and Download the Assignment ##
-Now that you have created your virtual GCE, you want to be able to connect to it from your computer. The rest of this tutorial goes over how to do that using the command line. First, download the Google Cloud SDK that is appropriate for your platform from [here](https://cloud.google.com/sdk/docs/ "Title") and follow their installation instructions. **NOTE: this tutorial assumes that you have performed step #4 on the website which they list as optional**. The easiest way to connect is using the gcloud compute command below. The tool takes care of authentication for you. On OS X, run:
+Now that you have created your virtual GCE, you want to be able to connect to it from your computer. The rest of this tutorial goes over how to do that using the command line. First, download the Google Cloud SDK that is appropriate for your platform from [here](https://cloud.google.com/sdk/docs/ "Title") and follow their installation instructions. **NOTE: this tutorial assumes that you have performed step #4 on the website which they list as optional**. When prompted, make sure you select us-west1-b for the time zone. The easiest way to connect is using the gcloud compute command below. The tool takes care of authentication for you. On OS X, run:
 
 ```
 <DIRECTORY-WHERE-GOOGLE-CLOUD-IS-INSTALLED>/bin/gcloud compute ssh --zone=us-west1-b <YOUR-INSTANCE-NAME>
