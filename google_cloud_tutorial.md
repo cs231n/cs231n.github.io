@@ -7,7 +7,8 @@ permalink: /gce-tutorial/
 
 ## Create and Configure Your Account ##
 For the class project and assignments, we offer an option to use Google Compute Engine for developing and testing your 
-implementations. This tutorial lists the necessary steps of working on the assignments using Google Cloud. 
+implementations. This tutorial lists the necessary steps of working on the assignments using Google Cloud. **Don't get intimidated by the steps, we made this tutorial detailed so that you are less likely to get stuck on a particular step.**
+
 For each assignment, we will provide you with an image containing the starter code and all dependencies that you need to 
 complete the assignment. This tutorial goes through how to set up your own Google Compute Engine (GCE) instance with the 
 provided images for the assignments. Each student will have $100 in credit throughout the quarter. When you sign up for the first time, you also receive $300 credits from Google by default. Please try to use the resources judiciously. But if $100 ends up not being enough, we will try to adjust this number as the quarter goes on.
