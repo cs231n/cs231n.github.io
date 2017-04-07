@@ -128,27 +128,14 @@ Click on the blue **CREATE FIREWALL RULE** button. Enter whatever name you want:
 ### Configuring Jupyter Notebook ###
 The following instructions are excerpts from [this page](https://haroldsoh.com/2016/04/28/set-up-anaconda-ipython-tensorflow-julia-on-a-google-compute-engine-vm/ "Title") that has more detailed instructions.
 
-On your GCE instance check if you have a Jupyter configuration file:
+On your GCE instance check where the Jupyter configuration file is located:
 
 ```
 ls ~/.jupyter/jupyter_notebook_config.py
 ```
+Mine was in /home/timnitgebru/.jupyter/jupyter_notebook_config.py
 
-If it doesn't exist, create one with: 
-
-```
-jupyter notebook --generate-config
-```
-
-You should see an output like:
-
-```
-Writing default config to:<PATH_TO_CONFIG_FILE>
-```
-
-where \<PATH_TO_CONFIG_FILE\> is the path to the configuration file. Mine was written to /home/timnitgebru/.jupyter/jupyter_notebook_config.py
-
-Using your favorite editor (vim, emacs etc...) add the following lines to \<PATH_TO_CONFIG_FILE\>:
+Using your favorite editor (vim, emacs etc...) add the following lines to the config file, (in my case: /home/timnitgebru/.jupyter/jupyter_notebook_config.py):
 
 ```
 c = get_config()
