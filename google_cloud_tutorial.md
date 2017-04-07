@@ -135,6 +135,12 @@ ls ~/.jupyter/jupyter_notebook_config.py
 ```
 Mine was in /home/timnitgebru/.jupyter/jupyter_notebook_config.py
 
+If it doesn’t exist, create one:
+
+```
+jupyter notebook --generate-config
+```
+
 Using your favorite editor (vim, emacs etc...) add the following lines to the config file, (in my case: /home/timnitgebru/.jupyter/jupyter_notebook_config.py):
 
 ```
