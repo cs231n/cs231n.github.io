@@ -7,7 +7,7 @@ permalink: /gce-tutorial/
 
 ## Create and Configure Your Account ##
 For the class project and assignments, we offer an option to use Google Compute Engine for developing and testing your 
-implementations. This tutorial lists the necessary steps of working on the assignments using Google Cloud. **We expect this tutorial to take about an hour. Don't get intimidated by the steps, we tried to make the tutorial detailed so that you are less likely to get stuck on a particular step.**
+implementations. This tutorial lists the necessary steps of working on the assignments using Google Cloud. **We expect this tutorial to take about an hour. Don't get intimidated by the steps, we tried to make the tutorial detailed so that you are less likely to get stuck on a particular step. Please ask your **
 
 For each assignment, we will provide you with an image containing the starter code and all dependencies that you need to 
 complete the assignment. This tutorial goes through how to set up your own Google Compute Engine (GCE) instance with the 
@@ -78,7 +78,14 @@ and
 unzip winter1516_assignmentX.zip
 ```
 
-to get the contents. You should now see a folder titled assignment**X**. 
+to get the contents. You should now see a folder titled assignment**X**.  To install the necessary dependancies, cd into the assignment directory and run the provided shell script:
+
+```
+cd assignmentX 
+./google_cloud_download.sh
+```
+
+You should now have all the software you need for assignment**X**.
 
 ## Using Jupyter Notebook with Google Compute Engine ##
 Many of the assignments will involve using Jupyter Notebook. Below, we discuss how to run Jupyter Notebook from your GCE instance and use it on your local browser. 
@@ -147,7 +154,8 @@ I usually use 7000 or 8000 for \<PORT-NUMBER\>. Save your changes and close the 
 ### Launching and connecting to Jupyter Notebook ###
 The instructions below assume that you have SSH'd into your GCE instance using the prior instructions, have already downloaded and unzipped the current assignment folder into assignment**X** (where X is the assignment number), and have successfully configured Jupyter Notebook.
 
-cd into the assignment directory by running the following command:
+
+If you are not already in the assignment directory, cd into it by running the following command:
 
 ```
 cd assignmentX 
