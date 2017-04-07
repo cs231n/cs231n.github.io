@@ -76,7 +76,7 @@ and
 unzip winter1516_assignmentX.zip
 ```
 
-to get the contents. You should now see a folder titled assignment**X**.  To install the necessary dependencies, cd into the assignment directory and run the provided shell script:
+to get the contents. You should now see a folder titled assignment**X**.  To install the necessary dependencies, cd into the assignment directory and run the provided shell script: **(Note: you will need to hit the [*enter*] key at all the "[Y/n]" prompts)**
 
 ```
 cd assignmentX 
