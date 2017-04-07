@@ -1,7 +1,7 @@
 ---
 layout: page
 mathjax: true
-permalink: /assignments2016/assignment1/
+permalink: /assignments2017/assignment1/
 ---
 
 In this assignment you will practice putting together a simple image classification pipeline, based on the k-Nearest Neighbor or the SVM/Softmax classifier. The goals of this assignment are as follows:
@@ -34,7 +34,8 @@ If you decide to work locally, we recommend using [virtual environment](http://d
 ```bash
 cd assignment1
 sudo pip install virtualenv      # This may already be installed
-virtualenv .env                  # Create a virtual environment
+virtualenv -p python3 .env       # Create a virtual environment (python3)
+# Note: you can also use "virtualenv .env" to use your default python (usually python 2.7)
 source .env/bin/activate         # Activate the virtual environment
 pip install -r requirements.txt  # Install dependencies
 # Work on the assignment for a while ...
