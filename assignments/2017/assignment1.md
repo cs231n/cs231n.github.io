@@ -68,13 +68,7 @@ errors with matplotlib due to the [issues described here](http://matplotlib.org/
 ### Submitting your work:
 Whether you work on the assignment locally or using Google Cloud, once you are done
 working run the `collectSubmission.sh` script; this will produce a file called
-`assignment1.zip`. Please submit this file on [Canvas](https://canvas.stanford.edu/).
-
-<!---
-Upload this file to your dropbox on
-[the coursework](https://coursework.stanford.edu/portal/site/W16-CS-231N-01/)
-page for the course.
---->
+`assignment1.zip`. Please submit this file on [Canvas](https://canvas.stanford.edu/courses/66461/).
 
 ### Q1: k-Nearest Neighbor classifier (20 points)
 
