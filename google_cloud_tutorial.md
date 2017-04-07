@@ -13,6 +13,11 @@ Don't forget to ***stop your instance*** when you are done (by clicking on the s
 
 If you follow our instructions below correctly, you should be able to restart your instance and the downloaded software will still be available.
 
+<div class='fig figcenter fighighlight'>
+  <img src='/assets/sadpuppy_nocredits.png'>
+</div>
+
+
 ## Create and Configure Your Account ##
 For the class project and assignments, we offer an option to use Google Compute Engine for developing and testing your 
 implementations. This tutorial lists the necessary steps of working on the assignments using Google Cloud. **We expect this tutorial to take about an hour. Don't get intimidated by the steps, we tried to make the tutorial detailed so that you are less likely to get stuck on a particular step. Please tag all questions related to Google Cloud with google_cloud on Piazza.**
