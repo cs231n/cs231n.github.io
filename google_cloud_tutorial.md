@@ -120,7 +120,7 @@ One last thing you have to do is adding a new firewall rule allowing TCP acess t
   <img src='/assets/cloud-networking-firewall-rule.png'>
 </div>
 
-Click on the blue **CREATE FIREWALL RULE** button. Enter whatever name you want: I used assignment1-rules. Enter 0.0.0.0/0 for **Source IP ranges** and tcp:<\PORT-NUMBER\> for **Allowed protocols and ports** where \<PORT-NUMBER\> is the number you used above. Click on the blue **Create** button. See the screen shot below.
+Click on the blue **CREATE FIREWALL RULE** button. Enter whatever name you want: I used assignment1-rules. Enter 0.0.0.0/0 for **Source IP ranges** and tcp:\<PORT-NUMBER\> for **Allowed protocols and ports** where \<PORT-NUMBER\> is the number you used above. Click on the blue **Create** button. See the screen shot below.
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-networking-firewall-rule-create.png'>
