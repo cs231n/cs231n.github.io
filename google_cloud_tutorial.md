@@ -80,7 +80,7 @@ to get the contents. You should now see a folder titled assignment**X**.  To ins
 
 ```
 cd assignmentX 
-./google_cloud_download.sh
+./setup_googlecloud.sh
 ```
 
 You will be prompted to enter Y/N at various times during the download. Press enter for every prompt. You should now have all the software you need for assignment**X**.
