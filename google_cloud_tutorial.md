@@ -177,7 +177,11 @@ If you are not already in the assignment directory, cd into it by running the fo
 ```
 cd assignmentX 
 ```
-(where X is the assignment number).
+(where X is the assignment number). If you haven't already done so, activate your virtualenv by running:
+
+```
+source .env/bin/activate
+```
 
 Launch Jupyter notebook using:
 
