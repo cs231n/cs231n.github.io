@@ -77,7 +77,7 @@ Run the following command to download the current assignment onto your GCE:
 wget http://cs231n.stanford.edu/assignments/2017/spring1617_assignment1.zip 
 ```
 
-where **X** is the assignment number (1, 2 or 3). Run:
+Then run:
 
 ```
 sudo apt-get install unzip
