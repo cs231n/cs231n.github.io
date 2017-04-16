@@ -111,6 +111,24 @@ deactivate
 ```
 to exit the venv. See assignment handout for details.
 
+**NOTE**: The instructions above will run everything needed using Python 2.7. If you would like to use Python 3.5 instead, replce the line 
+
+```
+virtualenv .env 
+```
+
+with 
+
+```
+virtualenv -p python3 .env
+```
+
+before running 
+
+```
+./setup_googlecloud.sh
+```
+
 ## Using Jupyter Notebook with Google Compute Engine ##
 Many of the assignments will involve using Jupyter Notebook. Below, we discuss how to run Jupyter Notebook from your GCE instance and use it on your local browser. 
 
