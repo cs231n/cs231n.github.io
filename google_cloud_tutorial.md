@@ -48,7 +48,7 @@ To change the name of your project, click on **Manage project settings** on the 
 </div>
 
 ## Launch a Virtual Instance ##
-To launch a virtual instance, go to the **Compute Engine** menu on the left column of your dashboard and click on **VM instances**.  Then click on the blue **CREATE** button on the next page. This will take you to a page that looks like the screenshot below. **(NOTE: the values that you see in the screenshot are the *default* values, please keep reading below for the values you will need to fill in.)**
+To launch a virtual instance, go to the **Compute Engine** menu on the left column of your dashboard and click on **VM instances**.  Then click on the blue **CREATE** button on the next page. This will take you to a page that looks like the screenshot below. **(NOTE: Please carefully read the instructions in addition to looking at the screenshots. The instructions tell you exactly what values to fill in).**
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-create-instance-screen.png'>
