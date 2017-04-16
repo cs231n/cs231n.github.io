@@ -151,6 +151,8 @@ Click on the blue **CREATE FIREWALL RULE** button. Enter whatever name you want:
   <img src='/assets/cloud-networking-firewall-rule-create.png'>
 </div>
 
+**NOTE:** Some people are seeing a different screen where instead of **Allowed protocols and ports** there is a field titled **Specified protocols and ports**. You should enter tcp:\<PORT-NUMBER\> for this field if this is the page you see. Also, if you see a field titled **Targets** select **All instances in the network**.
+
 ### Configuring Jupyter Notebook ###
 The following instructions are excerpts from [this page](https://haroldsoh.com/2016/04/28/set-up-anaconda-ipython-tensorflow-julia-on-a-google-compute-engine-vm/ "Title") that has more detailed instructions.
 
