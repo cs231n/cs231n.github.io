@@ -232,7 +232,7 @@ On your local browser, if you go to http://\<YOUR-EXTERNAL-IP-ADDRESS>:\<PORT-NU
 </div>
 
 ## Submission: Transferring Files From Your Instance To Your Computer ##
-Once you are done with your assignments, run the submission script in your assignment folder. For assignment1, this will create a zip file called assignment1.zip containing the files you need to upload to Canvas. If you're not in the assignment1 directory already, CD into it by running
+Once you are done with your assignments, run the submission script in your assignment folder. For assignment1, this will create a zip file called `assignment1.zip` containing the files you need to upload to Canvas. If you're not in the assignment1 directory already, CD into it by running
 
 ```
 cd assignment1
