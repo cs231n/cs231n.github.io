@@ -231,8 +231,8 @@ On your local browser, if you go to http://\<YOUR-EXTERNAL-IP-ADDRESS>:\<PORT-NU
   <img src='/assets/jupyter-screen.png'>
 </div>
 
-## Transferring Files From Your Instance ##
-Once you are done with your assignments, run the submission script in assignment one. This will create a zip file called assignment1.zip containing the files you need to upload to canvas. I.e., if you're not in the assignment1 directory already, CD into it by running
+## Submission: Transferring Files From Your Instance To Your Computer ##
+Once you are done with your assignments, run the submission script in your assignment folder. For assignment1, this will create a zip file called assignment1.zip containing the files you need to upload to Canvas. If you're not in the assignment1 directory already, CD into it by running
 
 ```
 cd assignment1
@@ -250,12 +250,14 @@ to create the zip file that you need to upload to canvas. Then copy the file to 
 gcloud compute copy-files [INSTANCE_NAME]:[REMOTE_FILE_PATH] [LOCAL_FILE_PATH]
 ```
 
-For example, to copy my files to my desktop I ran:
+For example to copy my files to my desktop I ran:
 
 ```
 gcloud compute copy-files instance-2:~/assignment1/assignment1.zip ~/Desktop
 ```
-See [this page](https://cloud.google.com/compute/docs/instances/transfer-files "Title") for more details.
+Finally, remember to upload the zip file containing your submission to [***Canvas***](https://canvas.stanford.edu/courses/66461). (You can unzip the file locally if you want to double check your ipython notebooks and other code files are correctly inside).
+
+You can refer to [this page](https://cloud.google.com/compute/docs/instances/transfer-files "Title") for more details on transferring files to/from Google Cloud.
 
 # BIG REMINDER: Make sure you stop your instances! #
 Don't forget to stop your instance when you are done (by clicking on the stop button at the top of the page showing your instances). You can restart your instance and the downloaded software will still be available. 
