@@ -238,6 +238,11 @@ Once you are done with your assignments, run the submission script in your assig
 cd assignment1
 ```
 
+install the **zip** by running
+```
+sudo apt-get install zip
+```
+
 and then run 
 
 ```
