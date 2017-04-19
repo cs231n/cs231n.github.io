@@ -255,6 +255,13 @@ For example, to copy my files to my desktop I ran:
 ```
 gcloud compute copy-files instance-2:~/assignment1/assignment1.zip ~/Desktop
 ```
+Another (perhaps easier) option proposed by a student is to directly download the zip file from Jupyter. After running the submission script and creating assignment1.zip, you can download that file directly from Jupyter. To do this, go to Jupyter Notebook and click on the zip file (in this case assignment1.zip). The file will be downloaded to your local computer. 
+
+
+To do this, click on the file assignment1.zip. Instead of opening the file, that will download it.
+
+
+
 Finally, remember to upload the zip file containing your submission to [***Canvas***](https://canvas.stanford.edu/courses/66461). (You can unzip the file locally if you want to double check your ipython notebooks and other code files are correctly inside).
 
 You can refer to [this page](https://cloud.google.com/compute/docs/instances/transfer-files "Title") for more details on transferring files to/from Google Cloud.
