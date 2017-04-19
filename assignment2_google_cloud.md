@@ -33,10 +33,4 @@ For the remaining assignments and the project, we provide you a disk which conta
 To start your instance using our provided disk, go to **VM Instances** and click on **Create Instance** like you have done below. However, instead of selecting 
 
 
-
-
-
-
-
-
-#
+### Starting Your Instance with Our Custom Image ###
