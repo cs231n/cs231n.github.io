@@ -238,7 +238,7 @@ Once you are done with your assignments, you will want to make a zip file contai
 sudo apt-get install zip 
 zip assignment1 assignment1
 ```
-Then copy the file to your local computer using the gcloud compute copy-file command as shown below. **NOTE: Run this command on your local computer**:
+Then copy the file to your local computer using the gcloud compute copy-file command as shown below. **NOTE: run this command on your local computer**:
 
 ```
 gcloud compute copy-files [INSTANCE_NAME]:[REMOTE_FILE_PATH] [LOCAL_FILE_PATH]
