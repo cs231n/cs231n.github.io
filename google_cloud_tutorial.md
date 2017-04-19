@@ -231,6 +231,25 @@ On your local browser, if you go to http://\<YOUR-EXTERNAL-IP-ADDRESS>:\<PORT-NU
   <img src='/assets/jupyter-screen.png'>
 </div>
 
+# Transferring Files from Your Instance #
+Once you are done with your assignments, you will want to make a zip file containing the assignment 1 folder, transfer it to your local computer and upload it to canvas. First create a zip file by running: 
+
+```
+sudo apt-get install zip 
+zip assignment 1
+```
+Then copy the file to your local computer using the gcloud compute copy-file command as shown below:
+
+```
+gcloud compute copy-files [INSTANCE_NAME]:[REMOTE_FILE_PATH] [LOCAL_FILE_PATH]
+```
+
+For example to copy my files to my desktop I ran:
+
+```
+gcloud compute copy-files instance-2:~/assignment1 ~/Desktop
+```
+See [this page](https://cloud.google.com/compute/docs/instances/transfer-files "Title") for more details.
 
 # BIG REMINDER: Make sure you stop your instances! #
 Don't forget to stop your instance when you are done (by clicking on the stop button at the top of the page showing your instances). You can restart your instance and the downloaded software will still be available. 
