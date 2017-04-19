@@ -250,7 +250,7 @@ to create the zip file that you need to upload to canvas. Then copy the file to 
 gcloud compute copy-files [INSTANCE_NAME]:[REMOTE_FILE_PATH] [LOCAL_FILE_PATH]
 ```
 
-For example to copy my files to my desktop I ran:
+For example, to copy my files to my desktop I ran:
 
 ```
 gcloud compute copy-files instance-2:~/assignment1/assignment1.zip ~/Desktop
