@@ -231,7 +231,7 @@ On your local browser, if you go to http://\<YOUR-EXTERNAL-IP-ADDRESS>:\<PORT-NU
   <img src='/assets/jupyter-screen.png'>
 </div>
 
-## Transferring Files from Your Instance ##
+## Transferring Files From Your Instance ##
 Once you are done with your assignments, you will want to make a zip file containing the assignment 1 folder, transfer it to your local computer and upload it to canvas. First create a zip file by running: 
 
 ```
