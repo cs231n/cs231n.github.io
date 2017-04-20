@@ -4,6 +4,7 @@ title: Google Cloud Tutorial Part 2 (with GPUs)
 permalink: /gce-tutorial-gpus/
 ---
 # Google Cloud Tutorial (Part 2 With GPUs) #
+This tutorial assumes that you have already gone through the first Google Cloud tutorial for assignment 1 [here](http://cs231n.github.io/gce-tutorial/ "title"). The first tutorial takes you through the process of setting up a Google Cloud account, launching a VM instance, accessing Jupyter Notebook from your local computer, working on assignment 1 on your VM instance, and transferring files to your local computer. While you created a VM instance without a GPU in the first tutorial, this one walks you through the necessary steps to create an instance with a GPU, and use our provided disk images to work on assignment 2. If you haven't already done so, we advise you to go through the first tutorial to be comfortable with the process of creating an instance with the right configurations and accessing Jupyter Notebook from your local computer.
 
 ## Changing your Billing Account ##
 Everyone enrolled in the class should have received $100 Google Cloud credits by now. Some of you might want to use these instead of your free trial credits. To do this, follow the instructions on [this website](https://support.google.com/cloud/answer/6293499?hl=en "Title") to change the billing address associated with your project to **CS 231n- Convolutional Neural Netwks for Visual Recog-Set 1**.
@@ -77,3 +78,7 @@ The disk should also have Jupyter 1.0.0, CUDA 8.0, CUDNN 5.1, Pytorch 0.1.11_5 a
 ### Getting started on Assignment 2 ###
 
 Get back to the Assignment 2 instructions [here](http://cs231n.github.io/assignments2017/assignment2/).
+
+## Transferring Files to Your Local Computer ##
+After following assignment 2 instructions to run the submission script and create assignment2.zip, you can download that file directly from Jupyter. To do this, go to Jupyter Notebook and click on the zip file (in this case assignment2.zip). The file will be downloaded to your local computer. You can also use the **gcloud compute copy-files** command to transfer files as discussed in the **Submission: Transferring Files From Your Instance To Your Computer** section in [the first GCE tutorial](http://cs231n.github.io/gce-tutorial/ "title").
+
