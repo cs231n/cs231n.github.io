@@ -82,3 +82,6 @@ Get back to the Assignment 2 instructions [here](http://cs231n.github.io/assignm
 ## Transferring Files to Your Local Computer ##
 After following assignment 2 instructions to run the submission script and create assignment2.zip, you can download that file directly from Jupyter. To do this, go to Jupyter Notebook and click on the zip file (in this case assignment2.zip). The file will be downloaded to your local computer. You can also use the **gcloud compute copy-files** command to transfer files as discussed in the **Submission: Transferring Files From Your Instance To Your Computer** section in [the first GCE tutorial](http://cs231n.github.io/gce-tutorial/ "title").
 
+# BIG REMINDER: Make sure you stop your instances! #
+
+Don't forget to stop your instance when you are done (by clicking on the stop button at the top of the page showing your instances). You can restart your instance and the downloaded software will still be available.
