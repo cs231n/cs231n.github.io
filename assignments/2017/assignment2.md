@@ -24,9 +24,13 @@ You can work on the assignment in one of two ways: locally on your own machine, 
 
 ### Working remotely on Google Cloud (Recommended)
 
-**Note:** after following these instructions, make sure you go to **Get the assignment** below (you can skip the **Working locally** section).
+**Note:** after following these instructions, make sure you go to **Working on the assignment** below (you can skip the **Working locally** section).
 
-As part of this course, you can use Google Cloud for your assignments. We recommend this route for anyone who is having trouble with installation set-up, or if you would like to use better CPU/GPU resources than you may have locally. Please see the TWO-PART set-up tutorial: [part one here](http://cs231n.github.io/gce-tutorial/), and [part two here](http://cs231n.github.io/gce-tutorial-gpus/) for more details. We strongly, strongly recommend using Google Cloud with GPU support for the last part of this assignment (the TensorFlow or PyTorch notebooks), since your training will go much, much faster. :)
+As part of this course, you can use Google Cloud for your assignments. We recommend this route for anyone who is having trouble with installation set-up, or if you would like to use better CPU/GPU resources than you may have locally. 
+
+Please see the Google Cloud GPU set-up tutorial [here](http://cs231n.github.io/gce-tutorial-gpus/) for instructions. If you have never set up a Google Cloud instance before (like for assignment 1), follow ONLY the "Create and Configure Your Account" section of [this original Google Cloud tutorial](http://cs231n.github.io/gce-tutorial) and then switch back to the new [Google Cloud GPU tutorial](http://cs231n.github.io/gce-tutorial-gpus/) before the "Launch a Virtual Instance" section. 
+
+We strongly, strongly recommend using Google Cloud with GPU support for the last part of this assignment (the TensorFlow or PyTorch notebooks), since your training will go much, much faster. :)
 
 ### Working locally
 Here's how you install the necessary dependencies:
@@ -53,7 +57,7 @@ deactivate                       # Exit the virtual environment
 
 Note that every time you want to work on the assignment, you should run `source .env/bin/activate` (from within your `assignment2` folder) to re-activate the virtual environment, and `deactivate` again whenever you are done.
 
-### Get the assignment:
+## Working on the assignment:
 Get the code as a zip file [here](http://cs231n.stanford.edu/assignments/2017/spring1617_assignment2.zip).
 
 ### Download data:
