@@ -23,11 +23,27 @@ Click on the blue **Request Increase** button. This opens a new tab with a long 
 Fill out the required portions of the form and put a value of 1 or 2 in the **Total Number of GPU dies** section. Once you have your quota increase you can just use GPUs (without requesting a quota increase). After you submit the form, you should recieve an email approving your quota increase shortly after (I recieved my email within a minute). If you don't receive your approval within 2 business days, please inform the course staff. Once you have received your quota increase, you can start an instance with a GPU. To do this, while launching a virtual instance as described in the **Launch a Virtual Instance** section [here](http://cs231n.github.io/gce-tutorial/ "title"), select the number of GPUs to be 1 (or 2 if you requested for a quota increase of 2 and you really really need to use 2). As a reminder, you can only use up to the number of GPUs allowed by your quota. Use your GPUs sparingly because they are expensive. See the pricing [here](https://cloud.google.com/compute/pricing#gpus "title").
 
 ## Starting Your Instance With Our Provided Disk ##
-For the remaining assignments and the project, we provide you a disk which contains the necessary software for the assignments. To use our disk, you first need to create your own custom disk using our file and use this custom image as the boot disk for your new VM instance. 
+For the remaining assignments and the project, we provide you with disks containing the necessary software for the assignments and commonnly used frameworks for the project. To use our disk, you first need to create your own custom image using our file and use this custom image as the boot disk for your new VM instance. 
 
 ### Creating a Custom Image Using Our Disk ###
+To create your custom image using our provided disk, go to **Compute Engine**, then **IMages** and click on the blue **Create Image** button at the top of the page. See the screenshot below.
+<div class='fig figcenter fighighlight'>
+  <img src='/assets/google-cloud-create-image-screenshot.png'>
+</div>
 
-To start your instance using our provided disk, go to **VM Instances** and click on **Create Instance** like you have done below. However, instead of selecting 
+Enter your preffered name in the **Name** field. Mine is called **image-2**. Select cloud storage file for **Source**, enter **cs231n-bucket/myimage.tar.gz** as the **Cloud Storage file** and click on the blue **Create** button. See the screenshot below. It will take a few minutes for your image to be created. This is a 60GB file with Ubuntu 16.04 LTS, CUDA 8.0, CUDNN 5.1, Python 3.5.3, Pytorch V **X** and Tensorflow V **X**. 
 
+<div class='fig figcenter fighighlight'>
+  <img src='/assets/google-cloud-select-cloud-storage.png'>
+</div>
 
 ### Starting Your Instance with Your Custom Image ###
+To start your instance using our provided disk, go to **VM Instances** and click on **Create Instance** like you have done before. Follow the same procedure that you have used to create an instance as detailed [here](http://cs231n.github.io/gce-tutorial/ "title") but instead of selecting an entry in **OS images** for **Boot disk**, select **Custom images** and the custom image that you created above. Mine is **image-2**. See the screenshot below. 
+
+<div class='fig figcenter fighighlight'>
+  <img src='/assets/google-cloud-select-custom-image.png'>
+</div>
+
+You should now be able to launch your instance with our custom image. To work on assignment 2, **MORE INSTRUCTIONS ON THE FOLDER STURCTURE ETC...***
+
+
