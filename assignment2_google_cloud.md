@@ -31,7 +31,7 @@ To create your custom image using our provided disk, go to **Compute Engine**, t
   <img src='/assets/google-cloud-create-image-screenshot.png'>
 </div>
 
-Enter your preffered name in the **Name** field. Mine is called **image-2**. Select cloud storage file for **Source**, enter **cs231n-bucket/myimage.tar.gz** as the **Cloud Storage file** and click on the blue **Create** button. See the screenshot below. It will take a few minutes for your image to be created. This is a 60GB file with Ubuntu 16.04 LTS, CUDA 8.0, CUDNN 5.1, Python 3.5.3, Pytorch V **X** and Tensorflow V **X**. 
+Enter your preffered name in the **Name** field. Mine is called **image-2**. Select cloud storage file for **Source**, enter **cs231n-bucket/myimage.tar.gz** as the **Cloud Storage file** and click on the blue **Create** button. See the screenshot below. It will take a few minutes for your image to be created. 
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/google-cloud-select-cloud-storage.png'>
@@ -44,6 +44,15 @@ To start your instance using our provided disk, go to **VM Instances** and click
   <img src='/assets/google-cloud-select-custom-image.png'>
 </div>
 
-You should now be able to launch your instance with our custom image. To work on assignment 2, **MORE INSTRUCTIONS ON THE FOLDER STURCTURE ETC...***
+You should now be able to launch your instance with our custom image. The custom disk is 60GB and uses Ubuntu 16.04 LTS. The default python version in the system is Python 2.7.2 and there is a virtual environment called **myVE35** with version 3.5.2 To use this virtual environment called run 
+
+```
+source myVE35/bin/activate
+```
+
+The disk should also have Jupyter **X**, CUDA 8.0, CUDNN 5.1, Pytorch 0.1.11_5 and Tensorflow 1.0.1.
+
+
+To work on assignment 2, **MORE INSTRUCTIONS ON THE FOLDER STURCTURE ETC...***
 
 
