@@ -31,6 +31,9 @@ As part of this course, you can use Google Cloud for your assignments. We recomm
 ### Working locally
 Here's how you install the necessary dependencies:
 
+**(OPTIONAL) Installing GPU drivers:**
+If you choose to work locally, you are at no disadvantage for the first 3 parts of the assignment. For the last part, which is in TensorFlow or PyTorch, however, having a GPU will be a significant advantage. We recommend using a Google Cloud Instance with a GPU, at least for this part. If you have your own NVIDIA GPU, however, and wish to use that, that's fine -- you'll need to install the drivers for your GPU, install CUDA, install cuDNN, and then install either [TensorFlow](https://www.tensorflow.org/install/) or [PyTorch](http://pytorch.org/). You could theoretically do the entire assignment with no GPUs, though this will make training much slower in the last part. 
+
 **Installing Python 3.5+:**
 To use python3, make sure to install version 3.5 or 3.6 on your local machine. If you are on Mac OS X, you can do this using [Homebrew](https://brew.sh) with `brew install python3`. You can find instructions for Ubuntu [here](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-ubuntu-16-04).
 
