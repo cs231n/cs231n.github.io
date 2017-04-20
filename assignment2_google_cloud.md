@@ -20,7 +20,9 @@ Click on the blue **Request Increase** button. This opens a new tab with a long 
   <img src='/assets/google-cloud-quotas-form.png'>
 </div>
 
-Fill out the required portions of the form and put a value of 1 or 2 in the **Total Number of GPU dies** section. Once you have your quota increase you can just use GPUs (without requesting a quota increase). After you submit the form, you should receive an email approving your quota increase shortly after (I received my email within a minute). If you don't receive your approval within 2 business days, please inform the course staff. Once you have received your quota increase, you can start an instance with a GPU. To do this, while launching a virtual instance as described in the **Launch a Virtual Instance** section [here](http://cs231n.github.io/gce-tutorial/ "title"), select the number of GPUs to be 1 (or 2 if you requested for a quota increase of 2 and you really really need to use 2). As a reminder, you can only use up to the number of GPUs allowed by your quota. Use your GPUs sparingly because they are expensive. See the pricing [here](https://cloud.google.com/compute/pricing#gpus "title").
+Fill out the required portions of the form and put a value of **1** in the **Total Number of GPU dies** section. You only need to do this for the **us-west1** region... don't request GPUs anywhere else, since all your instances should also live in us-west1. 
+
+Once you have your quota increase you can just use GPUs (without requesting a quota increase). After you submit the form, you should receive an email approving your quota increase shortly after (I received my email within a minute). If you don't receive your approval within 2 business days, please inform the course staff. Once you have received your quota increase, you can start an instance with a GPU. To do this, while launching a virtual instance as described in the **Launch a Virtual Instance** section [here](http://cs231n.github.io/gce-tutorial/ "title"), select the number of GPUs to be 1 (or 2 if you requested for a quota increase of 2 and you really really need to use 2). As a reminder, you can only use up to the number of GPUs allowed by your quota. Use your GPUs sparingly because they are expensive. See the pricing [here](https://cloud.google.com/compute/pricing#gpus "title").
 
 ## Starting Your Instance With Our Provided Disk ##
 For the remaining assignments and the project, we provide you with disks containing the necessary software for the assignments and commonly used frameworks for the project. To use our disk, you first need to create your own custom image using our file, and use this custom image as the boot disk for your new VM instance. 
@@ -38,47 +40,40 @@ Enter your preferred name in the **Name** field. Mine is called **final-cs231n**
 </div>
 
 ### Starting Your Instance with Your Custom Image ###
-To start your instance using our provided disk, go to **VM Instances** and click on **Create Instance** like you have done before. Follow the same procedure that you have used to create an instance as detailed [here](http://cs231n.github.io/gce-tutorial/ "title") but instead of selecting an entry in **OS images** for **Boot disk**, select **Custom images** and the custom image that you created above. Mine is **final-cs231n**. See the screenshot below. 
+To start your instance using our provided disk, go to **VM Instances** and click on **Create Instance** like you have done before. Make sure you start the instance in **us-west1-b**. Follow the same procedure that you have used to create an instance as detailed [here](http://cs231n.github.io/gce-tutorial/ "title") but with the following differences:
+
+Make sure to provision 1 GPU to your instance by clicking "Customize" in the "Machine Type" box, as in the screenshot below:
+
+<div class='fig figcenter fighighlight'>
+  <img src='/assets/google-cloud-instance-gpus.png'>
+</div>
+
+Instead of selecting an entry in **OS images** for **Boot disk**, select **Custom images** and the custom image that you created above. Mine is **final-cs231n**. See the screenshot below. 
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/google-cloud-select-custom-image.png'>
 </div>
 
-You should now be able to launch your instance with our custom image. The custom disk is 40GB and uses Ubuntu 16.04 LTS. The default python version in the system is Python 2.7.2 and there is a virtual environment called **myVE35** with version 3.5.2. The python in this virtual environment already has all the Python packages you'll need for this assignment installed. To use this virtual environment, run the following command (you'll have to do this every time you start your instance up): 
+It should take about 5 minutes for the instance to get created. You should now be able to launch your instance with our custom image. The custom disk is 40GB and uses Ubuntu 16.04 LTS. 
+The default python version in the system is Python 2.7.2 and there is a virtual environment in **/home/cs231n/myVE35** with version 3.5.2. 
+
+You don't need to create a new virtual environment for this assignment -- we are providing you with one, with all the Python packages you need for the assignment already installed. So, unlike the previous assignment, you do not need to run any commands to create the virtual environment (and install packages, etc), just one command to activate it. To use this virtual environment, run the following command (you may have to do this every time you start your instance up, if you don't see your bash prompt prefaced by "(myVE35)"): 
 
 ```
 source /home/cs231n/myVE35/bin/activate
 ```
 
-The disk should also have Jupyter **X**, CUDA 8.0, CUDNN 5.1, Pytorch 0.1.11_5 and TensorFlow 1.0.1. GPU support should be automatically enabled for PyTorch and TensorFlow. 
+Here's what you should see after running that to confirm you're in the virtual environment:
+
+```
+username@instance-2:~$ source /home/cs231n/myVE35/bin/activate
+(myVE35) username@instance-2:~$ which python
+/home/cs231n/myVE35/bin/python
+(myVE35) username@instance-2:~$ 
+```
+
+The disk should also have Jupyter 1.0.0, CUDA 8.0, CUDNN 5.1, Pytorch 0.1.11_5 and TensorFlow 1.0.1. GPU support should be automatically enabled for PyTorch and TensorFlow. 
 
 ### Getting started on Assignment 2 ###
 
-To work on assignment 2, download the code from the following zip file, and unzip it. 
-
-### Download data:
-Once you have the starter code, you will need to download the CIFAR-10 dataset.
-Run the following from the `assignment2` directory:
-
-```bash
-cd cs231n/datasets
-./get_datasets.sh
-```
-
-### Start IPython:
-After you have the CIFAR-10 data, you should start the IPython notebook server from the
-`assignment1` directory, with the `jupyter notebook` command. (See the [Google Cloud Tutorial](http://cs231n.github.io/gce-tutorial/) for any additional steps you may need to do for setting this up, if you are working remotely)
-
-If you are unfamiliar with IPython, you can also refer to our
-[IPython tutorial](/ipython-tutorial).
-
-### Some Notes
-**NOTE 1:** This year, the `assignment2` code has been tested to be compatible with python version 3.5 (it may work with other versions of `3.x`, but we won't be officially supporting them). You will need to make sure that during your `virtualenv` setup that the correct version of `python` is used. If you use our Google Cloud virtual environment, you'll be good to go. You can confirm your python version by (1) activating your virtualenv and (2) running `which python`.
-
-**NOTE 2:** If you are working in a virtual environment on OSX, you may *potentially* encounter
-errors with matplotlib due to the [issues described here](http://matplotlib.org/faq/virtualenv_faq.html). In our testing, it seems that this issue is no longer present with the most recent version of matplotlib, but if you do end up running into this issue you may have to use the `start_ipython_osx.sh` script from the `assignment1` directory (instead of `jupyter notebook` above) to launch your IPython notebook server. Note that you may have to modify some variables within the script to match your version of python/installation directory. The script assumes that your virtual environment is named `.env`.
-
-### Submitting your work:
-Whether you work on the assignment locally or using Google Cloud, once you are done
-working run the `collectSubmission.sh` script; this will produce a file called
-`assignment2.zip`. Please submit this file on [Canvas](https://canvas.stanford.edu/courses/66461/).
+To work on assignment 2, download the code from the following zip file, and unzip it. Continue following the assignment 2 instructions to get started.
