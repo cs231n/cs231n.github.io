@@ -20,17 +20,14 @@ Click on the blue **Request Increase** button. This opens a new tab with a long 
   <img src='/assets/google-cloud-quotas-form.png'>
 </div>
 
-Fill out the required portions of the form and put a value of 1 or 2 in the **Total Number of GPU dies** section. Once you have your quota increase you can just use GPUs (without requesting a quota increase). After you submit the form, you should recieve an email approving your quota increase shortly after (I recieved my email within a minute). If you don't receive your approval within 2 business days, please inform the course staff. 
-
+Fill out the required portions of the form and put a value of 1 or 2 in the **Total Number of GPU dies** section. Once you have your quota increase you can just use GPUs (without requesting a quota increase). After you submit the form, you should recieve an email approving your quota increase shortly after (I recieved my email within a minute). If you don't receive your approval within 2 business days, please inform the course staff. Once you have received your quota increase, you can start an instance with a GPU. To do this, while launching a virtual instance as described in the **Launch a Virtual Instance** section [here](http://cs231n.github.io/gce-tutorial/ "title"), select the number of GPUs to be 1 (or 2 if you requested for a quota increase of 2 and you really really need to use 2). As a reminder, you can only use up to the number of GPUs allowed by your quota. Use your GPUs sparingly because they are expensive. See the pricing [here](https://cloud.google.com/compute/pricing#gpus "title").
 
 ## Starting Your Instance With Our Provided Disk ##
 For the remaining assignments and the project, we provide you a disk which contains the necessary software for the assignments. To use our disk, you first need to create your own custom disk using our file and use this custom image as the boot disk for your new VM instance. 
 
 ### Creating a Custom Image Using Our Disk ###
 
-
-
 To start your instance using our provided disk, go to **VM Instances** and click on **Create Instance** like you have done below. However, instead of selecting 
 
 
-### Starting Your Instance with Our Custom Image ###
+### Starting Your Instance with Your Custom Image ###
