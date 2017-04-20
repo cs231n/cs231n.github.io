@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Google Cloud Tutorial
-permalink: /gce-tutorial/
+title: Google Cloud Tutorial Part 2 (with GPUs)
+permalink: /gce-tutorial-gpus/
 ---
 # Google Cloud Tutorial (Part 2 With GPUs) #
 
@@ -76,4 +76,4 @@ The disk should also have Jupyter 1.0.0, CUDA 8.0, CUDNN 5.1, Pytorch 0.1.11_5 a
 
 ### Getting started on Assignment 2 ###
 
-To work on assignment 2, download the code from the following zip file, and unzip it. Continue following the assignment 2 instructions to get started.
+Get back to the Assignment 2 instructions [here](http://cs231n.github.io/assignments2017/assignment2/).
