@@ -48,7 +48,7 @@ To change the name of your project, click on **Manage project settings** on the 
 </div>
 
 ## Launch a Virtual Instance ##
-To launch a virtual instance, go to the **Compute Engine** menu on the left column of your dashboard and click on **VM instances**.  Then click on the blue **CREATE** button on the next page. This will take you to a page that looks like the screenshot below. **(NOTE: the values that you see in the screenshot are the *default* values, please keep reading below for the values you will need to fill in.)**
+To launch a virtual instance, go to the **Compute Engine** menu on the left column of your dashboard and click on **VM instances**.  Then click on the blue **CREATE** button on the next page. This will take you to a page that looks like the screenshot below. **(NOTE: Please carefully read the instructions in addition to looking at the screenshots. The instructions tell you exactly what values to fill in).**
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-create-instance-screen.png'>
@@ -110,6 +110,24 @@ in your assignment directory to load the venv, and run
 deactivate
 ```
 to exit the venv. See assignment handout for details.
+
+**NOTE**: The instructions above will run everything needed using Python 2.7. If you would like to use Python 3.5 instead, edit setup_googlecloud.sh to replce the line 
+
+```
+virtualenv .env 
+```
+
+with 
+
+```
+virtualenv -p python3 .env
+```
+
+before running 
+
+```
+./setup_googlecloud.sh
+```
 
 ## Using Jupyter Notebook with Google Compute Engine ##
 Many of the assignments will involve using Jupyter Notebook. Below, we discuss how to run Jupyter Notebook from your GCE instance and use it on your local browser. 
@@ -213,6 +231,40 @@ On your local browser, if you go to http://\<YOUR-EXTERNAL-IP-ADDRESS>:\<PORT-NU
   <img src='/assets/jupyter-screen.png'>
 </div>
 
+## Submission: Transferring Files From Your Instance To Your Computer ##
+Once you are done with your assignments, run the submission script in your assignment folder. For assignment1, this will create a zip file called `assignment1.zip` containing the files you need to upload to Canvas. If you're not in the assignment1 directory already, CD into it by running
+
+```
+cd assignment1
+```
+
+install **zip** by running
+```
+sudo apt-get install zip
+```
+
+and then run 
+
+```
+bash collectSubmission.sh 
+```
+
+to create the zip file that you need to upload to canvas. Then copy the file to your local computer using the gcloud compute copy-file command as shown below. **NOTE: run this command on your local computer**:
+
+```
+gcloud compute copy-files [INSTANCE_NAME]:[REMOTE_FILE_PATH] [LOCAL_FILE_PATH]
+```
+
+For example, to copy my files to my desktop I ran:
+
+```
+gcloud compute copy-files instance-2:~/assignment1/assignment1.zip ~/Desktop
+```
+Another (perhaps easier) option proposed by a student is to directly download the zip file from Jupyter. After running the submission script and creating assignment1.zip, you can download that file directly from Jupyter. To do this, go to Jupyter Notebook and click on the zip file (in this case assignment1.zip). The file will be downloaded to your local computer. 
+
+Finally, remember to upload the zip file containing your submission to [***Canvas***](https://canvas.stanford.edu/courses/66461). (You can unzip the file locally if you want to double check your ipython notebooks and other code files are correctly inside).
+
+You can refer to [this page](https://cloud.google.com/compute/docs/instances/transfer-files "Title") for more details on transferring files to/from Google Cloud.
 
 # BIG REMINDER: Make sure you stop your instances! #
 Don't forget to stop your instance when you are done (by clicking on the stop button at the top of the page showing your instances). You can restart your instance and the downloaded software will still be available. 
