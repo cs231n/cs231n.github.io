@@ -31,28 +31,54 @@ To create your custom image using our provided disk, go to **Compute Engine**, t
   <img src='/assets/google-cloud-create-image-screenshot.png'>
 </div>
 
-Enter your preferred name in the **Name** field. Mine is called **image-2**. Select cloud storage file for **Source**, enter **cs231n-bucket/myimage.tar.gz** as the **Cloud Storage file** and click on the blue **Create** button. See the screenshot below. It will take a few minutes for your image to be created. 
+Enter your preferred name in the **Name** field. Mine is called **final-cs231n**. Select cloud storage file for **Source**, enter **cs231n-files/cs231n_image.tar.gz** as the **Cloud Storage file** and click on the blue **Create** button. See the screenshot below. It will take a few minutes for your image to be created (about 10-15 in our experience, though your mileage may vary). 
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/google-cloud-select-cloud-storage.png'>
 </div>
 
 ### Starting Your Instance with Your Custom Image ###
-To start your instance using our provided disk, go to **VM Instances** and click on **Create Instance** like you have done before. Follow the same procedure that you have used to create an instance as detailed [here](http://cs231n.github.io/gce-tutorial/ "title") but instead of selecting an entry in **OS images** for **Boot disk**, select **Custom images** and the custom image that you created above. Mine is **image-2**. See the screenshot below. 
+To start your instance using our provided disk, go to **VM Instances** and click on **Create Instance** like you have done before. Follow the same procedure that you have used to create an instance as detailed [here](http://cs231n.github.io/gce-tutorial/ "title") but instead of selecting an entry in **OS images** for **Boot disk**, select **Custom images** and the custom image that you created above. Mine is **final-cs231n**. See the screenshot below. 
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/google-cloud-select-custom-image.png'>
 </div>
 
-You should now be able to launch your instance with our custom image. The custom disk is 60GB and uses Ubuntu 16.04 LTS. The default python version in the system is Python 2.7.2 and there is a virtual environment called **myVE35** with version 3.5.2. To use this virtual environment called run 
+You should now be able to launch your instance with our custom image. The custom disk is 40GB and uses Ubuntu 16.04 LTS. The default python version in the system is Python 2.7.2 and there is a virtual environment called **myVE35** with version 3.5.2. The python in this virtual environment already has all the Python packages you'll need for this assignment installed. To use this virtual environment, run the following command (you'll have to do this every time you start your instance up): 
 
 ```
-source myVE35/bin/activate
+source /home/cs231n/myVE35/bin/activate
 ```
 
-The disk should also have Jupyter **X**, CUDA 8.0, CUDNN 5.1, Pytorch 0.1.11_5 and Tensorflow 1.0.1.
+The disk should also have Jupyter **X**, CUDA 8.0, CUDNN 5.1, Pytorch 0.1.11_5 and TensorFlow 1.0.1. GPU support should be automatically enabled for PyTorch and TensorFlow. 
 
+### Getting started on Assignment 2 ###
 
-To work on assignment 2, **MORE INSTRUCTIONS ON THE FOLDER STRUCTURE ETC...***
+To work on assignment 2, download the code from the following zip file, and unzip it. 
 
+### Download data:
+Once you have the starter code, you will need to download the CIFAR-10 dataset.
+Run the following from the `assignment2` directory:
 
+```bash
+cd cs231n/datasets
+./get_datasets.sh
+```
+
+### Start IPython:
+After you have the CIFAR-10 data, you should start the IPython notebook server from the
+`assignment1` directory, with the `jupyter notebook` command. (See the [Google Cloud Tutorial](http://cs231n.github.io/gce-tutorial/) for any additional steps you may need to do for setting this up, if you are working remotely)
+
+If you are unfamiliar with IPython, you can also refer to our
+[IPython tutorial](/ipython-tutorial).
+
+### Some Notes
+**NOTE 1:** This year, the `assignment2` code has been tested to be compatible with python version 3.5 (it may work with other versions of `3.x`, but we won't be officially supporting them). You will need to make sure that during your `virtualenv` setup that the correct version of `python` is used. If you use our Google Cloud virtual environment, you'll be good to go. You can confirm your python version by (1) activating your virtualenv and (2) running `which python`.
+
+**NOTE 2:** If you are working in a virtual environment on OSX, you may *potentially* encounter
+errors with matplotlib due to the [issues described here](http://matplotlib.org/faq/virtualenv_faq.html). In our testing, it seems that this issue is no longer present with the most recent version of matplotlib, but if you do end up running into this issue you may have to use the `start_ipython_osx.sh` script from the `assignment1` directory (instead of `jupyter notebook` above) to launch your IPython notebook server. Note that you may have to modify some variables within the script to match your version of python/installation directory. The script assumes that your virtual environment is named `.env`.
+
+### Submitting your work:
+Whether you work on the assignment locally or using Google Cloud, once you are done
+working run the `collectSubmission.sh` script; this will produce a file called
+`assignment2.zip`. Please submit this file on [Canvas](https://canvas.stanford.edu/courses/66461/).
