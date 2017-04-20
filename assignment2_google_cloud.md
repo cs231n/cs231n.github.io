@@ -44,7 +44,7 @@ To start your instance using our provided disk, go to **VM Instances** and click
   <img src='/assets/google-cloud-select-custom-image.png'>
 </div>
 
-You should now be able to launch your instance with our custom image. The custom disk is 60GB and uses Ubuntu 16.04 LTS. The default python version in the system is Python 2.7.2 and there is a virtual environment called **myVE35** with version 3.5.2 To use this virtual environment called run 
+You should now be able to launch your instance with our custom image. The custom disk is 60GB and uses Ubuntu 16.04 LTS. The default python version in the system is Python 2.7.2 and there is a virtual environment called **myVE35** with version 3.5.2. To use this virtual environment called run 
 
 ```
 source myVE35/bin/activate
