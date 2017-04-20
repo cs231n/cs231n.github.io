@@ -26,7 +26,7 @@ Fill out the required portions of the form and put a value of 1 or 2 in the **To
 For the remaining assignments and the project, we provide you with disks containing the necessary software for the assignments and commonnly used frameworks for the project. To use our disk, you first need to create your own custom image using our file and use this custom image as the boot disk for your new VM instance. 
 
 ### Creating a Custom Image Using Our Disk ###
-To create your custom image using our provided disk, go to **Compute Engine**, then **IMages** and click on the blue **Create Image** button at the top of the page. See the screenshot below.
+To create your custom image using our provided disk, go to **Compute Engine**, then **Images** and click on the blue **Create Image** button at the top of the page. See the screenshot below.
 <div class='fig figcenter fighighlight'>
   <img src='/assets/google-cloud-create-image-screenshot.png'>
 </div>
