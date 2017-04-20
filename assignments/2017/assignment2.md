@@ -26,7 +26,11 @@ You can work on the assignment in one of two ways: locally on your own machine, 
 
 **Note:** after following these instructions, make sure you go to **Working on the assignment** below (you can skip the **Working locally** section).
 
-As part of this course, you can use Google Cloud for your assignments. We recommend this route for anyone who is having trouble with installation set-up, or if you would like to use better CPU/GPU resources than you may have locally. Please see the set-up tutorial [here](http://cs231n.github.io/gce-tutorial-gpus/) for more details - if you have never set up a Google Cloud instance before (like for assignment 1), follow ONLY the "Create and Configure Your Account" section of [this earlier tutorial](http://cs231n.github.io/gce-tutorial) and then switch back to this tutorial before the "Launch a Virtual Instance" section) . We strongly, strongly recommend using Google Cloud with GPU support for the last part of this assignment (the TensorFlow or PyTorch notebooks), since your training will go much, much faster. :)
+As part of this course, you can use Google Cloud for your assignments. We recommend this route for anyone who is having trouble with installation set-up, or if you would like to use better CPU/GPU resources than you may have locally. 
+
+Please see the Google Cloud GPU set-up tutorial [here](http://cs231n.github.io/gce-tutorial-gpus/) for instructions. If you have never set up a Google Cloud instance before (like for assignment 1), follow ONLY the "Create and Configure Your Account" section of [this original Google Cloud tutorial](http://cs231n.github.io/gce-tutorial) and then switch back to the new [Google Cloud GPU tutorial](http://cs231n.github.io/gce-tutorial-gpus/)before the "Launch a Virtual Instance" section. 
+
+We strongly, strongly recommend using Google Cloud with GPU support for the last part of this assignment (the TensorFlow or PyTorch notebooks), since your training will go much, much faster. :)
 
 ### Working locally
 Here's how you install the necessary dependencies:
