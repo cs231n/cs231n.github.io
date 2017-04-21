@@ -30,6 +30,12 @@ As part of this course, you can use Google Cloud for your assignments. We recomm
 
 Please see the Google Cloud GPU set-up tutorial [here](http://cs231n.github.io/gce-tutorial-gpus/) for instructions. 
 
+Once you've got the cloud instance running, make sure to run the following line to enter the virtual environment that we prepared for you (you do **not** need to make your own virtual environment):
+
+```
+source /home/cs231n/myVE35/bin/activate
+```
+
 We strongly, strongly recommend using Google Cloud with GPU support for the last part of this assignment (the TensorFlow or PyTorch notebooks), since your training will go much, much faster. :)
 
 ### Working locally
