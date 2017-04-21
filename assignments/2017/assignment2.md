@@ -113,7 +113,7 @@ its effects on model generalization.
 ### Q4: Convolutional Networks (30 points)
 In the IPython Notebook ConvolutionalNetworks.ipynb you will implement several new layers that are commonly used in convolutional networks.
 
-### Q5: PyTorch / Tensorflow on CIFAR-10 (10 points)
+### Q5: PyTorch / TensorFlow on CIFAR-10 (10 points)
 For this last part, you will be working in either TensorFlow or PyTorch, two popular and powerful deep learning frameworks. **You only need to complete ONE of these two notebooks.** You do NOT need to do both, but a very small amount of extra credit will be awarded to those who do. 
 
 Open up either `PyTorch.ipynb` or `TensorFlow.ipynb`. There, you will learn how the framework works, culminating in training a  convolutional network of your own design on CIFAR-10 to get the best performance you can.
