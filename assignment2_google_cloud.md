@@ -43,7 +43,7 @@ Enter your preferred name in the **Name** field. Mine is called **final-cs231n**
 ### Starting Your Instance with Your Custom Image ###
 To start your instance using our provided disk, go to **VM Instances** and click on **Create Instance** like you have done before. Make sure you start the instance in **us-west1-b**. Follow the same procedure that you have used to create an instance as detailed [here](http://cs231n.github.io/gce-tutorial/ "title") but with the following differences:
 
-Make sure to provision 1 GPU to your instance by clicking "Customize" in the "Machine Type" box, as in the screenshot below:
+Make sure to provision 1 GPU to your instance by clicking **Customize** in the **Machine Type** box, as in the screenshot below:
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/google-cloud-instance-gpus.png'>
