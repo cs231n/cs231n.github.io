@@ -77,8 +77,21 @@ username@instance-2:~$ source /home/cs231n/myVE35/bin/activate
 The disk should also have Jupyter 1.0.0, CUDA 8.0, CUDNN 5.1, Pytorch 0.1.11_5 and TensorFlow 1.0.1. GPU support should be automatically enabled for PyTorch and TensorFlow. 
 
 ### Getting started on Assignment 2 ###
+As in assignment 1, you can download the assignment zip file by running:
 
-Get back to the Assignment 2 instructions [here](http://cs231n.github.io/assignments2017/assignment2/).
+```
+wget http://cs231n.stanford.edu/assignments/2017/spring1617_assignment2.zip
+```
+
+You can unzip the assignment zip file by running:
+
+```
+sudo apt-get install zip #For when you need to zip the file to submit it.
+sudo apt-get install unzip
+unzip spring1617_assignment2.zip
+```
+
+Get back to the Assignment 2 instructions [here](http://cs231n.github.io/assignments2017/assignment2/). 
 
 ## Transferring Files to Your Local Computer ##
 After following assignment 2 instructions to run the submission script and create assignment2.zip, you can download that file directly from Jupyter. To do this, go to Jupyter Notebook and click on the zip file (in this case assignment2.zip). The file will be downloaded to your local computer. You can also use the **gcloud compute copy-files** command to transfer files as discussed in the **Submission: Transferring Files From Your Instance To Your Computer** section in [the first GCE tutorial](http://cs231n.github.io/gce-tutorial/ "title").
