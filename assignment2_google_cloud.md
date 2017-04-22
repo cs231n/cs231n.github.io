@@ -91,7 +91,7 @@ sudo apt-get install unzip
 unzip spring1617_assignment2.zip
 ```
 
-Get back to the Assignment 2 instructions [here](http://cs231n.github.io/assignments2017/assignment2/). 
+Get back to the Assignment 2 instructions [here](http://cs231n.github.io/assignments2017/assignment2/). Follow the instructions starting from the **Download data** section.
 
 ## Transferring Files to Your Local Computer ##
 After following assignment 2 instructions to run the submission script and create assignment2.zip, you can download that file directly from Jupyter. To do this, go to Jupyter Notebook and click on the zip file (in this case assignment2.zip). The file will be downloaded to your local computer. You can also use the **gcloud compute copy-files** command to transfer files as discussed in the **Submission: Transferring Files From Your Instance To Your Computer** section in [the first GCE tutorial](http://cs231n.github.io/gce-tutorial/ "title").
