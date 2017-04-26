@@ -28,7 +28,8 @@ You can work on the assignment in one of two ways: locally on your own machine, 
 
 As part of this course, you can use Google Cloud for your assignments. We recommend this route for anyone who is having trouble with installation set-up, or if you would like to use better CPU/GPU resources than you may have locally. 
 
-Please see the Google Cloud GPU set-up tutorial [here](http://cs231n.github.io/gce-tutorial-gpus/) for instructions. 
+#### GPU Resources
+**A GPU will only help on Question 5**. Please see the Google Cloud GPU set-up tutorial [here](http://cs231n.github.io/gce-tutorial-gpus/) for instructions. The GPU instances are much more expensive, so use them only when needed.
 
 Once you've got the cloud instance running, make sure to run the following line to enter the virtual environment that we prepared for you (you do **not** need to make your own virtual environment):
 
@@ -36,13 +37,13 @@ Once you've got the cloud instance running, make sure to run the following line 
 source /home/cs231n/myVE35/bin/activate
 ```
 
-We strongly, strongly recommend using Google Cloud with GPU support for the last part of this assignment (the TensorFlow or PyTorch notebooks), since your training will go much, much faster. :)
+We strongly recommend using Google Cloud with GPU support for the **Question 5** of this assignment (the TensorFlow or PyTorch notebooks), since your training will go much, much faster. However, it will not help on any of the other questions. 
 
 ### Working locally
 Here's how you install the necessary dependencies:
 
 **(OPTIONAL) Installing GPU drivers:**
-If you choose to work locally, you are at no disadvantage for the first 3 parts of the assignment. For the last part, which is in TensorFlow or PyTorch, however, having a GPU will be a significant advantage. We recommend using a Google Cloud Instance with a GPU, at least for this part. If you have your own NVIDIA GPU, however, and wish to use that, that's fine -- you'll need to install the drivers for your GPU, install CUDA, install cuDNN, and then install either [TensorFlow](https://www.tensorflow.org/install/) or [PyTorch](http://pytorch.org/). You could theoretically do the entire assignment with no GPUs, though this will make training much slower in the last part. 
+If you choose to work locally, you are at no disadvantage for the first parts of the assignment. For the last question, which is in TensorFlow or PyTorch, however, having a GPU will be a significant advantage. We recommend using a Google Cloud Instance with a GPU, at least for this part. If you have your own NVIDIA GPU, however, and wish to use that, that's fine -- you'll need to install the drivers for your GPU, install CUDA, install cuDNN, and then install either [TensorFlow](https://www.tensorflow.org/install/) or [PyTorch](http://pytorch.org/). You could theoretically do the entire assignment with no GPUs, though this will make training much slower in the last part. However, our reference code runs in 10-15 minutes on a dual-core laptop without a GPU, so it is certainly possible. 
 
 **Installing Python 3.5+:**
 To use python3, make sure to install version 3.5 or 3.6 on your local machine. If you are on Mac OS X, you can do this using [Homebrew](https://brew.sh) with `brew install python3`. You can find instructions for Ubuntu [here](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-ubuntu-16-04).
