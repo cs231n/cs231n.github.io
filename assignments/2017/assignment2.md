@@ -28,15 +28,22 @@ You can work on the assignment in one of two ways: locally on your own machine, 
 
 As part of this course, you can use Google Cloud for your assignments. We recommend this route for anyone who is having trouble with installation set-up, or if you would like to use better CPU/GPU resources than you may have locally. 
 
-Please see the Google Cloud GPU set-up tutorial [here](http://cs231n.github.io/gce-tutorial-gpus/) for instructions. 
+#### GPU Resources
+**A GPU will only help on Question 5**. Please see the Google Cloud GPU set-up tutorial [here](http://cs231n.github.io/gce-tutorial-gpus/) for instructions. The GPU instances are much more expensive, so use them only when needed.
 
-We strongly, strongly recommend using Google Cloud with GPU support for the last part of this assignment (the TensorFlow or PyTorch notebooks), since your training will go much, much faster. :)
+Once you've got the cloud instance running, make sure to run the following line to enter the virtual environment that we prepared for you (you do **not** need to make your own virtual environment):
+
+```
+source /home/cs231n/myVE35/bin/activate
+```
+
+We strongly recommend using Google Cloud with GPU support for the **Question 5** of this assignment (the TensorFlow or PyTorch notebooks), since your training will go much, much faster. However, it will not help on any of the other questions. 
 
 ### Working locally
 Here's how you install the necessary dependencies:
 
 **(OPTIONAL) Installing GPU drivers:**
-If you choose to work locally, you are at no disadvantage for the first 3 parts of the assignment. For the last part, which is in TensorFlow or PyTorch, however, having a GPU will be a significant advantage. We recommend using a Google Cloud Instance with a GPU, at least for this part. If you have your own NVIDIA GPU, however, and wish to use that, that's fine -- you'll need to install the drivers for your GPU, install CUDA, install cuDNN, and then install either [TensorFlow](https://www.tensorflow.org/install/) or [PyTorch](http://pytorch.org/). You could theoretically do the entire assignment with no GPUs, though this will make training much slower in the last part. 
+If you choose to work locally, you are at no disadvantage for the first parts of the assignment. For the last question, which is in TensorFlow or PyTorch, however, having a GPU will be a significant advantage. We recommend using a Google Cloud Instance with a GPU, at least for this part. If you have your own NVIDIA GPU, however, and wish to use that, that's fine -- you'll need to install the drivers for your GPU, install CUDA, install cuDNN, and then install either [TensorFlow](https://www.tensorflow.org/install/) or [PyTorch](http://pytorch.org/). You could theoretically do the entire assignment with no GPUs, though this will make training much slower in the last part. However, our reference code runs in 10-15 minutes on a dual-core laptop without a GPU, so it is certainly possible. 
 
 **Installing Python 3.5+:**
 To use python3, make sure to install version 3.5 or 3.6 on your local machine. If you are on Mac OS X, you can do this using [Homebrew](https://brew.sh) with `brew install python3`. You can find instructions for Ubuntu [here](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-ubuntu-16-04).
@@ -47,7 +54,7 @@ If you decide to work locally, we recommend using [virtual environment](http://d
 ```bash
 cd assignment2
 sudo pip install virtualenv      # This may already be installed
-virtualenv -p python3 .env       # Create a virtual environment (python3)
+python3 -m venv .env       		 # Create a virtual environment (python3)
 source .env/bin/activate         # Activate the virtual environment
 pip install -r requirements.txt  # Install dependencies
 # Note that this does NOT install TensorFlow or PyTorch, 
@@ -80,7 +87,7 @@ If you are unfamiliar with IPython, you can also refer to our
 [IPython tutorial](/ipython-tutorial).
 
 ### Some Notes
-**NOTE 1:** This year, the `assignment2` code has been tested to be compatible with python versions `3.5` and `3.6` (it may work with other versions of `3.x`, but we won't be officially supporting them). For this assignment, we are NOT officially supporting python2. Use it at your own risk. You will need to make sure that during your `virtualenv` setup that the correct version of `python` is used. You can confirm your python version by (1) activating your virtualenv and (2) running `which python`.
+**NOTE 1:** This year, the `assignment2` code has been tested to be compatible with python versions `3.5` and `3.6` (it may work with other versions of `3.x`, but we won't be officially supporting them). For this assignment, we are NOT officially supporting python2. Use it at your own risk. You will need to make sure that during your `virtualenv` setup that the correct version of `python` is used. You can confirm your python version by (1) activating your virtualenv and (2) running `python --version`.
 
 **NOTE 2:** If you are working in a virtual environment on OSX, you may *potentially* encounter
 errors with matplotlib due to the [issues described here](http://matplotlib.org/faq/virtualenv_faq.html). In our testing, it seems that this issue is no longer present with the most recent version of matplotlib, but if you do end up running into this issue you may have to use the `start_ipython_osx.sh` script from the `assignment1` directory (instead of `jupyter notebook` above) to launch your IPython notebook server. Note that you may have to modify some variables within the script to match your version of python/installation directory. The script assumes that your virtual environment is named `.env`.
@@ -107,7 +114,7 @@ its effects on model generalization.
 ### Q4: Convolutional Networks (30 points)
 In the IPython Notebook ConvolutionalNetworks.ipynb you will implement several new layers that are commonly used in convolutional networks.
 
-### Q5: PyTorch / Tensorflow on CIFAR-10 (10 points)
+### Q5: PyTorch / TensorFlow on CIFAR-10 (10 points)
 For this last part, you will be working in either TensorFlow or PyTorch, two popular and powerful deep learning frameworks. **You only need to complete ONE of these two notebooks.** You do NOT need to do both, but a very small amount of extra credit will be awarded to those who do. 
 
 Open up either `PyTorch.ipynb` or `TensorFlow.ipynb`. There, you will learn how the framework works, culminating in training a  convolutional network of your own design on CIFAR-10 to get the best performance you can.
