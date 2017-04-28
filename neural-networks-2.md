@@ -230,7 +230,7 @@ There has a been a large amount of research after the first introduction of drop
 
 We have discussed the regularization loss part of the objective, which can be seen as penalizing some measure of complexity of the model. The second part of an objective is the *data loss*, which in a supervised learning problem measures the compatibility between a prediction (e.g. the class scores in classification) and the ground truth label. The data loss takes the form of an average over the data losses for every individual example. That is, \\(L = \frac{1}{N} \sum_i L_i\\) where \\(N\\) is the number of training data. Lets abbreviate \\(f = f(x_i; W)\\) to be the activations of the output layer in a Neural Network. There are several types of problems you might want to solve in practice:
 
-**Classification** is the case that we have so far discussed at length. Here, we assume a dataset of examples and a single correct label (out of a fixed set) for each example. One of two most commonly seen cost functions in this setting are the SVM (e.g. the Weston Watkins formulation):
+**Classification** is the case that we have so far discussed at length. Here, we assume a dataset of examples and a single correct label (out of a fixed set) for each example. One of two most commonly seen cost functions in this setting is the SVM (e.g. the Weston Watkins formulation):
 
 $$
 L_i = \sum_{j\neq y_i} \max(0, f_j - f_{y_i} + 1)
