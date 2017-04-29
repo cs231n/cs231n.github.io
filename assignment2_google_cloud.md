@@ -95,6 +95,20 @@ unzip spring1617_assignment2.zip
 
 Get back to the Assignment 2 instructions [here](http://cs231n.github.io/assignments2017/assignment2/). Follow the instructions starting from the **Download data** section.
 
+**NOTE: Some students have seen errors saying that an NVIDIA driver is not installed.** If you see this error, follow the instructions [here](https://cloud.google.com/compute/docs/gpus/add-gpus#install-driver-script "title") to run the script for **Ubuntu 16.04 LTS or 16.10 - CUDA 8 with latest driver** under **Installing GPU drivers**. I.e. copy and paste the script into a file, lets call the file install_cuda.sh. And then run 
+
+```
+bash install_cuda.sh 
+```
+
+Once you run the script above, run the commands 
+```
+nvidia-smi
+nvcc --version
+```
+
+to ensure that the drivers are installed.
+
 ## Transferring Files to Your Local Computer ##
 After following assignment 2 instructions to run the submission script and create assignment2.zip, you can download that file directly from Jupyter. To do this, go to Jupyter Notebook and click on the zip file (in this case assignment2.zip). The file will be downloaded to your local computer. You can also use the **gcloud compute copy-files** command to transfer files as discussed in the **Submission: Transferring Files From Your Instance To Your Computer** section in [the first GCE tutorial](http://cs231n.github.io/gce-tutorial/ "title").
 
