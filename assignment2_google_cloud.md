@@ -60,7 +60,7 @@ Instead of selecting an entry in **OS images** for **Boot disk**, select **Custo
 It should take about 5 minutes for the instance to get created. You should now be able to launch your instance with our custom image. The custom disk is 40GB and uses Ubuntu 16.04 LTS. 
 The default python version in the system is Python 2.7.2 and there is a virtual environment in **/home/cs231n/myVE35** with version 3.5.2. 
 
-**NOTE:** Some students have reported GPU instances whose drivers disappear upon restarts. And there is strong evidence to suggest that the issue happens when Ubuntu auto-installs security updates upon booting up. The easiest way to disable auto-updating is to run
+**NOTE:** Some students have reported GPU instances whose drivers disappear upon restarts. And there is strong evidence to suggest that the issue happens when Ubuntu auto-installs security updates upon booting up. To disable auto-updating, run
 
 ```
 sudo apt-get remove unattended-upgrades
