@@ -22,7 +22,7 @@ If you follow our instructions below correctly, you should be able to restart yo
 For the class project and assignments, we offer an option to use Google Compute Engine for developing and testing your 
 implementations. This tutorial lists the necessary steps of working on the assignments using Google Cloud. **We expect this tutorial to take about an hour. Don't get intimidated by the steps, we tried to make the tutorial detailed so that you are less likely to get stuck on a particular step. Please tag all questions related to Google Cloud with google_cloud on Piazza.**
 
-This tutorial goes through how to set up your own Google Compute Engine (GCE) instance to work on the assignments. Each student will have $100 in credit throughout the quarter. When you sign up for the first time, you also receive $300 credits from Google by default. Please try to use the resources judiciously. But if $100 ends up not being enough, we will try to adjust this number as the quarter goes on. **Note: for assignment 1, we are only supporting python version 3.5.3**.
+This tutorial goes through how to set up your own Google Compute Engine (GCE) instance to work on the assignments. Each student will have $100 in credit throughout the quarter. When you sign up for the first time, you also receive $300 credits from Google by default. Please try to use the resources judiciously. But if $100 ends up not being enough, we will try to adjust this number as the quarter goes on. **Note: for assignment 1, we are only supporting python version 2.7 (the default installation from the script) and 3.5.3**.
 
 First, if you don't have a Google Cloud account already, create one by going to the [Google Cloud homepage](https://cloud.google.com/?utm_source=google&utm_medium=cpc&utm_campaign=2015-q2-cloud-na-gcp-skws-freetrial-en&gclid=CP2e4PPpiNMCFU9bfgodGHsA1A "Title") and clicking on **Compute**. When you get to the next page, click on the blue **TRY IT FREE** button. If you are not logged into gmail, you will see a page that looks like the one below. Sign into your gmail account or create a new one if you do not already have an account. 
 
@@ -48,13 +48,13 @@ To change the name of your project, click on **Manage project settings** on the 
 </div>
 
 ## Launch a Virtual Instance ##
-To launch a virtual instance, go to the **Compute Engine** menu on the left column of your dashboard and click on **VM instances**.  Then click on the blue **CREATE** button on the next page. This will take you to a page that looks like the screenshot below.
+To launch a virtual instance, go to the **Compute Engine** menu on the left column of your dashboard and click on **VM instances**.  Then click on the blue **CREATE** button on the next page. This will take you to a page that looks like the screenshot below. **(NOTE: Please carefully read the instructions in addition to looking at the screenshots. The instructions tell you exactly what values to fill in).**
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-create-instance-screen.png'>
 </div>
 
-Make sure that the Zone is set to be us-west1-b (for assignments where you need to use GPU instances). Under **Machine type** pick the **8 vCPUs** option. Click on the **customize** button under **Machine type** and make sure that the number of cores is set to 8 and the number of GPUs is set to **None** (we will not be using GPUs in assignment 1 and this tutorial will be updated with instructions for GPU usage). Click on the **Change** button under **Boot disk**, choose **OS images**, check **Ubuntu 16.04 LTS** and click on the blue **select** button. Check **Allow HTTP traffic** and **Allow HTTPS traffic**. Click on **disk** and then **Disks** and uncheck **Delete boot disk when instance is deleted** (Note that the "Disks" option may be hiding under an expandable URL at the bottom of that webform). Click on the blue **Create** button at the bottom of the page. You should have now successfully created a Google Compute Instance, it might take a few minutes to start running. Your screen should look something like the one below. When you want to stop running the instance, click on the blue stop button above. 
+Make sure that the Zone is set to be **us-west1-b** (especially for assignments where you need to use GPU instances). Under **Machine type** pick the **8 vCPUs** option. Click on the **customize** button under **Machine type** and make sure that the number of cores is set to 8 and the number of GPUs is set to **None** (we will not be using GPUs in assignment 1 and this tutorial will be updated with instructions for GPU usage). Click on the **Change** button under **Boot disk**, choose **OS images**, check **Ubuntu 16.04 LTS** and click on the blue **select** button. Check **Allow HTTP traffic** and **Allow HTTPS traffic**. Click on **disk** and then **Disks** and uncheck **Delete boot disk when instance is deleted** (Note that the "Disks" option may be hiding under an expandable URL at the bottom of that webform). Click on the blue **Create** button at the bottom of the page. You should have now successfully created a Google Compute Instance, it might take a few minutes to start running. Your screen should look something like the one below. When you want to stop running the instance, click on the blue stop button above. 
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-instance-started.png'>
@@ -77,7 +77,7 @@ Run the following command to download the current assignment onto your GCE:
 wget http://cs231n.stanford.edu/assignments/2017/spring1617_assignment1.zip 
 ```
 
-where **X** is the assignment number (1, 2 or 3). Run:
+Then run:
 
 ```
 sudo apt-get install unzip
@@ -86,10 +86,10 @@ sudo apt-get install unzip
 and 
 
 ```
-unzip assignment1.zip
+unzip spring1617_assignment1.zip
 ```
 
-to get the contents. You should now see a folder titled assignment**X**.  To install the necessary dependencies, cd into the assignment directory and run the provided shell script: **(Note: you will need to hit the [*enter*] key at all the "[Y/n]" prompts)**
+to get the contents. You should now see a folder titled assignment**X**.  To install the necessary dependencies for assignment 1 (**NOTE:** you only need to do this for assignment 1), cd into the assignment directory and run the provided shell script: **(Note: you will need to hit the [*enter*] key at all the "[Y/n]" prompts)**
 
 ```
 cd assignment1 
@@ -110,6 +110,24 @@ in your assignment directory to load the venv, and run
 deactivate
 ```
 to exit the venv. See assignment handout for details.
+
+**NOTE**: The instructions above will run everything needed using Python 2.7. If you would like to use Python 3.5 instead, edit setup_googlecloud.sh to replce the line 
+
+```
+virtualenv .env 
+```
+
+with 
+
+```
+virtualenv -p python3 .env
+```
+
+before running 
+
+```
+./setup_googlecloud.sh
+```
 
 ## Using Jupyter Notebook with Google Compute Engine ##
 Many of the assignments will involve using Jupyter Notebook. Below, we discuss how to run Jupyter Notebook from your GCE instance and use it on your local browser. 
@@ -150,6 +168,8 @@ Click on the blue **CREATE FIREWALL RULE** button. Enter whatever name you want:
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-networking-firewall-rule-create.png'>
 </div>
+
+**NOTE:** Some people are seeing a different screen where instead of **Allowed protocols and ports** there is a field titled **Specified protocols and ports**. You should enter tcp:\<PORT-NUMBER\> for this field if this is the page you see. Also, if you see a field titled **Targets** select **All instances in the network**.
 
 ### Configuring Jupyter Notebook ###
 The following instructions are excerpts from [this page](https://haroldsoh.com/2016/04/28/set-up-anaconda-ipython-tensorflow-julia-on-a-google-compute-engine-vm/ "Title") that has more detailed instructions.
@@ -211,6 +231,40 @@ On your local browser, if you go to http://\<YOUR-EXTERNAL-IP-ADDRESS>:\<PORT-NU
   <img src='/assets/jupyter-screen.png'>
 </div>
 
+## Submission: Transferring Files From Your Instance To Your Computer ##
+Once you are done with your assignments, run the submission script in your assignment folder. For assignment1, this will create a zip file called `assignment1.zip` containing the files you need to upload to Canvas. If you're not in the assignment1 directory already, CD into it by running
+
+```
+cd assignment1
+```
+
+install **zip** by running
+```
+sudo apt-get install zip
+```
+
+and then run 
+
+```
+bash collectSubmission.sh 
+```
+
+to create the zip file that you need to upload to canvas. Then copy the file to your local computer using the gcloud compute copy-file command as shown below. **NOTE: run this command on your local computer**:
+
+```
+gcloud compute copy-files [INSTANCE_NAME]:[REMOTE_FILE_PATH] [LOCAL_FILE_PATH]
+```
+
+For example, to copy my files to my desktop I ran:
+
+```
+gcloud compute copy-files instance-2:~/assignment1/assignment1.zip ~/Desktop
+```
+Another (perhaps easier) option proposed by a student is to directly download the zip file from Jupyter. After running the submission script and creating assignment1.zip, you can download that file directly from Jupyter. To do this, go to Jupyter Notebook and click on the zip file (in this case assignment1.zip). The file will be downloaded to your local computer. 
+
+Finally, remember to upload the zip file containing your submission to [***Canvas***](https://canvas.stanford.edu/courses/66461). (You can unzip the file locally if you want to double check your ipython notebooks and other code files are correctly inside).
+
+You can refer to [this page](https://cloud.google.com/compute/docs/instances/transfer-files "Title") for more details on transferring files to/from Google Cloud.
 
 # BIG REMINDER: Make sure you stop your instances! #
 Don't forget to stop your instance when you are done (by clicking on the stop button at the top of the page showing your instances). You can restart your instance and the downloaded software will still be available. 
