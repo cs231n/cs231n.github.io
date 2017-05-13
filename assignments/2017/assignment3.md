@@ -37,6 +37,17 @@ source /home/cs231n/myVE35/bin/activate
 
 We recommend using Google Cloud with GPU support for the question 5 of this assignment (the GAN notebook), since your training will go much, much faster. However, it will not help at all for questions 1 and 2 (RNN and LSTM), and questions 3 and 4 are still fast on CPU (these notebook should run in a few minutes).
 
+#### What do I do if my Google Cloud GPUs disappeared?
+You might note that sometimes, your GPUs are no longer accessible on your Google Cloud instance after you restart it. If this happens, please run the following commands in your assignment3 directory:
+
+```bash
+sudo apt-get remove unattended-upgrades
+chmod u+x where_are_my_drivers.sh
+./where_are_my_drivers.sh
+```
+
+If this isn't working, you can find more detailed instructions and manual ways of fixing this [here](https://cloud.google.com/compute/docs/gpus/add-gpus#install-driver-script). You should follow the "Ubuntu 16.04" instructions. 
+
 ### Working locally
 Here's how you install the necessary dependencies:
 
@@ -66,7 +77,8 @@ deactivate                       # Exit the virtual environment
 Note that every time you want to work on the assignment, you should run `source .env/bin/activate` (from within your `assignment3` folder) to re-activate the virtual environment, and `deactivate` again whenever you are done.
 
 ## Working on the assignment:
-Get the code as a zip file [here](http://cs231n.stanford.edu/assignments/2017/spring1617_assignment3_v1.zip).
+
+### Get the code as a zip file [here](http://cs231n.stanford.edu/assignments/2017/spring1617_assignment3_v1.zip).
 
 ### Download data:
 Once you have the starter code (regardless of which method you choose above), you will need to download the COCO captioning data,  pretrained SqueezeNet model (TensorFlow-only), and a few ImageNet validation images.
@@ -97,23 +109,23 @@ working run the `collectSubmission.sh` script; this will produce a file called
 
 #### You can do Questions 3, 4, and 5 in TensorFlow or PyTorch. There are two versions of each notebook, with suffixes -TensorFlow or -PyTorch. No extra credit will be awarded if you do a question in both TensorFlow and PyTorch.
 
-### Q1: Image Captioning with Vanilla RNNs (20 points)
+### Q1: Image Captioning with Vanilla RNNs (25 points)
 The Jupyter notebook `RNN_Captioning.ipynb` will walk you through the
 implementation of an image captioning system on MS-COCO using vanilla recurrent
 networks.
 
-### Q2: Image Captioning with LSTMs (20 points)
+### Q2: Image Captioning with LSTMs (30 points)
 The Jupyter notebook `LSTM_Captioning.ipynb` will walk you through the
 implementation of Long-Short Term Memory (LSTM) RNNs, and apply them to image
 captioning on MS-COCO.
 
-### Q3: Network Visualization: Saliency maps, Class Visualization, and Fooling Images (20 points)
+### Q3: Network Visualization: Saliency maps, Class Visualization, and Fooling Images (15 points)
 The Jupyter notebooks `NetworkVisualization-TensorFlow.ipynb` /`NetworkVisualization-PyTorch.ipynb` will introduce the pretrained SqueezeNet model, compute gradients
 with respect to images, and use them to produce saliency maps and fooling
 images. Please complete only one of the notebooks (TensorFlow or PyTorch). No extra credit will be awardeded if you complete both notebooks.
 
-### Q4: Style Transfer (20 points)
+### Q4: Style Transfer (15 points)
 In the Jupyter notebooks `StyleTransfer-TensorFlow.ipynb`/`StyleTransfer-PyTorch.ipynb` you will learn how to create images with the content of one image but the style of another. Please complete only one of the notebooks (TensorFlow or PyTorch). No extra credit will be awardeded if you complete both notebooks.
 
-### Q5: Generative Adversarial Networks (20 points)
+### Q5: Generative Adversarial Networks (15 points)
 In the Jupyter notebooks `GANs-TensorFlow.ipynb`/`GANs-PyTorch.ipynb` you will learn how to generate images that match a training dataset, and use these models to improve classifier performance when training on a large amount of unlabeled data and a small amount of labeled data. Please complete only one of the notebooks (TensorFlow or PyTorch). No extra credit will be awarded if you complete both notebooks.
