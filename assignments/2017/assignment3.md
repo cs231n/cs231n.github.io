@@ -27,7 +27,7 @@ You can work on the assignment in one of two ways: locally on your own machine, 
 As part of this course, you can use Google Cloud for your assignments. We recommend this route for anyone who is having trouble with installation set-up, or if you would like to use better CPU/GPU resources than you may have locally. 
 
 #### GPU Resources
-GPUs are **not required** for this assignment, but will help to speed up training and processing time for questions 3-5. Please see the Google Cloud GPU set-up tutorial [here](http://cs231n.github.io/gce-tutorial-gpus/) for instructions. The GPU instances are much more expensive, so use them only when needed.
+GPUs are **not required** for this assignment, but will help to speed up training and processing time for questions 3-5. Please see the Google Cloud GPU set-up tutorial [here](http://cs231n.github.io/gce-tutorial-gpus/) for instructions. The GPU instances are much more expensive, so use them only when needed. **We only recommend a GPU for Q5 (GANs)**, Q3 and Q4 run in under a minute even on CPU, while Q5 can take 30+ minutes for your model to converge on a CPU (versus under a minute on the Google Cloud GPUs). 
 
 Once you've got the cloud instance running, make sure to run the following line to enter the virtual environment that we prepared for you (you do **not** need to make your own virtual environment):
 
