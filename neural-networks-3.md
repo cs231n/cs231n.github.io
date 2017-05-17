@@ -310,7 +310,18 @@ v = beta2*v + (1-beta2)*(dx**2)
 x += - learning_rate * m / (np.sqrt(v) + eps)
 ```
 
-Notice that the update looks exactly as RMSProp update, except the "smooth" version of the gradient `m` is used instead of the raw (and perhaps noisy) gradient vector `dx`. Recommended values in the paper are `eps = 1e-8`, `beta1 = 0.9`, `beta2 = 0.999`. In practice Adam is currently recommended as the default algorithm to use, and often works slightly better than RMSProp. However, it is often also worth trying SGD+Nesterov Momentum as an alternative. The full Adam update also includes a *bias correction* mechanism, which compensates for the fact that in the first few time steps the vectors `m,v` are both initialized and therefore biased at zero, before they fully "warm up". We refer the reader to the paper for the details, or the course slides where this is expanded on.
+Notice that the update looks exactly as RMSProp update, except the "smooth" version of the gradient `m` is used instead of the raw (and perhaps noisy) gradient vector `dx`. Recommended values in the paper are `eps = 1e-8`, `beta1 = 0.9`, `beta2 = 0.999`. In practice Adam is currently recommended as the default algorithm to use, and often works slightly better than RMSProp. However, it is often also worth trying SGD+Nesterov Momentum as an alternative. The full Adam update also includes a *bias correction* mechanism, which compensates for the fact that in the first few time steps the vectors `m,v` are both initialized and therefore biased at zero, before they fully "warm up". With the *bias correction* mechanism, the update looks as follows:
+
+```python
+# t is your iteration counter going from 1 to infinity
+m = beta1*m + (1-beta1)*dx
+mt = m / (1-beta1**t)
+v = beta2*v + (1-beta2)*(dx**2)
+vt = v / (1-beta2**t)
+x += - learning_rate * mt / (np.sqrt(vt) + eps)
+```
+Note that the update is now a function of the iteration as well as the other parameters.
+We refer the reader to the paper for the details, or the course slides where this is expanded on.
 
 Additional References:
 
