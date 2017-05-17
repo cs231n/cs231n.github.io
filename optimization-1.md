@@ -136,7 +136,7 @@ With the best **W** this gives an accuracy of about **15.5%**. Given that guessi
 
 > Our strategy will be to start with random weights and iteratively refine them over time to get lower loss
 
-**Blindfolded hiker analogy.** One analogy that you may find helpful going forward is to think of yourself as hiking on a hilly terrain with a blindfold on, and trying to reach the bottom. In the example of CIFAR-10, the hills are 30,730-dimensional, since the dimensions of **W** are 3073 x 10. At every point on the hill we achieve a particular loss (the height of the terrain).
+**Blindfolded hiker analogy.** One analogy that you may find helpful going forward is to think of yourself as hiking on a hilly terrain with a blindfold on, and trying to reach the bottom. In the example of CIFAR-10, the hills are 30,730-dimensional, since the dimensions of **W** are 10 x 3073. At every point on the hill we achieve a particular loss (the height of the terrain).
 
 <a name='opt2'></a>
 
