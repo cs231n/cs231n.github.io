@@ -204,8 +204,8 @@ print nums         # Prints "[0, 1, 2, 3, 4]"
 print nums[2:4]    # Get a slice from index 2 to 4 (exclusive); prints "[2, 3]"
 print nums[2:]     # Get a slice from index 2 to the end; prints "[2, 3, 4]"
 print nums[:2]     # Get a slice from the start to index 2 (exclusive); prints "[0, 1]"
-print nums[:]      # Get a slice of the whole list; prints ["0, 1, 2, 3, 4]"
-print nums[:-1]    # Slice indices can be negative; prints ["0, 1, 2, 3]"
+print nums[:]      # Get a slice of the whole list; prints "[0, 1, 2, 3, 4]"
+print nums[:-1]    # Slice indices can be negative; prints "[0, 1, 2, 3]"
 nums[2:4] = [8, 9] # Assign a new sublist to a slice
 print nums         # Prints "[0, 1, 8, 9, 4]"
 ```
@@ -286,7 +286,7 @@ d = {'person': 2, 'cat': 4, 'spider': 8}
 for animal in d:
     legs = d[animal]
     print 'A %s has %d legs' % (animal, legs)
-# Prints "A person has 2 legs", "A spider has 8 legs", "A cat has 4 legs"
+# Prints "A person has 2 legs", "A spider has 8 legs", "A cat has 4 legs", each on its own line
 ```
 
 If you want access to keys and their corresponding values, use the `iteritems` method:
@@ -295,7 +295,7 @@ If you want access to keys and their corresponding values, use the `iteritems` m
 d = {'person': 2, 'cat': 4, 'spider': 8}
 for animal, legs in d.iteritems():
     print 'A %s has %d legs' % (animal, legs)
-# Prints "A person has 2 legs", "A spider has 8 legs", "A cat has 4 legs"
+# Prints "A person has 2 legs", "A spider has 8 legs", "A cat has 4 legs", each on its own line
 ```
 
 **Dictionary comprehensions:**
@@ -340,7 +340,7 @@ in which you visit the elements of the set:
 animals = {'cat', 'dog', 'fish'}
 for idx, animal in enumerate(animals):
     print '#%d: %s' % (idx + 1, animal)
-# Prints "#1: fish", "#2: dog", "#3: cat"
+# Prints "#1: fish", "#2: dog", "#3: cat", each on its own line
 ```
 
 **Set comprehensions:**
@@ -385,7 +385,7 @@ def sign(x):
 
 for x in [-1, 0, 1]:
     print sign(x)
-# Prints "negative", "zero", "positive"
+# Prints "negative", "zero", "positive", each on its own line
 ```
 
 We will often define functions to take optional keyword arguments, like this:
@@ -907,7 +907,7 @@ print x + v
 # [[ 5  6  7]
 #  [ 9 10 11]]
 print (x.T + w).T
-# Another solution is to reshape w to be a row vector of shape (2, 1);
+# Another solution is to reshape w to be a column vector of shape (2, 1);
 # we can then broadcast it directly against x to produce the same
 # output.
 print x + np.reshape(w, (2, 1))
