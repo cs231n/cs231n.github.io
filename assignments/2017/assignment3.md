@@ -78,7 +78,7 @@ Note that every time you want to work on the assignment, you should run `source 
 
 ## Working on the assignment:
 
-### Get the code as a zip file [here](http://cs231n.stanford.edu/assignments/2017/spring1617_assignment3_v2.zip).
+### Get the code as a zip file [here](http://cs231n.stanford.edu/assignments/2017/spring1617_assignment3_v3.zip).
 
 ### Download data:
 Once you have the starter code (regardless of which method you choose above), you will need to download the COCO captioning data,  pretrained SqueezeNet model (TensorFlow-only), and a few ImageNet validation images.
