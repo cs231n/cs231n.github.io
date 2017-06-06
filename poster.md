@@ -8,7 +8,7 @@ permalink: /poster-session/
   <img src='/assets/bing.jpg'>
 </div>
 
----
+==========
 The 2017 Stanford CS231N poster session will showcase projects in Convolutional Neural Networks for Visual Recognition that students have worked on over the past quarter. This year, 750 students will be presenting over 350 projects. 
 
 Sponsor Setup Time: 11:15 am - 12:00 pm
