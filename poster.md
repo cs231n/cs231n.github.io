@@ -24,7 +24,7 @@ The topics range from Generative Adversarial Networks (GANs), healthcare and med
 </div>
 
 
-# List of Projects (3 Digit Number is ID to Locate the Poster)#
+## List of Projects (3 Digit Number is ID to Locate the Poster) ##
 
 * **101**		Invasive Species Detection									
 * **102**		Scene Classification with Convolutional Neural Networks									
