@@ -117,7 +117,7 @@ The first quantity that is useful to track during training is the loss, as it is
 
 The amount of "wiggle" in the loss is related to the batch size. When the batch size is 1, the wiggle will be relatively high. When the batch size is the full dataset, the wiggle will be minimal because every gradient update should be improving the loss function monotonically (unless the learning rate is set too high).
 
-Some people prefer to plot their loss functions in the log domain. Since learning progress generally takes an exponential form shape, the plot appears more as a slightly more interpretable straight line, rather than a hockey stick. Additionally, if multiple cross-validated models are plotted on the same loss graph, the differences between them become more apparent.
+Some people prefer to plot their loss functions in the log domain. Since learning progress generally takes an exponential form shape, the plot appears as a slightly more interpretable straight line, rather than a hockey stick. Additionally, if multiple cross-validated models are plotted on the same loss graph, the differences between them become more apparent.
 
 Sometimes loss functions can look funny [lossfunctions.tumblr.com](http://lossfunctions.tumblr.com/).
 
@@ -194,7 +194,7 @@ x += - learning_rate * dx
 
 where `learning_rate` is a hyperparameter - a fixed constant. When evaluated on the full dataset, and when the learning rate is low enough, this is guaranteed to make non-negative progress on the loss function.
 
-**Momentum update** is another approach that almost always enjoys better converge rates on deep networks. This update can be motivated from a physical perspective of the optimization problem. In particular, the loss can be interpreted as a the height of a hilly terrain (and therefore also to the potential energy since \\(U = mgh\\) and therefore \\( U \propto h \\) ). Initializing the parameters with random numbers is equivalent to setting a particle with zero initial velocity at some location. The optimization process can then be seen as equivalent to the process of simulating the parameter vector (i.e. a particle) as rolling on the landscape.
+**Momentum update** is another approach that almost always enjoys better converge rates on deep networks. This update can be motivated from a physical perspective of the optimization problem. In particular, the loss can be interpreted as the height of a hilly terrain (and therefore also to the potential energy since \\(U = mgh\\) and therefore \\( U \propto h \\) ). Initializing the parameters with random numbers is equivalent to setting a particle with zero initial velocity at some location. The optimization process can then be seen as equivalent to the process of simulating the parameter vector (i.e. a particle) as rolling on the landscape.
 
 Since the force on the particle is related to the gradient of potential energy (i.e. \\(F = - \nabla U \\) ), the **force** felt by the particle is precisely the (negative) **gradient** of the loss function. Moreover, \\(F = ma \\) so the (negative) gradient is in this view proportional to the acceleration of the particle. Note that this is different from the SGD update shown above, where the gradient directly integrates the position. Instead, the physics view suggests an update in which the gradient only directly influences the velocity, which in turn has an effect on the position:
 
@@ -208,7 +208,7 @@ Here we see an introduction of a `v` variable that is initialized at zero, and a
 
 > With Momentum update, the parameter vector will build up velocity in any direction that has consistent gradient.
 
-**Nesterov Momentum** is a slightly different version of the momentum update has recently been gaining popularity. It enjoys stronger theoretical converge guarantees for convex functions and in practice it also consistenly works slightly better than standard momentum.
+**Nesterov Momentum** is a slightly different version of the momentum update that has recently been gaining popularity. It enjoys stronger theoretical converge guarantees for convex functions and in practice it also consistenly works slightly better than standard momentum.
 
 The core idea behind Nesterov momentum is that when the current parameter vector is at some position `x`, then looking at the momentum update above, we know that the momentum term alone (i.e. ignoring the second term with the gradient) is about to nudge the parameter vector by `mu * v`. Therefore, if we are about to compute the gradient, we can treat the future approximate position `x + mu * v` as a "lookahead" - this is a point in the vicinity of where we are soon going to end up. Hence, it makes sense to compute the gradient at `x + mu * v` instead of at the "old/stale" position `x`. 
 
@@ -252,7 +252,7 @@ In training deep networks, it is usually helpful to anneal the learning rate ove
 - **Exponential decay.** has the mathematical form \\(\alpha = \alpha_0 e^{-k t}\\), where \\(\alpha_0, k\\) are hyperparameters and \\(t\\) is the iteration number (but you can also use units of epochs).
 - **1/t decay** has the mathematical form \\(\alpha = \alpha_0 / (1 + k t )\\) where \\(a_0, k\\) are hyperparameters and \\(t\\) is the iteration number.
 
-In practice, we find that the step decay dropout is slightly preferable because the hyperparameters it involves (the fraction of decay and the step timings in units of epochs) are more interpretable than the hyperparameter \\(k\\). Lastly, if you can afford the computational budget, err on the side of slower decay and train for a longer time.
+In practice, we find that the step decay is slightly preferable because the hyperparameters it involves (the fraction of decay and the step timings in units of epochs) are more interpretable than the hyperparameter \\(k\\). Lastly, if you can afford the computational budget, err on the side of slower decay and train for a longer time.
 
 <a name='second'></a>
 
@@ -310,7 +310,18 @@ v = beta2*v + (1-beta2)*(dx**2)
 x += - learning_rate * m / (np.sqrt(v) + eps)
 ```
 
-Notice that the update looks exactly as RMSProp update, except the "smooth" version of the gradient `m` is used instead of the raw (and perhaps noisy) gradient vector `dx`. Recommended values in the paper are `eps = 1e-8`, `beta1 = 0.9`, `beta2 = 0.999`. In practice Adam is currently recommended as the default algorithm to use, and often works slightly better than RMSProp. However, it is often also worth trying SGD+Nesterov Momentum as an alternative. The full Adam update also includes a *bias correction* mechanism, which compensates for the fact that in the first few time steps the vectors `m,v` are both initialized and therefore biased at zero, before they fully "warm up". We refer the reader to the paper for the details, or the course slides where this is expanded on.
+Notice that the update looks exactly as RMSProp update, except the "smooth" version of the gradient `m` is used instead of the raw (and perhaps noisy) gradient vector `dx`. Recommended values in the paper are `eps = 1e-8`, `beta1 = 0.9`, `beta2 = 0.999`. In practice Adam is currently recommended as the default algorithm to use, and often works slightly better than RMSProp. However, it is often also worth trying SGD+Nesterov Momentum as an alternative. The full Adam update also includes a *bias correction* mechanism, which compensates for the fact that in the first few time steps the vectors `m,v` are both initialized and therefore biased at zero, before they fully "warm up". With the *bias correction* mechanism, the update looks as follows:
+
+```python
+# t is your iteration counter going from 1 to infinity
+m = beta1*m + (1-beta1)*dx
+mt = m / (1-beta1**t)
+v = beta2*v + (1-beta2)*(dx**2)
+vt = v / (1-beta2**t)
+x += - learning_rate * mt / (np.sqrt(vt) + eps)
+```
+Note that the update is now a function of the iteration as well as the other parameters.
+We refer the reader to the paper for the details, or the course slides where this is expanded on.
 
 Additional References:
 
@@ -334,7 +345,7 @@ As we've seen, training Neural Networks can involve many hyperparameter settings
 - learning rate decay schedule (such as the decay constant)
 - regularization strength (L2 penalty, dropout strength)
 
-But as saw, there are many more relatively less sensitive hyperparameters, for example in per-parameter adaptive learning methods, the setting of momentum and its schedule, etc. In this section we describe some additional tips and tricks for performing the hyperparameter search:
+But as we saw, there are many more relatively less sensitive hyperparameters, for example in per-parameter adaptive learning methods, the setting of momentum and its schedule, etc. In this section we describe some additional tips and tricks for performing the hyperparameter search:
 
 **Implementation**. Larger Neural Networks typically require a long time to train, so performing hyperparameter search can take many days/weeks. It is important to keep this in mind since it influences the design of your code base. One particular design is to have a **worker** that continuously samples random hyperparameters and performs the optimization. During the training, the worker will keep track of the validation performance after every epoch, and writes a model checkpoint (together with miscellaneous training statistics such as the loss over time) to a file, preferably on a shared file system. It is useful to include the validation performance directly in the filename, so that it is simple to inspect and sort the progress. Then there is a second program which we will call a **master**, which launches or kills workers across a computing cluster, and may additionally inspect the checkpoints written by workers and plot their training statistics, etc.
 
