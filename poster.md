@@ -8,8 +8,8 @@ permalink: /poster-session/
 <div class='fig figcenter fighighlight'>
   <img src='/assets/bing.jpg'>
 </div>
-<break>
-<break>
+
+<b
 * **Location: [Bing Concert Hall](https://www.google.com/maps/place/Bing+Concert+Hall/@37.4320543,-122.1660855,15z/data=!4m5!3m4!1s0x0:0xf5f2c6a783cabf93!8m2!3d37.4320543!4d-122.1660855, "title")**
 * **Sponsor Setup Time: 11:15 am - 12:00 pm**
 * **Poster Session: 12:00 pm - 2:45 pm**
