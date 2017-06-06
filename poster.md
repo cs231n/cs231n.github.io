@@ -11,7 +11,7 @@ permalink: /poster-session/
 
 The 2017 Stanford CS231N poster session will showcase projects in Convolutional Neural Networks for Visual Recognition that students have worked on over the past quarter. This year, 750 students will be presenting over 350 projects. 
 
-* **Location: [Bing Concert Hall](https://www.google.com/maps/place/Bing+Concert+Hall/@37.4320543,-122.1660855,15z/data=!4m5!3m4!1s0x0:0xf5f2c6a783cabf93!8m2!3d37.4320543!4d-122.1660855, "title")
+* **Location: [Bing Concert Hall](https://www.google.com/maps/place/Bing+Concert+Hall/@37.4320543,-122.1660855,15z/data=!4m5!3m4!1s0x0:0xf5f2c6a783cabf93!8m2!3d37.4320543!4d-122.1660855, "title")**
 * **Sponsor Setup Time: 11:15 am - 12:00 pm**
 * **Poster Session: 12:00 pm - 2:45 pm**
 * **Award Ceremony: 2:55 pm - 3:15 pm**
