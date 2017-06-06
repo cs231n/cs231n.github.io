@@ -16,7 +16,7 @@ permalink: /poster-session/
 * **Award Ceremony: 2:55 pm - 3:15 pm**
 
 The 2017 Stanford CS231N poster session will showcase projects in Convolutional Neural Networks for Visual Recognition that students have worked on over the past quarter. This year, 750 students will be presenting over 350 projects. 
-The topics range from Generative Adversarial Networks (GANs), healthcare and medical imaging, art and style transfer, satellite imaging, self-driving cars, video understanding and more! We will be awarding 10+ awards to the top posters! The top prizes will be $500+ in value! Stanford affiliates (faculty, staff, students, alumni) and their guests are welcome to attend. Catered food and refreshments will be made available over the course of the event. This poster session is made possible through the generous support of Benchmark, Andreessen Horowitz, Nvidia and Apple! 
+The topics range from Generative Adversarial Networks (GANs), healthcare and medical imaging, art and style transfer, satellite imaging, self-driving cars, video understanding and more! We will be awarding more than 10 awards to the top posters! The top prizes will be more than $500 in value! Stanford affiliates (faculty, staff, students, alumni) and their guests are welcome to attend. Catered food and refreshments will be made available over the course of the event. This poster session is made possible through the generous support of Benchmark, Andreessen Horowitz, Nvidia and Apple! 
 
 # List of Projects #
 
