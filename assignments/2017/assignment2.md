@@ -119,7 +119,7 @@ For this last part, you will be working in either TensorFlow or PyTorch, two pop
 
 Open up either `PyTorch.ipynb` or `TensorFlow.ipynb`. There, you will learn how the framework works, culminating in training a  convolutional network of your own design on CIFAR-10 to get the best performance you can.
 
-### Q5: Do something extra! (up to +10 points)
+### Q6: Do something extra! (up to +10 points)
 In the process of training your network, you should feel free to implement
 anything that you want to get better performance. You can modify the solver,
 implement additional layers, use different types of regularization, use an
