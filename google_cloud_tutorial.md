@@ -111,7 +111,7 @@ deactivate
 ```
 to exit the venv. See assignment handout for details.
 
-**NOTE**: The instructions above will run everything needed using Python 2.7. If you would like to use Python 3.5 instead, edit setup_googlecloud.sh to replce the line 
+**NOTE**: The instructions above will run everything needed using Python 2.7. If you would like to use Python 3.5 instead, edit setup_googlecloud.sh to replace the line 
 
 ```
 virtualenv .env 
