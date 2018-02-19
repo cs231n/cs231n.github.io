@@ -11,7 +11,7 @@ Table of Contents:
 - [Intuitive understanding of backpropagation](#intuitive)
 - [Modularity: Sigmoid example](#sigmoid)
 - [Backprop in practice: Staged computation](#staged)
-- [Patterns in backward flow](#patters)
+- [Patterns in backward flow](#patterns)
 - [Gradients for vectorized operations](#mat)
 - [Summary](#summary)
 
