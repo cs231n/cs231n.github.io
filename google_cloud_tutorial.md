@@ -61,11 +61,7 @@ Go to **Compute Engine**, then **Images** and click on the blue **Create Image**
   <img src='/assets/cloud-create-image.png'>
 </div>
 
-Enter your preferred name in the **Name** field. Mine is called **cs231n-image**. Select **Cloud Storage file** for **Source**, enter 
-
-> **cs231n-repo/deep-ubuntu.tar.gz**
-
-and click on the blue **Create** button. See the screenshot below. It will take a few minutes for your image to be created (about 10-15 min in our experience, though your mileage may vary). 
+Enter your preferred name in the **Name** field. Ours is called `cs231n-image`. Select **Cloud Storage file** for **Source**, enter `cs231n-repo/deep-ubuntu.tar.gz` and click on the blue **Create** button. See the screenshot below. It will take a few minutes for your image to be created (about 10-15 min in our experience, though your mileage may vary). 
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-config-image.png'>
