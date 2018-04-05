@@ -141,7 +141,7 @@ Our provided image supports the following frameworks:
 - [Caffe2](https://caffe2.ai/), CPU only. Note that it is very different from the original Caffe. 
 - Nvidia runtime: CUDA 9.0 and cuDNN 7.0. They only work when you create a Cloud GPU instance, which we will cover later.  
 
-The `python` on our image is `3.6.4`, and has all the above libraries installed. It should work out of the box for all assignments unless noted otherwise. You don't need `virtualenv`, but if you insist, Anaconda has [its own way](https://conda.io/docs/user-guide/tasks/manage-environments.html). If you need libraries not mentioned above, you can always run `conda install \<mylib\>` yourself. 
+The `python` on our image is `3.6.4`, and has all the above libraries installed. It should work out of the box for all assignments unless noted otherwise. You don't need `virtualenv`, but if you insist, Anaconda has [its own way](https://conda.io/docs/user-guide/tasks/manage-environments.html). If you need libraries not mentioned above, you can always run `conda install <mylib>` yourself. 
 
 You are now ready to work on the assignments on Google Cloud!
 
@@ -161,7 +161,7 @@ To Do this, click on the 3 line icon next to the **Google Cloud Platform** butto
   <img src='/assets/cloud-networking-external-ip.png'>
 </div>
 
-To have a static IP address, change **Type** from **Ephemeral** to **Static**. Enter your prefered name for your static IP, mine is "cs231n-ip" (see screenshot below). And click on Reserve. Remember to release the static IP address when you are done because according to [this page](https://jeffdelaney.me/blog/running-jupyter-notebook-google-cloud-platform/ "Title") Google charges a small fee for unused static IPs. 
+To have a static IP address, change **Type** from **Ephemeral** to **Static**. Enter your prefered name for your static IP, ours is `cs231n-ip` (see screenshot below). And click on Reserve. Remember to release the static IP address when you are done because according to [this page](https://jeffdelaney.me/blog/running-jupyter-notebook-google-cloud-platform/ "Title") Google charges a small fee for unused static IPs. 
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-networking-external-ip-naming.png'>
@@ -183,7 +183,7 @@ Click on the 3-line icon at the top of the page next to **Google Cloud Platform*
   <img src='/assets/cloud-networking-firewall-rule.png'>
 </div>
 
-Click on the blue **CREATE FIREWALL RULE** button. Enter whatever name you want: we use cs231n-rule. Select "All instances in the network" for **Targets** (if the menu item exists). Enter `0.0.0.0/0` for **Source IP ranges** and `tcp:\<port-number\>` for **Specified protocols and ports** where `\<port-number\>` is the number you used above. Click on the blue **Create** button. See the screenshot below.
+Click on the blue **CREATE FIREWALL RULE** button. Enter whatever name you want: we use cs231n-rule. Select "All instances in the network" for **Targets** (if the menu item exists). Enter `0.0.0.0/0` for **Source IP ranges** and `tcp:<port-number>` for **Specified protocols and ports** where `<port-number>` is the number you used above. Click on the blue **Create** button. See the screenshot below.
 
 <div class='fig figcenter fighighlight'>
   <img src='/assets/cloud-networking-firewall-rule-create.png'>
@@ -228,7 +228,7 @@ When you are done with your assignments, run the submission script in your assig
 Once you create the zip file, e.g. `assignment1.zip`, you will transfer the file from GCE instance to your local laptop. There is an [easy command](https://cloud.google.com/sdk/gcloud/reference/compute/scp) for this purpose:
 
 ```
-gcloud compute scp \<user>\@\<instance-name>\:/path/to/assignment1.zip /local/path
+gcloud compute scp <user>@<instance-name>:/path/to/assignment1.zip /local/path
 ```
 
 For example, to download files from our instance to the current folder:
@@ -245,7 +245,7 @@ gcloud compute scp /my/local/file tonystark@cs231:/home/shared/
 
 Another (perhaps easier) option proposed by a student is to directly download the zip file from Jupyter. After running the submission script and creating assignment1.zip, you can download that file directly from Jupyter. To do this, go to Jupyter Notebook and click on the zip file, which will be downloaded to your local computer. 
 
-# BIG REMINDER: Make sure you stop your instances! #
+## BIG REMINDER: Make sure you stop your instances! ##
 
 Don't forget to stop your instance when you are done (by clicking on the stop button at the top of the page showing your instances). You can restart your instance and the downloaded software will still be available. 
 
