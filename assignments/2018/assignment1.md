@@ -63,8 +63,6 @@ The IPython Notebook **two\_layer\_net.ipynb** will walk you through the impleme
 
 The IPython Notebook **features.ipynb** will walk you through this exercise, in which you will examine the improvements gained by using higher-level representations as opposed to using raw pixel values.
 
-Implement, investigate or analyze something extra surrounding the topics in this assignment, and using the code you developed. For example, is there some other interesting question we could have asked? Is there any insightful visualization you can plot? Or anything fun to look at? Or maybe you can experiment with a spin on the loss function? If you try out something cool we'll give you up to 10 extra points and may feature your results in the lecture.
-
 ### Submitting your work
 There are **_two_** steps to submitting your assignment:
 
