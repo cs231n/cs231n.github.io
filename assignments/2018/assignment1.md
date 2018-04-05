@@ -82,14 +82,14 @@ for each of the notebooks, where `FILE.ipynb` is the notebook you want to conver
 
 ```bash
 # Run from the assignment directory where the zip file is located
-scp assignment1.zip YOUR_SUNET@rice.stanford.edu:~/DEST_PATH
+scp assignment1.zip YOUR_SUNET@myth.stanford.edu:~/DEST_PATH
 ```
 
 `YOUR_SUNET` should be replaced with your SUNetID (e.g. `jdoe`), and `DEST_PATH` should be a path to an existing directory on AFS where you want the zip file to be copied to (you may want to create a CS231N directory for convenience). Once this is done, run the following:
 
  ```bash
-# SSH into the Stanford Rice machines 
-ssh YOUR_SUNET@rice.stanford.edu
+# SSH into the Stanford Myth machines 
+ssh YOUR_SUNET@myth.stanford.edu
 
 # Descend into the directory where the zip file is now located
 cd DEST_PATH
