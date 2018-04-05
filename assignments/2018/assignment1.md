@@ -16,36 +16,8 @@ In this assignment you will practice putting together a simple image classificat
 - understand the differences and tradeoffs between these classifiers
 - get a basic understanding of performance improvements from using **higher-level representations** than raw pixels (e.g. color histograms, Histogram of Gradient (HOG) features)
 
-## Setup
-You can work on the assignment in one of two ways: locally on your own machine, or on a virtual machine on Google Cloud. 
-
-### Working remotely on Google Cloud (Recommended)
-
-**Note:** after following these instructions, make sure you go to **Download data** below (you can skip the **Working locally** section).
-
-As part of this course, you can use Google Cloud for your assignments. We recommend this route for anyone who is having trouble with installation set-up, or if you would like to use better CPU/GPU resources than you may have locally. Please see the set-up tutorial [here](http://cs231n.github.io/gce-tutorial/) for more details. :)
-
 ### Working locally
-Get the code as a zip file [here](http://cs231n.stanford.edu/assignments/2017/spring1617_assignment1.zip). As for the dependencies:
-
-**Installing Python 3.5+:**
-To use python3, make sure to install version 3.5 or 3.6 on your local machine. If you are on Mac OS X, you can do this using [Homebrew](https://brew.sh) with `brew install python3`. You can find instructions for Ubuntu [here](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-ubuntu-16-04).
-
-**Virtual environment:**
-If you decide to work locally, we recommend using [virtual environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/) for the project. If you choose not to use a virtual environment, it is up to you to make sure that all dependencies for the code are installed globally on your machine. To set up a virtual environment, run the following:
-
-```bash
-cd assignment1
-sudo pip install virtualenv      # This may already be installed
-virtualenv -p python3 .env       # Create a virtual environment (python3)
-# Note: you can also use "virtualenv .env" to use your default python (usually python 2.7)
-source .env/bin/activate         # Activate the virtual environment
-pip install -r requirements.txt  # Install dependencies
-# Work on the assignment for a while ...
-deactivate                       # Exit the virtual environment
-```
-
-Note that every time you want to work on the assignment, you should run `source .env/bin/activate` (from within your `assignment1` folder) to re-activate the virtual environment, and `deactivate` again whenever you are done.
+Get the code as a zip file [here](http://cs231n.stanford.edu/assignments/2018/spring1718_assignment1.zip). As for the dependencies:
 
 ### Download data:
 Once you have the starter code (regardless of which method you choose above), you will need to download the CIFAR-10 dataset.
@@ -92,7 +64,5 @@ The IPython Notebook **two\_layer\_net.ipynb** will walk you through the impleme
 ### Q5: Higher Level Representations: Image Features (10 points)
 
 The IPython Notebook **features.ipynb** will walk you through this exercise, in which you will examine the improvements gained by using higher-level representations as opposed to using raw pixel values.
-
-### Q6: Cool Bonus: Do something extra! (+10 points)
 
 Implement, investigate or analyze something extra surrounding the topics in this assignment, and using the code you developed. For example, is there some other interesting question we could have asked? Is there any insightful visualization you can plot? Or anything fun to look at? Or maybe you can experiment with a spin on the loss function? If you try out something cool we'll give you up to 10 extra points and may feature your results in the lecture.
