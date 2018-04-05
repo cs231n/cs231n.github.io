@@ -18,10 +18,9 @@ In this assignment you will practice putting together a simple image classificat
 
 ## Setup
 
-You can follow the setup instructions [here](http://cs231n.github.io/setup-instructions/).
-
-### Working locally
 Get the code as a zip file [here](http://cs231n.stanford.edu/assignments/2018/spring1718_assignment1.zip).
+
+You can follow the setup instructions [here](http://cs231n.github.io/setup-instructions/).
 
 ### Download data:
 Once you have the starter code (regardless of which method you choose above), you will need to download the CIFAR-10 dataset.
