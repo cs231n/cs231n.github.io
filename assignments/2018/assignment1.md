@@ -16,8 +16,12 @@ In this assignment you will practice putting together a simple image classificat
 - understand the differences and tradeoffs between these classifiers
 - get a basic understanding of performance improvements from using **higher-level representations** than raw pixels (e.g. color histograms, Histogram of Gradient (HOG) features)
 
+## Setup
+
+You can follow the setup instructions [here](http://cs231n.github.io/setup-instructions/).
+
 ### Working locally
-Get the code as a zip file [here](http://cs231n.stanford.edu/assignments/2018/spring1718_assignment1.zip). As for the dependencies:
+Get the code as a zip file [here](http://cs231n.stanford.edu/assignments/2018/spring1718_assignment1.zip).
 
 ### Download data:
 Once you have the starter code (regardless of which method you choose above), you will need to download the CIFAR-10 dataset.
@@ -36,7 +40,7 @@ If you are unfamiliar with IPython, you can also refer to our
 [IPython tutorial](/ipython-tutorial).
 
 ### Some Notes
-**NOTE 1:** This year, the `assignment1` code has been tested to be compatible with python versions `2.7`, `3.5`, `3.6` (it may work with other versions of `3.x`, but we won't be officially supporting them). You will need to make sure that during your `virtualenv` setup that the correct version of `python` is used. You can confirm your python version by (1) activating your virtualenv and (2) running `which python`.
+**NOTE 1:** This year, the `assignment1` code has been tested to be compatible with python version `3.6` (it may work with other versions of `3.x`, but we won't be officially supporting them). You will need to make sure that during your virtual environment setup that the correct version of `python` is used. You can confirm your python version by (1) activating your virtualenv and (2) running `which python`.
 
 **NOTE 2:** If you are working in a virtual environment on OSX, you may *potentially* encounter
 errors with matplotlib due to the [issues described here](http://matplotlib.org/faq/virtualenv_faq.html). In our testing, it seems that this issue is no longer present with the most recent version of matplotlib, but if you do end up running into this issue you may have to use the `start_ipython_osx.sh` script from the `assignment1` directory (instead of `jupyter notebook` above) to launch your IPython notebook server. Note that you may have to modify some variables within the script to match your version of python/installation directory. The script assumes that your virtual environment is named `.env`.

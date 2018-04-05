@@ -1,3 +1,9 @@
+---
+layout: page
+title: Setup Instructions
+permalink: /setup-instructions/
+---
+
 ## Setup
 You can work on the assignment in one of two ways: locally on your own machine, or on a virtual machine on Google Cloud. 
 
