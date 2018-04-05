@@ -66,7 +66,7 @@ The IPython Notebook **features.ipynb** will walk you through this exercise, in 
 ### Submitting your work
 There are **_two_** steps to submitting your assignment:
 
-**1.** Submit a pdf of the completed iPython notebooks to [Gradescope](http://gradescope.com). If you are enrolled in the course, then you should have already been automatically added to the course on Gradescope. 
+**1.** Submit a pdf of the completed iPython notebooks to [Gradescope](https://gradescope.com/courses/17367). If you are enrolled in the course, then you should have already been automatically added to the course on Gradescope. 
 
 To produce a pdf of your work, you can first convert each of the .ipynb files to HTML. To do this, simply run 
 
