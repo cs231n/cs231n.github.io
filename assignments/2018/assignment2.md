@@ -23,7 +23,7 @@ Get the code as a zip file [here](http://cs231n.github.io/assignments/2018/sprin
 
 You can follow the setup instructions [here](http://cs231n.github.io/setup-instructions/).
 
-**NOTE:** For this assignment, you will need to install TensorFlow and/or PyTorch. 
+**NOTE:** For this assignment, you will need to install TensorFlow 1.7 and/or PyTorch 0.4.
 
 ### Download data:
 Once you have the starter code, you will need to download the CIFAR-10 dataset.
@@ -47,13 +47,13 @@ If you are unfamiliar with IPython, you can also refer to our
 **NOTE 2:** If you are working in a virtual environment on OSX, you may *potentially* encounter
 errors with matplotlib due to the [issues described here](http://matplotlib.org/faq/virtualenv_faq.html). In our testing, it seems that this issue is no longer present with the most recent version of matplotlib, but if you do end up running into this issue you may have to use the `start_ipython_osx.sh` script from the `assignment2` directory (instead of `jupyter notebook` above) to launch your IPython notebook server. Note that you may have to modify some variables within the script to match your version of python/installation directory. The script assumes that your virtual environment is named `.env`.
 
-### Q1: Fully-connected Neural Network (25 points)
+### Q1: Fully-connected Neural Network (20 points)
 The IPython notebook `FullyConnectedNets.ipynb` will introduce you to our
 modular layer design, and then use those layers to implement fully-connected
 networks of arbitrary depth. To optimize these models you will implement several
 popular update rules.
 
-### Q2: Batch Normalization (25 points)
+### Q2: Batch Normalization (30 points)
 In the IPython notebook `BatchNormalization.ipynb` you will implement batch
 normalization, and use it to train deep fully-connected networks.
 
@@ -68,6 +68,8 @@ In the IPython Notebook ConvolutionalNetworks.ipynb you will implement several n
 For this last part, you will be working in either TensorFlow or PyTorch, two popular and powerful deep learning frameworks. **You only need to complete ONE of these two notebooks.** You do NOT need to do both, and we will _not_ be awarding extra credit to those who do. 
 
 Open up either `PyTorch.ipynb` or `TensorFlow.ipynb`. There, you will learn how the framework works, culminating in training a  convolutional network of your own design on CIFAR-10 to get the best performance you can.
+
+**NOTE:** At this time, the PyTorch and TensorFlow notebooks are not finalized. We will update this page with a zip file containing the two notebooks as soon as they are completed.
 
 
 ### Submitting your work
