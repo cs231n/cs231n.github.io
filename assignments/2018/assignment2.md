@@ -62,7 +62,7 @@ The IPython notebook `Dropout.ipynb` will help you implement Dropout and explore
 its effects on model generalization.
 
 ### Q4: Convolutional Networks (30 points)
-In the IPython Notebook ConvolutionalNetworks.ipynb you will implement several new layers that are commonly used in convolutional networks.
+In the IPython Notebook `ConvolutionalNetworks.ipynb` you will implement several new layers that are commonly used in convolutional networks.
 
 ### Q5: PyTorch / TensorFlow on CIFAR-10 (10 points)
 For this last part, you will be working in either TensorFlow or PyTorch, two popular and powerful deep learning frameworks. **You only need to complete ONE of these two notebooks.** You do NOT need to do both, and we will _not_ be awarding extra credit to those who do. 
@@ -108,10 +108,3 @@ cd DEST_PATH
 ```
 Once you run the submit script, simply follow the on-screen prompts to finish submitting the assignment on AFS. If successful, you should see a "SUBMIT SUCCESS" message output by the script.
 
-<!-- ### Q5: Do something extra! (up to +10 points)
-In the process of training your network, you should feel free to implement
-anything that you want to get better performance. You can modify the solver,
-implement additional layers, use different types of regularization, use an
-ensemble of models, or anything else that comes to mind. If you implement these
-or other ideas not covered in the assignment then you will be awarded some bonus
-points. -->
