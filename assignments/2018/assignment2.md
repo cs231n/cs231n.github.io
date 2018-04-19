@@ -80,7 +80,7 @@ There are **_two_** steps to submitting your assignment:
 To produce a pdf of your work, you can first convert each of the .ipynb files to HTML. To do this, simply run from your assignment directory
 
 ```bash
-ipython nbconvert --to html FILE.ipynb
+jupyter nbconvert --to html FILE.ipynb
 ```
 for each of the notebooks, where `FILE.ipynb` is the notebook you want to convert. Then you can convert the HTML files to PDFs with your favorite web browser, and then concatenate them all together in your favorite PDF viewer/editor. Submit this final PDF on Gradescope, and be sure to tag the questions correctly!
 
