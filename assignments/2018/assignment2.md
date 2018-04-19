@@ -23,7 +23,7 @@ Get the code as a zip file [here](http://cs231n.github.io/assignments/2018/sprin
 
 You can follow the setup instructions [here](http://cs231n.github.io/setup-instructions/).
 
-**NOTE:** For this assignment, you will need to install TensorFlow 1.7 and/or PyTorch 0.4.
+**NOTE: At this time, the PyTorch and TensorFlow notebooks for Question 5 are not finalized. We will update this page with a zip file containing the two notebooks and installation instructions as soon as they are completed.**
 
 ### Download data:
 Once you have the starter code, you will need to download the CIFAR-10 dataset.
@@ -69,7 +69,7 @@ For this last part, you will be working in either TensorFlow or PyTorch, two pop
 
 Open up either `PyTorch.ipynb` or `TensorFlow.ipynb`. There, you will learn how the framework works, culminating in training a  convolutional network of your own design on CIFAR-10 to get the best performance you can.
 
-**NOTE:** At this time, the PyTorch and TensorFlow notebooks are not finalized. We will update this page with a zip file containing the two notebooks as soon as they are completed.
+**NOTE: Once again, at this time, the PyTorch and TensorFlow notebooks are not finalized. We will update this page with a zip file containing the two notebooks as soon as they are completed!**
 
 
 ### Submitting your work
