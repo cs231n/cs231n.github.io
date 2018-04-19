@@ -112,14 +112,14 @@ probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)
 We now have an array `probs` of size [300 x 3], where each row now contains the class probabilities. In particular, since we've normalized them every row now sums to one. We can now query for the  log probabilities assigned to the correct classes in each example:
 
 ```python
-corect_logprobs = -np.log(probs[range(num_examples),y])
+correct_logprobs = -np.log(probs[range(num_examples),y])
 ```
 
 The array `correct_logprobs` is a 1D array of just the probabilities assigned to the correct classes for each example. The full loss is then the average of these log probabilities and the regularization loss:
 
 ```python
 # compute the loss: average cross-entropy loss and regularization
-data_loss = np.sum(corect_logprobs)/num_examples
+data_loss = np.sum(correct_logprobs)/num_examples
 reg_loss = 0.5*reg*np.sum(W*W)
 loss = data_loss + reg_loss
 ```
@@ -203,8 +203,8 @@ for i in xrange(200):
   probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K]
   
   # compute the loss: average cross-entropy loss and regularization
-  corect_logprobs = -np.log(probs[range(num_examples),y])
-  data_loss = np.sum(corect_logprobs)/num_examples
+  correct_logprobs = -np.log(probs[range(num_examples),y])
+  data_loss = np.sum(correct_logprobs)/num_examples
   reg_loss = 0.5*reg*np.sum(W*W)
   loss = data_loss + reg_loss
   if i % 10 == 0:
@@ -351,8 +351,8 @@ for i in xrange(10000):
   probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K]
   
   # compute the loss: average cross-entropy loss and regularization
-  corect_logprobs = -np.log(probs[range(num_examples),y])
-  data_loss = np.sum(corect_logprobs)/num_examples
+  correct_logprobs = -np.log(probs[range(num_examples),y])
+  data_loss = np.sum(correct_logprobs)/num_examples
   reg_loss = 0.5*reg*np.sum(W*W) + 0.5*reg*np.sum(W2*W2)
   loss = data_loss + reg_loss
   if i % 1000 == 0:
