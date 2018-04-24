@@ -19,11 +19,11 @@ are as follows:
 - gain experience with a major deep learning framework, such as **TensorFlow** or **PyTorch**.
 
 ## Setup
-Get the code as a zip file [here](http://cs231n.github.io/assignments/2018/spring1718_assignment2.zip).
+Get the code as a zip file [here](http://cs231n.github.io/assignments/2018/spring1718_assignment2_v2.zip).
 
 You can follow the setup instructions [here](http://cs231n.github.io/setup-instructions/).
 
-**NOTE: At this time, the PyTorch and TensorFlow notebooks for Question 5 are not finalized. We will update this page with a zip file containing the two notebooks and installation instructions as soon as they are completed.**
+**NOTE: Our initial release of the assignment did not include the PyTorch and TensorFlow notebooks for Q5. These have now been finalized, and the zip file has been updated with these notebooks.**
 
 ### Download data:
 Once you have the starter code, you will need to download the CIFAR-10 dataset.
@@ -69,7 +69,7 @@ For this last part, you will be working in either TensorFlow or PyTorch, two pop
 
 Open up either `PyTorch.ipynb` or `TensorFlow.ipynb`. There, you will learn how the framework works, culminating in training a  convolutional network of your own design on CIFAR-10 to get the best performance you can.
 
-**NOTE: Once again, at this time, the PyTorch and TensorFlow notebooks are not finalized. We will update this page with a zip file containing the two notebooks as soon as they are completed!**
+**NOTE**: The PyTorch notebook requires PyTorch version 0.4, which is not yet released. For the time being you can install the latest version of PyTorch from source by [following the instructions here](https://github.com/pytorch/pytorch#from-source). Installing PyTorch from source has been tested on the provided Google Cloud VM image.
 
 
 ### Submitting your work
