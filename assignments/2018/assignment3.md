@@ -17,7 +17,7 @@ The goals of this assignment are as follows:
 
 ## Setup
 
-Get the code as a zip file [here](http://cs231n.github.io/assignments/2018/spring1718_assignment3_v2.zip).
+Get the code as a zip file [here](http://cs231n.github.io/assignments/2018/spring1718_assignment3.zip).
 
 **Update (5/11/18, 6:05 a.m.): The assignment zip file has been updated to include the proper optim.py and layers.py files.**
 
