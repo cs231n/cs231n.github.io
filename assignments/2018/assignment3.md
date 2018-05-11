@@ -66,7 +66,7 @@ images. Please complete only one of the notebooks (TensorFlow or PyTorch). No ex
 In the Jupyter notebooks `StyleTransfer-TensorFlow.ipynb`/`StyleTransfer-PyTorch.ipynb` you will learn how to create images with the content of one image but the style of another. Please complete only one of the notebooks (TensorFlow or PyTorch). No extra credit will be awardeded if you complete both notebooks.
 
 ### Q5: Generative Adversarial Networks (15 points)
-In the Jupyter notebooks `Generative_Adversarial_Networks_TF.ipynb`/`Generative_Adversarial_Networks_PyTorch.ipynb` you will learn how to generate images that match a training dataset, and use these models to improve classifier performance when training on a large amount of unlabeled data and a small amount of labeled data. Please complete only one of the notebooks (TensorFlow or PyTorch). No extra credit will be awarded if you complete both notebooks.
+In the Jupyter notebooks `GANS-TensorFlow.ipynb`/`GANS-PyTorch.ipynb` you will learn how to generate images that match a training dataset, and use these models to improve classifier performance when training on a large amount of unlabeled data and a small amount of labeled data. Please complete only one of the notebooks (TensorFlow or PyTorch). No extra credit will be awarded if you complete both notebooks.
 
 ### Submitting your work
 There are **_two_** steps that you must complete to submit your assignment:
