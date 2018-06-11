@@ -4,8 +4,6 @@ title: CS231n Poster Session 2018
 permalink: /poster-session-2018/
 ---
 
-# 2018 Stanford CS231n Poster Session #
-
 <div class='fig figcenter fighighlight'>
   <img src='/assets/huang.jpg'>
 </div>
@@ -18,7 +16,7 @@ permalink: /poster-session-2018/
 
 
 The 2018 Stanford CS231N poster session will showcase projects in Convolutional Neural Networks for Visual Recognition that students have worked on over the past quarter. This year, 650 students will be presenting over 300 projects. 
-The topics range from Generative Adversarial Networks (GANs), healthcare and medical imaging, art and style transfer, satellite imaging, self-driving cars, video understanding and more! See the list below for the projects that will be presented:
+The topics range from Generative Adversarial Networks (GANs), healthcare and medical imaging, art and style transfer, satellite imaging, self-driving cars, video understanding and more! See the list below for the projects that will be presented.
 
 Catered food and refreshments will be made available over the course of the event.
 
