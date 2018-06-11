@@ -124,6 +124,7 @@ This poster session has been made possible thanks to generous donations from Way
 * **317**: Video Hand Gesture Recognition
 * **319**: Improving Affectnet: Emotion Classification
 * **320**: Video Gesture Classification Using Combined RGB and Depth Features
+* **321**: Predicting Hand Pose and Gesture from Monocular RGB Images
 * **402**: Medical Image Super-Resolution using GANs
 * **403**: 3D Reconstruction and Alignment of MRIs for Improved Medical Diagnostics
 * **405**: Learning electrode probing strategy in retinal prosthesis systems
