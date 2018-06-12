@@ -98,6 +98,7 @@ This poster session has been made possible thanks to generous donations from Way
 * **240**: Traffic monitoring from seismic data
 * **241**: Image-based Merged Di-photon Identification for the ATLAS Experiment at the Large Hadron Collider
 * **242**: DeepClean:  Deep Bayesian Restoration of Interferometric Images
+* **243**: 3D GAN Object Generation and Reconstruction
 * **244**: Image Segmentation for Autonomous Cars
 * **245**: Multi-Task Facial Landmark Detection with CNN
 * **247**: 3DNetView: Training Neural Networks to Perform 3D Image Reconstruction
