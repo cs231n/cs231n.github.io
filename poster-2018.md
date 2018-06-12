@@ -81,7 +81,6 @@ This poster session has been made possible thanks to generous donations from Way
 * **218**: Fine Grain Image Classification on Dog Breeds
 * **219**: TINE-CNN Augmentation: Automatic data augmentation for any image classification task
 * **220**: Fashion Product Recognition in Fine-Grained Visual Categorization
-* **221**: Zero-shot Semantic Segmentation
 * **222**: One-Shot Learning of Cosmetic Objects
 * **223**: Exploring Movie Poster Classification and Generation with Deep Convolutional Neural Networks
 * **224**: Classifying Electromagnetic Showers from Calorimeter Images with CNNs
