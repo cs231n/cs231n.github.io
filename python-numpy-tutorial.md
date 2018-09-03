@@ -437,7 +437,7 @@ You can read a lot more about Python classes
 [Numpy](http://www.numpy.org/) is the core library for scientific computing in Python.
 It provides a high-performance multidimensional array object, and tools for working with these
 arrays. If you are already familiar with MATLAB, you might find
-[this tutorial useful](https://docs.scipy.org/doc/numpy-dev/user/numpy-for-matlab-users.html) to get started with Numpy.
+[this tutorial useful](https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html) to get started with Numpy.
 
 <a name='numpy-arrays'></a>
 
