@@ -214,7 +214,7 @@ It is common to periodically insert a Pooling layer in-between successive Conv l
   - \\(H_2 = (H_1 - F)/S + 1\\)
   - \\(D_2 = D_1\\)
 - Introduces zero parameters since it computes a fixed function of the input
-- Note that it is not common to use zero-padding for Pooling layers
+- For Pooling layers, it is not common to pad the input using zero-padding.
 
 It is worth noting that there are only two commonly seen variations of the max pooling layer found in practice: A pooling layer with \\(F = 3, S = 2\\) (also called overlapping pooling), and more commonly \\(F = 2, S = 2\\). Pooling sizes with larger receptive fields are too destructive.
 
