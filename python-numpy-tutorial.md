@@ -33,7 +33,7 @@ for the rest of you, this section will serve as a quick crash course both on
 the Python programming language and on the use of Python for scientific
 computing.
 
-Some of you may have previous knowledge in Matlab, in which case we also recommend the [numpy for Matlab users](http://wiki.scipy.org/NumPy_for_Matlab_Users) page.
+Some of you may have previous knowledge in Matlab, in which case we also recommend the [numpy for Matlab users](https://docs.scipy.org/doc/numpy-1.15.0/user/numpy-for-matlab-users.html) page.
 
 You can also find an [IPython notebook version of this tutorial here](https://github.com/kuleshov/cs228-material/blob/master/tutorials/python/cs228-python-tutorial.ipynb) created by [Volodymyr Kuleshov](http://web.stanford.edu/~kuleshov/) and [Isaac Caswell](https://symsys.stanford.edu/viewing/symsysaffiliate/21335) for [CS 228](http://cs.stanford.edu/~ermon/cs228/index.html).
 
@@ -868,7 +868,7 @@ Broadcasting two arrays together follows these rules:
 
 If this explanation does not make sense, try reading the explanation
 [from the documentation](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
-or [this explanation](http://wiki.scipy.org/EricsBroadcastingDoc).
+or [this explanation](https://scipy.github.io/old-wiki/pages/EricsBroadcastingDoc).
 
 Functions that support broadcasting are known as *universal functions*. You can find
 the list of all universal functions
@@ -1032,7 +1032,7 @@ across two sets of points; you can read about it
 In this section give a brief introduction to the `matplotlib.pyplot` module,
 which provides a plotting system similar to that of MATLAB.
 
-<a name='matplotlib-plot'></a>
+<a name='matplotlib-plotting'></a>
 
 ### Plotting
 The most important function in matplotlib is `plot`,
