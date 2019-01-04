@@ -109,7 +109,7 @@ $$
 \begin{align}
 \text{Var}(s) &= \text{Var}(\sum_i^n w_ix_i) \\\\
 &= \sum_i^n \text{Var}(w_ix_i) \\\\
-&= \sum_i^n [E(w_i)]^2\text{Var}(x_i) + E[(x_i)]^2\text{Var}(w_i) + \text{Var}(x_i)\text{Var}(w_i) \\\\
+&= \sum_i^n [E(w_i)]^2\text{Var}(x_i) + [E(x_i)]^2\text{Var}(w_i) + \text{Var}(x_i)\text{Var}(w_i) \\\\
 &= \sum_i^n \text{Var}(x_i)\text{Var}(w_i) \\\\
 &= \left( n \text{Var}(w) \right) \text{Var}(x)
 \end{align}
