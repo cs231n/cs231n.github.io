@@ -16,12 +16,12 @@ As part of this course, you can use Google Cloud for your assignments. We recomm
 ### Working locally
 
 **Installing Anaconda:**
-If you decide to work locally, we recommend using the free [Anaconda Python distribution](https://www.anaconda.com/download/), which provides an easy way for you to handle package dependencies. Please be sure to download the Python 3 version, which currently installs Python 3.6. We are no longer supporting Python 2.
+If you decide to work locally, we recommend using the free [Anaconda Python distribution](https://www.anaconda.com/download/), which provides an easy way for you to handle package dependencies. Please be sure to download the Python 3 version, which currently installs Python 3.7. We are no longer supporting Python 2.
 
 **Anaconda Virtual environment:**
 Once you have Anaconda installed, it makes sense to create a virtual environment for the course. If you choose not to use a virtual environment, it is up to you to make sure that all dependencies for the code are installed globally on your machine. To set up a virtual environment, run (in a terminal)
 
-`conda create -n cs231n python=3.6 anaconda`
+`conda create -n cs231n python=3.7 anaconda`
 
 to create an environment called `cs231n`.
 
