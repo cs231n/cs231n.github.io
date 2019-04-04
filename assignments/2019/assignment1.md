@@ -33,7 +33,7 @@ cd cs231n/datasets
 
 ### Start IPython:
 After you have the CIFAR-10 data, you should start the IPython notebook server from the
-`assignment1` directory, with the `jupyter notebook` command. (See the [Google Cloud Tutorial](http://cs231n.github.io/gce-tutorial/) for any additional steps you may need to do for setting this up, if you are working remotely)
+`assignment1` directory, with the `jupyter notebook` command. (See the [Google Cloud Tutorial](https://github.com/cs231n/gcloud/) for any additional steps you may need to do for setting this up, if you are working remotely)
 
 If you are unfamiliar with IPython, you can also refer to our
 [IPython tutorial](/ipython-tutorial).
