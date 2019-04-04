@@ -18,7 +18,7 @@ In this assignment you will practice putting together a simple image classificat
 
 ## Setup
 
-Get the code as a zip file [here](http://cs231n.github.io/assignments/2018/spring1819_assignment1.zip).
+Get the code as a zip file [here](http://cs231n.github.io/assignments/2019/spring1819_assignment1.zip).
 
 You can follow the setup instructions [here](http://cs231n.github.io/setup-instructions/).
 
