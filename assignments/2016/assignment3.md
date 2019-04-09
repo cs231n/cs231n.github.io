@@ -3,6 +3,7 @@ layout: page
 mathjax: true
 permalink: assignments2016/assignment3/
 ---
+**Note: this is the 2016 version of this assignment.**
 
 In this assignment you will implement recurrent networks, and apply them to image captioning on Microsoft COCO. We will also introduce the TinyImageNet dataset, and use a pretrained model on this dataset to explore different applications of image gradients.
 
