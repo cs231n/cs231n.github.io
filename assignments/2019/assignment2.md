@@ -19,16 +19,17 @@ are as follows:
 - gain experience with a major deep learning framework, such as **TensorFlow** or **PyTorch**.
 
 ## Setup
-Get the code as a zip file [here].
+Get the code as a zip file [here](http://cs231n.github.io/assignments/2019/spring1819_assignment2.zip).
+
 You can follow the setup instructions [here](/setup-instructions).
 
-If you've perform the google cloud setup already for assignment1, you can skip this step and use the virtual machine you created previously. 
+If you performed the google cloud setup already for assignment1, you can skip this step and use the virtual machine you created previously. 
 (However, if you're using your virtual machine from assignment1, you might need to perform additional installation steps for the 5th notebook depending on whether you're using Pytorch or Tensorflow. See below for details.)
 
 ### Some Notes
 **NOTE 1:** This year, the `assignment2` code has been tested to be compatible with python version `3.7` (it may work with other versions of `3.x`, but we won't be officially supporting them). You will need to make sure that during your virtual environment setup that the correct version of `python` is used. You can confirm your python version by (1) activating your virtualenv and (2) running `which python`.
 
-**NOTE 2:** As noted in the setup instructions, we strongly recommend you to do development on Google Cloud, as we have limited support for local machine configurations. 
+**NOTE 2:** As noted in the setup instructions, we recommend you to develop on Google Cloud, and we have limited support for local machine configurations. In particular, for students who wish to develop with Windows machines, we recommend installing a Linux subsystem (preferably Ubuntu) via the [Windows App Store](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to streamline the AFS submission process.
 
 **NOTE 3:** The submission process this year has **2 steps**, requiring you to 1. run a submission script and 2. download/upload an auto-generated pdf (details below.) We suggest **_making a test submission early on_** to make sure you are able to successfully submit your assignment on time (a maximum of 10 successful submissions can be made.)
 
