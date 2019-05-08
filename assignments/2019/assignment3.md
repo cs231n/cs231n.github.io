@@ -58,7 +58,6 @@ In the Jupyter notebooks `StyleTransfer-TensorFlow.ipynb`/`StyleTransfer-PyTorch
 In the Jupyter notebooks `GANS-TensorFlow.ipynb`/`GANS-PyTorch.ipynb` you will learn how to generate images that match a training dataset, and use these models to improve classifier performance when training on a large amount of unlabeled data and a small amount of labeled data. Please complete only one of the notebooks (TensorFlow or PyTorch). No extra credit will be awarded if you complete both notebooks.
 
 ### Submitting your work
-There are **_two_** steps that you must complete to submit your assignment:
 
 **Important:** _Please make sure that the submitted notebooks have been run and saved, and the cell outputs are visible on your pdfs._ In addition, please _do not use the Web AFS interface_ to retrieve your pdfs, and rely on scp directly.
 
