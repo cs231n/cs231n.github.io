@@ -32,7 +32,7 @@ cd cs231n/datasets
 ### Some Notes
 **NOTE 1:** This year, the `assignment3` code has been tested to be compatible with python version `3.7` (it may work with other versions of `3.x`, but we won't be officially supporting them). You will need to make sure that during your virtual environment setup that the correct version of `python` is used. You can confirm your python version by (1) activating your virtualenv and (2) running `which python`.
 
-**NOTE 2: Please make sure that the submitted notebooks have been run and saved, and the cell outputs are visible on your pdfs.** In addition, please _do not use the Web AFS interface_ to retrieve your pdfs, and rely on scp commands directly, as there is a known caching bug that University IT is looking at that causes AFS files to not be properly updated with their most current version.
+**NOTE 2: Please make sure that the submitted notebooks have been run and saved, and the cell outputs are visible on your pdfs.** In addition, please **do not use the Web AFS interface** to retrieve your pdfs, and rely on **scp commands** directly, as there is a known Web AFS caching bug University IT is looking at that causes AFS files to not be properly updated with their most current version.
 
 #### You can do Questions 3, 4, and 5 in TensorFlow or PyTorch. There are two versions of each of these notebooks, one for TensorFlow and one for PyTorch. No extra credit will be awarded if you do a question in both TensorFlow and PyTorch.
 
