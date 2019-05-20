@@ -63,7 +63,7 @@ In the Jupyter notebooks `GANS-TensorFlow.ipynb`/`GANS-PyTorch.ipynb` you will l
 
 There are **_two_** steps to submitting your assignment:
 
-**1.** Run the provided `collectSubmission_*.sh` script in the `assignment2` directory, depending on which version (TensorFlow/PyTorch) you intend to submit.
+**1.** Run the provided `collectSubmission_*.sh` script in the `assignment3` directory, depending on which version (TensorFlow/PyTorch) you intend to submit.
 
 You will be prompted for your SunetID (e.g. `jdoe`) and will need to provide your Stanford password. This script will generate a zip file of your code, submit your source code to Stanford AFS, and generate a pdf `a3.pdf` in a `cs231n-2019-assignment3/` folder in your AFS home directory. 
 
