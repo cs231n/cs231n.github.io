@@ -366,4 +366,4 @@ We now saw one way to take a dataset of images and map each one to class scores 
 
 These readings are optional and contain pointers of interest.
 
-- [Deep Learning using Linear Support Vector Machines](http://arxiv.org/abs/1306.0239) from Charlie Tang 2013 presents some results claiming that the L2SVM outperforms Softmax.
+- [Deep Learning using Linear Support Vector Machines](https://arxiv.org/abs/1306.0239) from Charlie Tang 2013 presents some results claiming that the L2SVM outperforms Softmax.
