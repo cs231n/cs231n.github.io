@@ -111,7 +111,7 @@ We can compute the spatial size of the output volume as a function of the input 
 <div class="fig figcenter fighighlight">
   <img src="/assets/cnn/stride.jpeg">
   <div class="figcaption">
-    Illustration of spatial arrangement. In this example there is only one spatial dimension (x-axis), one neuron with a receptive field size of F = 3, the input size is W = 5, and there is zero padding of P = 1. <b>Left:</b> The neuron strided across the input in stride of S = 1, giving output of size (5 - 3 + 2)/1+1 = 5. <b>Right:</b> The neuron uses stride of S = 2, giving output of size (5 - 3 + 2)/2+1 = 3. Notice that stride S = 3 could not be used since it wouldn't fit neatly across the volume. In terms of the equation, this can be determined since (5 - 3 + 2) = 4 is not divisible by 3. 
+    Illustration of spatial arrangement. In this example there is only one spatial dimension (x-axis), one neuron with a receptive field size of F = 3, the input size is W = 7, and there is zero padding of P = 0. <b>Left:</b> The neuron strided across the input in stride of S = 1, giving output of size (7 - 3 + 0)/1+1 = 5. <b>Right:</b> The neuron uses stride of S = 2, giving output of size (7 - 3 + 0)/2+1 = 3. Notice that stride S = 3 could not be used since it wouldn't fit neatly across the volume. In terms of the equation, this can be determined since (7 - 3 + 0) = 4 is not divisible by 3. 
     <br>The neuron weights are in this example [1,0,-1] (shown on very right), and its bias is zero. These weights are shared across all yellow neurons (see parameter sharing below).
   </div>
 </div>
