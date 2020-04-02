@@ -25,10 +25,21 @@ We strongly recommend using the free [Anaconda Python distribution](https://www.
 Once you have Anaconda installed, it makes sense to create a virtual environment for the course. If you choose not to use a virtual environment (strongly not recommended!), it is up to you to make sure that all dependencies for the code are installed globally on your machine. To set up a virtual environment called `cs231n`, run the following in your terminal:
 
 ```bash
+# this will create an anaconda environment
+# called cs231n in 'path/to/anaconda3/envs/'
 conda create -n cs231n python=3.7
 ```
 
 To activate and enter the environment, run `conda activate cs231n`. To deactivate the environment, either run `conda deactivate cs231n` or exit the terminal. Note that every time you want to work on the assignment, you should rerun `conda activate cs231n`.
+
+```bash
+# sanity check that the path to the python
+# binary matches that of the anaconda env
+# after you activate it
+which python
+# for example, on my machine, this prints
+# $ '/Users/kevin/anaconda3/envs/sci/bin/python'
+```
 
 You may refer to [this page](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) for more detailed instructions on managing virtual environments with Anaconda.
 
@@ -37,16 +48,20 @@ You may refer to [this page](https://docs.conda.io/projects/conda/en/latest/user
 <a name='venv'></a>
 #### Python venv
 
-As of 3.3, Python natively ships with a lightweight virtual environment module called [venv](https://docs.python.org/3/library/venv.html). Each virtual environment packages its own independent set of installed Python packages that are isolated from system-wide Python packages and runs a Python version that matches that of the binary that was used to create it. To set up your `cs231` venv for the course, run the following:
+As of 3.3, Python natively ships with a lightweight virtual environment module called [venv](https://docs.python.org/3/library/venv.html). Each virtual environment packages its own independent set of installed Python packages that are isolated from system-wide Python packages and runs a Python version that matches that of the binary that was used to create it. To set up a virtual environment called `cs231n`, run the following in your terminal:
 
 ```bash
-# create a virtual environment called cs231n
-# that will use version 3.7 of Python
-python3.7 -m venv cs231n
-source cs231n/bin/activate  # activate the virtual env
+# this will create a virtual environment
+# called cs231n in your home directory
+python3.7 -m venv ~/cs231n
+```
 
+To activate and enter the environment, run `source ~/cs231n/bin/activate`. To deactivate the environment, either run `deactivate` or exit the terminal. Note that every time you want to work on the assignment, you should rerun `source ~/cs231n/bin/activate`.
+
+```bash
 # sanity check that the path to the python
-# binary matches that of the virtual env.
+# binary matches that of the virtual env
+# after you activate it
 which python
 # for example, on my machine, this prints
 # $ '/Users/kevin/cs231n/bin/python'
@@ -58,10 +73,13 @@ which python
 Once you've **setup** and **activated** your virtual environment (via `conda` or `venv`), you should install the libraries needed to run the assignments using `pip`. To do so, run:
 
 ```bash
-# again, ensure your virtual env has been activated
-# before running the commands below
+# again, ensure your virtual env (either conda or venv)
+# has been activated before running the commands below
 cd assignment1  # cd to the assignment directory
-pip install -r requirements.txt  # install assignment dependencies
-# work on the assignment for a while ...
-deactivate  # deactivate the virtual env
+
+# install assignment dependencies.
+# since the virtual env is activated,
+# this pip is associated with the
+# python binary of the environment
+pip install -r requirements.txt
 ```
