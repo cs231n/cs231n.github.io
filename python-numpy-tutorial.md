@@ -40,28 +40,30 @@ You can also find an [IPython notebook version of this tutorial here](https://gi
 Table of contents:
 
 - [Python](#python)
-  - [Basic data types](#python-basic)
-  - [Containers](#python-containers)
-      - [Lists](#python-lists)
-      - [Dictionaries](#python-dicts)
-      - [Sets](#python-sets)
-      - [Tuples](#python-tuples)
-  - [Functions](#python-functions)
-  - [Classes](#python-classes)
+  - [Python versions](#python-versions)
+  - [Basic data types](#basic-data-types)
+  - [Containers](#containers)
+    - [Lists](#lists)
+    - [Dictionaries](#dictionaries)
+    - [Sets](#sets)
+    - [Tuples](#tuples)
+  - [Functions](#functions)
+  - [Classes](#classes)
 - [Numpy](#numpy)
-  - [Arrays](#numpy-arrays)
-  - [Array indexing](#numpy-array-indexing)
-  - [Datatypes](#numpy-datatypes)
-  - [Array math](#numpy-math)
-  - [Broadcasting](#numpy-broadcasting)
+  - [Arrays](#arrays)
+  - [Array indexing](#array-indexing)
+  - [Datatypes](#datatypes)
+  - [Array math](#array-math)
+  - [Broadcasting](#broadcasting)
+  - [Numpy Documentation](#numpy-documentation)
 - [SciPy](#scipy)
-  - [Image operations](#scipy-image)
-  - [MATLAB files](#scipy-matlab)
-  - [Distance between points](#scipy-dist)
+  - [Image operations](#image-operations)
+  - [MATLAB files](#matlab-files)
+  - [Distance between points](#distance-between-points)
 - [Matplotlib](#matplotlib)
-  - [Plotting](#matplotlib-plotting)
-  - [Subplots](#matplotlib-subplots)
-  - [Images](#matplotlib-images)
+  - [Plotting](#plotting)
+  - [Subplots](#subplots)
+  - [Images](#images)
 
 <a name='python'></a>
 
@@ -91,7 +93,8 @@ print(quicksort([3,6,8,10,1,2,1]))
 There are currently two different supported versions of Python, 2.7 and 3.5.
 Somewhat confusingly, Python 3.0 introduced many backwards-incompatible changes
 to the language, so code written for 2.7 may not work under 3.5 and vice versa.
-For this class all code will use Python 3.5.
+
+**For this class all code will use Python 3.7**.
 
 You can check your Python version at the command line by running
 `python --version`.
