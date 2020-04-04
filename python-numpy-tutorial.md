@@ -4,30 +4,13 @@ title: Python Numpy Tutorial
 permalink: /python-numpy-tutorial/
 ---
 
-<!--
-Python:
-  Simple data types
-    integer, float, string
-  Compound data types
-    tuple, list, dictionary, set
-  Flow control
-    if, while, for, try, with
-  Comprehensions, generators
-  Functions
-  Classes
-  Standard library
-    json, collections, itertools
-
-Numpy
--->
-
 <div>
   <a href="https://colab.research.google.com/github/cs231n/cs231n.github.io/blob/master/python-colab.ipynb" target="_blank">
     <img class="colab-badge" src="/assets/badges/colab-open.svg" alt="Colab Notebook"/>
   </a>
 </div>
 
-This tutorial was contributed by [Justin Johnson](http://cs.stanford.edu/people/jcjohns/).
+This tutorial was originally contributed by [Justin Johnson](http://cs.stanford.edu/people/jcjohns/).
 
 We will use the Python programming language for all assignments in this course.
 Python is a great general-purpose programming language on its own, but with the
