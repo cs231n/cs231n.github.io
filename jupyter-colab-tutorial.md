@@ -4,22 +4,21 @@ title: Jupyter Notebook / Google Colab Tutorial
 permalink: /jupyter-colab-tutorial/
 ---
 
-To get some extra practice with Python, we'll be running the
-[Python Numpy Tutorial](python-numpy-tutorial.md) as a Jupyter
-notebook or [Google Colaboratory](https://research.google.com).
-
 A Jupyter notebook lets you write and execute
-Python code locally in your web browser. Jupyter notebooks
+Python code *locally* in your web browser. Jupyter notebooks
 make it very easy to tinker with code and execute it in bits
 and pieces; for this reason they are widely used in scientific
 computing.
-Google has released a flavor of Jupyter notebooks called Colaboratory
-that runs entirely in the cloud. Colab is basically Jupyter notebook on
-steroids: it's free, requires no setup, comes preinstalled with many packages,
-is easy to share with the world, and benefits from free access to hardware
-accelerators like GPUs and TPUs (with some caveats).
+Colab on the other hand is Google's flavor of
+Jupyter notebooks that is particularly suited for machine
+learning and data analysis and that runs entirely in the *cloud*.
+Colab is basically Jupyter notebook on steroids: it's free, requires no setup,
+comes preinstalled with many packages, is easy to share with the world,
+and benefits from free access to hardware accelerators like GPUs and TPUs (with some caveats).
 
-If you wish to run this tutorial in Colab, click the `Open in Colab` badge below.
+To get yourself familiar with Python and notebooks, we'll be running
+a short tutorial as a standalone Jupyter or Colab notebook. If you wish
+to use Colab, click the `Open in Colab` badge below.
 
 <div>
   <a href="https://colab.research.google.com/github/cs231n/cs231n.github.io/blob/master/python-colab.ipynb" target="_blank">
@@ -27,7 +26,7 @@ If you wish to run this tutorial in Colab, click the `Open in Colab` badge below
   </a>
 </div>
 
-Otherwise, if you're reading this far, we're assuming you wish to run the notebook locally. If your virtual environment was installed correctly (as per the [setup instructions]({{site.baseurl}}/setup-instructions/)), activate it, then run `pip install notebook` to install Jupyter notebook. Next, [open the notebook](https://raw.githubusercontent.com/cs231n/cs231n.github.io/master/jupyter-notebook-tutorial.ipynb) and download it to a directory of your choice by right-clicking on the page and selecting `Save Page As`. Then `cd` to that directory and run the following in your terminal:
+If you wish to run the notebook locally make sure your virtual environment was installed correctly (as per the [setup instructions]({{site.baseurl}}/setup-instructions/)), activate it, then run `pip install notebook` to install Jupyter notebook. Next, [open the notebook](https://raw.githubusercontent.com/cs231n/cs231n.github.io/master/jupyter-notebook-tutorial.ipynb) and download it to a directory of your choice by right-clicking on the page and selecting `Save Page As`. Then `cd` to that directory and run the following in your terminal:
 
 ```
 jupyter notebook
