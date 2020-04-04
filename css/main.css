@@ -63,6 +63,10 @@ a:visited { color: #205caa; }
   background-color: #f7f6f1;
 }
 
+.colab-badge {
+  border: 0 !important;
+}
+
 /* Custom CSS rules for content */
 
 .embedded-video {

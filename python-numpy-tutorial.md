@@ -21,6 +21,12 @@ Python:
 Numpy
 -->
 
+<div>
+  <a href="https://colab.research.google.com/github/cs231n/cs231n.github.io/blob/master/python-colab.ipynb" target="_blank">
+    <img class="colab-badge" src="/assets/badges/colab-open.svg" alt="Colab Notebook"/>
+  </a>
+</div>
+
 This tutorial was contributed by [Justin Johnson](http://cs.stanford.edu/people/jcjohns/).
 
 We will use the Python programming language for all assignments in this course.
@@ -34,8 +40,6 @@ the Python programming language and on the use of Python for scientific
 computing.
 
 Some of you may have previous knowledge in Matlab, in which case we also recommend the [numpy for Matlab users](http://wiki.scipy.org/NumPy_for_Matlab_Users) page.
-
-You can also find an [IPython notebook version of this tutorial here](https://github.com/kuleshov/cs228-material/blob/master/tutorials/python/cs228-python-tutorial.ipynb) created by [Volodymyr Kuleshov](http://web.stanford.edu/~kuleshov/) and [Isaac Caswell](https://symsys.stanford.edu/viewing/symsysaffiliate/21335) for [CS 228](http://cs.stanford.edu/~ermon/cs228/index.html).
 
 Table of contents:
 
@@ -90,14 +94,11 @@ print(quicksort([3,6,8,10,1,2,1]))
 ```
 
 ### Python versions
-There are currently two different supported versions of Python, 2.7 and 3.5.
-Somewhat confusingly, Python 3.0 introduced many backwards-incompatible changes
-to the language, so code written for 2.7 may not work under 3.5 and vice versa.
-
-**For this class all code will use Python 3.7**.
-
-You can check your Python version at the command line by running
-`python --version`.
+As of Janurary 1, 2020, Python has [officially dropped support](https://www.python.org/doc/sunset-python-2/) for `python2`.
+**For this class all code will use Python 3.7**. Ensure you have gone through the [setup instructions](setup.md)
+and correctly installed a `python3` virtual environment before proceeding with this tutorial.
+You can double-check your Python version at the command line after activating your environment
+by running `python --version`.
 
 <a name='python-basic'></a>
 
