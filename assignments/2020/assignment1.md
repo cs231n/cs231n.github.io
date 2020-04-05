@@ -10,7 +10,7 @@ This assignment is due on **Wednesday, April 22 2020**.
 <details>
 <summary>Handy Download Links</summary>
 
-<p><a href="">Starter code</a> - <a href="">Colab notebooks</a> - <a href="">Jupyter notebooks</a></p>
+<p><a href="">Starter code</a></p>
 </details>
 
 - [Goals](#goals)
