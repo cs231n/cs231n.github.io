@@ -10,7 +10,10 @@ This assignment is due on **Wednesday, April 22 2020**.
 <details>
 <summary>Handy Download Links</summary>
 
-<p><a href="">Starter code</a></p>
+ <ul>
+  <li><a href="">Option A: Colab starter code</a></li>
+  <li><a href="">Option B: Jupyter starter code</a></li>
+</ul>
 </details>
 
 - [Goals](#goals)
@@ -44,26 +47,28 @@ You can work on the assignment in one of two ways: **remotely** on Google Colabo
 
 **Regardless of the method chosen, ensure you have followed the [setup instructions](/setup-instructions) before proceeding.**
 
-For both methods, you will need to download the starter zip code [here]().
-
 #### Option A: Google Colaboratory (Recommended)
 
-If you choose to work with Google Colab, follow the instructions below:
+**Download.** Starter code containing Colab notebooks can be downloaded [here]().
 
-0. Unzip the starter code zip file. You should see an `assignment1` folder.
-1. Create a folder in your personal Google Drive and upload the `assignment1/cs231n` folder to the Drive folder. We recommend that you call the Google Drive folder `cs231n/assignments/assignment1/` so that the final uploaded folder has the path `cs231n/assignments/assignment1/cs231n`.
-2. The colab notebooks in `assignment1` are the files that end with `_colab.ipynb`. Each Colab notebook corresponds to an assignment question. For each notebook, visit [Google Colab](https://colab.research.google.com/) and upload it using the `Upload -> Browse` menu.
-3. Once you upload the notebook, you will be connected you to a Colab VM. You can mount your Google Drive and access your uploaded
+If you choose to work with Google Colab, you can follow the instructions below or watch the tutorial video.
+
+<iframe style="display: block; margin: auto;" width="560" height="315" src="https://www.youtube.com/embed/qvwYtun1uhQ" frameborder="0" allowfullscreen></iframe>
+
+1. Unzip the starter code zip file. You should see an `assignment1` folder.
+2. Create a folder in your personal Google Drive and upload `assignment1/` folder to the Drive folder. We recommend that you call the Google Drive folder `cs231n/assignments/` so that the final uploaded folder has the path `cs231n/assignments/assignment1/`.
+3. Each Colab notebook (i.e. files ending in `.ipynb`) corresponds to an assignment question. In Google Drive, double click on the notebook and select the option to open with `Colab`.
+4. You will be connected to a Colab VM. You can mount your Google Drive and access your uploaded
 files by executing the first cell in the notebook. It will prompt you for an authorization code which you can obtain
 from a popup window. The code cell will also automatically download the CIFAR-10 dataset for you.
-4. Once you have completed the assignment question (i.e. reached the end of the notebook), you can save your edited files back to your Drive and move on to the next question. For your convenience, we also provide you with a code cell (the very last one) that automatically saves the modified files for that question back to your Drive.
-6. Repeat steps 2-4 for each remaining notebook.
+5. Once you have completed the assignment question (i.e. reached the end of the notebook), you can save your edited files back to your Drive and move on to the next question. For your convenience, we also provide you with a code cell (the very last one) that automatically saves the modified files for that question back to your Drive.
+6. Repeat steps 3-5 for each remaining notebook.
 
-Once you are done, go to the [submission instructions](#submitting-your-work).
+Once you have completed all Colab notebooks, redownload your Google Drive `assignment1` folder locally to your computer and proceed to the [submission instructions](#submitting-your-work).
 
 #### Option B: Local Development
 
-If you choose to work locally with Jupyter notebooks, you'll be working with the `.ipynb` files that **do not** end with `_colab`.
+**Download.** Starter code containing jupyter notebooks can be downloaded [here]().
 
 **Install Packages**. Once you have the starter code, activate your environment (the one you installed in the [Software Setup]({{site.baseurl}}/setup-instructions/) page) and run `pip install -r requirements.txt`.
 
