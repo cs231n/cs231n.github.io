@@ -1,20 +1,42 @@
 ---
 layout: page
-title: Setup Instructions
+title: Software Setup
 permalink: /setup-instructions/
 ---
-- [Working remotely on Google Cloud](#working-remotely-on-google-cloud)
+
+This year, the recommended way to work on assignments is through [Google Colaboratory](https://colab.research.google.com/). However, if you already own GPU-backed hardware and would prefer to work locally, we provide you with instructions for setting up a virtual environment.
+
+- [Working remotely on Google Colaboratory](#working-remotely-on-google-colaboratory)
 - [Working locally on your machine](#working-locally-on-your-machine)
   - [Anaconda virtual environment](#anaconda-virtual-environment)
   - [Python venv](#python-venv)
   - [Installing packages](#installing-packages)
 
-You can work on the assignment in one of two ways: **locally** on your own machine, or **remotely** on a Google Cloud virtual machine (VM).
+### Working remotely on Google Colaboratory
 
-### Working remotely on Google Cloud
-As part of this course, you can use Google Cloud for your assignments. We recommend this route for anyone who is having trouble with installation set-up, or if you would like to use better CPU/GPU resources than you may have locally. Please see the set-up tutorial [here](https://github.com/cs231n/gcloud/) for more details.
+Google Colaboratory is basically a combination of Jupyter notebook and Google Drive. It runs entirely in the cloud and comes
+preinstalled with many packages (e.g. PyTorch and Tensorflow) so everyone has access to the same
+dependencies. Even cooler is the fact that Colab benefits from free access to hardware accelerators
+like GPUs and TPUs which will be particularly useful for assignments 2 and 3.
 
-**Note:** after following these instructions, you may skip the remaining sections.
+**Requirements**. To use Colab, you must have a Google account with an associated Google Drive. Assuming you have both, you can connect Colab to your Drive with the following steps:
+
+1. Click the wheel in the top right corner and select `Settings`.
+2. Click on the `Manage Apps` tab.
+3. At the top, select `Connect more apps` which should bring up a `GSuite Marketplace` window.
+4. Search for Colab then click `Add`.
+
+Every assignment provides you with a download link to a zip file containing all Colab notebooks for that particular assignment. You can visit [Colab](https://colab.research.google.com/) and use the `Upload` pane to upload and work on a specific notebook at a time.
+
+**Best Practices**. There are a few things you should be aware of when working with Colab. The first thing you should do when a Colab notebook loads is to save a copy to your drive. You can do this by selecting `File -> Save a copy in Drive`. The second thing to note is that resource limits aren't guaranteed in Colab (the price for being free). If you are idle for too long or your connection time exceeds 12 hours, the Colab VM is disconnected. Make sure you save your progress frequently to prevent loss of work. To read more about resource limitations, click [here](https://research.google.com/colaboratory/faq.html).
+
+**Using a GPU**. Using a GPU is as simple as switching the runtime in Colab. Specifically, click `Runtime -> Change runtime type -> Hardware Accelerator -> GPU` and your Colab instance will automatically be backed by GPU compute.
+
+If you're interested in learning more about Colab, we encourage you to visit the resources below:
+
+* [Intro to Google Colab](https://www.youtube.com/watch?v=inN8seMm7UI)
+* [Welcome to Colab](https://colab.research.google.com/notebooks/intro.ipynb)
+* [Overview of Colab Features](https://colab.research.google.com/notebooks/basic_features_overview.ipynb)
 
 ### Working locally on your machine
 If you wish to work locally, you should use a virtual environment. You can install one via Anaconda (recommended) or via Python's native `venv` module. Ensure you are using Python 3.7 as **we are no longer supporting Python 2**.

@@ -22,7 +22,7 @@ for the rest of you, this section will serve as a quick crash course on both
 the Python programming language and its use for scientific
 computing. We'll also introduce notebooks, which are a very convenient way
 of tinkering with Python code. Some of you may have previous knowledge in Matlab,
-in which case we also recommend the [numpy for Matlab users](http://wiki.scipy.org/NumPy_for_Matlab_Users)
+in which case we also recommend the [numpy for Matlab users](https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html)
 page.
 
 
@@ -57,6 +57,7 @@ page.
 
 ## Jupyter and Colab Notebooks
 
+Before we dive into Python, we'd like to briefly talk about *notebooks*.
 A Jupyter notebook lets you write and execute
 Python code *locally* in your web browser. Jupyter notebooks
 make it very easy to tinker with code and execute it in bits

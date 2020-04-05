@@ -5,7 +5,7 @@ description: "Course materials and notes for Stanford class CS231n: Convolutiona
 baseurl: ""
 url: "http://cs231n.github.io"
 twitter_username: cs231n
-github_username:  cs231n
+github_username: cs231n
 
 # Build settings
 markdown: kramdown
@@ -16,4 +16,3 @@ kramdown:
   input: GFM
   auto_ids: true
   syntax_highlighter: rouge
-
