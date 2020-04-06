@@ -887,7 +887,7 @@ Broadcasting two arrays together follows these rules:
 
 If this explanation does not make sense, try reading the explanation
 [from the documentation](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
-or [this explanation](http://wiki.scipy.org/EricsBroadcastingDoc).
+or [this explanation](http://scipy.github.io/old-wiki/pages/EricsBroadcastingDoc).
 
 Functions that support broadcasting are known as *universal functions*. You can find
 the list of all universal functions
