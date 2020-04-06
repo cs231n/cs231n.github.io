@@ -64,7 +64,7 @@ from a popup window. The code cell will also automatically download the CIFAR-10
 5. Once you have completed the assignment question (i.e. reached the end of the notebook), you can save your edited files back to your Drive and move on to the next question. For your convenience, we also provide you with a code cell (the very last one) that automatically saves the modified files for that question back to your Drive.
 6. Repeat steps 3-5 for each remaining notebook.
 
-Once you have completed all Colab notebooks, redownload your Google Drive `assignment1` folder locally to your computer and proceed to the [submission instructions](#submitting-your-work).
+Once you have completed all Colab notebooks **except `collect_submission.ipynb`**, proceed to the [submission instructions](#submitting-your-work).
 
 #### Option B: Local Development
 
@@ -110,18 +110,21 @@ as opposed to using raw pixel values.
 
 Once you have completed all notebooks and filled out the necessary code, there are **_two_** steps you must follow to submit your assignment:
 
-**1.** Run the provided submission script in `assignment1` by executing `bash collectSubmission.sh`.
+**1.** If you selected Option A and worked on the assignment in Colab, open `collect_submission.ipynb` in Colab and execute the notebook cells. If you selected Option B and worked on the assignment locally, run the bash script in `assignment1` by executing `bash collectSubmission.sh`.
 
-This script will:
+This notebook/script will:
 
 * Generate a zip file of your code (`.py` and `.ipynb`) called `a1.zip`.
-* Convert all notebooks into a single PDF file if `PyPDF2` is installed. If `PyPDF2` cannot be found,
+* Convert all notebooks into a single PDF file.
+
+**Note for Option B users**. Ensure you `pip install PyPDF2` before executing the bash script to minimize your workload. If it cannot be found,
   it will generate a separate PDF file for every notebook and it will be your responsibility to concatenate
-  them all together with your favorite viewer/editor. Thus, make sure you `pip install PyPDF2`
-  to minimize your submission workload.
+  them all together with your favorite viewer/editor.
 
 If your submission for this step was successful, you should see the following display message:
 
 `### Done! Please submit a1.zip and the pdfs to Gradescope. ###`
 
 **2.** Submit the PDF and the zip file to [Gradescope](https://www.gradescope.com/courses/103764).
+
+**Note for Option A users**. Remember to download `a1.zip` and `assignment.pdf` locally before submitting to Gradescope.
