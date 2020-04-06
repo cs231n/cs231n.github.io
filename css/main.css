@@ -123,27 +123,54 @@ a:visited { color: #205caa; }
 
 /* Site header */
 
-.title-wrap {
-  text-align: center;
-}
-
 .site-header {
   border-bottom: 1px solid #e8e8e8;
   min-height: 56px;
   background-color: #8C1515;
+  padding: 10px 10px;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
 }
 
 .site-title,
 .site-title:hover,
 .site-title:visited {
-  display: block;
+  flex: 3 3 800px;
+  margin: 0 auto;
+  text-align: center;
   font-size: 26px;
+  line-height: 1.2em;
   letter-spacing: -1px;
-  line-height: 56px;
-  position: relative;
-  z-index: 1;
   color: #FFF;
   font-weight: 100;
+}
+
+.site-header::before,
+.site-link:link,
+.site-link:hover,
+.site-link:visited {
+  flex: 1 1 0px;
+  text-align: center;
+  white-space: nowrap;
+  margin: 10px;
+  font-size: 18px;
+  line-height: 2em;
+  padding: 0 10px;
+  color: #fff;
+  border: 2px solid #fff;
+  font-weight: 50;
+}
+
+.site-header::before {
+  /* Pseudo-element for centering */
+  /* Should maintain ~the same width as .site-link */
+  content: "flexbox-dummy";
+  visibility: hidden;
+  height: 0;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .site-nav {
