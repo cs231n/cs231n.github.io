@@ -64,6 +64,8 @@ from a popup window. The code cell will also automatically download the CIFAR-10
 5. Once you have completed the assignment question (i.e. reached the end of the notebook), you can save your edited files back to your Drive and move on to the next question. For your convenience, we also provide you with a code cell (the very last one) that automatically saves the modified files for that question back to your Drive.
 6. Repeat steps 3-5 for each remaining notebook.
 
+**Important:** Please make sure that you work on the Colab notebooks in the order of the questions (see below). Specifically, you should work on kNN first, then SVM, the Softmax, then Two-layer Net and finally on Image Features. The reason is that the code cells that get executed *at the end* of the notebooks save the modified files back to your drive and some notebooks may require code from previous notebook.
+
 Once you have completed all Colab notebooks **except `collect_submission.ipynb`**, proceed to the [submission instructions](#submitting-your-work).
 
 #### Option B: Local Development

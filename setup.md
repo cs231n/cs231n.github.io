@@ -17,14 +17,14 @@ This year, the recommended way to work on assignments is through [Google Colabor
 Google Colaboratory is basically a combination of Jupyter notebook and Google Drive. It runs entirely in the cloud and comes
 preinstalled with many packages (e.g. PyTorch and Tensorflow) so everyone has access to the same
 dependencies. Even cooler is the fact that Colab benefits from free access to hardware accelerators
-like GPUs and TPUs which will be particularly useful for assignments 2 and 3.
+like GPUs (K80, P100) and TPUs which will be particularly useful for assignments 2 and 3.
 
 **Requirements**. To use Colab, you must have a Google account with an associated Google Drive. Assuming you have both, you can connect Colab to your Drive with the following steps:
 
 1. Click the wheel in the top right corner and select `Settings`.
 2. Click on the `Manage Apps` tab.
 3. At the top, select `Connect more apps` which should bring up a `GSuite Marketplace` window.
-4. Search for Colab then click `Add`.
+4. Search for **Colab** then click `Add`.
 
 Every assignment provides you with a download link to a zip file containing all Colab notebooks for that particular assignment. You can visit [Colab](https://colab.research.google.com/) and use the `Upload` pane to upload and work on a specific notebook at a time.
 
