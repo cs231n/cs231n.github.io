@@ -51,9 +51,9 @@ You can work on the assignment in one of two ways: **remotely** on Google Colabo
 
 **Download.** Starter code containing Colab notebooks can be downloaded [here]().
 
-If you choose to work with Google Colab, you can follow the instructions below or watch the tutorial video.
-
 <iframe style="display: block; margin: auto;" width="560" height="315" src="https://www.youtube.com/embed/qvwYtun1uhQ" frameborder="0" allowfullscreen></iframe>
+
+If you choose to work with Google Colab, please watch the workflow tutorial above or read the instructions below.
 
 1. Unzip the starter code zip file. You should see an `assignment1` folder.
 2. Create a folder in your personal Google Drive and upload `assignment1/` folder to the Drive folder. We recommend that you call the Google Drive folder `cs231n/assignments/` so that the final uploaded folder has the path `cs231n/assignments/assignment1/`.

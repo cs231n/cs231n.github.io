@@ -6,14 +6,13 @@ permalink: /classification/
 
 This is an introductory lecture designed to introduce people from outside of Computer Vision to the Image Classification problem, and the data-driven approach. The Table of Contents:
 
-- [Intro to Image Classification, data-driven approach, pipeline](#intro)
-- [Nearest Neighbor Classifier](#nn)
-  - [k-Nearest Neighbor](#knn)
-- [Validation sets, Cross-validation, hyperparameter tuning](#val)
-- [Pros/Cons of Nearest Neighbor](#procon)
-- [Summary](#summary)
-- [Summary: Applying kNN in practice](#summaryapply)
-- [Further Reading](#reading)
+- [Image Classification](#image-classification)
+  - [Nearest Neighbor Classifier](#nearest-neighbor-classifier)
+  - [k - Nearest Neighbor Classifier](#k---nearest-neighbor-classifier)
+  - [Validation sets for Hyperparameter tuning](#validation-sets-for-hyperparameter-tuning)
+  - [Summary](#summary)
+  - [Summary: Applying kNN in practice](#summary-applying-knn-in-practice)
+    - [Further Reading](#further-reading)
 
 <a name='intro'></a>
 
@@ -61,7 +60,7 @@ A good image classification model must be invariant to the cross product of all 
 <a name='nn'></a>
 
 ### Nearest Neighbor Classifier
-As our first approach, we will develop what we call a **Nearest Neighbor Classifier**. This classifier has nothing to do with Convolutional Neural Networks and it is very rarely used in practice, but it will allow us to get an idea about the basic approach to an image classification problem. 
+As our first approach, we will develop what we call a **Nearest Neighbor Classifier**. This classifier has nothing to do with Convolutional Neural Networks and it is very rarely used in practice, but it will allow us to get an idea about the basic approach to an image classification problem.
 
 **Example image classification dataset: CIFAR-10.** One popular toy image classification dataset is the <a href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10 dataset</a>. This dataset consists of 60,000 tiny images that are 32 pixels high and wide. Each image is labeled with one of 10 classes (for example *"airplane, automobile, bird, etc"*). These 60,000 images are partitioned into a training set of 50,000 images and a test set of 10,000 images. In the image below you can see 10 random example images from each one of the 10 classes:
 
@@ -139,7 +138,7 @@ class NearestNeighbor(object):
 
 If you ran this code, you would see that this classifier only achieves **38.6%** on CIFAR-10. That's more impressive than guessing at random (which would give 10% accuracy since there are 10 classes), but nowhere near human performance (which is [estimated at about 94%](https://karpathy.github.io/2011/04/27/manually-classifying-cifar10/)) or near state-of-the-art Convolutional Neural Networks that achieve about 95%, matching human accuracy (see the [leaderboard](https://www.kaggle.com/c/cifar-10/leaderboard) of a recent Kaggle competition on CIFAR-10).
 
-**The choice of distance.** 
+**The choice of distance.**
 There are many other ways of computing distances between vectors. Another common choice could be to instead use the **L2 distance**, which has the geometric interpretation of computing the euclidean distance between two vectors. The distance takes the form:
 
 $$
@@ -194,7 +193,7 @@ Ytr = Ytr[1000:]
 # find hyperparameters that work best on the validation set
 validation_accuracies = []
 for k in [1, 3, 5, 10, 20, 50, 100]:
-  
+
   # use a particular value of k and evaluation on validation data
   nn = NearestNeighbor()
   nn.train(Xtr_rows, Ytr)
@@ -263,7 +262,7 @@ In summary:
 -  We saw that the correct way to set these hyperparameters is to split your training data into two: a training set and a fake test set, which we call **validation set**. We try different hyperparameter values and keep the values that lead to the best performance on the validation set.
 - If the lack of training data is a concern, we discussed a procedure called **cross-validation**, which can help reduce noise in estimating which hyperparameters work best.
 - Once the best hyperparameters are found, we fix them and perform a single **evaluation** on the actual test set.
-- We saw that Nearest Neighbor can get us about 40% accuracy on CIFAR-10. It is simple to implement but requires us to store the entire training set and it is expensive to evaluate on a test image. 
+- We saw that Nearest Neighbor can get us about 40% accuracy on CIFAR-10. It is simple to implement but requires us to store the entire training set and it is expensive to evaluate on a test image.
 - Finally, we saw that the use of L1 or L2 distances on raw pixel values is not adequate since the distances correlate more strongly with backgrounds and color distributions of images than with their semantic content.
 
 In next lectures we will embark on addressing these challenges and eventually arrive at solutions that give 90% accuracies, allow us to completely discard the training set once learning is complete, and they will allow us to evaluate a test image in less than a millisecond.
@@ -275,7 +274,7 @@ In next lectures we will embark on addressing these challenges and eventually ar
 If you wish to apply kNN in practice (hopefully not on images, or perhaps as only a baseline) proceed as follows:
 
 1. Preprocess your data: Normalize the features in your data (e.g. one pixel in images) to have zero mean and unit variance. We will cover this in more detail in later sections, and chose not to cover data normalization in this section because pixels in images are usually homogeneous and do not exhibit widely different distributions, alleviating the need for data normalization.
-2. If your data is very high-dimensional, consider using a dimensionality reduction technique such as PCA ([wiki ref](https://en.wikipedia.org/wiki/Principal_component_analysis), [CS229ref](http://cs229.stanford.edu/notes/cs229-notes10.pdf), [blog ref](https://web.archive.org/web/20150503165118/http://www.bigdataexaminer.com:80/understanding-dimensionality-reduction-principal-component-analysis-and-singular-value-decomposition/)) or even [Random Projections](https://scikit-learn.org/stable/modules/random_projection.html).
+2. If your data is very high-dimensional, consider using a dimensionality reduction technique such as PCA ([wiki ref](https://en.wikipedia.org/wiki/Principal_component_analysis), [CS229ref](http://cs229.stanford.edu/notes/cs229-notes10.pdf), [blog ref](https://web.archive.org/web/20150503165118/http://www.bigdataexaminer.com:80/understanding-dimensionality-reduction-principal-component-analysis-and-singular-value-decomposition/)), NCA ([wiki ref](https://en.wikipedia.org/wiki/Neighbourhood_components_analysis), [blog ref](https://kevinzakka.github.io/2020/02/10/nca/)), or even [Random Projections](https://scikit-learn.org/stable/modules/random_projection.html).
 3. Split your training data randomly into train/val splits. As a rule of thumb, between 70-90% of your data usually goes to the train split. This setting depends on how many hyperparameters you have and how much of an influence you expect them to have. If there are many hyperparameters to estimate, you should err on the side of having larger validation set to estimate them effectively. If you are concerned about the size of your validation data, it is best to split the training data into folds and perform cross-validation. If you can afford the computational budget it is always safer to go with cross-validation (the more folds the better, but more expensive).
 4. Train and evaluate the kNN classifier on the validation data (for all folds, if doing cross-validation) for many choices of **k** (e.g. the more the better) and across different distance types (L1 and L2 are good candidates)
 5. If your kNN classifier is running too long, consider using an Approximate Nearest Neighbor library (e.g. [FLANN](https://github.com/mariusmuja/flann)) to accelerate the retrieval (at cost of some accuracy).
