@@ -3,7 +3,7 @@ title: CS231n Convolutional Neural Networks for Visual Recognition
 email: karpathy@cs.stanford.edu
 description: "Course materials and notes for Stanford class CS231n: Convolutional Neural Networks for Visual Recognition."
 baseurl: ""
-url: "http://cs231n.github.io"
+url: "https://cs231n.github.io"
 courseurl: "http://cs231n.stanford.edu/"
 twitter_username: cs231n
 github_username: cs231n
@@ -17,3 +17,7 @@ kramdown:
   input: GFM
   auto_ids: true
   syntax_highlighter: rouge
+
+# links to homeworks
+hw_1_jupyter: https://cs231n.github.io/assignments/2020/assignment1_jupyter.zip
+hw_1_colab: https://cs231n.github.io/assignments/2020/assignment1_colab.zip

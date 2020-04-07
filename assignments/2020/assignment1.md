@@ -11,8 +11,8 @@ This assignment is due on **Wednesday, April 22 2020**.
 <summary>Handy Download Links</summary>
 
  <ul>
-  <li><a href="">Option A: Colab starter code</a></li>
-  <li><a href="">Option B: Jupyter starter code</a></li>
+  <li><a href="{{ site.hw_1_colab }}">Option A: Colab starter code</a></li>
+  <li><a href="{{ site.hw_1_jupyter }}">Option B: Jupyter starter code</a></li>
 </ul>
 </details>
 
@@ -49,7 +49,7 @@ You can work on the assignment in one of two ways: **remotely** on Google Colabo
 
 #### Option A: Google Colaboratory (Recommended)
 
-**Download.** Starter code containing Colab notebooks can be downloaded [here]().
+**Download.** Starter code containing Colab notebooks can be downloaded [here]({{site.hw_1_colab}}).
 
 <iframe style="display: block; margin: auto;" width="560" height="315" src="https://www.youtube.com/embed/qvwYtun1uhQ" frameborder="0" allowfullscreen></iframe>
 
@@ -70,7 +70,7 @@ Once you have completed all Colab notebooks **except `collect_submission.ipynb`*
 
 #### Option B: Local Development
 
-**Download.** Starter code containing jupyter notebooks can be downloaded [here]().
+**Download.** Starter code containing jupyter notebooks can be downloaded [here]({{site.hw_1_jupyter}}).
 
 **Install Packages**. Once you have the starter code, activate your environment (the one you installed in the [Software Setup]({{site.baseurl}}/setup-instructions/) page) and run `pip install -r requirements.txt`.
 
