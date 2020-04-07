@@ -151,7 +151,7 @@ a:visited { color: #205caa; }
 .site-link:link,
 .site-link:hover,
 .site-link:visited {
-  flex: 1 1 0px;
+  /* flex: 1 1 0px; */
   text-align: center;
   white-space: nowrap;
   margin: 10px;
