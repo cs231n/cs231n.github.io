@@ -26,9 +26,11 @@ like GPUs (K80, P100) and TPUs which will be particularly useful for assignments
 3. At the top, select `Connect more apps` which should bring up a `GSuite Marketplace` window.
 4. Search for **Colab** then click `Add`.
 
-Every assignment provides you with a download link to a zip file containing all Colab notebooks for that particular assignment. You can visit [Colab](https://colab.research.google.com/) and use the `Upload` pane to upload and work on a specific notebook at a time.
+**Workflow**. Every assignment provides you with a download link to a zip file containing Colab notebooks and Python starter code. You can upload the folder to Drive, open the notebooks in Colab and work on them, then save your progress back to Drive. We encourage you to watch the tutorial video below which covers the recommended workflow for assignment 1.
 
-**Best Practices**. There are a few things you should be aware of when working with Colab. The first thing you should do when a Colab notebook loads is to save a copy to your drive. You can do this by selecting `File -> Save a copy in Drive`. The second thing to note is that resource limits aren't guaranteed in Colab (the price for being free). If you are idle for too long or your connection time exceeds 12 hours, the Colab VM is disconnected. Make sure you save your progress frequently to prevent loss of work. To read more about resource limitations, click [here](https://research.google.com/colaboratory/faq.html).
+<iframe style="display: block; margin: auto;" width="560" height="315" src="https://www.youtube.com/embed/qvwYtun1uhQ" frameborder="0" allowfullscreen></iframe>
+
+**Best Practices**. There are a few things you should be aware of when working with Colab. The first thing to note is that resource limits aren't guaranteed (this is the price for being free). If you are idle for a certain amount of time or your total connection time exceeds the maximum allowed time (~12 hours), the Colab VM will disconnect. This means any unsaved progress will be lost. <font color="red"><strong>Thus, get into the habit of frequently saving your code whilst working on assignments.</strong></font> To read more about resource limitations in Colab, read their FAQ [here](https://research.google.com/colaboratory/faq.html).
 
 **Using a GPU**. Using a GPU is as simple as switching the runtime in Colab. Specifically, click `Runtime -> Change runtime type -> Hardware Accelerator -> GPU` and your Colab instance will automatically be backed by GPU compute.
 
