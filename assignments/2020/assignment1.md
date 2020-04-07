@@ -119,9 +119,7 @@ This notebook/script will:
 * Generate a zip file of your code (`.py` and `.ipynb`) called `a1.zip`.
 * Convert all notebooks into a single PDF file.
 
-**Note for Option B users**. Ensure you `pip install PyPDF2` before executing the bash script to minimize your workload. If it cannot be found,
-  it will generate a separate PDF file for every notebook and it will be your responsibility to concatenate
-  them all together with your favorite viewer/editor.
+**Note for Option B users**. You must have (a) `nbconvert` installed with Pandoc and Tex support and (b) `PyPDF2` installed to successfully convert your notebooks to a PDF file. Please follow these [installation instructions](https://nbconvert.readthedocs.io/en/latest/install.html#installing-nbconvert) to install (a) and run `pip install PyPDF2` to install (b). If you are, for some inexplicable reason, unable to successfully install the above dependencies, you can manually convert each jupyter notebook to HTML (`File -> Download as -> HTML (.html)`), save the HTML page as a PDF, then concatenate all the PDFs into a single PDF submission using your favorite PDF viewer.
 
 If your submission for this step was successful, you should see the following display message:
 
