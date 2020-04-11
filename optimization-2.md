@@ -19,11 +19,11 @@ Table of Contents:
 
 ### Introduction
 
-**Motivation**. In this section we will develop expertise with an intuitive understanding of **backpropagation**, which is a way of computing gradients of expressions through recursive application of **chain rule**. Understanding of this process and its subtleties is critical for you to understand, and effectively develop, design and debug Neural Networks.
+**Motivation**. In this section we will develop expertise with an intuitive understanding of **backpropagation**, which is a way of computing gradients of expressions through recursive application of **chain rule**. Understanding of this process and its subtleties is critical for you to understand, and effectively develop, design and debug neural networks.
 
 **Problem statement**. The core problem studied in this section is as follows: We are given some function \\(f(x)\\) where \\(x\\) is a vector of inputs and we are interested in computing the gradient of \\(f\\) at \\(x\\) (i.e. \\(\nabla f(x)\\) ).
 
-**Motivation**. Recall that the primary reason we are interested in this problem is that in the specific case of Neural Networks, \\(f\\) will correspond to the loss function ( \\(L\\) ) and the inputs \\(x\\) will consist of the training data and the neural network weights. For example, the loss could be the SVM loss function and the inputs are both the training data \\((x_i,y_i), i=1 \ldots N\\) and the weights and biases \\(W,b\\). Note that (as is usually the case in Machine Learning) we think of the training data as given and fixed, and of the weights as variables we have control over. Hence, even though we can easily use backpropagation to compute the gradient on the input examples \\(x_i\\), in practice we usually only compute the gradient for the parameters (e.g. \\(W,b\\)) so that we can use it to perform a parameter update. However, as we will see later in the class the gradient on \\(x_i\\) can still be useful sometimes, for example for purposes of visualization and interpreting what the Neural Network might be doing.
+**Motivation**. Recall that the primary reason we are interested in this problem is that in the specific case of neural networks, \\(f\\) will correspond to the loss function ( \\(L\\) ) and the inputs \\(x\\) will consist of the training data and the neural network weights. For example, the loss could be the SVM loss function and the inputs are both the training data \\((x_i,y_i), i=1 \ldots N\\) and the weights and biases \\(W,b\\). Note that (as is usually the case in Machine Learning) we think of the training data as given and fixed, and of the weights as variables we have control over. Hence, even though we can easily use backpropagation to compute the gradient on the input examples \\(x_i\\), in practice we usually only compute the gradient for the parameters (e.g. \\(W,b\\)) so that we can use it to perform a parameter update. However, as we will see later in the class the gradient on \\(x_i\\) can still be useful sometimes, for example for purposes of visualization and interpreting what the Neural Network might be doing.
 
 If you are coming to this class and you're comfortable with deriving gradients with chain rule, we would still like to encourage you to at least skim this section, since it presents a rarely developed view of backpropagation as backward flow in real-valued circuits and any insights you'll gain may help you throughout the class.
 
@@ -87,7 +87,7 @@ dfdx = 1.0 * dfdq # dq/dx = 1. And the multiplication here is the chain rule!
 dfdy = 1.0 * dfdq # dq/dy = 1
 ```
 
-At the end we are left with the gradient in the variables `[dfdx,dfdy,dfdz]`, which tell us the sensitivity of the variables `x,y,z` on `f`!. This is the simplest example of backpropagation. Going forward, we will want to use a more concise notation so that we don't have to keep writing the `df` part. That is, for example instead of `dfdq` we would simply write `dq`, and always assume that the gradient is with respect to the final output.
+We are left with the gradient in the variables `[dfdx,dfdy,dfdz]`, which tell us the sensitivity of the variables `x,y,z` on `f`!. This is the simplest example of backpropagation. Going forward, we will use a more concise notation that omits the `df` prefix. For example, we will simply write `dq` instead of `dfdq`, and always assume that the gradient is computed on the final output.
 
 This computation can also be nicely visualized with a circuit diagram:
 
@@ -104,7 +104,7 @@ This computation can also be nicely visualized with a circuit diagram:
 
 ### Intuitive understanding of backpropagation
 
-Notice that backpropagation is a beautifully local process. Every gate in a circuit diagram gets some inputs and can right away compute two things: 1. its output value and 2. the *local* gradient of its inputs with respect to its output value. Notice that the gates can do this completely independently without being aware of any of the details of the full circuit that they are embedded in. However, once the forward pass is over, during backpropagation the gate will eventually learn about the gradient of its output value on the final output of the entire circuit. Chain rule says that the gate should take that gradient and multiply it into every gradient it normally computes for all of its inputs.
+Notice that backpropagation is a beautifully local process. Every gate in a circuit diagram gets some inputs and can right away compute two things: 1. its output value and 2. the *local* gradient of its output with respect to its inputs. Notice that the gates can do this completely independently without being aware of any of the details of the full circuit that they are embedded in. However, once the forward pass is over, during backpropagation the gate will eventually learn about the gradient of its output value on the final output of the entire circuit. Chain rule says that the gate should take that gradient and multiply it into every gradient it normally computes for all of its inputs.
 
 > This extra multiplication (for each input) due to the chain rule can turn a single and relatively useless gate into a cog in a complex circuit such as an entire neural network.
 
@@ -297,7 +297,7 @@ Erik Learned-Miller has also written up a longer related document on taking matr
 - We developed intuition for what the gradients mean, how they flow backwards in the circuit, and how they communicate which part of the circuit should increase or decrease and with what force to make the final output higher.
 - We discussed the importance of **staged computation** for practical implementations of backpropagation. You always want to break up your function into modules for which you can easily derive local gradients, and then chain them with chain rule. Crucially, you almost never want to write out these expressions on paper and differentiate them symbolically in full, because you never need an explicit mathematical equation for the gradient of the input variables. Hence, decompose your expressions into stages such that you can differentiate every stage independently (the stages will be matrix vector multiplies, or max operations, or sum operations, etc.) and then backprop through the variables one step at a time.
 
-In the next section we will start to define Neural Networks, and backpropagation will allow us to efficiently compute the gradients on the connections of the neural network, with respect to a loss function. In other words, we're now ready to train Neural Nets, and the most conceptually difficult part of this class is behind us! ConvNets will then be a small step away.
+In the next section we will start to define neural networks, and backpropagation will allow us to efficiently compute the gradient of a loss function with respect to its parameters. In other words, we're now ready to train neural nets, and the most conceptually difficult part of this class is behind us! ConvNets will then be a small step away.
 
 
 ### References
