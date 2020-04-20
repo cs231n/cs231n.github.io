@@ -258,7 +258,7 @@ $$
 P(y = 1 \mid x; w, b) = \frac{1}{1 + e^{-(w^Tx +b)}} = \sigma (w^Tx + b)
 $$
 
-Since the probabilities of class 1 and 0 sum to one, the probability for class 0 is \\(P(y = 0 \mid x; w, b) = 1 - P(y = 1 \mid x; w,b)\\). Hence, an example is classified as a positive example (y = 1) if \\(\sigma (w^Tx + b) > 0.5\\), or equivalently if the score \\(w^Tx +b > 0\\). The loss function then maximizes the log likelihood of this probability (similar to minimizing the negative-log likelihood). You can convince yourself that this simplifies to:
+Since the probabilities of class 1 and 0 sum to one, the probability for class 0 is \\(P(y = 0 \mid x; w, b) = 1 - P(y = 1 \mid x; w,b)\\). Hence, an example is classified as a positive example (y = 1) if \\(\sigma (w^Tx + b) > 0.5\\), or equivalently if the score \\(w^Tx +b > 0\\). The loss function then maximizes this probability. You can convince yourself that this simplifies to minimizing the negative log-likelihood:
 
 $$
 L_i = -\sum_j y_{ij} \log(\sigma(f_j)) + (1 - y_{ij}) \log(1 - \sigma(f_j))
