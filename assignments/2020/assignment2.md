@@ -70,7 +70,7 @@ cd cs231n/datasets
 ./get_datasets.sh
 ```
 **Start Jupyter Server**. After you have the CIFAR-10 data, you should start the Jupyter server from the
-`assignment1` directory by executing `jupyter notebook` in your terminal.
+`assignment2` directory by executing `jupyter notebook` in your terminal.
 
 Complete each notebook, then once you are done, go to the [submission instructions](#submitting-your-work).
 
