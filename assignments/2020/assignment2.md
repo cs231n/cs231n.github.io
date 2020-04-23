@@ -5,7 +5,7 @@ mathjax: true
 permalink: /assignments2020/assignment2/
 ---
 
-This assignment is due on **Wednesday, May 6 2020** at 11:59pm PST.
+This assignment is due on **Wednesday, May 6 2020** at 11:59pm PDT.
 
 <details>
 <summary>Handy Download Links</summary>
@@ -47,7 +47,7 @@ You can work on the assignment in one of two ways: **remotely** on Google Colabo
 
 #### Option A: Google Colaboratory (Recommended)
 
-**Download.** Starter code containing Colab notebooks can be downloaded [here]({{site.hw_1_colab}}).
+**Download.** Starter code containing Colab notebooks can be downloaded [here]({{site.hw_2_colab}}).
 
 If you choose to work with Google Colab, please familiarize yourself with the [recommended workflow]({{site.baseurl}}/setup-instructions/#working-remotely-on-google-colaboratory).
 
@@ -59,7 +59,7 @@ Once you have completed all Colab notebooks **except `collect_submission.ipynb`*
 
 #### Option B: Local Development
 
-**Download.** Starter code containing jupyter notebooks can be downloaded [here]({{site.hw_1_jupyter}}).
+**Download.** Starter code containing jupyter notebooks can be downloaded [here]({{site.hw_2_jupyter}}).
 
 **Install Packages**. Once you have the starter code, activate your environment (the one you installed in the [Software Setup]({{site.baseurl}}/setup-instructions/) page) and run `pip install -r requirements.txt`.
 
