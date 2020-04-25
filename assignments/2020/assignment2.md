@@ -36,7 +36,7 @@ In this assignment you will practice writing backpropagation code, and training 
 - Implement various **update rules** used to optimize Neural Networks.
 - Implement **Batch Normalization** and **Layer Normalization** for training deep networks.
 - Implement **Dropout** to regularize networks.
-- Understand the architecture of **Convolutional Neural Networks** and get practice with training these models on data.
+- Understand the architecture of **Convolutional Neural Networks** and get practice with training them.
 - Gain experience with a major deep learning framework, such as **TensorFlow** or **PyTorch**.
 
 ### Setup
@@ -51,9 +51,9 @@ You can work on the assignment in one of two ways: **remotely** on Google Colabo
 
 If you choose to work with Google Colab, please familiarize yourself with the [recommended workflow]({{site.baseurl}}/setup-instructions/#working-remotely-on-google-colaboratory).
 
-**Note 1**. Please make sure that you work on the Colab notebooks in the order of the questions (see below). The reason is that the code cells that get executed *at the end* of the notebooks save the modified files back to your drive and some notebooks may require code from previous notebook.
+<iframe style="display: block; margin: auto;" width="560" height="315" src="https://www.youtube.com/embed/IZUz4pRYlus" frameborder="0" allowfullscreen></iframe>
 
-**Note 2**. Related to above, ensure you are periodically saving your notebook (`File -> Save`), and any edited `.py` files relevant to that notebook (i.e. **by executing the last code cell**) so that you don't lose your progress if you step away from the assignment and the Colab VM disconnects.
+**Note**. Ensure you are periodically saving your notebook (`File -> Save`) so that you don't lose your progress if you step away from the assignment and the Colab VM disconnects.
 
 Once you have completed all Colab notebooks **except `collect_submission.ipynb`**, proceed to the [submission instructions](#submitting-your-work).
 
