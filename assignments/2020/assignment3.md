@@ -43,7 +43,7 @@ The goals of this assignment are as follows:
 
 ### Setup
 
-You should be able to use your setup from assignment 2.
+You should be able to use your setup from assignment 3.
 
 You can work on the assignment in one of two ways: **remotely** on Google Colaboratory or **locally** on your own machine.
 
@@ -104,11 +104,11 @@ In the Jupyter notebooks `GANS-TensorFlow.ipynb`/`GANS-PyTorch.ipynb` you will l
 
 Once you have completed all notebooks and filled out the necessary code, there are **_two_** steps you must follow to submit your assignment:
 
-**1.** If you selected Option A and worked on the assignment in Colab, open `collect_submission.ipynb` in Colab and execute the notebook cells. If you selected Option B and worked on the assignment locally, run the bash script in `assignment2` by executing `bash collectSubmission.sh`.
+**1.** If you selected Option A and worked on the assignment in Colab, open `collect_submission.ipynb` in Colab and execute the notebook cells. If you selected Option B and worked on the assignment locally, run the bash script in `assignment3` by executing `bash collectSubmission.sh`.
 
 This notebook/script will:
 
-* Generate a zip file of your code (`.py` and `.ipynb`) called `a2.zip`.
+* Generate a zip file of your code (`.py` and `.ipynb`) called `a3.zip`.
 * Convert all notebooks into a single PDF file.
 
 **Note for Option B users**. You must have (a) `nbconvert` installed with Pandoc and Tex support and (b) `PyPDF2` installed to successfully convert your notebooks to a PDF file. Please follow these [installation instructions](https://nbconvert.readthedocs.io/en/latest/install.html#installing-nbconvert) to install (a) and run `pip install PyPDF2` to install (b). If you are, for some inexplicable reason, unable to successfully install the above dependencies, you can manually convert each jupyter notebook to HTML (`File -> Download as -> HTML (.html)`), save the HTML page as a PDF, then concatenate all the PDFs into a single PDF submission using your favorite PDF viewer.
