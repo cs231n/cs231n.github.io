@@ -20,7 +20,7 @@ This assignment is due on **Wednesday, May 27 2020** at 11:59pm PDT.
 - [Setup](#setup)
   - [Option A: Google Colaboratory (Recommended)](#option-a-google-colaboratory-recommended)
   - [Option B: Local Development](#option-b-local-development)
-- [Q1: Image Captioning with Vanilla RNNs (25 points)](#q1-image-captioning-with-vanilla-rnns-25-points)
+- [Q1: Image Captioning with Vanilla RNNs (29 points)](#q1-image-captioning-with-vanilla-rnns-29-points)
 - [Q2: Image Captioning with LSTMs (30 points)](#q2-image-captioning-with-lstms-30-points)
 - [Q3: Network Visualization: Saliency maps, Class Visualization, and Fooling Images (15 points)](#q3-network-visualization-saliency-maps-class-visualization-and-fooling-images-15-points)
 - [Q4: Style Transfer (15 points)](#q4-style-transfer-15-points)
@@ -80,7 +80,7 @@ Complete each notebook, then once you are done, go to the [submission instructio
 
 **You can do Questions 3, 4, and 5 in TensorFlow or PyTorch. There are two versions of each of these notebooks, one for TensorFlow and one for PyTorch. No extra credit will be awarded if you do a question in both TensorFlow and PyTorch**
 
-### Q1: Image Captioning with Vanilla RNNs (25 points)
+### Q1: Image Captioning with Vanilla RNNs (29 points)
 
 The Jupyter notebook `RNN_Captioning.ipynb` will walk you through the implementation of an image captioning system on MS-COCO using vanilla recurrent networks.
 
