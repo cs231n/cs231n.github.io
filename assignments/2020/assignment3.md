@@ -71,7 +71,7 @@ Once you have completed all Colab notebooks **except `collect_submission.ipynb`*
 
 ```bash
 cd cs231n/datasets
-./get_assignment3_data.sh
+./get_datasets.sh
 ```
 **Start Jupyter Server**. After you have the CIFAR-10 data, you should start the Jupyter server from the
 `assignment3` directory by executing `jupyter notebook` in your terminal.
