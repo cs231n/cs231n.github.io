@@ -66,14 +66,13 @@ Once you have completed all Colab notebooks **except `collect_submission.ipynb`*
 
 **Install Packages**. Once you have the starter code, activate your environment (the one you installed in the [Software Setup]({{site.baseurl}}/setup-instructions/) page) and run `pip install -r requirements.txt`.
 
-**Download CIFAR-10**. Next, you will need to download the CIFAR-10 dataset. Run the following from the `assignment3` directory:
+**Download data**. Next, you will need to download the COCO captioning data, a pretrained SqueezeNet model (for TensorFlow), and a few ImageNet validation images. Run the following from the `assignment3` directory:
 
 ```bash
 cd cs231n/datasets
 ./get_datasets.sh
 ```
-**Start Jupyter Server**. After you have the CIFAR-10 data, you should start the Jupyter server from the
-`assignment3` directory by executing `jupyter notebook` in your terminal.
+**Start Jupyter Server**. After you've downloaded the data, you can start the Jupyter server from the `assignment3` directory by executing `jupyter notebook` in your terminal.
 
 Complete each notebook, then once you are done, go to the [submission instructions](#submitting-your-work).
 
