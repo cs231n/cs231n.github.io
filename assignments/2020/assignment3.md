@@ -21,7 +21,7 @@ This assignment is due on **Wednesday, May 27 2020** at 11:59pm PDT.
   - [Option A: Google Colaboratory (Recommended)](#option-a-google-colaboratory-recommended)
   - [Option B: Local Development](#option-b-local-development)
 - [Q1: Image Captioning with Vanilla RNNs (29 points)](#q1-image-captioning-with-vanilla-rnns-29-points)
-- [Q2: Image Captioning with LSTMs (30 points)](#q2-image-captioning-with-lstms-30-points)
+- [Q2: Image Captioning with LSTMs (23 points)](#q2-image-captioning-with-lstms-23-points)
 - [Q3: Network Visualization: Saliency maps, Class Visualization, and Fooling Images (15 points)](#q3-network-visualization-saliency-maps-class-visualization-and-fooling-images-15-points)
 - [Q4: Style Transfer (15 points)](#q4-style-transfer-15-points)
 - [Q5: Generative Adversarial Networks (15 points)](#q5-generative-adversarial-networks-15-points)
@@ -82,7 +82,7 @@ Complete each notebook, then once you are done, go to the [submission instructio
 
 The notebook `RNN_Captioning.ipynb` will walk you through the implementation of an image captioning system on MS-COCO using vanilla recurrent networks.
 
-### Q2: Image Captioning with LSTMs (30 points)
+### Q2: Image Captioning with LSTMs (23 points)
 
 The notebook `LSTM_Captioning.ipynb` will walk you through the implementation of Long-Short Term Memory (LSTM) RNNs, and apply them to image captioning on MS-COCO.
 
