@@ -202,7 +202,7 @@ def L_i(x, y, W):
   correct_class_score = scores[y]
   D = W.shape[0] # number of classes, e.g. 10
   loss_i = 0.0
-  for j in xrange(D): # iterate over all wrong classes
+  for j in range(D): # iterate over all wrong classes
     if j == y:
       # skip for the true class to only loop over incorrect classes
       continue
@@ -366,4 +366,4 @@ We now saw one way to take a dataset of images and map each one to class scores 
 
 These readings are optional and contain pointers of interest.
 
-- [Deep Learning using Linear Support Vector Machines](http://arxiv.org/abs/1306.0239) from Charlie Tang 2013 presents some results claiming that the L2SVM outperforms Softmax.
+- [Deep Learning using Linear Support Vector Machines](https://arxiv.org/abs/1306.0239) from Charlie Tang 2013 presents some results claiming that the L2SVM outperforms Softmax.

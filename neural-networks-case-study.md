@@ -30,7 +30,7 @@ D = 2 # dimensionality
 K = 3 # number of classes
 X = np.zeros((N*K,D)) # data matrix (each row = single example)
 y = np.zeros(N*K, dtype='uint8') # class labels
-for j in xrange(K):
+for j in range(K):
   ix = range(N*j,N*(j+1))
   r = np.linspace(0.0,1,N) # radius
   t = np.linspace(j*4,(j+1)*4,N) + np.random.randn(N)*0.2 # theta
@@ -66,7 +66,7 @@ W = 0.01 * np.random.randn(D,K)
 b = np.zeros((1,K))
 ```
 
-Recall that we `D = 2` is the dimensionality and `K = 3` is the number of classes. 
+Recall that we `D = 2` is the dimensionality and `K = 3` is the number of classes.
 
 <a name='scores'></a>
 
@@ -142,7 +142,7 @@ $$
 \frac{\partial L_i }{ \partial f_k } = p_k - \mathbb{1}(y_i = k)
 $$
 
-Notice how elegant and simple this expression is. Suppose the probabilities we computed were `p = [0.2, 0.3, 0.5]`, and that the correct class was the middle one (with probability 0.3). According to this derivation the gradient on the scores would be `df = [0.2, -0.7, 0.5]`. Recalling what the interpretation of the gradient, we see that this result is highly intuitive: increasing the first or last element of the score vector `f` (the scores of the incorrect classes) leads to an *increased* loss (due to the positive signs +0.2 and +0.5) - and increasing the loss is bad, as expected. However, increasing the score of the correct class has *negative* influence on the loss. The gradient of -0.7 is telling us that increasing the correct class score would lead to a decrease of the loss \\(L_i\\), which makes sense. 
+Notice how elegant and simple this expression is. Suppose the probabilities we computed were `p = [0.2, 0.3, 0.5]`, and that the correct class was the middle one (with probability 0.3). According to this derivation the gradient on the scores would be `df = [0.2, -0.7, 0.5]`. Recalling what the interpretation of the gradient, we see that this result is highly intuitive: increasing the first or last element of the score vector `f` (the scores of the incorrect classes) leads to an *increased* loss (due to the positive signs +0.2 and +0.5) - and increasing the loss is bad, as expected. However, increasing the score of the correct class has *negative* influence on the loss. The gradient of -0.7 is telling us that increasing the correct class score would lead to a decrease of the loss \\(L_i\\), which makes sense.
 
 All of this boils down to the following code. Recall that `probs` stores the probabilities of all classes (as rows) for each example. To get the gradient on the scores, which we call `dscores`, we proceed as follows:
 
@@ -193,15 +193,15 @@ reg = 1e-3 # regularization strength
 
 # gradient descent loop
 num_examples = X.shape[0]
-for i in xrange(200):
-  
+for i in range(200):
+
   # evaluate class scores, [N x K]
-  scores = np.dot(X, W) + b 
-  
+  scores = np.dot(X, W) + b
+
   # compute the class probabilities
   exp_scores = np.exp(scores)
   probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K]
-  
+
   # compute the loss: average cross-entropy loss and regularization
   correct_logprobs = -np.log(probs[range(num_examples),y])
   data_loss = np.sum(correct_logprobs)/num_examples
@@ -209,18 +209,18 @@ for i in xrange(200):
   loss = data_loss + reg_loss
   if i % 10 == 0:
     print "iteration %d: loss %f" % (i, loss)
-  
+
   # compute the gradient on scores
   dscores = probs
   dscores[range(num_examples),y] -= 1
   dscores /= num_examples
-  
+
   # backpropate the gradient to the parameters (W,b)
   dW = np.dot(X.T, dscores)
   db = np.sum(dscores, axis=0, keepdims=True)
-  
+
   dW += reg*W # regularization gradient
-  
+
   # perform a parameter update
   W += -step_size * dW
   b += -step_size * db
@@ -340,16 +340,16 @@ reg = 1e-3 # regularization strength
 
 # gradient descent loop
 num_examples = X.shape[0]
-for i in xrange(10000):
-  
+for i in range(10000):
+
   # evaluate class scores, [N x K]
   hidden_layer = np.maximum(0, np.dot(X, W) + b) # note, ReLU activation
   scores = np.dot(hidden_layer, W2) + b2
-  
+
   # compute the class probabilities
   exp_scores = np.exp(scores)
   probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K]
-  
+
   # compute the loss: average cross-entropy loss and regularization
   correct_logprobs = -np.log(probs[range(num_examples),y])
   data_loss = np.sum(correct_logprobs)/num_examples
@@ -357,12 +357,12 @@ for i in xrange(10000):
   loss = data_loss + reg_loss
   if i % 1000 == 0:
     print "iteration %d: loss %f" % (i, loss)
-  
+
   # compute the gradient on scores
   dscores = probs
   dscores[range(num_examples),y] -= 1
   dscores /= num_examples
-  
+
   # backpropate the gradient to the parameters
   # first backprop into parameters W2 and b2
   dW2 = np.dot(hidden_layer.T, dscores)
@@ -374,11 +374,11 @@ for i in xrange(10000):
   # finally into W,b
   dW = np.dot(X.T, dhidden)
   db = np.sum(dhidden, axis=0, keepdims=True)
-  
+
   # add regularization gradient contribution
   dW2 += reg * W2
   dW += reg * W
-  
+
   # perform a parameter update
   W += -step_size * dW
   b += -step_size * db
