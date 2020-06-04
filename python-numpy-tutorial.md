@@ -21,9 +21,11 @@ We expect that many of you will have some experience with Python and numpy;
 for the rest of you, this section will serve as a quick crash course on both
 the Python programming language and its use for scientific
 computing. We'll also introduce notebooks, which are a very convenient way
-of tinkering with Python code. Some of you may have previous knowledge in Matlab,
-in which case we also recommend the [numpy for Matlab users](https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html)
-page.
+of tinkering with Python code. Some of you may have previous knowledge in a
+different language, in which case we also recommend referencing:
+[NumPy for Matlab users](https://numpy.org/doc/stable/user/numpy-for-matlab-users.html),
+[Python for R users](http://www.data-analysis-in-python.org/python_for_r.html), and/or
+[Python for SAS users](https://nbviewer.jupyter.org/github/RandyBetancourt/PythonForSASUsers/tree/master/).
 
 
 **Table of Contents**
