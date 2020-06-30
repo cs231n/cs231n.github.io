@@ -142,7 +142,7 @@ With the best **W** this gives an accuracy of about **15.5%**. Given that guessi
 
 #### Strategy #2: Random Local Search
 
-The first strategy you may think of is to try to extend one foot in a random direction and then take a step only if it leads downhill. Concretely, we will start out with a random \\(W\\), generate random perturbations \\( \delta W \\) to it and if the loss at the perturbed \\(W + \delta W\\) is lower, we will perform an update. The code for this procedure is as follows:
+The first strategy you may think of is to try to extend one foot in a random direction and then take a step only if it leads downhill. Concretely, we will start out with a random \\(W\\), generate random perturbations \\( \delta W' \\) to it and if the loss at the perturbed \\(W + \delta W'\\) is lower, we will perform an update. The code for this procedure is as follows:
 
 ```python
 W = np.random.randn(10, 3073) * 0.001 # generate random starting W
