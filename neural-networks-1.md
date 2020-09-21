@@ -214,8 +214,8 @@ The takeaway is that you should not be using smaller networks because you are af
 
 In summary, 
 
-- We introduced a very coarse model of a biological **neuron**
-- We discussed several types of **activation functions** that are used in practice, with ReLU being the most common choice
+- We introduced a very coarse model of a biological **neuron**.
+- We discussed several types of **activation functions** that are used in practice, with ReLU being the most common choice.
 - We introduced **Neural Networks** where neurons are connected with **Fully-Connected layers** where neurons in adjacent layers have full pair-wise connections, but neurons within a layer are not connected.
 - We saw that this layered architecture enables very efficient evaluation of Neural Networks based on matrix multiplications interwoven with the application of the activation function.
 - We saw that that Neural Networks are **universal function approximators**, but we also discussed the fact that this property has little to do with their ubiquitous use. They are used because they make certain "right" assumptions about the functional forms of functions that come up in practice.
