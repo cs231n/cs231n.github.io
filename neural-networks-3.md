@@ -97,7 +97,7 @@ Here are a few sanity checks you might consider running before you plunge into e
 
 ### Babysitting the learning process
 
-There are multiple useful quantities you should monitor during training of a neural network. These plots are the window into the training process and should be utilized to get intuitions about different hyperparameter settings and how they should be changed for more efficient learning. 
+There are multiple useful quantities you should monitor during training of a neural network. These plots are the window into the training process and should be utilized to get intuitions about different hyperparameter settings and how they should be changed for more efficient learning. There is a third-party online machine learning hyperparameters tuning web app, and you can try it [here](https://bingcheng.openmc.cn/HyperQuest/).
 
 The x-axis of the plots below are always in units of epochs, which measure how many times every example has been seen during training in expectation (e.g. one epoch means that every example has been seen once). It is preferable to track epochs rather than iterations since the number of iterations depends on the arbitrary setting of batch size.
 
