@@ -19,9 +19,4 @@ kramdown:
   syntax_highlighter: rouge
 
 # links to homeworks
-hw_1_jupyter: https://cs231n.github.io/assignments/2020/assignment1_jupyter.zip
-hw_1_colab: https://cs231n.github.io/assignments/2020/assignment1_colab.zip
-hw_2_jupyter: https://cs231n.github.io/assignments/2020/assignment2_jupyter.zip
-hw_2_colab: https://cs231n.github.io/assignments/2020/assignment2_colab.zip
-hw_3_jupyter: https://cs231n.github.io/assignments/2020/assignment3_jupyter.zip
-hw_3_colab: https://cs231n.github.io/assignments/2020/assignment3_colab.zip
+hw_1_colab: https://cs231n.github.io/assignments/2021/assignment1_colab.zip
