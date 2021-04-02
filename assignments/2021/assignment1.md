@@ -11,11 +11,11 @@ Starter code containing Colab notebooks can be [downloaded here]({{site.hw_1_col
 
 - [Setup](#setup)
 - [Goals](#goals)
-- [Q1: k-Nearest Neighbor classifier (20 points)](#q1-k-nearest-neighbor-classifier-20-points)
-- [Q2: Training a Support Vector Machine (25 points)](#q2-training-a-support-vector-machine-25-points)
-- [Q3: Implement a Softmax classifier (20 points)](#q3-implement-a-softmax-classifier-20-points)
-- [Q4: Two-Layer Neural Network (25 points)](#q4-two-layer-neural-network-25-points)
-- [Q5: Higher Level Representations: Image Features (10 points)](#q5-higher-level-representations-image-features-10-points)
+- [Q1: k-Nearest Neighbor classifier](#q1-k-nearest-neighbor-classifier)
+- [Q2: Training a Support Vector Machine](#q2-training-a-support-vector-machine)
+- [Q3: Implement a Softmax classifier](#q3-implement-a-softmax-classifier)
+- [Q4: Two-Layer Neural Network](#q4-two-layer-neural-network)
+- [Q5: Higher Level Representations: Image Features](#q5-higher-level-representations-image-features)
 - [Submitting your work](#submitting-your-work)
 
 ### Setup
@@ -42,23 +42,23 @@ In this assignment you will practice putting together a simple image classificat
 - Understand the differences and tradeoffs between these classifiers.
 - Get a basic understanding of performance improvements from using **higher-level representations** as opposed to raw pixels, e.g. color histograms, Histogram of Gradient (HOG) features, etc.
 
-### Q1: k-Nearest Neighbor classifier (20 points)
+### Q1: k-Nearest Neighbor classifier
 
 The notebook **knn.ipynb** will walk you through implementing the kNN classifier.
 
-### Q2: Training a Support Vector Machine (25 points)
+### Q2: Training a Support Vector Machine
 
 The notebook **svm.ipynb** will walk you through implementing the SVM classifier.
 
-### Q3: Implement a Softmax classifier (20 points)
+### Q3: Implement a Softmax classifier
 
 The notebook **softmax.ipynb** will walk you through implementing the Softmax classifier.
 
-### Q4: Two-Layer Neural Network (25 points)
+### Q4: Two-Layer Neural Network
 
 The notebook **two\_layer\_net.ipynb** will walk you through the implementation of a two-layer neural network classifier.
 
-### Q5: Higher Level Representations: Image Features (10 points)
+### Q5: Higher Level Representations: Image Features
 
 The notebook **features.ipynb** will examine the improvements gained by using higher-level representations
 as opposed to using raw pixel values.
@@ -80,6 +80,6 @@ If your submission for this step was successful, you should see the following di
 
 `### Done! Please submit a1.zip and the pdfs to Gradescope. ###`
 
-**2.** Submit the PDF and the zip file to [Gradescope](https://www.gradescope.com/courses/103764).
+**2.** Submit the PDF and the zip file to [Gradescope](https://www.gradescope.com/courses/257661).
 
 Remember to download `a1.zip` and `assignment.pdf` locally before submitting to Gradescope.
