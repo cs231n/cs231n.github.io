@@ -11,11 +11,11 @@ Starter code containing Colab notebooks can be [downloaded here]({{site.hw_2_col
 
 - [Setup](#setup)
 - [Goals](#goals)
-- [Q1: Fully-connected Neural Network](#q1-fully-connected-neural-network)
+- [Q1: Multi-Layer Fully Connected Neural Networks](#q1-fully-connected-neural-network)
 - [Q2: Batch Normalization](#q2-batch-normalization)
 - [Q3: Dropout](#q3-dropout)
-- [Q4: Convolutional Networks](#q4-convolutional-networks)
-- [Q5: PyTorch / TensorFlow on CIFAR-10](#q5-pytorch--tensorflow-on-cifar-10)
+- [Q4: Convolutional Neural Networks](#q4-convolutional-networks)
+- [Q5: PyTorch/TensorFlow on CIFAR-10](#q5-pytorch--tensorflow-on-cifar-10)
 - [Submitting your work](#submitting-your-work)
 
 ### Setup
@@ -42,28 +42,27 @@ In this assignment you will practice writing backpropagation code, and training 
 - Understand the architecture of **Convolutional Neural Networks** and get practice with training them.
 - Gain experience with a major deep learning framework, such as **TensorFlow** or **PyTorch**.
 
-### Q1: Fully-connected Neural Network
+### Q1: Multi-Layer Fully Connected Neural Networks
 
-The notebook `FullyConnectedNets.ipynb` will introduce you to our
-modular layer design, and then use those layers to implement fully-connected
+The notebook `FullyConnectedNets.ipynb` will have you implement fully connected
 networks of arbitrary depth. To optimize these models you will implement several
 popular update rules.
 
 ### Q2: Batch Normalization
 
-In notebook `BatchNormalization.ipynb` you will implement batch normalization, and use it to train deep fully-connected networks.
+In notebook `BatchNormalization.ipynb` you will implement batch normalization, and use it to train deep fully connected networks.
 
 ### Q3: Dropout
 
-The notebook `Dropout.ipynb` will help you implement Dropout and explore its effects on model generalization.
+The notebook `Dropout.ipynb` will help you implement dropout and explore its effects on model generalization.
 
-### Q4: Convolutional Networks
+### Q4: Convolutional Neural Networks
 
-In the IPython Notebook `ConvolutionalNetworks.ipynb` you will implement several new layers that are commonly used in convolutional networks.
+In the notebook `ConvolutionalNetworks.ipynb` you will implement several new layers that are commonly used in convolutional networks.
 
-### Q5: PyTorch / TensorFlow on CIFAR-10
+### Q5: PyTorch/TensorFlow on CIFAR-10
 
-For this last part, you will be working in either TensorFlow or PyTorch, two popular and powerful deep learning frameworks. **You only need to complete ONE of these two notebooks.** You do NOT need to do both, and we will _not_ be awarding extra credit to those who do.
+For this last part, you will be working in either TensorFlow or PyTorch, two popular and powerful deep learning frameworks. **You only need to complete ONE of these two notebooks.** While you are welcome to explore both for your own learning, there will be no extra credit.
 
 Open up either `PyTorch.ipynb` or `TensorFlow.ipynb`. There, you will learn how the framework works, culminating in training a convolutional network of your own design on CIFAR-10 to get the best performance you can.
 
@@ -82,7 +81,7 @@ This notebook/script will:
 
 If your submission for this step was successful, you should see the following display message:
 
-`### Done! Please submit a1.zip and the pdfs to Gradescope. ###`
+`### Done! Please submit a2.zip and the pdfs to Gradescope. ###`
 
 **2.** Submit the PDF and the zip file to [Gradescope](https://www.gradescope.com/courses/257661).
 
