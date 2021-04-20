@@ -11,11 +11,11 @@ Starter code containing Colab notebooks can be [downloaded here]({{site.hw_2_col
 
 - [Setup](#setup)
 - [Goals](#goals)
-- [Q1: Multi-Layer Fully Connected Neural Networks](#q1-fully-connected-neural-network)
-- [Q2: Batch Normalization](#q2-batch-normalization)
-- [Q3: Dropout](#q3-dropout)
-- [Q4: Convolutional Neural Networks](#q4-convolutional-networks)
-- [Q5: PyTorch/TensorFlow on CIFAR-10](#q5-pytorch--tensorflow-on-cifar-10)
+- [Q1: Multi-Layer Fully Connected Neural Networks (16%)](#q1-multi-layer-fully-connected-neural-networks-16)
+- [Q2: Batch Normalization (34%)](#q2-batch-normalization-34)
+- [Q3: Dropout (10%)](#q3-dropout-10)
+- [Q4: Convolutional Neural Networks (30%)](#q4-convolutional-neural-networks-30)
+- [Q5: PyTorch/TensorFlow on CIFAR-10 (10%)](#q5-pytorchtensorflow-on-cifar-10-10)
 - [Submitting your work](#submitting-your-work)
 
 ### Setup
@@ -42,25 +42,25 @@ In this assignment you will practice writing backpropagation code, and training 
 - Understand the architecture of **Convolutional Neural Networks** and get practice with training them.
 - Gain experience with a major deep learning framework, such as **TensorFlow** or **PyTorch**.
 
-### Q1: Multi-Layer Fully Connected Neural Networks
+### Q1: Multi-Layer Fully Connected Neural Networks (16%)
 
 The notebook `FullyConnectedNets.ipynb` will have you implement fully connected
 networks of arbitrary depth. To optimize these models you will implement several
 popular update rules.
 
-### Q2: Batch Normalization
+### Q2: Batch Normalization (34%)
 
 In notebook `BatchNormalization.ipynb` you will implement batch normalization, and use it to train deep fully connected networks.
 
-### Q3: Dropout
+### Q3: Dropout (10%)
 
 The notebook `Dropout.ipynb` will help you implement dropout and explore its effects on model generalization.
 
-### Q4: Convolutional Neural Networks
+### Q4: Convolutional Neural Networks (30%)
 
 In the notebook `ConvolutionalNetworks.ipynb` you will implement several new layers that are commonly used in convolutional networks.
 
-### Q5: PyTorch/TensorFlow on CIFAR-10
+### Q5: PyTorch/TensorFlow on CIFAR-10 (10%)
 
 For this last part, you will be working in either TensorFlow or PyTorch, two popular and powerful deep learning frameworks. **You only need to complete ONE of these two notebooks.** While you are welcome to explore both for your own learning, there will be no extra credit.
 
