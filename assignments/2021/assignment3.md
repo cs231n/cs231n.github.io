@@ -5,7 +5,7 @@ mathjax: true
 permalink: /assignments2020/assignment3/
 ---
 
-This assignment is due on **Wednesday, May 27 2020** at 11:59pm PDT.
+This assignment is due on **Tuesday, May 25 2021** at 11:59pm PDT.
 
 <details>
 <summary>Handy Download Links</summary>
