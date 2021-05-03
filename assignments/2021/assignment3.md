@@ -2,7 +2,7 @@
 layout: page
 title: Assignment 3
 mathjax: true
-permalink: /assignments2020/assignment3/
+permalink: /assignments2021/assignment3/
 ---
 
 This assignment is due on **Tuesday, May 25 2021** at 11:59pm PDT.
