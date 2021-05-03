@@ -42,7 +42,7 @@ Once you have completed all Colab notebooks **except `collect_submission.ipynb`*
 
 ### Goals
 
-In this assignment, you will implement recurrent neural networks and apply them to image captioning on the Microsoft COCO data. You will also explore methods for visualizing the features of a pretrained model on ImageNet, and use this model to implement Style Transfer. Finally, you will train a Generative Adversarial Network to generate images that look like a training dataset!
+In this assignment, you will implement language networks and apply them to image captioning on the COCO dataset. Then you will explore methods for visualizing the features of a pretrained model on ImageNet and train a Generative Adversarial Network to generate images that look like a training dataset. Finally, you will be introduced to self-supervised learning to automatically learn the visual representations of an unlabeled dataset.
 
 The goals of this assignment are as follows:
 
@@ -58,31 +58,31 @@ The goals of this assignment are as follows:
 
 ### Q1: Image Captioning with Vanilla RNNs (29 points)
 
-The notebook `RNN_Captioning.ipynb` will walk you through the implementation of an image captioning system on MS-COCO using vanilla recurrent networks.
+The notebook `RNN_Captioning.ipynb` will walk you through the implementation of vanilla recurrent neural networks and apply them to image captioning on COCO.
 
 ### Q2: Image Captioning with LSTMs (23 points)
 
-The notebook `LSTM_Captioning.ipynb` will walk you through the implementation of Long-Short Term Memory (LSTM) RNNs, and apply them to image captioning on MS-COCO.
+The notebook `LSTM_Captioning.ipynb` will walk you through the implementation of Long-Short Term Memory (LSTM) RNNs and apply them to image captioning on COCO.
 
 ### Q3: Image Captioning with Transformers (18 points)
 
-The notebook `Transformer_Captioning.ipynb` will walk you through the implementation of Transformer Model, and apply them to image captioning on MS-COCO.
+The notebook `Transformer_Captioning.ipynb` will walk you through the implementation of a Transformer model and apply it to image captioning on COCO. **When first opening the notebook, go to `Runtime > Change runtime type` and set `Hardware accelerator` to `GPU`.**
 
 ### Q4: Network Visualization: Saliency maps, Class Visualization, and Fooling Images (15 points)
 
-The notebook `NetworkVisualization-PyTorch.ipynb` will introduce the pretrained SqueezeNet model, compute gradients with respect to images, and use them to produce saliency maps and fooling images. Please complete only one of the notebooks (TensorFlow or PyTorch). No extra credit will be awardeded if you complete both notebooks.
+The notebook `Network_Visualization.ipynb` will introduce the pretrained SqueezeNet model, compute gradients with respect to images, and use them to produce saliency maps and fooling images.
 
 ### Q5: Generative Adversarial Networks (15 points)
 
-In the notebook `GANS-PyTorch.ipynb` you will learn how to generate images that match a training dataset, and use these models to improve classifier performance when training on a large amount of unlabeled data and a small amount of labeled data. Please complete only one of the notebooks (TensorFlow or PyTorch). No extra credit will be awarded if you complete both notebooks.
+In the notebook `Generative_Adversarial_Networks.ipynb` you will learn how to generate images that match a training dataset and use these models to improve classifier performance when training on a large amount of unlabeled data and a small amount of labeled data. **When first opening the notebook, go to `Runtime > Change runtime type` and set `Hardware accelerator` to `GPU`.**
 
 ### Q6: Self-Supervised Learning (16-points)
 
-In the notebook `self_supervised_learning,ipynb`, you will learn how to 
+In the notebook `Self_Supervised_Learning.ipynb`, you will learn how to ... **When first opening the notebook, go to `Runtime > Change runtime type` and set `Hardware accelerator` to `GPU`.**
 
 ### Optional: Style Transfer (15 points)
 
-In thenotebooks `StyleTransfer-TensorFlow.ipynb` or `StyleTransfer-PyTorch.ipynb` you will learn how to create images with the content of one image but the style of another. Please complete only one of the notebooks (TensorFlow or PyTorch). No extra credit will be awardeded if you complete both notebooks.
+In the notebook `Style_Transfer.ipynb`, you will learn how to create images with the content of one image but the style of another.
 
 ### Submitting your work
 
@@ -94,13 +94,13 @@ Once you have completed all notebooks and filled out the necessary code, you nee
 
 This notebook/script will:
 
-* Generate a zip file of your code (`.py` and `.ipynb`) called `a2.zip`.
+* Generate a zip file of your code (`.py` and `.ipynb`) called `a3.zip`.
 * Convert all notebooks into a single PDF file.
 
 If your submission for this step was successful, you should see the following display message:
 
-`### Done! Please submit a2.zip and the pdfs to Gradescope. ###`
+`### Done! Please submit a3.zip and the pdfs to Gradescope. ###`
 
 **2.** Submit the PDF and the zip file to [Gradescope](https://www.gradescope.com/courses/257661).
 
-Remember to download `a2.zip` and `assignment.pdf` locally before submitting to Gradescope.
+Remember to download `a3.zip` and `assignment.pdf` locally before submitting to Gradescope.
