@@ -56,11 +56,11 @@ The goals of this assignment are as follows:
 
 **You will use PyTorch for the majority of this homework.**
 
-### Q1: Image Captioning with Vanilla RNNs (29 points)
+### Q1: Image Captioning with Vanilla RNNs (30 points)
 
 The notebook `RNN_Captioning.ipynb` will walk you through the implementation of vanilla recurrent neural networks and apply them to image captioning on COCO.
 
-### Q2: Image Captioning with Transformers (18 points)
+### Q2: Image Captioning with Transformers (20 points)
 
 The notebook `Transformer_Captioning.ipynb` will walk you through the implementation of a Transformer model and apply it to image captioning on COCO. **When first opening the notebook, go to `Runtime > Change runtime type` and set `Hardware accelerator` to `GPU`.**
 
@@ -72,7 +72,7 @@ The notebook `Network_Visualization.ipynb` will introduce the pretrained Squeeze
 
 In the notebook `Generative_Adversarial_Networks.ipynb` you will learn how to generate images that match a training dataset and use these models to improve classifier performance when training on a large amount of unlabeled data and a small amount of labeled data. **When first opening the notebook, go to `Runtime > Change runtime type` and set `Hardware accelerator` to `GPU`.**
 
-### Q5: Self-Supervised Learning (16 points)
+### Q5: Self-Supervised Learning (20 points)
 
 In the notebook `Self_Supervised_Learning.ipynb`, you will learn how to leverage self-supervised pretraining to obtain better performance on image classification task **When first opening the notebook, go to `Runtime > Change runtime type` and set `Hardware accelerator` to `GPU`.**
 
