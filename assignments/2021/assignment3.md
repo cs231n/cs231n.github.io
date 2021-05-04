@@ -72,7 +72,7 @@ The notebook `Network_Visualization.ipynb` will introduce the pretrained Squeeze
 
 In the notebook `Generative_Adversarial_Networks.ipynb` you will learn how to generate images that match a training dataset and use these models to improve classifier performance when training on a large amount of unlabeled data and a small amount of labeled data. **When first opening the notebook, go to `Runtime > Change runtime type` and set `Hardware accelerator` to `GPU`.**
 
-### Q5: Self-Supervised Learning (16-points)
+### Q5: Self-Supervised Learning (16 points)
 
 In the notebook `Self_Supervised_Learning.ipynb`, you will learn how to leverage self-supervised pretraining to obtain better performance on image classification task **When first opening the notebook, go to `Runtime > Change runtime type` and set `Hardware accelerator` to `GPU`.**
 
