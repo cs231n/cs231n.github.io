@@ -18,13 +18,13 @@ This assignment is due on **Tuesday, May 25 2021** at 11:59pm PDT.
 - [Setup](#setup)
 - [Goals](#goals)
   - [Google Colaboratory](#option-a-google-colaboratory-recommended)
-- [Q1: Image Captioning with LSTMs (23 points)](#q1-image-captioning-with-lstms-23-points)
+- [Q1: Image Captioning with Vanilla RNNs (29 points)](#q1-image-captioning-with-vanilla-rnns-29-points)
 - [Q2: Image Captioning with Transformers (18 points)](#q2-image-captioning-with-transformers-18-points)
 - [Q3: Network Visualization: Saliency maps, Class Visualization, and Fooling Images (15 points)](#q3-network-visualization-saliency-maps-class-visualization-and-fooling-images-15-points)
 - [Q4: Generative Adversarial Networks (15 points)](#q4-generative-adversarial-networks-15-points)
 - [Q5: Self-Supervised Learning for Image Classification (15 points)](#q5-self-supervised-learning-15-points)
-- [Optional (Extra Credit): Image Captioning with Vanilla RNNs (tbd points)](#optional-image-captioning-with-vanilla-rnns-29-points)
-- [Optional (Extra Credit): Style Transfer (tbd points)](#optional-style-transfer-15-points)
+- [Optional (Extra Credit): Image Captioning with LSTMs (5 points)](#optional-image-captioning-with-lstms-5-points)
+- [Optional (Extra Credit): Style Transfer (5 points)](#optional-style-transfer-5-points)
 - [Submitting your work](#submitting-your-work)
 
 
@@ -56,9 +56,9 @@ The goals of this assignment are as follows:
 
 **You will use PyTorch for the majority of this homework.**
 
-### Q1: Image Captioning with LSTMs (23 points)
+### Q1: Image Captioning with Vanilla RNNs (29 points)
 
-The notebook `LSTM_Captioning.ipynb` will walk you through the implementation of Long-Short Term Memory (LSTM) RNNs and apply them to image captioning on COCO.
+The notebook `RNN_Captioning.ipynb` will walk you through the implementation of vanilla recurrent neural networks and apply them to image captioning on COCO.
 
 ### Q2: Image Captioning with Transformers (18 points)
 
@@ -76,11 +76,11 @@ In the notebook `Generative_Adversarial_Networks.ipynb` you will learn how to ge
 
 In the notebook `Self_Supervised_Learning.ipynb`, you will learn how to leverage self-supervised pretraining to obtain better performance on image classification task **When first opening the notebook, go to `Runtime > Change runtime type` and set `Hardware accelerator` to `GPU`.**
 
-### Optional (Extra Credit): Image Captioning with Vanilla RNNs (tbd points)
+### Optional (Extra Credit): Image Captioning with LSTMs (5 points)
 
-The notebook `RNN_Captioning.ipynb` will walk you through the implementation of vanilla recurrent neural networks and apply them to image captioning on COCO.
+The notebook `LSTM_Captioning.ipynb` will walk you through the implementation of Long-Short Term Memory (LSTM) RNNs and apply them to image captioning on COCO.
 
-### Optional (Extra Credit): Style Transfer (tbd points)
+### Optional (Extra Credit): Style Transfer (5 points)
 
 In the notebook `Style_Transfer.ipynb`, you will learn how to create images with the content of one image but the style of another.
 
