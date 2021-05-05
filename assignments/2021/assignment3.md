@@ -7,6 +7,18 @@ permalink: /assignments2021/assignment3/
 
 <span style="color:red">This assignment is due on **Tuesday, May 25 2021** at 11:59pm PST.</span>
 
+Starter code containing Colab notebooks can be [downloaded here]({{site.hw_3_colab}}).
+
+- [Setup](#setup)
+- [Goals](#goals)
+- [Q1: Image Captioning with Vanilla RNNs (30 points)](#q1-image-captioning-with-vanilla-rnns-30-points)
+- [Q2: Image Captioning with Transformers (20 points)](#q2-image-captioning-with-transformers-20-points)
+- [Q3: Network Visualization: Saliency Maps, Class Visualization, and Fooling Images (15 points)](#q3-network-visualization-saliency-maps-class-visualization-and-fooling-images-15-points)
+- [Q4: Generative Adversarial Networks (15 points)](#q4-generative-adversarial-networks-15-points)
+- [Q5: Self-Supervised Learning for Image Classification (20 points)](#q5-self-supervised-learning-for-image-classification-20-points)
+- [Extra Credit: Image Captioning with LSTMs (5 points)](#extra-credit-image-captioning-with-lstms-5-points)
+- [Submitting your work](#submitting-your-work)
+
 ### Setup
 
 Please familiarize yourself with the [recommended workflow]({{site.baseurl}}/setup-instructions/#working-remotely-on-google-colaboratory) before starting the assignment. You should also watch the Colab walkthrough tutorial below.
