@@ -5,28 +5,7 @@ mathjax: true
 permalink: /assignments2021/assignment3/
 ---
 
-This assignment is due on **Tuesday, May 25 2021** at 11:59pm PDT.
-
-<details>
-<summary>Handy Download Links</summary>
-
- <ul>
-  <li><a href="{{ site.hw_3_colab }}">Option A: Colab starter code</a></li>
-  <li><a href="{{ site.hw_3_jupyter }}">Option B: Jupyter starter code</a></li>
-</ul>
-</details>
-- [Setup](#setup)
-- [Goals](#goals)
-  - [Google Colaboratory](#option-a-google-colaboratory-recommended)
-- [Q1: Image Captioning with Vanilla RNNs (29 points)](#q1-image-captioning-with-vanilla-rnns-29-points)
-- [Q2: Image Captioning with Transformers (18 points)](#q2-image-captioning-with-transformers-18-points)
-- [Q3: Network Visualization: Saliency maps, Class Visualization, and Fooling Images (15 points)](#q3-network-visualization-saliency-maps-class-visualization-and-fooling-images-15-points)
-- [Q4: Generative Adversarial Networks (15 points)](#q4-generative-adversarial-networks-15-points)
-- [Q5: Self-Supervised Learning for Image Classification (15 points)](#q5-self-supervised-learning-15-points)
-- [Optional (Extra Credit): Image Captioning with LSTMs (5 points)](#optional-image-captioning-with-lstms-5-points)
-- [Optional (Extra Credit): Style Transfer (5 points)](#optional-style-transfer-5-points)
-- [Submitting your work](#submitting-your-work)
-
+<span style="color:red">This assignment is due on **Tuesday, May 25 2021** at 11:59pm PST.</span>
 
 ### Setup
 
@@ -46,13 +25,10 @@ In this assignment, you will implement language networks and apply them to image
 
 The goals of this assignment are as follows:
 
-- Understand the architecture of recurrent neural networks (RNNs) and how they operate on sequences by sharing weights over time.
-- Understand and implement Vanilla RNNs, Long-Short Term Memory (LSTM), and Transformer networks for Image captioning.
-- Understand how to combine convolutional neural nets and recurrent nets to implement an image captioning system.
+- Understand and implement RNN and Transformer networks. Combine them with CNN networks for image captioning.
 - Explore various applications of image gradients, including saliency maps, fooling images, class visualizations.
 - Understand how to train and implement a Generative Adversarial Network (GAN) to produce images that resemble samples from a dataset.
 - Understand how to leverage self-supervised learning techniques to help with image classification tasks.
-- *(optional) Understand and implement techniques for image style transfer.
 
 **You will use PyTorch for the majority of this homework.**
 
@@ -62,9 +38,9 @@ The notebook `RNN_Captioning.ipynb` will walk you through the implementation of 
 
 ### Q2: Image Captioning with Transformers (20 points)
 
-The notebook `Transformer_Captioning.ipynb` will walk you through the implementation of a Transformer model and apply it to image captioning on COCO. **When first opening the notebook, go to `Runtime > Change runtime type` and set `Hardware accelerator` to `GPU`.**
+The notebook `Transformer_Captioning.ipynb` will walk you through the implementation of a Transformer model and apply it to image captioning on COCO.
 
-### Q3: Network Visualization: Saliency maps, Class Visualization, and Fooling Images (15 points)
+### Q3: Network Visualization: Saliency Maps, Class Visualization, and Fooling Images (15 points)
 
 The notebook `Network_Visualization.ipynb` will introduce the pretrained SqueezeNet model, compute gradients with respect to images, and use them to produce saliency maps and fooling images.
 
@@ -72,17 +48,13 @@ The notebook `Network_Visualization.ipynb` will introduce the pretrained Squeeze
 
 In the notebook `Generative_Adversarial_Networks.ipynb` you will learn how to generate images that match a training dataset and use these models to improve classifier performance when training on a large amount of unlabeled data and a small amount of labeled data. **When first opening the notebook, go to `Runtime > Change runtime type` and set `Hardware accelerator` to `GPU`.**
 
-### Q5: Self-Supervised Learning (20 points)
+### Q5: Self-Supervised Learning for Image Classification (20 points)
 
-In the notebook `Self_Supervised_Learning.ipynb`, you will learn how to leverage self-supervised pretraining to obtain better performance on image classification task **When first opening the notebook, go to `Runtime > Change runtime type` and set `Hardware accelerator` to `GPU`.**
+In the notebook `Self_Supervised_Learning.ipynb`, you will learn how to leverage self-supervised pretraining to obtain better performance on image classification tasks. **When first opening the notebook, go to `Runtime > Change runtime type` and set `Hardware accelerator` to `GPU`.**
 
-### Optional (Extra Credit): Image Captioning with LSTMs (5 points)
+### Extra Credit: Image Captioning with LSTMs (5 points)
 
 The notebook `LSTM_Captioning.ipynb` will walk you through the implementation of Long-Short Term Memory (LSTM) RNNs and apply them to image captioning on COCO.
-
-### Optional (Extra Credit): Style Transfer (5 points)
-
-In the notebook `Style_Transfer.ipynb`, you will learn how to create images with the content of one image but the style of another.
 
 ### Submitting your work
 
@@ -94,13 +66,13 @@ Once you have completed all notebooks and filled out the necessary code, you nee
 
 This notebook/script will:
 
-* Generate a zip file of your code (`.py` and `.ipynb`) called `a3.zip`.
-* Convert all notebooks into a single PDF file.
+* Generate a zip file of your code (`.py` and `.ipynb`) called `a3_code_submission.zip`.
+* Convert all notebooks into a single PDF file called `a3_inline_submission.pdf`.
 
 If your submission for this step was successful, you should see the following display message:
 
-`### Done! Please submit a3.zip and the pdfs to Gradescope. ###`
+`### Done! Please submit a3_code_submission.zip and a3_inline_submission.pdf to Gradescope. ###`
 
 **2.** Submit the PDF and the zip file to [Gradescope](https://www.gradescope.com/courses/257661).
 
-Remember to download `a3.zip` and `assignment.pdf` locally before submitting to Gradescope.
+Remember to download `a3_code_submission.zip` and `a3_inline_submission.pdf` locally before submitting to Gradescope.
