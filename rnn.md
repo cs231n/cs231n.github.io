@@ -7,6 +7,8 @@ permalink: /rnn/
 Table of Contents:
 
 - [Intro to RNN](#intro)
+- [RNN example as Character-level language model](#char)
+- [Long-Short Term Memory (LSTM)](#lstm)
 
 
 
@@ -31,9 +33,76 @@ a sequence of words of a sentence in French, for example (forth model in Figure 
 we can have a video classification RNN where we might imagine classifying every single frame of
 video with some number of classes, and most importantly we don't want the prediction to be only a
 function of the current timestep (current frame of the video), but also all the timesteps (frames)
-that have come before it in the video (rightmost model in Figure 1).
+that have come before it in the video (rightmost model in Figure 1). In general Recurrent Neural
+Networks allow us to wire up an architecture, where the prediction at every single timestep is a
+function of all the timesteps that have come up to that point.
 
 <div class="fig figcenter fighighlight">
   <img src="/assets/rnn/types.png" width="100%">
-  <div class="figcaption">Different (non-exhaustive) types of Recurrent Neural Network architectures. Red boxes are input vectors. Green boxes are hidden layers. Blue boxes are output vectors.</div>
+  <div class="figcaption">Figure 1. Different (non-exhaustive) types of Recurrent Neural Network architectures. Red boxes are input vectors. Green boxes are hidden layers. Blue boxes are output vectors.</div>
 </div>
+
+A Recurrent Neural Network is basically a blackbox (Figure 2), where it has a state and it receives through
+timesteps input vectors. At every single timestep we feed in an input vectors into the RNN and it
+can modify that state as a function of what it receives at every single timestep. There are weights
+inside the RNN and when we tune those weights, the RNN will have a different behavior in terms of
+how its state evolves, as it receives these inputs. Usually we are also interested in producing an
+output based on the RNN state, so we can produce these output vectors on top of the RNN (as depicted
+in Figure 2).
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/rnn/rnn_blackbox.png" width="20%" >
+  <div class="figcaption">Figure 2. Simplified RNN box.</div>
+</div>
+
+More precisely, RNN can be represented as a recurrence formula of some function $$f_W$$ with
+parameters $$W$$:
+
+$$
+h_t = f_W(h_{t-1}, x_t)
+$$
+
+where at every timestep it receives some previous state as a vector $$h_{t-1}$$ at previous
+iteration timestep $$t-1$$ and current input vector $$x_t$$ to produce the current state as a vector
+$$h_t$$. The same function is used at every single timestep. We have a fixed function $$f_W$$ of
+weights $$W$$ and we applied that single function at every single timestep and that allows us to use
+the Recurrent Neural Network on sequences without having to commit to the size of the sequence because
+we apply the exact same function at every single timestep, no matter how long the input or output
+sequences are.
+
+In the most simplest form of RNN, which we call a Vanilla RNN, the network is just a single hidden
+state $$h$$ where we use a recurrence formula that basically tells us how we should update our hidden
+state $$h$$ as a function of previous hidden state and the current input $$x_t$$. In particular, we're
+going to have these weight matrices $$W_{hh}$$ and $$W_{xh}$$, where they will project both the hidden
+state from the previous timestep and the current input $$x_t$$, and then those are going to be summed
+and squished with $$tanh$$ function to update the hidden state $$h_t$$ at timestep $$t$$. This recurrence
+is telling us how $$h$$ will change as a function of its history and also the current input at this
+timestep:
+
+$$
+h_t = tanh(W_{hh}h_{t-1} + W_{xh}x_t)
+$$
+
+We can base predictions on top of $$h$$, for example, by using just another matrix projection on top
+of the hidden state. This is the simplest complete case in which you can wire up a neural network:
+
+$$
+y_t = W_{hy}h_t
+$$
+
+So far we have showed RNN in terms of abstract vectors $$x, h, y$$, however we can endow these vectors
+with semantics in the following section.
+
+
+
+
+<a name='char'></a>
+
+## RNN example as Character-level language model
+
+
+
+
+<a name='lstm'></a>
+
+## Long-Short Term Memory (LSTM)
