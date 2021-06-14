@@ -889,7 +889,8 @@ Broadcasting two arrays together follows these rules:
 
 If this explanation does not make sense, try reading the explanation
 [from the documentation](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
-or [this explanation](http://scipy.github.io/old-wiki/pages/EricsBroadcastingDoc).
+or [this explanation](https://scipy.github.io/old-wiki/pages/EricsBroadcastingDoc).
+
 
 Functions that support broadcasting are known as *universal functions*. You can find
 the list of all universal functions
@@ -1053,7 +1054,7 @@ across two sets of points; you can read about it
 In this section give a brief introduction to the `matplotlib.pyplot` module,
 which provides a plotting system similar to that of MATLAB.
 
-<a name='matplotlib-plot'></a>
+<a name='matplotlib-plotting'></a>
 
 ### Plotting
 The most important function in matplotlib is `plot`,
