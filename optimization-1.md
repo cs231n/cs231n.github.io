@@ -99,7 +99,7 @@ Since it is so simple to check how good a given set of parameters **W** is, the 
 # assume the function L evaluates the loss function
 
 bestloss = float("inf") # Python assigns the highest possible float value
-for num in xrange(1000):
+for num in range(1000):
   W = np.random.randn(10, 3073) * 0.0001 # generate random parameters
   loss = L(X_train, Y_train, W) # get the loss over the entire training set
   if loss < bestloss: # keep track of the best solution
@@ -147,7 +147,7 @@ The first strategy you may think of is to try to extend one foot in a random dir
 ```python
 W = np.random.randn(10, 3073) * 0.001 # generate random starting W
 bestloss = float("inf")
-for i in xrange(1000):
+for i in range(1000):
   step_size = 0.0001
   Wtry = W + np.random.randn(10, 3073) * step_size
   loss = L(Xtr_cols, Ytr, Wtry)
@@ -187,11 +187,11 @@ The formula given above allows us to compute the gradient numerically. Here is a
 
 ```python
 def eval_numerical_gradient(f, x):
-  """ 
-  a naive implementation of numerical gradient of f at x 
+  """
+  a naive implementation of numerical gradient of f at x
   - f should be a function that takes a single argument
   - x is the point (numpy array) to evaluate the gradient at
-  """ 
+  """
 
   fx = f(x) # evaluate function value at original point
   grad = np.zeros(x.shape)
@@ -215,7 +215,7 @@ def eval_numerical_gradient(f, x):
   return grad
 ```
 
-Following the gradient formula we gave above, the code above iterates over all dimensions one by one, makes a small change `h` along that dimension and calculates the partial derivative of the loss function along that dimension by seeing how much the function changed. The variable `grad` holds the full gradient in the end. 
+Following the gradient formula we gave above, the code above iterates over all dimensions one by one, makes a small change `h` along that dimension and calculates the partial derivative of the loss function along that dimension by seeing how much the function changed. The variable `grad` holds the full gradient in the end.
 
 **Practical considerations**. Note that in the mathematical formulation the gradient is defined in the limit as **h** goes towards zero, but in practice it is often sufficient to use a very small value (such as 1e-5 as seen in the example). Ideally, you want to use the smallest step size that does not lead to numerical issues. Additionally, in practice it often works better to compute the numeric gradient using the **centered difference formula**: \\( [f(x+h) - f(x-h)] / 2 h \\) . See [wiki](http://en.wikipedia.org/wiki/Numerical_differentiation) for details.
 
@@ -297,7 +297,7 @@ $$
 \nabla_{w_j} L_i = \mathbb{1}(w_j^Tx_i - w_{y_i}^Tx_i + \Delta > 0) x_i
 $$
 
-Once you derive the expression for the gradient it is straight-forward to implement the expressions and use them to perform the gradient update. 
+Once you derive the expression for the gradient it is straight-forward to implement the expressions and use them to perform the gradient update.
 
 <a name='gd'></a>
 
@@ -346,7 +346,7 @@ In this section,
 
 - We developed the intuition of the loss function as a **high-dimensional optimization landscape** in which we are trying to reach the bottom. The working analogy we developed was that of a blindfolded hiker who wishes to reach the bottom. In particular, we saw that the SVM cost function is piece-wise linear and bowl-shaped.
 - We motivated the idea of optimizing the loss function with
-**iterative refinement**, where we start with a random set of weights and refine them step by step until the loss is minimized. 
+**iterative refinement**, where we start with a random set of weights and refine them step by step until the loss is minimized.
 - We saw that the **gradient** of a function gives the steepest ascent direction and we discussed a simple but inefficient way of computing it numerically using the finite difference approximation (the finite difference being the value of *h* used in computing the numerical gradient).
 - We saw that the parameter update requires a tricky setting of the **step size** (or the **learning rate**) that must be set just right: if it is too low the progress is steady but slow. If it is too high the progress can be faster, but more risky. We will explore this tradeoff in much more detail in future sections.
 - We discussed the tradeoffs between computing the **numerical** and **analytic** gradient. The numerical gradient is simple but it is approximate and expensive to compute. The analytic gradient is exact, fast to compute but more error-prone since it requires the derivation of the gradient with math. Hence, in practice we always use the analytic gradient and then perform a **gradient check**, in which its implementation is compared to the numerical gradient.

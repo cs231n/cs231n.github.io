@@ -3,6 +3,7 @@ layout: page
 mathjax: true
 permalink: /assignments2017/assignment2/
 ---
+**Note: this is the 2017 version of this assignment.**
 
 In this assignment you will practice writing backpropagation code, and training
 Neural Networks and Convolutional Neural Networks. The goals of this assignment

@@ -5,21 +5,23 @@ permalink: /linear-classify/
 
 Table of Contents:
 
-- [Intro to Linear classification](#intro)
-- [Linear score function](#score)
-- [Interpreting a linear classifier](#interpret)
-- [Loss function](#loss)
-  - [Multiclass SVM](#svm)
-  - [Softmax classifier](#softmax)
-  - [SVM vs Softmax](#svmvssoftmax)
-- [Interactive Web Demo of Linear Classification](#webdemo)
-- [Summary](#summary)
+- [Linear Classification](#linear-classification)
+  - [Parameterized mapping from images to label scores](#parameterized-mapping-from-images-to-label-scores)
+  - [Interpreting a linear classifier](#interpreting-a-linear-classifier)
+  - [Loss function](#loss-function)
+    - [Multiclass Support Vector Machine loss](#multiclass-support-vector-machine-loss)
+  - [Practical Considerations](#practical-considerations)
+  - [Softmax classifier](#softmax-classifier)
+  - [SVM vs. Softmax](#svm-vs-softmax)
+  - [Interactive web demo](#interactive-web-demo)
+  - [Summary](#summary)
+  - [Further Reading](#further-reading)
 
 <a name='intro'></a>
 
 ## Linear Classification
 
-In the last section we introduced the problem of Image Classification, which is the task of assigning a single label to an image from a fixed set of categories. Morever, we described the k-Nearest Neighbor (kNN) classifier which labels images by comparing them to (annotated) images from the training set. As we saw, kNN has a number of disadvantages:
+In the last section we introduced the problem of Image Classification, which is the task of assigning a single label to an image from a fixed set of categories. Moreover, we described the k-Nearest Neighbor (kNN) classifier which labels images by comparing them to (annotated) images from the training set. As we saw, kNN has a number of disadvantages:
 
 - The classifier must *remember* all of the training data and store it for future comparisons with the test data. This is space inefficient because datasets may easily be gigabytes in size.
 - Classifying a test image is expensive since it requires a comparison to all training images.
@@ -202,7 +204,7 @@ def L_i(x, y, W):
   correct_class_score = scores[y]
   D = W.shape[0] # number of classes, e.g. 10
   loss_i = 0.0
-  for j in xrange(D): # iterate over all wrong classes
+  for j in range(D): # iterate over all wrong classes
     if j == y:
       # skip for the true class to only loop over incorrect classes
       continue
@@ -285,6 +287,8 @@ $$
 
 can be interpreted as the (normalized) probability assigned to the correct label \\(y_i\\) given the image \\(x_i\\) and parameterized by \\(W\\). To see this, remember that the Softmax classifier interprets the scores inside the output vector \\(f\\) as the unnormalized log probabilities. Exponentiating these quantities therefore gives the (unnormalized) probabilities, and the division performs the normalization so that the probabilities sum to one. In the probabilistic interpretation, we are therefore minimizing the negative log likelihood of the correct class, which can be interpreted as performing *Maximum Likelihood Estimation* (MLE). A nice feature of this view is that we can now also interpret the regularization term \\(R(W)\\) in the full loss function as coming from a Gaussian prior over the weight matrix \\(W\\), where instead of MLE we are performing the *Maximum a posteriori* (MAP) estimation. We mention these interpretations to help your intuitions, but the full details of this derivation are beyond the scope of this class.
 
+<a name='softmax-stability'></a>
+
 **Practical issues: Numeric stability**. When you're writing code for computing the Softmax function in practice, the intermediate terms \\(e^{f_{y_i}}\\) and \\(\sum_j e^{f_j}\\) may be very large due to the exponentials. Dividing large numbers can be numerically unstable, so it is important to use a normalization trick. Notice that if we multiply the top and bottom of the fraction by a constant \\(C\\) and push it into the sum, we get the following (mathematically equivalent) expression:
 
 $$
@@ -366,4 +370,4 @@ We now saw one way to take a dataset of images and map each one to class scores 
 
 These readings are optional and contain pointers of interest.
 
-- [Deep Learning using Linear Support Vector Machines](http://arxiv.org/abs/1306.0239) from Charlie Tang 2013 presents some results claiming that the L2SVM outperforms Softmax.
+- [Deep Learning using Linear Support Vector Machines](https://arxiv.org/abs/1306.0239) from Charlie Tang 2013 presents some results claiming that the L2SVM outperforms Softmax.

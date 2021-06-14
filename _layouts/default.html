@@ -5,6 +5,25 @@
 
     <body>
 
+      <script src="https://unpkg.com/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js"></script>
+      <script>addBackToTop({
+        backgroundColor: '#fff',
+        innerHTML: 'Back to Top',
+        textColor: '#333'
+      })</script>
+      <style>
+        #back-to-top {
+          border: 1px solid #ccc;
+          border-radius: 0;
+          font-family: sans-serif;
+          font-size: 14px;
+          width: 100px;
+          text-align: center;
+          line-height: 30px;
+          height: 30px;
+        }
+      </style>
+
     {% include header.html %}
 
     <div class="page-content">
@@ -17,5 +36,13 @@
 
     <!-- mathjax -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+      // Make responsive
+      MathJax.Hub.Config({
+       "HTML-CSS": { linebreaks: { automatic: true } },
+       "SVG": { linebreaks: { automatic: true } },
+      });
+    </script>
+
     </body>
 </html>

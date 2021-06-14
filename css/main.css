@@ -63,6 +63,10 @@ a:visited { color: #205caa; }
   background-color: #f7f6f1;
 }
 
+.colab-badge {
+  border: 0 !important;
+}
+
 /* Custom CSS rules for content */
 
 .embedded-video {
@@ -119,40 +123,39 @@ a:visited { color: #205caa; }
 
 /* Site header */
 
-.title-wrap {
-  text-align: center;
-}
-
 .site-header {
+  position: relative;
   border-bottom: 1px solid #e8e8e8;
-  min-height: 56px;
   background-color: #8C1515;
+  padding: 15px;
+  text-align: center;
 }
 
 .site-title,
 .site-title:hover,
 .site-title:visited {
   display: block;
+  padding: 10px;
   font-size: 26px;
+  line-height: 1.2em;
   letter-spacing: -1px;
-  line-height: 56px;
-  position: relative;
-  z-index: 1;
   color: #FFF;
   font-weight: 100;
 }
 
-.site-nav {
-  float: right;
-  line-height: 56px;
-}
-
-.site-nav .menu-icon { display: none; }
-
-.site-nav .page-link {
-  margin-left: 20px;
-  color: #727272;
-  letter-spacing: -.5px;
+.site-link:link,
+.site-link:hover,
+.site-link:visited {
+  margin-bottom: 10px;
+  display: inline-block;
+  text-align: center;
+  font-size: 18px;
+  line-height: 2em;
+  height: 2em;
+  padding: 0 10px;
+  color: #fff;
+  border: 2px solid #fff;
+  font-weight: 50;
 }
 
 /* Site footer */
@@ -160,13 +163,6 @@ a:visited { color: #205caa; }
 .site-footer {
   border-top: 1px solid #e8e8e8;
   padding: 30px 0;
-}
-
-.footer-heading {
-  font-size: 18px;
-  font-weight: 300;
-  letter-spacing: -.5px;
-  margin-bottom: 15px;
 }
 
 .site-footer .column { float: left; margin-bottom: 15px; }
@@ -409,6 +405,15 @@ a:visited { color: #205caa; }
 /* media queries */
 /* ----------------------------------------------------------*/
 
+@media (min-width: 1080px) {
+  .site-link:link,
+  .site-link:visited {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
 
 @media screen and (max-width: 750px) {
 
@@ -434,45 +439,6 @@ a:visited { color: #205caa; }
 @media screen and (max-width: 600px) {
 
   .wrap { padding: 0 12px; }
-
-  .site-nav {
-    position: fixed;
-    z-index: 10;
-    top: 14px; right: 8px;
-    background-color: white;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    border: 1px solid #e8e8e8;
-  }
-
-  .site-nav .menu-icon {
-    display: block;
-    font-size: 24px;
-    color: #505050;
-    float: right;
-    width: 36px;
-    text-align: center;
-    line-height: 36px;
-  }
-
-  .site-nav .menu-icon svg { width: 18px; height: 16px; }
-
-  .site-nav .trigger {
-    clear: both;
-    margin-bottom: 5px;
-    display: none;
-  }
-
-  .site-nav:hover .trigger { display: block; }
-
-  .site-nav .page-link {
-    display: block;
-    text-align: right;
-    line-height: 1.25;
-    padding: 5px 10px;
-    margin: 0;
-  }
 
   .post-header h1 { font-size: 36px; }
   .post-content h2 { font-size: 28px; }

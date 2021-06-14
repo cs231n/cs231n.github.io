@@ -3,6 +3,7 @@ layout: page
 mathjax: true
 permalink: /assignments2018/assignment3/
 ---
+**Note: this is the 2018 version of this assignment.**
 
 In this assignment you will implement recurrent networks, and apply them to image captioning on Microsoft COCO. You will also explore methods for visualizing the features of a pretrained model on ImageNet, and also this model to implement Style Transfer. Finally, you will train a Generative Adversarial Network to generate images that look like a training dataset!
 
