@@ -170,4 +170,5 @@ how to scale up the training of the model over larger training dataset.
 <a name='lstm'></a>
 
 ## Long-Short Term Memory (LSTM)
+
 TODO-SANDRA
