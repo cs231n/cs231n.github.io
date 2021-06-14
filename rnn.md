@@ -62,19 +62,19 @@ $$
 h_t = f_W(h_{t-1}, x_t)
 $$
 
-where at every timestep it receives some previous state as a vector $$h_{t-1}$$ at previous
+where at every timestep it receives some previous state as a vector $$h_{t-1}$$ of previous
 iteration timestep $$t-1$$ and current input vector $$x_t$$ to produce the current state as a vector
-$$h_t$$. The same function is used at every single timestep. We have a fixed function $$f_W$$ of
-weights $$W$$ and we applied that single function at every single timestep and that allows us to use
+$$h_t$$. A fixed function $$f_W$$ with
+weights $$W$$ is applied at every single timestep and that allows us to use
 the Recurrent Neural Network on sequences without having to commit to the size of the sequence because
 we apply the exact same function at every single timestep, no matter how long the input or output
 sequences are.
 
 In the most simplest form of RNN, which we call a Vanilla RNN, the network is just a single hidden
 state $$h$$ where we use a recurrence formula that basically tells us how we should update our hidden
-state $$h$$ as a function of previous hidden state and the current input $$x_t$$. In particular, we're
-going to have these weight matrices $$W_{hh}$$ and $$W_{xh}$$, where they will project both the hidden
-state from the previous timestep and the current input $$x_t$$, and then those are going to be summed
+state $$h$$ as a function of previous hidden state $$h_{t-1}$$ and the current input $$x_t$$. In particular, we're
+going to have weight matrices $$W_{hh}$$ and $$W_{xh}$$, where they will project both the hidden
+state $$h_{t-1}$$ from the previous timestep and the current input $$x_t$$, and then those are going to be summed
 and squished with $$tanh$$ function to update the hidden state $$h_t$$ at timestep $$t$$. This recurrence
 is telling us how $$h$$ will change as a function of its history and also the current input at this
 timestep:
@@ -83,7 +83,7 @@ $$
 h_t = tanh(W_{hh}h_{t-1} + W_{xh}x_t)
 $$
 
-We can base predictions on top of $$h$$, for example, by using just another matrix projection on top
+We can base predictions on top of $$h_t$$ by using just another matrix projection on top
 of the hidden state. This is the simplest complete case in which you can wire up a neural network:
 
 $$
@@ -99,6 +99,70 @@ with semantics in the following section.
 <a name='char'></a>
 
 ## RNN example as Character-level language model
+
+One of the simplest ways in which we can use an RNN is in the case of a character-level language model
+since it's intuitive to understand. The way this RNN will work is we will feed a sequence of characters
+into the RNN and at every single timestep, we will ask the RNN to predict the next character in the
+sequence. The prediction of RNN will be in the form of score distribution of the characters in the vocabulary
+for what RNN thinks should come next in the sequence that it has seen so far.
+
+So suppose, in a very simple example (Figure 3), we have the training sequence of just one string $$\text{"hello"}$$, and we have a vocabulary
+$$V \in \{\text{"h"}, \text{"e"}, \text{"l"}, \text{"o"}\}$$ of 4 characters in the entire dataset. We are going to try to get an RNN to
+learn to predict the next character in the sequence on this training data.
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/rnn/char_level_language_model.png" width="60%" >
+  <div class="figcaption">Figure 3. Simplified Character-level Language Model RNN.</div>
+</div>
+
+As shown in Figure 3, we'll feed in one character at a time into an RNN, first $$\text{"h"}$$, then
+$$\text{"e"}$$, then $$\text{"l"}$$, and finally $$\text{"l"}$$. All characters are encoded in the representation
+of what's called a one-hot vector, where only one unique bit of the vector is turned on for each unique
+character in the vocabulary. For example:
+
+$$
+\begin{bmatrix}1 \\ 0 \\ 0 \\ 0 \end{bmatrix} = \text{"h"}\ \ 
+\begin{bmatrix}0 \\ 1 \\ 0 \\ 0 \end{bmatrix} = \text{"e"}\ \ 
+\begin{bmatrix}0 \\ 0 \\ 1 \\ 0 \end{bmatrix} = \text{"l"}\ \ 
+\begin{bmatrix}0 \\ 0 \\ 0 \\ 1 \end{bmatrix} = \text{"o"}
+$$
+
+Then we're going to use the recurrence formula from the previous section at every single timestep.
+Suppose we start off with $$h$$ as a vector of size 3 with all zeros. By using this fixed recurrence
+formula, we're going to end up with a 3-dimensional representation of the next hidden state $$h$$
+that basically at any point in time summarizes all the characters that have come until then:
+
+$$
+\begin{aligned}
+\begin{bmatrix}0.3 \\ -0.1 \\ 0.9 \end{bmatrix} &= f_W(W_{hh}\begin{bmatrix}0 \\ 0 \\ 0 \end{bmatrix} + W_{xh}\begin{bmatrix}1 \\ 0 \\ 0 \\ 0 \end{bmatrix}) \ \ \ \ &(1) \\
+\begin{bmatrix}1.0 \\ 0.3 \\ 0.1 \end{bmatrix} &= f_W(W_{hh}\begin{bmatrix}0.3 \\ -0.1 \\ 0.9 \end{bmatrix} + W_{xh}\begin{bmatrix}0 \\ 1 \\ 0 \\ 0 \end{bmatrix}) \ \ \ \ &(2) \\
+\begin{bmatrix}0.1 \\ -0.5 \\ -0.3 \end{bmatrix} &= f_W(W_{hh}\begin{bmatrix}1.0 \\ 0.3 \\ 0.1 \end{bmatrix} + W_{xh}\begin{bmatrix}0 \\ 0 \\ 1 \\ 0 \end{bmatrix}) \ \ \ \ &(3) \\
+\begin{bmatrix}-0.3 \\ 0.9 \\ 0.7 \end{bmatrix} &= f_W(W_{hh}\begin{bmatrix}0.1 \\ -0.5 \\ -0.3 \end{bmatrix} + W_{xh}\begin{bmatrix}0 \\ 0 \\ 1 \\ 0 \end{bmatrix}) \ \ \ \ &(4)
+\end{aligned}
+$$
+
+As we apply this recurrence at every timestep, we're going to predict what should be the next character
+in the sequence at every timestep. Since we have four characters in vocabulary $$V$$, we're going to
+predict 4-dimensional vector of logits at every single timestep.
+
+As shown in Figure 3, in the very first timestep we fed in $$\text{"h"}$$, and the RNN with its current
+setting of weights computed a vector of logits:
+
+$$
+\begin{bmatrix}1.0 \\ 2.2 \\ -3.0 \\ 4.1 \end{bmatrix} \rightarrow \begin{bmatrix}\text{"h"} \\ \text{"e"} \\ \text{"l"}\\ \text{"o"} \end{bmatrix}
+$$
+
+where RNN thinks that the next character $$\text{"h"}$$ is $$1.0$$ likely to come next, $$\text{"e"}$$ is $$2.2$$ likely,
+$$\text{"e"}$$ is $$-3.0$$ likely, and $$\text{"o"}$$ is $$4.1$$ likely to come next. In this case,
+RNN incorrectly suggests that $$\text{"o"}$$ should come next, as the score of $$4.1$$ is the highest.
+However, of course, we know that in this training sequence $$\text{"e"}$$ should follow $$\text{"h"}$$,
+so in fact the score of $$2.2$$ is the correct answer as it's highlighted in green in Figure 3, and we want that to be high and all other scores
+to be low. At every single timestep we have a target for what next character should come in the sequence,
+therefore the error signal is backpropagated as a gradient of the loss function through the connections.
+As a loss function we could choose to have a softmax classifier, for example, so we just get all those losses
+flowing down from the top backwards to calculate the gradients on all the weight matrices to figure out how to
+shift the matrices so that the correct probabilities are coming out of the RNN. Similarly we can imagine
+how to scale up the training of the model over larger training dataset.
 
 
 
