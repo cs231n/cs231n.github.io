@@ -59,7 +59,7 @@
 \author{
   Ashish Jain \\
   Stanford University \\
-  \texttt{ashishj@stanford.edu}
+  \texttt{ashishj@stanford.edu/cs231n@ashishjain.io}
  }
 \date{\today}
 
@@ -1300,51 +1300,53 @@ To compute $\frac{\partial L}{\partial \matr{X}}$, we need to compute $\frac{\pa
 \subsection{Forward Pass}
 Suppose we are given a matrix $\matr{X}$ of shape $3 \times 2$. Let $\vecr{z}$ = \verb|np.sum(|${\matr{X}}$\verb|, axis=0)|. $\vecr{z}$ will be of shape $1 \times 2$.
 
-\begin{displaymath}
-\matr{X} =
+\begin{flalign}
+\matr{X} &=
 \begin{bmatrix}
 x_{1,1} & x_{1,2} \\%[0.5em]
 x_{2,1} & x_{2,2} \\%[0.5em]
 x_{3,1} & x_{3,2} \\%[0.5em]
-\end{bmatrix}
-\end{displaymath}
+\end{bmatrix} &
+\end{flalign}
 
-$\vecr{z}$ can be expressed as:
+\noindent $\vecr{z}$ can be expressed as:
 
-\begin{align}
+\begin{flalign}
 \vecr{z} &=
 \begin{bmatrix}
 z_{1,1} & z_{1,2} \\%[0.5em]
 \end{bmatrix}
+&
 \nonumber \\
 &=
 \begin{bmatrix}
 x_{1,1} + x_{2,1} + x_{3,1} &
 x_{1,2} + x_{2,2} + x_{3,2} \\%[0.5em]
 \end{bmatrix}
-\end{align}
+\end{flalign}
 
 \subsection{Backward Pass}
 We have $\frac{\partial L}{\partial \vecr{z}}$ of shape $1 \times 2$.
 
-\begin{displaymath}
-\frac{\partial L}{\partial \matr{Z}} =
+\begin{flalign}
+\frac{\partial L}{\partial \vecr{z}} &=
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} & \frac{\partial L}{\partial z_{1,2}} \\[0.3em]
 \end{bmatrix}
-\end{displaymath}
+& \eqncomment{$\frac{\partial L}{\partial \vecr{z}}$ is the same shape as $\vecr{z}$ as $L$ is a scalar}
+\end{flalign}
 
-We now need to compute $\frac{\partial L}{\partial \matr{X}}$. Using chain rule, we get:
+\noindent We now need to compute $\frac{\partial L}{\partial \matr{X}}$. Using chain rule, we get:
 
-\begin{equation} \label{dX_sum_along_axis_0}
-\frac{\partial L}{\partial \matr{X}} = \frac{\partial \vecr{z}}{\partial \matr{X}}\frac{\partial L}{\partial \vecr{z}}
-\end{equation}
+\begin{flalign} \label{dX_sum_along_axis_0}
+\frac{\partial L}{\partial \matr{X}} &= \frac{\partial \vecr{z}}{\partial \matr{X}}\frac{\partial L}{\partial \vecr{z}} &
+\end{flalign}
 
 \subsubsection{Computing $\frac{\partial L}{\partial \matr{X}}$}
 To compute $\frac{\partial L}{\partial \matr{X}}$, we need to compute $\frac{\partial \vecr{z}}{\partial \matr{X}}$. To make it easy for us to think about and capture the Jacobian in a two dimensional matrix (as opposed to a tensor), we will reshape matrix $\matr{X}$ as well as vector $\vecr{z}$ as column vectors, and compute Jacobians on them. Once we have computed the column vector corresponding to $\frac{\partial L}{\partial \matr{X}}$, we will reshape it back to a matrix with the same shape as $\matr{X}$.
 
-\begin{align}
-\frac{\partial \matr{Z}}{\partial \matr{X}} &=
+\begin{flalign}
+\frac{\partial \vecr{z}}{\partial \matr{X}} &=
 \begin{bmatrix}
 \frac{\partial z_{1,1}}{\partial x_{1,1}} & \frac{\partial z_{1,2}}{\partial x_{1,1}} \\[0.7em]
 \frac{\partial z_{1,1}}{\partial x_{1,2}} & \frac{\partial z_{1,2}}{\partial x_{1,2}} \\[0.7em]
@@ -1352,7 +1354,9 @@ To compute $\frac{\partial L}{\partial \matr{X}}$, we need to compute $\frac{\pa
 \frac{\partial z_{1,1}}{\partial x_{2,2}} & \frac{\partial z_{1,2}}{\partial x_{2,2}} \\[0.7em]
 \frac{\partial z_{1,1}}{\partial x_{3,1}} & \frac{\partial z_{1,2}}{\partial x_{3,1}} \\[0.7em]
 \frac{\partial z_{1,1}}{\partial x_{3,2}} & \frac{\partial z_{1,2}}{\partial x_{3,2}} \\[0.7em]
-\end{bmatrix} \nonumber
+\end{bmatrix}
+& \longeqncomment{$\matr{X}$, $\vecr{z}$ are being treated as column vectors.}{Therefore, $\frac{\partial \vecr{z}}{\partial \matr{X}}$ is of shape $6\times2$.}
+\nonumber
 \\ \label{dZbydX_sum_along_axis_0}
 &=
 \begin{bmatrix}
@@ -1363,22 +1367,26 @@ To compute $\frac{\partial L}{\partial \matr{X}}$, we need to compute $\frac{\pa
 1 & 0 \\%[0.5em]
 0 & 1 \\%[0.5em]
 \end{bmatrix}
-\end{align}
+\end{flalign}
 
-Now, $\frac{\partial L}{\partial \vecr{z}}$ expressed as a column vector will be:
+\noindent Now, $\frac{\partial L}{\partial \vecr{z}}$ expressed as a column vector will be:
 
-\begin{equation} \label{dZAsColumnVector_sum_along_axis_0}
-\frac{\partial L}{\partial \vecr{z}} =
+\begin{flalign} \label{dZAsColumnVector_sum_along_axis_0}
+\frac{\partial L}{\partial \vecr{z}} &=
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} \\[0.7em]
 \frac{\partial L}{\partial z_{1,2}} \\[0.7em]
-\end{bmatrix}
-\end{equation}
+\end{bmatrix} &
+& \eqncomment{Reshaping $\frac{\partial L}{\partial \vecr{z}}$ from shape $1 \times 2$ to $2 \times 1$}
+\end{flalign}
 
-Plugging equations \ref{dZbydX_sum_along_axis_0} and \ref{dZAsColumnVector_sum_along_axis_0} into equation \ref{dX_sum_along_axis_0}, we get:
+\noindent Plugging equations \ref{dZbydX_sum_along_axis_0} and \ref{dZAsColumnVector_sum_along_axis_0} into equation \ref{dX_sum_along_axis_0}, we get:
 
-\begin{align}
+\begin{flalign}
 \frac{\partial L}{\partial \matr{X}} &=
+\frac{\partial \vecr{z}}{\partial \matr{X}}\frac{\partial L}{\partial \vecr{z}} &
+\nonumber \\
+&=
 \begin{bmatrix}
 1 & 0 \\%[0.5em]
 0 & 1 \\%[0.5em]
@@ -1391,6 +1399,7 @@ Plugging equations \ref{dZbydX_sum_along_axis_0} and \ref{dZAsColumnVector_sum_a
 \frac{\partial L}{\partial z_{1,1}} \\[0.7em]
 \frac{\partial L}{\partial z_{1,2}} \\[0.7em]
 \end{bmatrix}
+& \eqncomment{$\matr{X}$, $\vecr{z}$ and $\frac{\partial L}{\partial \vecr{z}}$ are being treated as column vectors}
 \nonumber \\
 &=
 \begin{bmatrix}
@@ -1401,11 +1410,11 @@ Plugging equations \ref{dZbydX_sum_along_axis_0} and \ref{dZAsColumnVector_sum_a
 \frac{\partial L}{\partial z_{1,1}} \\[0.7em]
 \frac{\partial L}{\partial z_{1,2}} \\[0.7em]
 \end{bmatrix} \label{dXAsColumnVector_sum_along_axis_0}
-\end{align}
+\end{flalign}
 
-Now, reshaping column vector in equation \ref{dXAsColumnVector_sum_along_axis_0} as a matrix of shape $\matr{X}$, we get:
+\noindent Reshaping column vector in equation \ref{dXAsColumnVector_sum_along_axis_0} as a matrix of shape $\matr{X}$, we get:
 
-\begin{align}
+\begin{flalign}
 \frac{\partial L}{\partial \matr{X}} &=
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} &
@@ -1422,39 +1431,45 @@ Now, reshaping column vector in equation \ref{dXAsColumnVector_sum_along_axis_0}
 1 \\
 1 \\
 \end{bmatrix}
+\underbrace{
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} & \frac{\partial L}{\partial z_{1,2}} \\[0.3em]
-\end{bmatrix} \nonumber
+\end{bmatrix}}_{\frac{\partial L}{\partial \vecr{z}}}
+& \eqncomment{Decomposing into a matmul operation}
+\nonumber
 \\
 &=
 \mathbf{1}_{3,1} \frac{\partial L}{\partial \vecr{z}} \nonumber
+& \eqncomment{We are using a bold 1 namely $\mathbf{1}$ to denote matrix of ones}
 \\
 &=
 \mathbf{1}_{\text{rows}(\matr{X}),1} \frac{\partial L}{\partial \vecr{z}}
-\end{align}
+& \eqncomment{Generalizing beyond our considered example}
+\end{flalign}
 
 \section{Sum along axis=1}
 \subsection{Forward Pass}
 Suppose we are given a matrix $\matr{X}$ of shape $3 \times 2$. Let $\vecr{z}$ = \verb|np.sum(|${\matr{X}}$\verb|, axis=1)|. $\vecr{z}$ will be of shape $3 \times 1$.
 
-\begin{displaymath}
-\matr{X} =
+\begin{flalign}
+\matr{X} &=
 \begin{bmatrix}
 x_{1,1} & x_{1,2} \\%[0.5em]
 x_{2,1} & x_{2,2} \\%[0.5em]
 x_{3,1} & x_{3,2} \\%[0.5em]
-\end{bmatrix}
-\end{displaymath}
+\end{bmatrix} &
+\end{flalign}
 
-$\vecr{z}$ can be expressed as:
+\noindent $\vecr{z}$ can be expressed as:
 
-\begin{align}
+\begin{flalign}
 \vecr{z} &=
 \begin{bmatrix}
 z_{1,1} \\
 z_{2,1} \\
 z_{3,1} \\
 \end{bmatrix}
+&
 \nonumber \\
 &=
 \begin{bmatrix}
@@ -1462,31 +1477,32 @@ x_{1,1} + x_{1,2} \\
 x_{2,1} + x_{2,2} \\
 x_{3,1} + x_{3,2} \\
 \end{bmatrix}
-\end{align}
+\end{flalign}
 
 \subsection{Backward Pass}
 We have $\frac{\partial L}{\partial \vecr{z}}$ of shape $3 \times 1$.
 
-\begin{align}
-\frac{\partial L}{\partial \matr{Z}} =
+\begin{flalign}
+\frac{\partial L}{\partial \vecr{z}} &=
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} \\[0.7em]
 \frac{\partial L}{\partial z_{2,1}} \\[0.7em]
 \frac{\partial L}{\partial z_{3,1}} \\[0.7em]
 \end{bmatrix} \label{dZAsColumnVector_sum_along_axis_1}
-\end{align}
+& \eqncomment{$\frac{\partial L}{\partial \vecr{z}}$ is the same shape as $\vecr{z}$ as $L$ is a scalar}
+\end{flalign}
 
-We now need to compute $\frac{\partial L}{\partial \matr{X}}$. Using chain rule, we get:
+\noindent We now need to compute $\frac{\partial L}{\partial \matr{X}}$. Using chain rule, we get:
 
-\begin{equation} \label{dX_sum_along_axis_1}
-\frac{\partial L}{\partial \matr{X}} = \frac{\partial \vecr{z}}{\partial \matr{X}}\frac{\partial L}{\partial \vecr{z}}
-\end{equation}
+\begin{flalign} \label{dX_sum_along_axis_1}
+\frac{\partial L}{\partial \matr{X}} &= \frac{\partial \vecr{z}}{\partial \matr{X}}\frac{\partial L}{\partial \vecr{z}} &
+\end{flalign}
 
 \subsubsection{Computing $\frac{\partial L}{\partial \matr{X}}$}
 To compute $\frac{\partial L}{\partial \matr{X}}$, we need to compute $\frac{\partial \vecr{z}}{\partial \matr{X}}$. To make it easy for us to think about and capture the Jacobian in a two dimensional matrix (as opposed to a tensor), we will reshape matrix $\matr{X}$ as a column vector, and compute Jacobians on the column vectors instead. Once we have computed the column vector corresponding to $\frac{\partial L}{\partial \matr{X}}$, we will reshape it back to a matrix with the same shape as $\matr{X}$.
 
-\begin{align}
-\frac{\partial \matr{Z}}{\partial \matr{X}} &=
+\begin{flalign}
+\frac{\partial \vecr{z}}{\partial \matr{X}} &=
 \begin{bmatrix}
 \frac{\partial z_{1,1}}{\partial x_{1,1}} & \frac{\partial z_{2,1}}{\partial x_{1,1}} & \frac{\partial z_{3,1}}{\partial x_{1,1}}\\[0.7em]
 \frac{\partial z_{1,1}}{\partial x_{1,2}} & \frac{\partial z_{2,1}}{\partial x_{1,2}} & \frac{\partial z_{3,1}}{\partial x_{1,2}} \\[0.7em]
@@ -1494,7 +1510,9 @@ To compute $\frac{\partial L}{\partial \matr{X}}$, we need to compute $\frac{\pa
 \frac{\partial z_{1,1}}{\partial x_{2,2}} & \frac{\partial z_{2,1}}{\partial x_{2,2}} & \frac{\partial z_{3,1}}{\partial x_{2,2}} \\[0.7em]
 \frac{\partial z_{1,1}}{\partial x_{3,1}} & \frac{\partial z_{2,1}}{\partial x_{3,1}} & \frac{\partial z_{3,1}}{\partial x_{3,1}} \\[0.7em]
 \frac{\partial z_{1,1}}{\partial x_{3,2}} & \frac{\partial z_{2,1}}{\partial x_{3,2}} & \frac{\partial z_{3,1}}{\partial x_{3,2}} \\[0.7em]
-\end{bmatrix} \nonumber
+\end{bmatrix}
+& \longeqncomment{$\matr{X}$ is being treated as a column vector.}{Therefore, $\frac{\partial \vecr{z}}{\partial \matr{X}}$ is of shape $6\times3$.}
+\nonumber
 \\ \label{dZbydX_sum_along_axis_1}
 &=
 \begin{bmatrix}
@@ -1505,12 +1523,15 @@ To compute $\frac{\partial L}{\partial \matr{X}}$, we need to compute $\frac{\pa
 0 & 0 & 1 \\%[0.5em]
 0 & 0 & 1 \\%[0.5em]
 \end{bmatrix}
-\end{align}
+\end{flalign}
 
-Plugging equations \ref{dZbydX_sum_along_axis_1} and \ref{dZAsColumnVector_sum_along_axis_1} into equation \ref{dX_sum_along_axis_1}, we get:
+\noindent Plugging equations \ref{dZbydX_sum_along_axis_1} and \ref{dZAsColumnVector_sum_along_axis_1} into equation \ref{dX_sum_along_axis_1}, we get:
 
-\begin{align}
+\begin{flalign}
 \frac{\partial L}{\partial \matr{X}} &=
+\frac{\partial \vecr{z}}{\partial \matr{X}}\frac{\partial L}{\partial \vecr{z}} &
+\nonumber \\
+&=
 \begin{bmatrix}
 1 & 0 & 0 \\%[0.5em]
 1 & 0 & 0 \\%[0.5em]
@@ -1524,6 +1545,7 @@ Plugging equations \ref{dZbydX_sum_along_axis_1} and \ref{dZAsColumnVector_sum_a
 \frac{\partial L}{\partial z_{2,1}} \\[0.7em]
 \frac{\partial L}{\partial z_{3,1}} \\[0.7em]
 \end{bmatrix}
+& \eqncomment{$\matr{X}$ and $\frac{\partial L}{\partial \vecr{z}}$ are being treated as column vectors}
 \nonumber \\
 &=
 \begin{bmatrix}
@@ -1534,11 +1556,11 @@ Plugging equations \ref{dZbydX_sum_along_axis_1} and \ref{dZAsColumnVector_sum_a
 \frac{\partial L}{\partial z_{3,1}} \\[0.7em]
 \frac{\partial L}{\partial z_{3,1}} \\[0.7em]
 \end{bmatrix} \label{dXAsColumnVector_sum_along_axis_1}
-\end{align}
+\end{flalign}
 
-Now, reshaping column vector in equation \ref{dXAsColumnVector_sum_along_axis_1} as a matrix of shape $\matr{X}$, we get:
+\noindent Reshaping column vector in equation \ref{dXAsColumnVector_sum_along_axis_1} as a matrix of shape $\matr{X}$, we get:
 
-\begin{align}
+\begin{flalign}
 \frac{\partial L}{\partial \matr{X}} &=
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} &
@@ -1550,44 +1572,51 @@ Now, reshaping column vector in equation \ref{dXAsColumnVector_sum_along_axis_1}
 \end{bmatrix} \nonumber
 \\
 &=
+\underbrace{
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} \\[0.7em]
 \frac{\partial L}{\partial z_{2,1}} \\[0.7em]
 \frac{\partial L}{\partial z_{3,1}} \\[0.7em]
-\end{bmatrix}
+\end{bmatrix}}_{\frac{\partial L}{\partial \vecr{z}}}
 \begin{bmatrix}
 1 & 1 \\%[0.3em]
-\end{bmatrix} \nonumber
+\end{bmatrix}
+& \eqncomment{Decomposing into a matmul operation}
+\nonumber
 \\
 &=
-\frac{\partial L}{\partial \vecr{z}} \mathbf{1}_{1,2} \nonumber
+\frac{\partial L}{\partial \vecr{z}} \mathbf{1}_{1,2}
+& \eqncomment{We are using a bold 1 namely $\mathbf{1}$ to denote matrix of ones}
+\nonumber
 \\
 &=
 \frac{\partial L}{\partial \vecr{z}} \mathbf{1}_{1, \text{cols}(\matr{X})}
-\end{align}
+& \eqncomment{Generalizing beyond our considered example}
+\end{flalign}
 
 \section{Broadcasting a column vector}
 \subsection{Forward Pass}
-Suppose we are given a vector $\vecr{x}$ of shape $3 \times 1$. Let $\matr{Z} = \vecr{x} \mathbf{1}_{1,\text{C}}$. $\matr{Z}$ will be of shape $3 \times \text{C}$. Let us suppose that C = 2.
+Suppose we are given a vector $\vecr{x}$ of shape $3 \times 1$. Let $\matr{Z} = \vecr{x} \mathbf{1}_{1,\text{C}}$ where $\mathbf{1}$ denotes a matrix of ones. $\matr{Z}$ will be of shape $3 \times \text{C}$. Let us suppose that C = 2.
 
-\begin{displaymath}
-\matr{X} =
+\begin{flalign}
+\vecr{x} &=
 \begin{bmatrix}
 x_{1,1} \\%[0.5em]
 x_{2,1} \\%[0.5em]
 x_{3,1} \\%[0.5em]
-\end{bmatrix}
-\end{displaymath}
+\end{bmatrix} &
+\end{flalign}
 
-$\vecr{z}$ can be expressed as:
+\noindent $\matr{Z}$ can be expressed as:
 
-\begin{align}
-\vecr{z} &=
+\begin{flalign}
+\matr{Z} &=
 \begin{bmatrix}
 z_{1,1} & z_{1,2} \\
 z_{2,1} & z_{2,2} \\
 z_{3,1} & z_{2,3} \\
 \end{bmatrix}
+&
 \nonumber \\
 &=
 \begin{bmatrix}
@@ -1595,36 +1624,39 @@ x_{1,1} & x_{1,1} \\
 x_{2,1} & x_{2,1} \\
 x_{3,1} & x_{3,1} \\
 \end{bmatrix}
-\end{align}
+\end{flalign}
 
 \subsection{Backward Pass}
 We have $\frac{\partial L}{\partial \matr{Z}}$ of shape $3 \times 2$.
 
-\begin{align}
-\frac{\partial L}{\partial \matr{Z}} =
+\begin{flalign}
+\frac{\partial L}{\partial \matr{Z}} &=
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} & \frac{\partial L}{\partial z_{1,2}} \\[0.7em]
 \frac{\partial L}{\partial z_{2,1}} & \frac{\partial L}{\partial z_{2,2}} \\[0.7em]
 \frac{\partial L}{\partial z_{3,1}} & \frac{\partial L}{\partial z_{3,2}} \\[0.7em]
 \end{bmatrix} \label{dZAsColumnVector_column_vector}
-\end{align}
+& \eqncomment{$\frac{\partial L}{\partial \vecr{z}}$ is the same shape as $\vecr{z}$ as $L$ is a scalar}
+\end{flalign}
 
-We now need to compute $\frac{\partial L}{\partial \vecr{x}}$. Using chain rule, we get:
+\noindent We now need to compute $\frac{\partial L}{\partial \vecr{x}}$. Using chain rule, we get:
 
-\begin{equation} \label{dX_broadcast_column_vector}
-\frac{\partial L}{\partial \vecr{x}} = \frac{\partial \matr{Z}}{\partial \vecr{x}}\frac{\partial L}{\partial \matr{Z}}
-\end{equation}
+\begin{flalign} \label{dX_broadcast_column_vector}
+\frac{\partial L}{\partial \vecr{x}} &= \frac{\partial \matr{Z}}{\partial \vecr{x}}\frac{\partial L}{\partial \matr{Z}} &
+\end{flalign}
 
 \subsubsection{Computing $\frac{\partial L}{\partial \vecr{x}}$}
 To compute $\frac{\partial L}{\partial \vecr{x}}$, we need to compute $\frac{\partial \matr{Z}}{\partial \vecr{x}}$. To make it easy for us to think about and capture the Jacobian in a two dimensional matrix (as opposed to a tensor), we will reshape matrix $\matr{Z}$ as a column vector, and compute Jacobians on the column vectors instead.
 
-\begin{align}
+\begin{flalign}
 \frac{\partial \matr{Z}}{\partial \vecr{x}} &=
 \begin{bmatrix}
 \frac{\partial z_{1,1}}{\partial x_{1,1}} & \frac{\partial z_{1,2}}{\partial x_{1,1}} & \frac{\partial z_{2,1}}{\partial x_{1,1}} & \frac{\partial z_{2,2}}{\partial x_{1,1}} & \frac{\partial z_{3,1}}{\partial x_{1,1}} & \frac{\partial z_{3,2}}{\partial x_{1,1}} \\[0.7em]
 \frac{\partial z_{1,1}}{\partial x_{2,1}} & \frac{\partial z_{1,2}}{\partial x_{2,1}} & \frac{\partial z_{2,1}}{\partial x_{2,1}} & \frac{\partial z_{2,2}}{\partial x_{2,1}} & \frac{\partial z_{3,1}}{\partial x_{2,1}} & \frac{\partial z_{3,2}}{\partial x_{2,1}} \\[0.7em]
 \frac{\partial z_{1,1}}{\partial x_{3,1}} & \frac{\partial z_{1,2}}{\partial x_{3,1}} & \frac{\partial z_{2,1}}{\partial x_{3,1}} & \frac{\partial z_{2,2}}{\partial x_{3,1}} & \frac{\partial z_{3,1}}{\partial x_{3,1}} & \frac{\partial z_{3,2}}{\partial x_{3,1}} \\[0.7em]
-\end{bmatrix} \nonumber
+\end{bmatrix}
+& \longeqncomment{$\matr{Z}$ is being treated as a column vector.}{Therefore, $\frac{\partial \matr{Z}}{\partial \vecr{x}}$ is of shape $3\times6$.}
+\nonumber
 \\ \label{dZbydX_broadcast_column_vector}
 &=
 \begin{bmatrix}
@@ -1632,12 +1664,12 @@ To compute $\frac{\partial L}{\partial \vecr{x}}$, we need to compute $\frac{\pa
 0 & 0 & 1 & 1 & 0 & 0\\%[0.5em]
 0 & 0 & 0 & 0 & 1 & 1\\%[0.5em]
 \end{bmatrix}
-\end{align}
+\end{flalign}
 
-Now, $\frac{\partial L}{\partial \matr{Z}}$ expressed as a column vector will be:
+\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ expressed as a column vector will be:
 
-\begin{equation} \label{dZAsColumnVector_broadcast_column_vector}
-\frac{\partial L}{\partial \matr{Z}} =
+\begin{flalign} \label{dZAsColumnVector_broadcast_column_vector}
+\frac{\partial L}{\partial \matr{Z}} &=
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} \\[0.7em]
 \frac{\partial L}{\partial z_{1,2}} \\[0.7em]
@@ -1646,12 +1678,17 @@ Now, $\frac{\partial L}{\partial \matr{Z}}$ expressed as a column vector will be
 \frac{\partial L}{\partial z_{3,1}} \\[0.7em]
 \frac{\partial L}{\partial z_{3,2}} \\[0.7em]
 \end{bmatrix}
-\end{equation}
+& \eqncomment{Reshaping $\frac{\partial L}{\partial \matr{Z}}$ from shape $3 \times 2$ to $6 \times 1$}
+\end{flalign}
 
-Plugging equations \ref{dZbydX_broadcast_column_vector} and \ref{dZAsColumnVector_broadcast_column_vector} into equation \ref{dX_broadcast_column_vector}, we get:
+\noindent Plugging equations \ref{dZbydX_broadcast_column_vector} and \ref{dZAsColumnVector_broadcast_column_vector} into equation \ref{dX_broadcast_column_vector}, we get:
 
-\begin{align}
+\begin{flalign}
 \frac{\partial L}{\partial \vecr{x}} &=
+\frac{\partial \matr{Z}}{\partial \vecr{x}}\frac{\partial L}{\partial \matr{Z}}
+&
+\nonumber \\
+&=
 \begin{bmatrix}
 1 & 1 & 0 & 0 & 0 & 0\\%[0.5em]
 0 & 0 & 1 & 1 & 0 & 0\\%[0.5em]
@@ -1665,6 +1702,7 @@ Plugging equations \ref{dZbydX_broadcast_column_vector} and \ref{dZAsColumnVecto
 \frac{\partial L}{\partial z_{3,1}} \\[0.7em]
 \frac{\partial L}{\partial z_{3,2}} \\[0.7em]
 \end{bmatrix}
+& \eqncomment{$\matr{Z}$ and $\frac{\partial L}{\partial \matr{Z}}$ are being treated as column vectors}
 \nonumber \\
 &=
 \begin{bmatrix}
@@ -1677,86 +1715,91 @@ Plugging equations \ref{dZbydX_broadcast_column_vector} and \ref{dZAsColumnVecto
 \end{bmatrix} \nonumber
 \\
 &=
-\begin{bmatrix}
-\frac{\partial L}{\partial z_{1,1}} +
-\frac{\partial L}{\partial z_{1,2}} \\[0.7em]
-\frac{\partial L}{\partial z_{2,1}} +
-\frac{\partial L}{\partial z_{2,2}} \\[0.7em]
-\frac{\partial L}{\partial z_{3,1}} +
-\frac{\partial L}{\partial z_{3,2}} \\[0.7em]
-\end{bmatrix} \nonumber
-\\
-&=
+\underbrace{
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} & \frac{\partial L}{\partial z_{1,2}} \\[0.7em]
 \frac{\partial L}{\partial z_{2,1}} & \frac{\partial L}{\partial z_{2,2}} \\[0.7em]
 \frac{\partial L}{\partial z_{3,1}} & \frac{\partial L}{\partial z_{3,2}} \\[0.7em]
-\end{bmatrix}
+\end{bmatrix}}_{\frac{\partial L}{\partial \matr{Z}} }
 \begin{bmatrix}
 1 \\
 1 \\
-\end{bmatrix} \nonumber
+\end{bmatrix}
+& \eqncomment{Decomposing into a matmul operation}
+\nonumber
 \\
 &=
-\frac{\partial L}{\partial \matr{Z}} \mathbf{1}_{\text{C},1} \nonumber
+\frac{\partial L}{\partial \matr{Z}} \mathbf{1}_{\text{2},1}
+& \eqncomment{We are using a bold 1 namely $\mathbf{1}$ to denote matrix of ones}
+\nonumber
+\\
+&=
+\frac{\partial L}{\partial \matr{Z}} \mathbf{1}_{\text{C},1}
+& \eqncomment{Generalizing beyond our considered example}
+\nonumber
 \\
 &= \mathtt{np.sum(} \matr{Z} \mathtt{, axis=1)}
-\end{align}
+& \eqncomment{Using $\mathtt{NumPy}$ notation for brevity}
+\end{flalign}
 
 \section{Broadcasting a row vector}
 \subsection{Forward Pass}
-Suppose we are given a vector $\vecr{x}$ of shape $1 \times 3$. Let $\matr{Z} = \mathbf{1}_{\text{R},1} \vecr{x}$. $\matr{Z}$ will be of shape $\text{R} \times 3$. Let us suppose that R = 2.
+Suppose we are given a vector $\vecr{x}$ of shape $1 \times 3$. Let $\matr{Z} = \mathbf{1}_{\text{R},1} \vecr{x}$ where $\mathbf{1}$ denotes a matrix of ones. $\matr{Z}$ will be of shape $\text{R} \times 3$. Let us suppose that R = 2.
 
-\begin{displaymath}
-\matr{X} =
+\begin{flalign}
+\vecr{x} &=
 \begin{bmatrix}
 x_{1,1} & x_{1,2} & x_{1,3} \\%[0.5em]
-\end{bmatrix}
-\end{displaymath}
+\end{bmatrix} &
+\end{flalign}
 
-$\matr{Z}$ can be expressed as:
+\noindent $\matr{Z}$ can be expressed as:
 
-\begin{align}
-\vecr{z} &=
+\begin{flalign}
+\matr{Z} &=
 \begin{bmatrix}
 z_{1,1} & z_{1,2} & z_{1,3} \\
 z_{2,1} & z_{2,2} & z_{2,3} \\
 \end{bmatrix}
+&
 \nonumber \\
 &=
 \begin{bmatrix}
 x_{1,1} & x_{1,2} & x_{1,3} \\%[0.5em]
 x_{1,1} & x_{1,2} & x_{1,3} \\%[0.5em]
 \end{bmatrix}
-\end{align}
+\end{flalign}
 
 \subsection{Backward Pass}
 We have $\frac{\partial L}{\partial \matr{Z}}$ of shape $2 \times 3$.
 
-\begin{align}
-\frac{\partial L}{\partial \matr{Z}} =
+\begin{flalign}
+\frac{\partial L}{\partial \matr{Z}} &=
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} & \frac{\partial L}{\partial z_{1,2}} & \frac{\partial L}{\partial z_{1,3}}\\[0.7em]
 \frac{\partial L}{\partial z_{2,1}} & \frac{\partial L}{\partial z_{2,2}} & \frac{\partial L}{\partial z_{2,3}}\\[0.7em]
 \end{bmatrix}
-\end{align}
+& \eqncomment{$\frac{\partial L}{\partial \vecr{z}}$ is the same shape as $\vecr{z}$ as $L$ is a scalar}
+\end{flalign}
 
-We now need to compute $\frac{\partial L}{\partial \vecr{x}}$. Using chain rule, we get:
+\noindent We now need to compute $\frac{\partial L}{\partial \vecr{x}}$. Using chain rule, we get:
 
-\begin{equation} \label{dX_broadcast_row_vector}
-\frac{\partial L}{\partial \vecr{x}} = \frac{\partial \matr{Z}}{\partial \vecr{x}}\frac{\partial L}{\partial \matr{Z}}
-\end{equation}
+\begin{flalign} \label{dX_broadcast_row_vector}
+\frac{\partial L}{\partial \vecr{x}} &= \frac{\partial \matr{Z}}{\partial \vecr{x}}\frac{\partial L}{\partial \matr{Z}} &
+\end{flalign}
 
 \subsubsection{Computing $\frac{\partial L}{\partial \vecr{x}}$}
 To compute $\frac{\partial L}{\partial \vecr{x}}$, we need to compute $\frac{\partial \matr{Z}}{\partial \vecr{x}}$. To make it easy for us to think about and capture the Jacobian in a two dimensional matrix (as opposed to a tensor), we will reshape matrix $\matr{Z}$ as well as vector $\vecr{x}$ as a column vector, and compute Jacobians on the column vectors instead.
 
-\begin{align}
+\begin{flalign}
 \frac{\partial \matr{Z}}{\partial \vecr{x}} &=
 \begin{bmatrix}
 \frac{\partial z_{1,1}}{\partial x_{1,1}} & \frac{\partial z_{1,2}}{\partial x_{1,1}} & \frac{\partial z_{1,3}}{\partial x_{1,1}} & \frac{\partial z_{2,1}}{\partial x_{1,1}} & \frac{\partial z_{2,2}}{\partial x_{1,1}} & \frac{\partial z_{2,3}}{\partial x_{1,1}} \\[0.7em]
 \frac{\partial z_{1,1}}{\partial x_{1,2}} & \frac{\partial z_{1,2}}{\partial x_{1,2}} & \frac{\partial z_{1,3}}{\partial x_{1,2}} & \frac{\partial z_{2,1}}{\partial x_{1,2}} & \frac{\partial z_{2,2}}{\partial x_{1,2}} & \frac{\partial z_{2,3}}{\partial x_{1,2}} \\[0.7em]
 \frac{\partial z_{1,1}}{\partial x_{1,3}} & \frac{\partial z_{1,2}}{\partial x_{1,3}} & \frac{\partial z_{1,3}}{\partial x_{1,3}} & \frac{\partial z_{2,1}}{\partial x_{1,3}} & \frac{\partial z_{2,2}}{\partial x_{1,3}} & \frac{\partial z_{2,3}}{\partial x_{1,3}} \\[0.7em]
-\end{bmatrix} \nonumber
+\end{bmatrix}
+& \longeqncomment{$\matr{Z}$ and $\vecr{x}$ are being treated as column vectors.}{Therefore, $\frac{\partial \matr{Z}}{\partial \vecr{x}}$ is of shape $3\times6$.}
+\nonumber
 \\ \label{dZbydX_broadcast_row_vector}
 &=
 \begin{bmatrix}
@@ -1764,12 +1807,12 @@ To compute $\frac{\partial L}{\partial \vecr{x}}$, we need to compute $\frac{\pa
 0 & 1 & 0 & 0 & 1 & 0\\%[0.5em]
 0 & 0 & 1 & 0 & 0 & 1\\%[0.5em]
 \end{bmatrix}
-\end{align}
+\end{flalign}
 
-Now, $\frac{\partial L}{\partial \matr{Z}}$ expressed as a column vector will be:
+\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ expressed as a column vector will be:
 
-\begin{equation} \label{dZAsColumnVector_broadcast_row_vector}
-\frac{\partial L}{\partial \matr{Z}} =
+\begin{flalign} \label{dZAsColumnVector_broadcast_row_vector}
+\frac{\partial L}{\partial \matr{Z}} &=
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} \\[0.7em]
 \frac{\partial L}{\partial z_{1,2}} \\[0.7em]
@@ -1778,12 +1821,17 @@ Now, $\frac{\partial L}{\partial \matr{Z}}$ expressed as a column vector will be
 \frac{\partial L}{\partial z_{2,2}} \\[0.7em]
 \frac{\partial L}{\partial z_{2,3}} \\[0.7em]
 \end{bmatrix}
-\end{equation}
+& \eqncomment{Reshaping $\frac{\partial L}{\partial \matr{Z}}$ from shape $2 \times 3$ to $6 \times 1$}
+\end{flalign}
 
-Plugging equations \ref{dZbydX_broadcast_row_vector} and \ref{dZAsColumnVector_broadcast_row_vector} into equation \ref{dX_broadcast_row_vector}, we get:
+\noindent Plugging equations \ref{dZbydX_broadcast_row_vector} and \ref{dZAsColumnVector_broadcast_row_vector} into equation \ref{dX_broadcast_row_vector}, we get:
 
-\begin{align}
+\begin{flalign}
 \frac{\partial L}{\partial \vecr{x}} &=
+\frac{\partial \matr{Z}}{\partial \vecr{x}}\frac{\partial L}{\partial \matr{Z}}
+&
+\nonumber \\
+&=
 \begin{bmatrix}
 1 & 0 & 0 & 1 & 0 & 0\\%[0.5em]
 0 & 1 & 0 & 0 & 1 & 0\\%[0.5em]
@@ -1797,6 +1845,7 @@ Plugging equations \ref{dZbydX_broadcast_row_vector} and \ref{dZAsColumnVector_b
 \frac{\partial L}{\partial z_{2,2}} \\[0.7em]
 \frac{\partial L}{\partial z_{2,3}} \\[0.7em]
 \end{bmatrix}
+& \eqncomment{$\matr{Z}$, $\vecr{x}$ and $\frac{\partial L}{\partial \matr{Z}}$ are being treated as column vectors}
 \nonumber \\
 &=
 \begin{bmatrix}
@@ -1807,11 +1856,11 @@ Plugging equations \ref{dZbydX_broadcast_row_vector} and \ref{dZAsColumnVector_b
 \frac{\partial L}{\partial z_{1,3}} +
 \frac{\partial L}{\partial z_{2,3}} \\[0.7em]
 \end{bmatrix} \label{dXAsColumnVector_broadcast_row_vector}
-\end{align}
+\end{flalign}
 
-Now reshaping $\frac{\partial L}{\partial \vecr{x}}$ from column vector of shape $3 \times 1$ in equation \ref{dXAsColumnVector_broadcast_row_vector} into row vector of shape $1 \times 3$ we get:
+\noindent Now reshaping $\frac{\partial L}{\partial \vecr{x}}$ from column vector of shape $3 \times 1$ in equation \ref{dXAsColumnVector_broadcast_row_vector} into row vector of shape $1 \times 3$ we get:
 
-\begin{align}
+\begin{flalign}
 \frac{\partial L}{\partial \vecr{x}} &=
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} +
@@ -1823,17 +1872,27 @@ Now reshaping $\frac{\partial L}{\partial \vecr{x}}$ from column vector of shape
 \end{bmatrix}
 \nonumber \\
 &=
-\mathbf{1}_{1, \text{2}}
+\begin{bmatrix}
+1 & 1\\
+\end{bmatrix}
+\underbrace{
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} & \frac{\partial L}{\partial z_{1,2}} & \frac{\partial L}{\partial z_{1,3}}\\[0.7em]
 \frac{\partial L}{\partial z_{2,1}} & \frac{\partial L}{\partial z_{2,2}} & \frac{\partial L}{\partial z_{2,3}}\\[0.7em]
-\end{bmatrix}
+\end{bmatrix}}_{\frac{\partial L}{\partial \matr{Z}}}
+& \eqncomment{Decomposing into a matmul operation}
+\nonumber \\
+&=
+\mathbf{1}_{1, \text{2}} \frac{\partial L}{\partial \matr{Z}}
+& \eqncomment{We are using a bold 1 namely $\mathbf{1}$ to denote matrix of ones}
 \nonumber \\
 &=
 \mathbf{1}_{1, \text{R}} \frac{\partial L}{\partial \matr{Z}}
+& \eqncomment{Generalizing beyond our considered example}
 \nonumber \\
 &=
 \mathtt{np.sum(} \matr{Z} \mathtt{, axis=0)}
-\end{align}
+& \eqncomment{Using $\mathtt{NumPy}$ notation for brevity}
+\end{flalign}
 
 \end{document}
