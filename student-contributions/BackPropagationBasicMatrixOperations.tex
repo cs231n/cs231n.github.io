@@ -29,6 +29,9 @@
 \renewcommand{\headrulewidth}{0pt} % and the line
 }
 
+\usepackage{biblatex}
+\addbibresource{BackPropagationBasicMatrixOperations.bib}
+
 % hyperref package doesn't seem to be working.
 
 
@@ -76,7 +79,7 @@
 This document is primarily targeted towards CS231N students who don't have a formal background in vector and matrix calculus.
 
 \subsection{Learning Goals}
-CS231N assignments have a heavy emphasis on vector and matrix calculus. Several different notation and layout conventions are popular in the literature which can be confusing and overwhelming for students just starting out with vector and matrix calculus. This document firmly aligns and sticks with the layout conventions for matrix calculus taught in CS231N lectures. This document hopes to bring the students who lack a formal background in vector and matrix calculus up to speed as well as serve as a reference while solving the various assignments. 
+CS231N assignments have a heavy emphasis on vector and matrix calculus. Several different notation and layout conventions are popular in the literature which can be confusing and overwhelming for students just starting out with vector and matrix calculus. This document firmly aligns and sticks with the layout conventions for matrix calculus taught in CS231N lectures \cite{li_krishna_xu_2021}. This document hopes to bring the students who lack a formal background in vector and matrix calculus up to speed as well as serve as a reference while solving the various assignments. 
 
 \subsection{Content}
 Through small non-trivial examples, we show how and why certain backpropagation operations reduce to the equations they reduce to for basic operations such as matrix multiplication, some element-wise operation on a matrix, element-wise operations between two matrices, reductions of a matrix to a vector and broadcasting of a vector to a matrix. The example matrices and vectors are deliberately kept small to ensure one can convince oneself or alternately verify on paper if the contents of this document are correct (please feel free to submit bugs or corrections). The examples considered while small are kept as general as possible throughout the derivations. Therefore, a motivated student can easily extend these examples to general proofs.
@@ -94,7 +97,7 @@ Each section from section \ref{Matrix Multiplication} onward is written independ
 \printnomenclature
 
 \section{Layout Convention}
-Given a vector $\vecr{y}$ where $\bm{y} \in \mathbb{R}^{m}$ and a vector $\bm{x}$ where $\bm{x} \in \mathbb{R}^{n}$, we are going to follow the \textbf{denominator layout} convention whereby $\frac{\partial y}{\partial x}$ is written as $n \times m$ matrix. This is in contrast to the \textbf{numerator layout} whereby $\frac{\partial y}{\partial x}$ is written as $m \times n$ matrix. 
+Given a vector $\vecr{y}$ where $\bm{y} \in \mathbb{R}^{m}$ and a vector $\bm{x}$ where $\bm{x} \in \mathbb{R}^{n}$, we are going to follow the \textbf{denominator layout} convention whereby $\frac{\partial y}{\partial x}$ is written as $n \times m$ matrix. This is in contrast to the \textbf{numerator layout} whereby $\frac{\partial y}{\partial x}$ is written as $m \times n$ matrix. For more details, please refer to the Wikipedia page \cite{wiki:Matrix_calculus}.
 
 For example, if $\bm{x} \in \mathbb{R}^{3}$ and $\bm{y} \in \mathbb{R}^{2}$ then:
 
@@ -203,6 +206,7 @@ Let $\matr{X}$ be a $2 \times 3$ matrix, and let $\matr{Y}$ be a $3 \times 2$ ma
 x_{1,1} & x_{1,2} & x_{1,3} \\%[0.5em]
 x_{2,1} & x_{2,2} & x_{2,3} \\%[0.5em]
 \end{bmatrix} &
+\nonumber
 \end{flalign}
 
 \begin{flalign}
@@ -212,6 +216,7 @@ y_{1,1} & y_{1,2} \\%[0.5em]
 y_{2,1} & y_{2,2} \\%[0.5em]
 y_{3,1} & y_{3,2} \\%[0.5em]
 \end{bmatrix} &
+\nonumber
 \end{flalign}
 
 \vspace{1em}
@@ -223,12 +228,14 @@ z_{1,1} & z_{1,2}\\[0.5em]
 z_{2,1} & z_{2,2}\\[0.5em]
 \end{bmatrix}
 &
+\nonumber
 \\
 &=
 \begin{bmatrix}
 x_{1,1}.y_{1,1} + x_{1,2}.y_{2,1} + x_{1,3}.y_{3,1} & x_{1,1}.y_{1,2} + x_{1,2}.y_{2,2} + x_{1,3}.y_{3,2}\\[0.5em]
 x_{2,1}.y_{1,1} + x_{2,2}.y_{2,1} + x_{2,3}.y_{3,1} & x_{2,1}.y_{1,2} + x_{2,2}.y_{2,2} + x_{2,3}.y_{3,2}\\[0.5em]
 \end{bmatrix}
+\nonumber
 \end{flalign}
 
 \subsection{Backward Pass}
@@ -239,16 +246,16 @@ We are given $\frac{\partial L}{\partial \matr{Z}}$. It will be of shape $2 \tim
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} & \frac{\partial L}{\partial z_{1,2}} \\[0.5em]
 \frac{\partial L}{\partial z_{2,1}} & \frac{\partial L}{\partial z_{2,2}} \\[0.5em]
-\end{bmatrix} & \eqncomment{$\frac{\partial L}{\partial \matr{Z}}$ is the same shape as $\matr{Z}$ as $L$ is a scalar}
+\end{bmatrix} & \eqncomment{$\frac{\partial L}{\partial \matr{Z}}$ is the same shape as $\matr{Z}$ as $L$ is a scalar} \label{dZ_matrix_multiplication}
 \end{flalign}
 
 \noindent We need to compute $\frac{\partial L}{\partial \matr{X}}$ and $\frac{\partial L}{\partial \matr{Y}}$. Using chain rule, we get:
 
-\begin{flalign} \label{dX}
+\begin{flalign} \label{dX_matrix_multiplication}
 \frac{\partial L}{\partial \matr{X}} &= \frac{\partial \matr{Z}}{\partial \matr{X}}\frac{\partial L}{\partial \matr{Z}} &
 \end{flalign}
 
-\begin{flalign} \label{dY}
+\begin{flalign} \label{dY_matrix_multiplication}
 \frac{\partial L}{\partial \matr{Y}} &= \frac{\partial \matr{Z}}{\partial \matr{Y}}\frac{\partial L}{\partial \matr{Z}} &
 \end{flalign}
 
@@ -267,7 +274,7 @@ To compute $\frac{\partial L}{\partial \matr{X}}$, we need to compute $\frac{\pa
 \end{bmatrix}
 & \eqncomment{$\matr{X}$, $\matr{Z}$ are being treated as column vectors. Therefore, $\frac{\partial \matr{Z}}{\partial \matr{X}}$ is of shape $6\times4$.}
 \nonumber \\
-\label{dZbydX}
+\label{dZbydX_matrix_multiplication}
 &=
 \begin{bmatrix}
 y_{1,1} & y_{1,2} & 0 & 0 \\[0.5em]
@@ -279,10 +286,10 @@ y_{3,1} & y_{3,2} & 0 & 0 \\[0.5em]
 \end{bmatrix}
 \end{flalign}
 
-\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ expressed as a column vector will be:
+\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ in equation \ref{dZ_matrix_multiplication} expressed as a column vector will be:
 
 \begin{flalign}
-\label{dZAsColumnVector}
+\label{dZAsColumnVector_matrix_multiplication}
 \frac{\partial L}{\partial \matr{Z}} &=
 \begin{bmatrix}
 \frac{\partial L}{\partial z_{1,1}} \\[0.7em]
@@ -292,7 +299,7 @@ y_{3,1} & y_{3,2} & 0 & 0 \\[0.5em]
 \end{bmatrix} & \eqncomment{Reshaping $\frac{\partial L}{\partial \matr{Z}}$ from shape $2 \times 2$ to $4 \times 1$}
 \end{flalign}
 
-\noindent Plugging equations \ref{dZbydX} and \ref{dZAsColumnVector} into equation \ref{dX}, we get:
+\noindent Plugging equations \ref{dZbydX_matrix_multiplication} and \ref{dZAsColumnVector_matrix_multiplication} into equation \ref{dX_matrix_multiplication}, we get:
 
 \begin{flalign}
 \frac{\partial L}{\partial \matr{X}} &=
@@ -323,10 +330,10 @@ y_{3,1}.\frac{\partial L}{\partial z_{1,1}} + y_{3,2}.\frac{\partial L}{\partial
 y_{1,1}.\frac{\partial L}{\partial z_{2,1}} + y_{1,2}.\frac{\partial L}{\partial z_{2,2}} \\[0.7em]
 y_{2,1}.\frac{\partial L}{\partial z_{2,1}} + y_{2,2}.\frac{\partial L}{\partial z_{2,2}} \\[0.7em]
 y_{3,1}.\frac{\partial L}{\partial z_{2,1}} + y_{3,2}.\frac{\partial L}{\partial z_{2,2}} \\[0.7em]
-\end{bmatrix} \label{dXAsColumnVector}
+\end{bmatrix} \label{dXAsColumnVector_matrix_multiplication}
 \end{flalign}
 
-\noindent Reshaping column vector in equation \ref{dXAsColumnVector} as a matrix of shape $\matr{X}$, we get:
+\noindent Reshaping column vector in equation \ref{dXAsColumnVector_matrix_multiplication} as a matrix of shape $\matr{X}$, we get:
 \begin{flalign}
 \frac{\partial L}{\partial \matr{X}} &=
 \begin{bmatrix}
@@ -389,10 +396,10 @@ x_{1,2} & 0 & x_{2,2} & 0 \\[0.5em]
 0 & x_{1,2} & 0 & x_{2,2} \\[0.5em]
 x_{1,3} & 0 & x_{2,3} & 0 \\[0.5em]
 0 & x_{1,3} & 0 & x_{2,3} \\[0.5em]
-\end{bmatrix} \label{dZbydY}
+\end{bmatrix} \label{dZbydY_matrix_multiplication}
 \end{flalign}
 
-\noindent Plugging equations \ref{dZbydY} and \ref{dZAsColumnVector} into equation \ref{dY}, we get:
+\noindent Plugging equations \ref{dZbydY_matrix_multiplication} and \ref{dZAsColumnVector_matrix_multiplication} into equation \ref{dY_matrix_multiplication}, we get:
 
 \begin{flalign}
 \frac{\partial L}{\partial \matr{Y}} &=
@@ -420,10 +427,10 @@ x_{1,2}.\frac{\partial L}{\partial z_{1,1}} + x_{2,2}.\frac{\partial L}{\partial
 x_{1,2}.\frac{\partial L}{\partial z_{1,2}} + x_{2,2}.\frac{\partial L}{\partial z_{2,2}} \\[0.7em]
 x_{1,3}.\frac{\partial L}{\partial z_{1,1}} + x_{2,3}.\frac{\partial L}{\partial z_{2,1}} \\[0.7em]
 x_{1,3}.\frac{\partial L}{\partial z_{1,2}} + x_{2,3}.\frac{\partial L}{\partial z_{2,2}} \\[0.7em]
-\end{bmatrix} \label{dYAsColumnVector}
+\end{bmatrix} \label{dYAsColumnVector_matrix_multiplication}
 \end{flalign}
 
-\noindent Reshaping column vector in equation \ref{dYAsColumnVector} as a matrix of shape $\matr{Y}$, we get:
+\noindent Reshaping column vector in equation \ref{dYAsColumnVector_matrix_multiplication} as a matrix of shape $\matr{Y}$, we get:
 
 \begin{flalign}
 \frac{\partial L}{\partial \matr{Y}} &=
@@ -475,6 +482,7 @@ x_{1,1} & x_{1,2} \\%[0.5em]
 x_{2,1} & x_{2,2} \\%[0.5em]
 x_{3,1} & x_{3,2} \\%[0.5em]
 \end{bmatrix} &
+\nonumber
 \end{flalign}
 
 \noindent $\matr{Z}$ can be expressed as:
@@ -493,6 +501,7 @@ g(x_{1,1}) & g(x_{1,2}) \\[0.5em]
 g(x_{2,1}) & g(x_{2,2}) \\[0.5em]
 g(x_{3,1}) & g(x_{3,2}) \\[0.5em]
 \end{bmatrix}
+\nonumber
 \end{flalign}
 
 \subsection{Backward Pass}
@@ -505,6 +514,7 @@ We have $\frac{\partial L}{\partial \matr{Z}}$ of shape $3 \times 2$.
 \frac{\partial L}{\partial z_{2,1}} & \frac{\partial L}{\partial z_{2,2}} \\[0.5em]
 \frac{\partial L}{\partial z_{3,1}} & \frac{\partial L}{\partial z_{3,2}} \\[0.5em]
 \end{bmatrix} & \eqncomment{$\frac{\partial L}{\partial \matr{Z}}$ is the same shape as $\matr{Z}$ as $L$ is a scalar}
+\label{dZ_elewise_single_matrix}
 \end{flalign}
 
 \noindent We now need to compute $\frac{\partial L}{\partial \matr{X}}$. Using chain rule, we get:
@@ -540,7 +550,7 @@ g'(x_{1,1}) & 0 & 0 & 0 & 0 & 0 \\[0.0em]
 \end{bmatrix*}
 \end{flalign}
 
-\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ expressed as a column vector will be:
+\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ in equation \ref{dZ_elewise_single_matrix} expressed as a column vector will be:
 
 \begin{flalign} \label{dZAsColumnVector_elewise_single_matrix}
 \frac{\partial L}{\partial \matr{Z}} &=
@@ -554,7 +564,6 @@ g'(x_{1,1}) & 0 & 0 & 0 & 0 & 0 \\[0.0em]
 \end{bmatrix}
 & \eqncomment{Reshaping $\frac{\partial L}{\partial \matr{Z}}$ from shape $3 \times 2$ to $6 \times 1$}
 \end{flalign}
-
 
 \noindent Plugging equations \ref{dZbydX_elewise_single_matrix} and \ref{dZAsColumnVector_elewise_single_matrix} into equation \ref{dX_elewise_single_matrix}, we get:
 
@@ -647,6 +656,7 @@ x_{1,1} & x_{1,2} \\%[0.5em]
 x_{2,1} & x_{2,2} \\%[0.5em]
 x_{3,1} & x_{3,2} \\%[0.5em]
 \end{bmatrix} &
+\nonumber
 \end{flalign}
 
 \begin{flalign}
@@ -656,6 +666,7 @@ y_{1,1} & y_{1,2} \\%[0.5em]
 y_{2,1} & y_{2,2} \\%[0.5em]
 y_{3,1} & y_{3,2} \\%[0.5em]
 \end{bmatrix} &
+\nonumber
 \end{flalign}
 
 \noindent Given $\matr{Z} = \matr{X} \circ \matr{Y}$, $\matr{Z}$ is a $3 \times 2$ matrix which can be expressed as:
@@ -667,6 +678,7 @@ z_{2,1} & z_{2,2}\\[0.5em]
 z_{3,1} & z_{3,2}\\[0.5em]
 \end{bmatrix}
 &
+\nonumber
 \\
 &=
 \begin{bmatrix}
@@ -674,6 +686,7 @@ x_{1,1}.y_{1,1} & x_{1,2}.y_{1,2} \\[0.5em]
 x_{2,1}.y_{2,1} & x_{2,2}.y_{2,2} \\[0.5em]
 x_{3,1}.y_{3,1} & x_{3,2}.y_{3,2} \\[0.5em]
 \end{bmatrix}
+\nonumber
 \end{flalign}
 
 \subsection{Backward Pass}
@@ -687,6 +700,7 @@ We have $\frac{\partial L}{\partial \matr{Z}}$ of shape $3 \times 2$.
 \frac{\partial L}{\partial z_{3,1}} & \frac{\partial L}{\partial z_{3,2}} \\[0.5em]
 \end{bmatrix}
 & \eqncomment{$\frac{\partial L}{\partial \matr{Z}}$ is the same shape as $\matr{Z}$ as $L$ is a scalar}
+\label{dZ_hadamard_product}
 \end{flalign}
 
 \noindent We now need to compute $\frac{\partial L}{\partial \matr{X}}$ and $\frac{\partial L}{\partial \matr{Y}}$. Using chain rule, we get:
@@ -726,7 +740,7 @@ y_{1,1} & 0 & 0 & 0 & 0 & 0 \\[0.5em]
 \end{bmatrix}
 \end{flalign}
 
-\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ expressed as a column vector will be:
+\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ in equation \ref{dZ_hadamard_product} expressed as a column vector will be:
 
 \begin{flalign} \label{dZAsColumnVector_hadamard_product}
 \frac{\partial L}{\partial \matr{Z}} &=
@@ -917,6 +931,7 @@ x_{1,1} & x_{1,2} \\%[0.5em]
 x_{2,1} & x_{2,2} \\%[0.5em]
 x_{3,1} & x_{3,2} \\%[0.5em]
 \end{bmatrix} &
+\nonumber
 \end{flalign}
 
 \begin{flalign}
@@ -926,6 +941,7 @@ y_{1,1} & y_{1,2} \\%[0.5em]
 y_{2,1} & y_{2,2} \\%[0.5em]
 y_{3,1} & y_{3,2} \\%[0.5em]
 \end{bmatrix} &
+\nonumber
 \end{flalign}
 
 \noindent Given $\matr{Z} = \matr{X} + \matr{Y}$, Z is a $3 \times 2$ matrix which can be expressed as:
@@ -937,6 +953,7 @@ z_{2,1} & z_{2,2}\\[0.5em]
 z_{3,1} & z_{3,2}\\[0.5em]
 \end{bmatrix}
 &
+\nonumber
 \\
 &=
 \begin{bmatrix}
@@ -944,6 +961,7 @@ x_{1,1} + y_{1,1} & x_{1,2} + y_{1,2} \\[0.5em]
 x_{2,1} + y_{2,1} & x_{2,2} + y_{2,2} \\[0.5em]
 x_{3,1} + y_{3,1} & x_{3,2} + y_{3,2} \\[0.5em]
 \end{bmatrix}
+\nonumber
 \end{flalign}
 
 \subsection{Backward Pass}
@@ -957,6 +975,7 @@ We have $\frac{\partial L}{\partial \matr{Z}}$ of shape $3 \times 2$.
 \frac{\partial L}{\partial z_{3,1}} & \frac{\partial L}{\partial z_{3,2}} \\[0.5em]
 \end{bmatrix}
 & \eqncomment{$\frac{\partial L}{\partial \matr{Z}}$ is the same shape as $\matr{Z}$ as $L$ is a scalar}
+\label{dZ_matrix_addition}
 \end{flalign}
 
 \noindent We now need to compute $\frac{\partial L}{\partial \matr{X}}$ and $\frac{\partial L}{\partial \matr{Y}}$. Using chain rule, we get:
@@ -996,7 +1015,7 @@ To compute $\frac{\partial L}{\partial \matr{X}}$, we need to compute $\frac{\pa
 \end{bmatrix}
 \end{flalign}
 
-\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ expressed as a column vector will be:
+\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ in equation \ref{dZ_matrix_addition} expressed as a column vector will be:
 
 \begin{flalign} \label{dZAsColumnVector_matrix_addition}
 \frac{\partial L}{\partial \matr{Z}} &=
@@ -1156,6 +1175,7 @@ x_{1,1} & x_{1,2} \\%[0.5em]
 x_{2,1} & x_{2,2} \\%[0.5em]
 x_{3,1} & x_{3,2} \\%[0.5em]
 \end{bmatrix} &
+\nonumber
 \end{flalign}
 
 \noindent $\matr{Z}$ can be expressed as:
@@ -1172,6 +1192,7 @@ z_{2,1} & z_{2,2} & z_{2,3}\\%[0.5em]
 x_{1,1} & x_{2,1} & x_{3,1} \\%[0.5em]
 x_{1,2} & x_{2,2} & x_{3,2} \\%[0.5em]
 \end{bmatrix}
+\nonumber
 \end{flalign}
 
 \subsection{Backward Pass}
@@ -1184,6 +1205,7 @@ We have $\frac{\partial L}{\partial \matr{Z}}$ of shape $2 \times 3$.
 \frac{\partial L}{\partial z_{2,1}} & \frac{\partial L}{\partial z_{2,2}} & \frac{\partial L}{\partial z_{2,3}} \\[0.5em]
 \end{bmatrix}
 & \eqncomment{$\frac{\partial L}{\partial \matr{Z}}$ is the same shape as $\matr{Z}$ as $L$ is a scalar}
+\label{dZ_transpose}
 \end{flalign}
 
 \noindent We now need to compute $\frac{\partial L}{\partial \matr{X}}$. Using chain rule, we get:
@@ -1219,7 +1241,7 @@ To compute $\frac{\partial L}{\partial \matr{X}}$, we need to compute $\frac{\pa
 \end{bmatrix}
 \end{flalign}
 
-\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ expressed as a column vector will be:
+\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ in equation \ref{dZ_transpose} expressed as a column vector will be:
 
 \begin{flalign} \label{dZAsColumnVector_transpose}
 \frac{\partial L}{\partial \matr{Z}} &=
@@ -1307,6 +1329,7 @@ x_{1,1} & x_{1,2} \\%[0.5em]
 x_{2,1} & x_{2,2} \\%[0.5em]
 x_{3,1} & x_{3,2} \\%[0.5em]
 \end{bmatrix} &
+\nonumber
 \end{flalign}
 
 \noindent $\vecr{z}$ can be expressed as:
@@ -1323,6 +1346,7 @@ z_{1,1} & z_{1,2} \\%[0.5em]
 x_{1,1} + x_{2,1} + x_{3,1} &
 x_{1,2} + x_{2,2} + x_{3,2} \\%[0.5em]
 \end{bmatrix}
+\nonumber
 \end{flalign}
 
 \subsection{Backward Pass}
@@ -1334,6 +1358,7 @@ We have $\frac{\partial L}{\partial \vecr{z}}$ of shape $1 \times 2$.
 \frac{\partial L}{\partial z_{1,1}} & \frac{\partial L}{\partial z_{1,2}} \\[0.3em]
 \end{bmatrix}
 & \eqncomment{$\frac{\partial L}{\partial \vecr{z}}$ is the same shape as $\vecr{z}$ as $L$ is a scalar}
+\label{dZ_sum_along_axis_0}
 \end{flalign}
 
 \noindent We now need to compute $\frac{\partial L}{\partial \matr{X}}$. Using chain rule, we get:
@@ -1369,7 +1394,7 @@ To compute $\frac{\partial L}{\partial \matr{X}}$, we need to compute $\frac{\pa
 \end{bmatrix}
 \end{flalign}
 
-\noindent Now, $\frac{\partial L}{\partial \vecr{z}}$ expressed as a column vector will be:
+\noindent Now, $\frac{\partial L}{\partial \vecr{z}}$ in equation \ref{dZ_sum_along_axis_0} expressed as a column vector will be:
 
 \begin{flalign} \label{dZAsColumnVector_sum_along_axis_0}
 \frac{\partial L}{\partial \vecr{z}} &=
@@ -1458,6 +1483,7 @@ x_{1,1} & x_{1,2} \\%[0.5em]
 x_{2,1} & x_{2,2} \\%[0.5em]
 x_{3,1} & x_{3,2} \\%[0.5em]
 \end{bmatrix} &
+\nonumber
 \end{flalign}
 
 \noindent $\vecr{z}$ can be expressed as:
@@ -1477,6 +1503,7 @@ x_{1,1} + x_{1,2} \\
 x_{2,1} + x_{2,2} \\
 x_{3,1} + x_{3,2} \\
 \end{bmatrix}
+\nonumber
 \end{flalign}
 
 \subsection{Backward Pass}
@@ -1488,8 +1515,9 @@ We have $\frac{\partial L}{\partial \vecr{z}}$ of shape $3 \times 1$.
 \frac{\partial L}{\partial z_{1,1}} \\[0.7em]
 \frac{\partial L}{\partial z_{2,1}} \\[0.7em]
 \frac{\partial L}{\partial z_{3,1}} \\[0.7em]
-\end{bmatrix} \label{dZAsColumnVector_sum_along_axis_1}
+\end{bmatrix}
 & \eqncomment{$\frac{\partial L}{\partial \vecr{z}}$ is the same shape as $\vecr{z}$ as $L$ is a scalar}
+\label{dZAsColumnVector_sum_along_axis_1}
 \end{flalign}
 
 \noindent We now need to compute $\frac{\partial L}{\partial \matr{X}}$. Using chain rule, we get:
@@ -1605,6 +1633,7 @@ x_{1,1} \\%[0.5em]
 x_{2,1} \\%[0.5em]
 x_{3,1} \\%[0.5em]
 \end{bmatrix} &
+\nonumber
 \end{flalign}
 
 \noindent $\matr{Z}$ can be expressed as:
@@ -1624,6 +1653,7 @@ x_{1,1} & x_{1,1} \\
 x_{2,1} & x_{2,1} \\
 x_{3,1} & x_{3,1} \\
 \end{bmatrix}
+\nonumber
 \end{flalign}
 
 \subsection{Backward Pass}
@@ -1635,7 +1665,7 @@ We have $\frac{\partial L}{\partial \matr{Z}}$ of shape $3 \times 2$.
 \frac{\partial L}{\partial z_{1,1}} & \frac{\partial L}{\partial z_{1,2}} \\[0.7em]
 \frac{\partial L}{\partial z_{2,1}} & \frac{\partial L}{\partial z_{2,2}} \\[0.7em]
 \frac{\partial L}{\partial z_{3,1}} & \frac{\partial L}{\partial z_{3,2}} \\[0.7em]
-\end{bmatrix} \label{dZAsColumnVector_column_vector}
+\end{bmatrix} \label{dZ_broadcast_column_vector}
 & \eqncomment{$\frac{\partial L}{\partial \vecr{z}}$ is the same shape as $\vecr{z}$ as $L$ is a scalar}
 \end{flalign}
 
@@ -1666,7 +1696,7 @@ To compute $\frac{\partial L}{\partial \vecr{x}}$, we need to compute $\frac{\pa
 \end{bmatrix}
 \end{flalign}
 
-\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ expressed as a column vector will be:
+\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ in equation \ref{dZ_broadcast_column_vector} expressed as a column vector will be:
 
 \begin{flalign} \label{dZAsColumnVector_broadcast_column_vector}
 \frac{\partial L}{\partial \matr{Z}} &=
@@ -1751,6 +1781,7 @@ Suppose we are given a vector $\vecr{x}$ of shape $1 \times 3$. Let $\matr{Z} = 
 \begin{bmatrix}
 x_{1,1} & x_{1,2} & x_{1,3} \\%[0.5em]
 \end{bmatrix} &
+\nonumber
 \end{flalign}
 
 \noindent $\matr{Z}$ can be expressed as:
@@ -1768,6 +1799,7 @@ z_{2,1} & z_{2,2} & z_{2,3} \\
 x_{1,1} & x_{1,2} & x_{1,3} \\%[0.5em]
 x_{1,1} & x_{1,2} & x_{1,3} \\%[0.5em]
 \end{bmatrix}
+\nonumber
 \end{flalign}
 
 \subsection{Backward Pass}
@@ -1780,6 +1812,7 @@ We have $\frac{\partial L}{\partial \matr{Z}}$ of shape $2 \times 3$.
 \frac{\partial L}{\partial z_{2,1}} & \frac{\partial L}{\partial z_{2,2}} & \frac{\partial L}{\partial z_{2,3}}\\[0.7em]
 \end{bmatrix}
 & \eqncomment{$\frac{\partial L}{\partial \vecr{z}}$ is the same shape as $\vecr{z}$ as $L$ is a scalar}
+\label{dZ_broadcast_row_vector}
 \end{flalign}
 
 \noindent We now need to compute $\frac{\partial L}{\partial \vecr{x}}$. Using chain rule, we get:
@@ -1809,7 +1842,7 @@ To compute $\frac{\partial L}{\partial \vecr{x}}$, we need to compute $\frac{\pa
 \end{bmatrix}
 \end{flalign}
 
-\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ expressed as a column vector will be:
+\noindent Now, $\frac{\partial L}{\partial \matr{Z}}$ in equation \ref{dZ_broadcast_row_vector} expressed as a column vector will be:
 
 \begin{flalign} \label{dZAsColumnVector_broadcast_row_vector}
 \frac{\partial L}{\partial \matr{Z}} &=
@@ -1894,5 +1927,9 @@ To compute $\frac{\partial L}{\partial \vecr{x}}$, we need to compute $\frac{\pa
 \mathtt{np.sum(} \matr{Z} \mathtt{, axis=0)}
 & \eqncomment{Using $\mathtt{NumPy}$ notation for brevity}
 \end{flalign}
+
+\medskip
+
+\printbibliography
 
 \end{document}
