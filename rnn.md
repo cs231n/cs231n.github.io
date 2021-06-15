@@ -207,7 +207,7 @@ So far we have seen only a simple recurrence formula for the Vanilla RNN. In pra
 rarely ever use Vanilla RNN formula. Instead, we will use what we call a Long-Short Term Memory (LSTM)
 RNN.
 
-### Vanilla RNN Gradient Flow
+### Vanilla RNN Gradient Flow & Vanishing Gradient Problem
 An RNN block takes in input $$x_t$$ and previous hidden representation $$h_{t-1}$$ and learn a transformation, which is then passed through tanh to produce the hidden representation $$h_{t}$$ for the next time step and output $$y_{t}$$ as shown in the equation below.
 
 $$ h_t = tanh(W_{hh}h_{t-1} + W_{xh}x_t) $$
@@ -223,15 +223,20 @@ We update the weights $$W$$ by getting the derivative of the loss at the very la
 = \frac{\partial L_{t}}{\partial h_{t}}(\prod_{t=2}^{T}  tanh^{'}(W_{hh}h_{t-1} + W_{xh}x_t)W_{hh}^{T-1})\frac{\partial h_{1}}{\partial W} 
 \end{aligned}
 $$ 
-* Vanishing gradient: We see that $$tanh^{'}(W_{hh}h_{t-1} + W_{xh}x_t)$$ will almost always be less than 1 because tanh is always between negative one and one.
-Thus, as $$t$$ gets larger (i.e. longer timesteps),  the gradient ($$\frac{\partial L_{t}}{\partial W} $$) will descrease in value and get close to zero. 
+* **Vanishing gradient:** We see that $$tanh^{'}(W_{hh}h_{t-1} + W_{xh}x_t)$$ will almost always be less than 1 because tanh is always between negative one and one. Thus, as $$t$$ gets larger (i.e. longer timesteps),  the gradient ($$\frac{\partial L_{t}}{\partial W} $$) will descrease in value and get close to zero. 
 This will lead to vanishing gradient problem, where gradients at future time steps rarely impact gradients at the very first time step. This is problematic when we model long sequence of inputs because the updates will be extremely slow. 
 
+* **Removing non-linearity (tanh):** If we remove non-linearity (tanh) to solve the vanishing gradient problem, then we will be left with  
+$$
+\begin{aligned}
+\frac{\partial L_{t}}{\partial W} = \frac{\partial L_{t}}{\partial h_{t}}(\prod_{t=2}^{T} W_{hh}^{T-1})\frac{\partial h_{1}}{\partial W} 
+\end{aligned}
+$$
+    * Exploding gradients: If the largest singular value of W_{hh} is greater than 1, then the gradients will blow up and the model will get very large gradients coming back from future time steps. Exploding gradient often leads to getting gradients that are NaNs. 
+    * Vanishing gradients: If the laregest singular value of W_{hh} is smaller than 1, then we will have vanishing gradient problem as mentioned above which will significantly slow down learning.   
+ 
+In practice, we can treat the exploding gradient problem through gradient clipping, which is clipping large gradient values to a maximum threshold. However, since vanishing gradient problem still exists in cases where largest singular value of W_{hh} matrix is less than one, LSTM was designed to avoid this problem. 
 
-Now, of course, you might
-ask, what if we just got rid of this nonlinearity?
 
-
-### Gradient Flow 
-
-### Vanishing gradient problem
+    
+    
