@@ -33,7 +33,7 @@ sentiment classification in NLP where we are given a sequence of words of a sent
 * An example of **many-to-many** task is video-captioning where the input is a sequence of video frames and the output is caption that describes
 what was in the video as shown in the fourth model in Figure 1. Another example of many-to-many task is machine translation in NLP, where we can have an
 RNN that takes a sequence of words of a sentence in English, and then this RNN is asked to produce a sequence of words of a sentence in French. 
-* There is a also a variation of many-to-many task as shown in the last model in Figure 1, 
+* There is a also a **variation of many-to-many** task as shown in the last model in Figure 1, 
 where the model generates an output at every timestep. An example of this many-to-many task is video classification on a frame level
 where the model classifies every single frame of video with some number of classes. We should note that we don't want 
 this prediction to only be a function of the current timestep (current frame of the video), but also all the timesteps (frames)
@@ -47,17 +47,20 @@ function of all the timesteps that have come before.
   <div class="figcaption"> <b> Figure 1.</b> Different (non-exhaustive) types of Recurrent Neural Network architectures. Red boxes are input vectors. Green boxes are hidden layers. Blue boxes are output vectors.</div>
 </div>
 
-A Recurrent Neural Network is basically a blackbox (Figure 2), where it has a state and it receives through
-timesteps input vectors. At every single timestep we feed in an input vectors into the RNN and it
-can modify that state as a function of what it receives at every single timestep. There are weights
-inside the RNN and when we tune those weights, the RNN will have a different behavior in terms of
-how its state evolves, as it receives these inputs. Usually we are also interested in producing an
-output based on the RNN state, so we can produce these output vectors on top of the RNN (as depicted
-in Figure 2).
+### Why are existing convnets insufficient? 
+The existing convnets are insufficient to deal with tasks that have inputs and outputs with variable sequence lengths. 
+In the example of video captioning, inputs have variable number of frames (e.g. 10-minute and 10-hour long video) and outputs are captions
+of variable length. Convnets can only take in inputs with a fixed size of width and height and cannot generalize over 
+inputs with different sizes. In order to tackle this problem, we introduce Recurrent Neural Networks (RNNs). 
+
+### Recurrent Neural Network
+RNN is basically a blackbox (Figure 2), where it has an “internal state” that is updated as a sequence is processed. At every single timestep, we feed in an input vector into RNN where it modifies that state as a function of what it receives. When we tune RNN weights, 
+RNN will show different behaviors in terms of how its state evolves as it receives these inputs. 
+We are also interested in producing an output based on the RNN state, so we can produce these output vectors on top of the RNN (as depicted in Figure 2.
 
 <div class="fig figcenter fighighlight">
   <img src="/assets/rnn/rnn_blackbox.png" width="20%" >
-  <div class="figcaption">Figure 2. Simplified RNN box.</div>
+  <div class="figcaption"><b>Figure 2. </b>Simplified RNN box.</div>
 </div>
 
 More precisely, RNN can be represented as a recurrence formula of some function $$f_W$$ with
@@ -69,8 +72,7 @@ $$
 
 where at every timestep it receives some previous state as a vector $$h_{t-1}$$ of previous
 iteration timestep $$t-1$$ and current input vector $$x_t$$ to produce the current state as a vector
-$$h_t$$. A fixed function $$f_W$$ with
-weights $$W$$ is applied at every single timestep and that allows us to use
+$$h_t$$. A fixed function $$f_W$$ with weights $$W$$ is applied at every single timestep and that allows us to use
 the Recurrent Neural Network on sequences without having to commit to the size of the sequence because
 we apply the exact same function at every single timestep, no matter how long the input or output
 sequences are.
