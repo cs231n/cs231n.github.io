@@ -59,7 +59,7 @@ RNN will show different behaviors in terms of how its state evolves as it receiv
 We are also interested in producing an output based on the RNN state, so we can produce these output vectors on top of the RNN (as depicted in Figure 2.
 
 If we unroll an RNN model (Right of Figure 2), then there are inputs (e.g. video frame) at different timesteps shown as $$x_1, x_2, x_3$$ ... $$x_t$$. 
-RNN at each timestep takes in two inputs -- an input frame ($$x_i$$) and previous representation of what it seems so far (i.e. history) -- to generate an output $$y_i$$ and update its history, which will get forward propagated over time. All the RNN blocks in Figure 2 (Right) are the same block that share the same parameter, but have different inputs and history at each timestep.
+RNN at each timestep takes in two inputs -- an input frame ($$x_i$$) and previous representation of what it seems so far (i.e. history) -- to generate an output $$y_i$$ and update its history, which will get forward propagated over time. All the RNN blocks in Figure 2 (Right) are the same block that share the same parameter, but takes in different input and history at each timestep.
 
 <div class="fig figcenter fighighlight">
   <img src="/assets/rnn/rnn_blackbox.png" width="16%" >
