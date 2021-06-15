@@ -207,7 +207,7 @@ So far we have seen only a simple recurrence formula for the Vanilla RNN. In pra
 rarely ever use Vanilla RNN formula. Instead, we will use what we call a Long-Short Term Memory (LSTM)
 RNN.
 
-### Vanilla RNN Gradient Flow
+### Vanilla RNN Gradient Flow & Vanishing Gradient Problem
 An RNN block takes in input $$x_t$$ and previous hidden representation $$h_{t-1}$$ and learn a transformation, which is then passed through tanh to produce the hidden representation $$h_{t}$$ for the next time step and output $$y_{t}$$ as shown in the equation below.
 
 $$ h_t = tanh(W_{hh}h_{t-1} + W_{xh}x_t) $$
