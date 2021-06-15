@@ -68,7 +68,7 @@ $$min_{\theta}\sum_{i}\left\| render_{i}(F_{\Theta}-I_{i}\right\|^{2}$$
 
 ![In this illustration taken from the paper, the five variables are fed
 into the MLP to produce color and volume density. $F_\Theta$ has 9
-layers, 256 channels](assets/raydiagram.png "fig:") [fig:my~l~abel]
+layers, 256 channels](assets/raydiagram.png "fig:") [fig:Figure 1]
 
 \
 In practice, the Cartesian coordinates are expressed as vector d. You
@@ -102,7 +102,7 @@ Here is an example of applying Fourier feature to your code:\
 
 ![Mapping how Fourier features are related to NeRF’s positional
 encoding. Taken from Jon Barron’s CS 231n talk in Spring
-2021](assets/fourier.png "fig:") [fig:my~l~abel]
+2021](assets/fourier.png "fig:") [fig:Figure 2]
 
 NeRF also uses hierarchical volume sampling: coarse sampling and the
 fine network. This allows NeRF to more efficiently run their model and
@@ -125,7 +125,7 @@ The paper goes in depth on quantitative measures of the results, which
 NeRF outperforms existing models. A visual assessment is shared below:
 
 ![Example of NeRF results versus existing SOTA
-results](assets/NeRFresults.png "fig:") [fig:my~l~abel]
+results](assets/NeRFresults.png "fig:") [fig:Figure 3]
 
 Additional references
 =====================
