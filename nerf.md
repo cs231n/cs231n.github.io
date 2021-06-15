@@ -49,9 +49,9 @@ you, querying the color and density. The equation for expected color
 $C(r)$ of a camera ray $r(t) = o + td$ with near and far bounds $t_n$
 and $t_f$ is calculated using the following:
 
-$$C(r) = \[ \int_{t_n}^{t_f} T(t)\sigma(r(t))c(r(t),d) \,dt \]
+$C(r) = \[ \int_{t_n}^{t_f} T(t)\sigma(r(t))c(r(t),d) \,dt \]
 where
-    \[T(t) = exp(-\int_{t_n}^{t}\sigma(r(s))\, ds)\]$$
+    \[T(t) = exp(-\int_{t_n}^{t}\sigma(r(s))\, ds)\]$
 
 \
 To actually calculate this, the authors used a stratified sampling
