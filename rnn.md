@@ -21,22 +21,25 @@ Table of Contents:
 In this lecture note, we're going to be talking about the Recurrent Neural Networks (RNNs). One
 great thing about the RNNs is that they offer a lot of flexibility on how we wire up the neural
 network architecture. Normally when we're working with neural networks (Figure 1), we are given a fixed sized
-input vector (red), then we process it with some hidden layers (green), and then we produce a
-fixed sized output vector (blue) as depicted in the leftmost model in Figure 1. Recurrent Neural
-Networks allow us to operate over sequences of input, output, or both at the same time. For
-example, in the case of image captioning, we are given a fixed sized image and then through an RNN
-we produce a sequence of words that describe the content of that image (second model in Figure 1).
-Or for example, in the case of sentiment classification in the NLP, we are given a sequence of words
-of the sentence and then we are trying to classify whether the sentiment of that sentence is
-positive or negative (third model in Figure 1). In the case of machine translation, we can have an
+input vector (red), then we process it with some hidden layers (green), and  we produce a
+fixed sized output vector (blue) as depicted in the leftmost model ("Vanilla" Neural Networks) in Figure 1.
+While **"Vanilla" Neural Networks** receive a single input and produce one label for that image, there are tasks where
+the model produce a sequence of outputs as shown in the one-to-many model in Figure 1. **Recurrent Neural Networks** allow 
+us to operate over sequences of input, output, or both at the same time. An example of **one-to-many** model is image 
+captioning where we are given a fixed sized image and produce a sequence of words that describe the content of that image through RNN (second model in Figure 1).
+An example of **many-to-one** task is action prediction where we look at a sequence of video frames instead of a single image and produce
+a label of what action was happening in the video as shown in the third model in Figure 1. Another example of many-to-one task is 
+sentiment classification in NLP where we are given a sequence of words
+of a sentence and then classify what sentiment (e.g. positive or negative) that sentence is.
+An example of **many-to-many** task is video-captioning where the input is a sequence of video frames and the output is caption that describes
+what was in the video as shown in the fourth model in Figure 1. Another example of many-to-many task is machine translation in NLP, where we can have an
 RNN that takes a sequence of words of a sentence in English, and then this RNN is asked to produce
-a sequence of words of a sentence in French, for example (forth model in Figure 1). As a last case,
-we can have a video classification RNN where we might imagine classifying every single frame of
-video with some number of classes, and most importantly we don't want the prediction to be only a
-function of the current timestep (current frame of the video), but also all the timesteps (frames)
-that have come before it in the video (rightmost model in Figure 1). In general Recurrent Neural
-Networks allow us to wire up an architecture, where the prediction at every single timestep is a
-function of all the timesteps that have come up to that point.
+a sequence of words of a sentence in French. There is a also a variation of many-to-many task as shown in the last model in Figure 1, 
+where the model generates an output at every timestep. An example of this many-to-many task is video classification on a frame level
+where the model classifies every single frame of video with some number of classes. We should note that we don't want 
+this prediction to only be a function of the current timestep (current frame of the video), but also all the timesteps (frames)
+that have come before this video. In general, RNNs allow us to wire up an architecture, where the prediction at every single timestep is a
+function of all the timesteps that have come before.
 
 <div class="fig figcenter fighighlight">
   <img src="/assets/rnn/types.png" width="100%">
