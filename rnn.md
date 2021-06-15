@@ -8,6 +8,7 @@ Table of Contents:
 
 - [Intro to RNN](#intro)
 - [RNN example as Character-level language model](#char)
+- [Multilayer RNNs](#multi)
 - [Long-Short Term Memory (LSTM)](#lstm)
 
 
@@ -167,6 +168,31 @@ how to scale up the training of the model over larger training dataset.
 
 
 
+<a name='multi'></a>
+
+## Multilayer RNNs
+
+So far we have only shown RNNs with just one layer. However, we're not limited to only a single layer architectures.
+One of the ways, RNNs are used today is in more complex manner. RNNs can be stacked together in multiple layers,
+which gives more depth, and empirically deeper architectures tend to work better (Figure 4).
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/rnn/multilayer_rnn.png" width="40%" >
+  <div class="figcaption">Figure 4. Multilayer RNN example.</div>
+</div>
+
+For example, in Figure 4, there are three separate RNNs each with their own set of weights. Three RNNs
+are stacked on top of each other, so the input of the second RNN (second RNN layer in Figure 4) is the
+vector of the hidden state vector of the first RNN (first RNN layer in Figure 4). All stacked RNNs
+are trained jointly, and the diagram in Figure 4 represents one computational graph.
+
+
+
+
 <a name='lstm'></a>
 
 ## Long-Short Term Memory (LSTM)
+
+So far we have seen only a simple recurrence formula for the Vanilla RNN. In practice, we actually will
+rarely ever use Vanilla RNN formula. Instead, we will use what we call a Long-Short Term Memory (LSTM)
+RNN.
