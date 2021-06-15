@@ -196,3 +196,7 @@ are trained jointly, and the diagram in Figure 4 represents one computational gr
 So far we have seen only a simple recurrence formula for the Vanilla RNN. In practice, we actually will
 rarely ever use Vanilla RNN formula. Instead, we will use what we call a Long-Short Term Memory (LSTM)
 RNN.
+
+### Gradient Flow 
+
+### Vanishing gradient problem
