@@ -94,12 +94,20 @@ $$
 h_t = tanh(W_{hh}h_{t-1} + W_{xh}x_t)
 $$
 
+<div class="fig figcenter">
+  <img src="/assets/rnn/vanilla_rnn_mformula_1.png" width="80%" >
+</div>
+
 We can base predictions on top of $$h_t$$ by using just another matrix projection on top
 of the hidden state. This is the simplest complete case in which you can wire up a neural network:
 
 $$
 y_t = W_{hy}h_t
 $$
+
+<div class="fig figcenter">
+  <img src="/assets/rnn/vanilla_rnn_mformula_2.png" width="40%" >
+</div>
 
 So far we have showed RNN in terms of abstract vectors $$x, h, y$$, however we can endow these vectors
 with semantics in the following section.
@@ -238,5 +246,39 @@ $$
 In practice, we can treat the exploding gradient problem through gradient clipping, which is clipping large gradient values to a maximum threshold. However, since vanishing gradient problem still exists in cases where largest singular value of W_{hh} matrix is less than one, LSTM was designed to avoid this problem. 
 
 
-    
-    
+### LSTM Formulation
+
+The following is the precise formulation for LSTM. On step $$t$$, there is a hidden state $$h_t$$ and
+a cell state $$c_t$$. Both $$h_t$$ and $$c_t$$ are vectors of size $$n$$. One distinction of LSTM from
+Vanilla RNN is that LSTM has this additional $$c_t$$ cell state, and intuitively it can be thought of as
+$$c_t$$ stores long-term information. LSTM can read, erase, and write information to and from this $$c_t$$ cell.
+The way LSTM alters $$c_t$$ cell is through three special gates: $$i, f, o$$ which correspond to “input”,
+“forget”, and “output” gates. The values of these gates vary from closed (0) to open (1). All $$i, f, o$$
+gates are vectors of size $$n$$.
+
+At every timestep we have an input vector $$x_t$$, previous hidden state $$h_{t-1}$$, previous cell state $$c_{t-1}$$,
+and LSTM computes the next hidden state $$h_t$$, and next cell state $$c_t$$ at timestep $$t$$ as follows:
+
+$$
+\begin{aligned}
+f_t &= \sigma(W_{hf}h_{t_1} + W_{xf}x_t) \\
+i_t &= \sigma(W_{hi}h_{t_1} + W_{xi}x_t) \\
+o_t &= \sigma(W_{ho}h_{t_1} + W_{xo}x_t) \\
+g_t &= \text{tanh}(W_{hg}h_{t_1} + W_{xg}x_t) \\
+\end{aligned}
+$$
+
+<div class="fig figcenter">
+  <img src="/assets/rnn/lstm_mformula_1.png" width="50%" >
+</div>
+
+$$
+\begin{aligned}
+c_t &= f_t \odot c_{t-1} + i_t \odot g_t \\
+h_t &= o_t \odot \text{tanh}(c_t) \\
+\end{aligned}
+$$
+
+<div class="fig figcenter">
+  <img src="/assets/rnn/lstm_mformula_2.png" width="40%" >
+</div>
