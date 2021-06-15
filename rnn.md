@@ -6,7 +6,7 @@ permalink: /rnn/
 
 Table of Contents:
 
-- [Intro to RNN](#intro)
+- [Introduction to RNN](#intro)
 - [RNN example as Character-level language model](#char)
 - [Multilayer RNNs](#multi)
 - [Long-Short Term Memory (LSTM)](#lstm)
@@ -16,44 +16,55 @@ Table of Contents:
 
 <a name='intro'></a>
 
-## Intro to RNN
+## Introduction to RNN
 
 In this lecture note, we're going to be talking about the Recurrent Neural Networks (RNNs). One
 great thing about the RNNs is that they offer a lot of flexibility on how we wire up the neural
 network architecture. Normally when we're working with neural networks (Figure 1), we are given a fixed sized
-input vector (red), then we process it with some hidden layers (green), and then we produce a
-fixed sized output vector (blue) as depicted in the leftmost model in Figure 1. Recurrent Neural
-Networks allow us to operate over sequences of input, output, or both at the same time. For
-example, in the case of image captioning, we are given a fixed sized image and then through an RNN
-we produce a sequence of words that describe the content of that image (second model in Figure 1).
-Or for example, in the case of sentiment classification in the NLP, we are given a sequence of words
-of the sentence and then we are trying to classify whether the sentiment of that sentence is
-positive or negative (third model in Figure 1). In the case of machine translation, we can have an
-RNN that takes a sequence of words of a sentence in English, and then this RNN is asked to produce
-a sequence of words of a sentence in French, for example (forth model in Figure 1). As a last case,
-we can have a video classification RNN where we might imagine classifying every single frame of
-video with some number of classes, and most importantly we don't want the prediction to be only a
-function of the current timestep (current frame of the video), but also all the timesteps (frames)
-that have come before it in the video (rightmost model in Figure 1). In general Recurrent Neural
-Networks allow us to wire up an architecture, where the prediction at every single timestep is a
-function of all the timesteps that have come up to that point.
+input vector (red), then we process it with some hidden layers (green), and  we produce a
+fixed sized output vector (blue) as depicted in the leftmost model ("Vanilla" Neural Networks) in Figure 1.
+While **"Vanilla" Neural Networks** receive a single input and produce one label for that image, there are tasks where
+the model produce a sequence of outputs as shown in the one-to-many model in Figure 1. **Recurrent Neural Networks** allow 
+us to operate over sequences of input, output, or both at the same time. 
+* An example of **one-to-many** model is image captioning where we are given a fixed sized image and produce a sequence of words that describe the content of that image through RNN (second model in Figure 1).
+* An example of **many-to-one** task is action prediction where we look at a sequence of video frames instead of a single image and produce
+a label of what action was happening in the video as shown in the third model in Figure 1. Another example of many-to-one task is 
+sentiment classification in NLP where we are given a sequence of words of a sentence and then classify what sentiment (e.g. positive or negative) that sentence is.
+* An example of **many-to-many** task is video-captioning where the input is a sequence of video frames and the output is caption that describes
+what was in the video as shown in the fourth model in Figure 1. Another example of many-to-many task is machine translation in NLP, where we can have an
+RNN that takes a sequence of words of a sentence in English, and then this RNN is asked to produce a sequence of words of a sentence in French. 
+* There is a also a **variation of many-to-many** task as shown in the last model in Figure 1, 
+where the model generates an output at every timestep. An example of this many-to-many task is video classification on a frame level
+where the model classifies every single frame of video with some number of classes. We should note that we don't want 
+this prediction to only be a function of the current timestep (current frame of the video), but also all the timesteps (frames)
+that have come before this video. 
+
+In general, RNNs allow us to wire up an architecture, where the prediction at every single timestep is a
+function of all the timesteps that have come before.
 
 <div class="fig figcenter fighighlight">
   <img src="/assets/rnn/types.png" width="100%">
-  <div class="figcaption">Figure 1. Different (non-exhaustive) types of Recurrent Neural Network architectures. Red boxes are input vectors. Green boxes are hidden layers. Blue boxes are output vectors.</div>
+  <div class="figcaption"> <b> Figure 1.</b> Different (non-exhaustive) types of Recurrent Neural Network architectures. Red boxes are input vectors. Green boxes are hidden layers. Blue boxes are output vectors.</div>
 </div>
 
-A Recurrent Neural Network is basically a blackbox (Figure 2), where it has a state and it receives through
-timesteps input vectors. At every single timestep we feed in an input vectors into the RNN and it
-can modify that state as a function of what it receives at every single timestep. There are weights
-inside the RNN and when we tune those weights, the RNN will have a different behavior in terms of
-how its state evolves, as it receives these inputs. Usually we are also interested in producing an
-output based on the RNN state, so we can produce these output vectors on top of the RNN (as depicted
-in Figure 2).
+### Why are existing convnets insufficient? 
+The existing convnets are insufficient to deal with tasks that have inputs and outputs with variable sequence lengths. 
+In the example of video captioning, inputs have variable number of frames (e.g. 10-minute and 10-hour long video) and outputs are captions
+of variable length. Convnets can only take in inputs with a fixed size of width and height and cannot generalize over 
+inputs with different sizes. In order to tackle this problem, we introduce Recurrent Neural Networks (RNNs). 
+
+### Recurrent Neural Network
+RNN is basically a blackbox (Left of Figure 2), where it has an “internal state” that is updated as a sequence is processed. At every single timestep, we feed in an input vector into RNN where it modifies that state as a function of what it receives. When we tune RNN weights, 
+RNN will show different behaviors in terms of how its state evolves as it receives these inputs. 
+We are also interested in producing an output based on the RNN state, so we can produce these output vectors on top of the RNN (as depicted in Figure 2.
+
+If we unroll an RNN model (Right of Figure 2), then there are inputs (e.g. video frame) at different timesteps shown as $$x_1, x_2, x_3$$ ... $$x_t$$. 
+RNN at each timestep takes in two inputs -- an input frame ($$x_i$$) and previous representation of what it seems so far (i.e. history) -- to generate an output $$y_i$$ and update its history, which will get forward propagated over time. All the RNN blocks in Figure 2 (Right) are the same block that share the same parameter, but have different inputs and history at each timestep.
 
 <div class="fig figcenter fighighlight">
-  <img src="/assets/rnn/rnn_blackbox.png" width="20%" >
-  <div class="figcaption">Figure 2. Simplified RNN box.</div>
+  <img src="/assets/rnn/rnn_blackbox.png" width="16%" >
+  <img src="/assets/rnn/unrolledRNN.png" width="60%" >
+  <div class="figcaption"><b>Figure 2. </b>Simplified RNN box (Left) and Unrolled RNN (Right).</div>
 </div>
 
 More precisely, RNN can be represented as a recurrence formula of some function $$f_W$$ with
@@ -65,8 +76,7 @@ $$
 
 where at every timestep it receives some previous state as a vector $$h_{t-1}$$ of previous
 iteration timestep $$t-1$$ and current input vector $$x_t$$ to produce the current state as a vector
-$$h_t$$. A fixed function $$f_W$$ with
-weights $$W$$ is applied at every single timestep and that allows us to use
+$$h_t$$. A fixed function $$f_W$$ with weights $$W$$ is applied at every single timestep and that allows us to use
 the Recurrent Neural Network on sequences without having to commit to the size of the sequence because
 we apply the exact same function at every single timestep, no matter how long the input or output
 sequences are.
@@ -196,3 +206,32 @@ are trained jointly, and the diagram in Figure 4 represents one computational gr
 So far we have seen only a simple recurrence formula for the Vanilla RNN. In practice, we actually will
 rarely ever use Vanilla RNN formula. Instead, we will use what we call a Long-Short Term Memory (LSTM)
 RNN.
+
+### Vanilla RNN Gradient Flow
+An RNN block takes in input $$x_t$$ and previous hidden representation $$h_{t-1}$$ and learn a transformation, which is then passed through tanh to produce the hidden representation $$h_{t}$$ for the next time step and output $$y_{t}$$ as shown in the equation below.
+
+$$ h_t = tanh(W_{hh}h_{t-1} + W_{xh}x_t) $$
+
+For the back propagation, Let's examine how the output at the very last timestep affects the weights at the very first time step.
+The partial derivative of $$h_t$$ with respect to $$h_{t-1}$$ is written as: 
+$$ \frac{\partial h_t}{\partial h_{t-1}} =  tanh^{'}(W_{hh}h_{t-1} + W_{xh}x_t)W_{hh} $$
+
+We update the weights $$W$$ by getting the derivative of the loss at the very last time step $$L_{t}$$ with respect to $$W$$. 
+\begin{aligned}
+\frac{\partial L_{t}}{\partial W} = \frac{\partial L_{t}}{\partial h_{t}} \frac{\partial h_{t}}{\partial h_{t-1} } \dots  \frac{\partial h_{1}}{\partial W} } \\
+= \frac{\partial L_{t}}{\partial h_{t}}(\prod_{t=2}^{T} \frac{\partial h_{t}}{\partial  h_{t-1}})\frac{\partial h_{1}}{\partial W} \\
+= \frac{\partial L_{t}}{\partial h_{t}}(\prod_{t=2}^{T}  tanh^{'}(W_{hh}h_{t-1} + W_{xh}x_t)W_{hh}^{T-1})\frac{\partial h_{1}}{\partial W} 
+\end{aligned}
+$$ 
+* Vanishing gradient: We see that $$tanh^{'}(W_{hh}h_{t-1} + W_{xh}x_t)$$ will almost always be less than 1 because tanh is always between negative one and one.
+Thus, as $$t$$ gets larger (i.e. longer timesteps),  the gradient ($$\frac{\partial L_{t}}{\partial W} $$) will descrease in value and get close to zero. 
+This will lead to vanishing gradient problem, where gradients at future time steps rarely impact gradients at the very first time step. This is problematic when we model long sequence of inputs because the updates will be extremely slow. 
+
+
+Now, of course, you might
+ask, what if we just got rid of this nonlinearity?
+
+
+### Gradient Flow 
+
+### Vanishing gradient problem
