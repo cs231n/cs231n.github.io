@@ -100,7 +100,7 @@ One drawback of Pixel RNN is that the sequential generation is slow and we need 
 
 You may wonder: are we able to generate the whole image with masked convolution? In fact, if we stack enough layers of this kind of masked convolution, we can achieve the same effective receptive field as the pixel generation that conditional on all of the previous pixels (pixel RNN).
 
-![](https://i.imgur.com/2eSJZ2Y.png =500x200)
+![](https://i.imgur.com/2eSJZ2Y.png)
 <figcaption> Pixel CNN Generating Example </figcaption>
 
 
@@ -149,7 +149,7 @@ $$
 The estimate of $\mathbb{E}_z [\log p_{\theta} (x^{(i)} | z)]$ can be computed through sampling. $D_{KL}(q_{\phi}(z | x^{(i)}) || p_{\theta}(z))$ has closed-form solution. $D_{KL}(q_{\phi}(z | x^{(i)})|| p_{\theta}(z | x^{(i)}))$ would be always larger than or equal to zero. Thus, we have tractable lower bound. 
 
 ### VAE training process
-![](https://i.imgur.com/IK8laIh.png =750x400)
+![](https://i.imgur.com/IK8laIh.png)
 
 
 $q_{\phi}(z | x^{(i)})$ is the encoder network in this process. The goal of $D_{KL}(q_{\phi}(z | x^{(i)}) || p_{\theta}(z))$ is to estimate a posterior distribution close to prior distribution. On the other hand, $p_{\theta} (x^{(i)} | z)$ is the decoder network and reconstruct the input data. We compute them in the forward pass for every minibatch of input data and then perform back-propagation. 
@@ -222,7 +222,7 @@ The training process is to alternate between
 
 Problem of 2 is the gradient dominated by the region sample is already good. Training is very slow and unstable at the beginning. One solution is to change to use gradient ascent on generator and modify the different objective.
 
-![](https://i.imgur.com/zvAex6j.png =750x250) 
+![](https://i.imgur.com/zvAex6j.png) 
 <figcaption> Generative Adversaial Nets training flow </figcaption>
 
 
