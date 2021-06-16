@@ -29,12 +29,8 @@ principles apply here; more precisely, we generate image pixels starting
 from the top left corner, and we model each pixel’s dependency on
 previous pixels using an RNN (LSTM).
 
-![(From CS231N Slides) Sequential Image Generation using
-PixelRNN](imports/pixelrnn.png "fig:") [fig:my~l~abel]
-
 <div class="fig figcenter fighighlight">
-  <img src="/assets/nn2/prepro1.jpeg">
-  <div class="figcaption">Common data preprocessing pipeline. <b>Left</b>: Original toy, 2-dimensional input data. <b>Middle</b>: The data is zero-centered by subtracting the mean in each dimension. The data cloud is now centered around the origin. <b>Right</b>: Each dimension is additionally scaled by its standard deviation. The red lines indicate the extent of the data - they are of unequal length in the middle, but of equal length on the right.</div>
+  <img src="/assets/pixelrnn.png">
 </div>
 
 Specifically, the PixelRNN framework is made up of twelve
@@ -89,8 +85,9 @@ As we have seen, there are two distinct components to the
 illustrates how each of these two LSTMs operates, when applied to an RGB
 image.
 
-![Visualization of the mappings for Row LSTM and Diagonal
-BiLSTM](Screen Shot 2021-06-15 at 9.41.08 AM.png "fig:") [fig:my~l~abel]
+<div class="fig figcenter fighighlight">
+  <img src="/assets/Screen Shot 2021-06-15 at 9.41.08 AM.png">
+</div>
 
 **Row LSTM** is a unidirectional layer that processes the image row by
 row from top to bottom computing features for a whole row at once using
@@ -140,3 +137,9 @@ On the ImageNet data set, achieved an NLL score of 3.86 and 3.63 on the
 the 32x32 and 64x64 image sizes respectively. On CiFAR-10, it achievied
 a NLL score of 3.00, which was state-of-the-art at the time of
 publication.
+
+References
+==========
+
+1) CS231n Lecture 11 'Generative Modeling'
+2) Pixel Recurrent Neural Networks (Oord et. al.) 2016
