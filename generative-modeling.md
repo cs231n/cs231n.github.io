@@ -91,7 +91,7 @@ Recall RNN that we learn in the previous lecture. RNN has an â€œinternal stateâ€
 
 The process described in the Pixel RNN paper is as follows: Starting from the corner, each pixel is conditional on the pixel from the left and the pixel above. Repeat the sequential generating process until the whole image is generated.
 
-![](https://i.imgur.com/6ajn4Pe.gif)
+![](https://i.imgur.com/6ajn4Pe.gif =200x)
 <figcaption> Pixel RNN Sequential Generating Process </figcaption>
 
 
