@@ -195,13 +195,13 @@ For feature denoising as a defense strategy, one study was conducted by Xie et a
 The input to a denoising block can be any feature layer in the convolutional neural network. In the study, each denoising blocks performs one type of the following denoising operations: nonlocal means, bilateral filter, mean filter, and median filter. These are the techniques commonly used in computer vision tasks such as image processing and denoising. The denoising blocks are trained jointly with all layers of the network in an end-to-end manner using adversarial training. In their experiments, denoising blocks were added to the variants of ResNet models. The results showed that the proposed denoising method achieved 55.7 percent accuracy under white-box attacks on ImageNet, whereas previous state of the art was only 27.9 percent accuracy.
 
 ## References
-[Explaining and harnessing adversarial examples](https://arxiv.org/abs/1412.6572)
-[One pixel attack for fooling deep neural networks](https://arxiv.org/abs/1710.08864)
-[Distillation as a Defense to Adversarial Perturbations against Deep Neural Networks](https://arxiv.org/abs/1511.04508)
-[Denoising and Verification Cross-Layer Ensemble Against Black-box Adversarial Attacks](https://arxiv.org/abs/1908.07667)
-[Feature Denoising for Improving Adversarial Robustness](https://arxiv.org/abs/1812.03411)
+[Explaining and harnessing adversarial examples](https://arxiv.org/abs/1412.6572)  
+[One pixel attack for fooling deep neural networks](https://arxiv.org/abs/1710.08864)  
+[Distillation as a Defense to Adversarial Perturbations against Deep Neural Networks](https://arxiv.org/abs/1511.04508)  
+[Denoising and Verification Cross-Layer Ensemble Against Black-box Adversarial Attacks](https://arxiv.org/abs/1908.07667)  
+[Feature Denoising for Improving Adversarial Robustness](https://arxiv.org/abs/1812.03411)  
 [Adversarial Attacks and Defences: A Survey](https://arxiv.org/abs/1810.00069)
 
 ## Additional Resources
-[Adversarial Robustness - Theory and Practice (NeurIPS 2018 tutorial)](https://adversarial-ml-tutorial.org/)
+[Adversarial Robustness - Theory and Practice (NeurIPS 2018 tutorial)](https://adversarial-ml-tutorial.org/)  
 [CleverHans - An Python Library on Adversarial Example](https://github.com/cleverhans-lab/cleverhans)
