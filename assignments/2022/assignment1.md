@@ -42,15 +42,6 @@ In this assignment you will practice putting together a simple image classificat
 - Understand the differences and tradeoffs between these classifiers.
 - Get a basic understanding of performance improvements from using **higher-level representations** as opposed to raw pixels, e.g. color histograms, Histogram of Gradient (HOG) features, etc.
 
-### Download data:
-Once you have the starter code, you will need to download the CIFAR-10 dataset.
-Run the following from the `assignment1` directory:
-
-```bash
-cd cs231n/datasets
-./get_datasets.sh
-```
-
 ### Q1: k-Nearest Neighbor classifier
 
 The notebook **knn.ipynb** will walk you through implementing the kNN classifier.
