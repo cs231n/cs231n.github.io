@@ -73,13 +73,13 @@ Once you have completed all notebooks and filled out the necessary code, you nee
 
 This notebook/script will:
 
-* Generate a zip file of your code (`.py` and `.ipynb`) called `a1.zip`.
+* Generate a zip file of your code (`.py` and `.ipynb`) called `a1_code_submission.zip`.
 * Convert all notebooks into a single PDF file.
 
 If your submission for this step was successful, you should see the following display message:
 
-`### Done! Please submit a1.zip and the pdfs to Gradescope. ###`
+`### Done! Please submit a1_code_submission.zip and a1_inline_submission.pdf to Gradescope. ###`
 
 **2.** Submit the PDF and the zip file to [Gradescope](https://www.gradescope.com/courses/379571).
 
-Remember to download `a1.zip` and `assignment.pdf` locally before submitting to Gradescope.
+Remember to download `a1_code_submission.zip` and `a1_inline_submission.pdf` locally before submitting to Gradescope.
