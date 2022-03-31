@@ -40,7 +40,7 @@ In this assignment you will practice putting together a simple image classificat
 - Implement and apply a **Softmax** classifier.
 - Implement and apply a **Two layer neural network** classifier.
 - Understand the differences and tradeoffs between these classifiers.
-- Get a basic understanding of performance improvements from using **higher-level representations** as opposed to raw pixels, e.g. color histograms, Histogram of Gradient (HOG) features, etc.
+- Get a basic understanding of performance improvements from using **higher-level representations** as opposed to raw pixels, e.g. color histograms, Histogram of Oriented Gradient (HOG) features, etc.
 
 ### Q1: k-Nearest Neighbor classifier
 
