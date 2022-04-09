@@ -54,7 +54,7 @@ The notebook `Transformer_Captioning.ipynb` will walk you through the implementa
 
 In the notebook `Generative_Adversarial_Networks.ipynb` you will learn how to generate images that match a training dataset and use these models to improve classifier performance when training on a large amount of unlabeled data and a small amount of labeled data. **When first opening the notebook, go to `Runtime > Change runtime type` and set `Hardware accelerator` to `GPU`.**
 
-### Q54 Self-Supervised Learning for Image Classification (20 points)
+### Q4: Self-Supervised Learning for Image Classification (20 points)
 
 In the notebook `Self_Supervised_Learning.ipynb`, you will learn how to leverage self-supervised pretraining to obtain better performance on image classification tasks. **When first opening the notebook, go to `Runtime > Change runtime type` and set `Hardware accelerator` to `GPU`.**
 
