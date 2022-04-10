@@ -11,11 +11,11 @@ Starter code containing Colab notebooks can be [downloaded here]({{site.hw_2_col
 
 - [Setup](#setup)
 - [Goals](#goals)
-- [Q1: Multi-Layer Fully Connected Neural Networks](#q1-multi-layer-fully-connected-neural-networks-16)
-- [Q2: Batch Normalization](#q2-batch-normalization-34)
-- [Q3: Dropout](#q3-dropout-10)
-- [Q4: Convolutional Neural Networks](#q4-convolutional-neural-networks-30)
-- [Q5: PyTorch/TensorFlow on CIFAR-10](#q5-pytorchtensorflow-on-cifar-10-10)
+- [Q1: Multi-Layer Fully Connected Neural Networks](#q1-multi-layer-fully-connected-neural-networks)
+- [Q2: Batch Normalization](#q2-batch-normalization)
+- [Q3: Dropout](#q3-dropout)
+- [Q4: Convolutional Neural Networks](#q4-convolutional-neural-networks)
+- [Q5: PyTorch/TensorFlow on CIFAR-10](#q5-pytorchtensorflow-on-cifar-10)
 - [Q6: Network Visualization: Saliency Maps, Class Visualization, and Fooling Images](#q6-network-visualization-saliency-maps-class-visualization-and-fooling-images)
 - [Submitting your work](#submitting-your-work)
 
