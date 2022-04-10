@@ -12,7 +12,7 @@ Starter code containing Colab notebooks can be [downloaded here]({{site.hw_3_col
 - [Setup](#setup)
 - [Goals](#goals)
 - [Q1: Image Captioning with Vanilla RNNs (30 points)](#q1-image-captioning-with-vanilla-rnns-30-points)
-- [Q2: Image Captioning with Transformers (20 points)](#q2-image-captioning-with-transformers-20-points)
+- [Q2: Image Captioning with Transformers (25 points)](#q2-image-captioning-with-transformers-25-points)
 - [Q3: Generative Adversarial Networks (15 points)](#q3-generative-adversarial-networks-15-points)
 - [Q4: Self-Supervised Learning for Image Classification (20 points)](#q4-self-supervised-learning-for-image-classification-20-points)
 - [Extra Credit: Image Captioning with LSTMs (5 points)](#extra-credit-image-captioning-with-lstms-5-points)
@@ -46,7 +46,7 @@ The goals of this assignment are as follows:
 
 The notebook `RNN_Captioning.ipynb` will walk you through the implementation of vanilla recurrent neural networks and apply them to image captioning on COCO.
 
-### Q2: Image Captioning with Transformers (20 points)
+### Q2: Image Captioning with Transformers (25 points)
 
 The notebook `Transformer_Captioning.ipynb` will walk you through the implementation of a Transformer model and apply it to image captioning on COCO.
 
