@@ -5,7 +5,7 @@ mathjax: true
 permalink: /assignments2022/assignment2/
 ---
 
-<span style="color:red">This assignment is due on **Friday, May 02 2022** at 11:59pm PST.</span>
+<span style="color:red">This assignment is due on **Monday, May 02 2022** at 11:59pm PST.</span>
 
 Starter code containing Colab notebooks can be [downloaded here]({{site.hw_2_colab}}).
 
