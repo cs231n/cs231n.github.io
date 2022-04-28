@@ -5,7 +5,7 @@ mathjax: true
 permalink: /assignments2022/assignment2/
 ---
 
-<span style="color:red">This assignment is due on **Friday, May 05 2022** at 11:59pm PST.</span>
+<span style="color:red">This assignment is due on **Monday, May 02 2022** at 11:59pm PST.</span>
 
 Starter code containing Colab notebooks can be [downloaded here]({{site.hw_2_colab}}).
 
@@ -15,7 +15,7 @@ Starter code containing Colab notebooks can be [downloaded here]({{site.hw_2_col
 - [Q2: Batch Normalization](#q2-batch-normalization)
 - [Q3: Dropout](#q3-dropout)
 - [Q4: Convolutional Neural Networks](#q4-convolutional-neural-networks)
-- [Q5: PyTorch/TensorFlow on CIFAR-10](#q5-pytorchtensorflow-on-cifar-10)
+- [Q5: PyTorch on CIFAR-10](#q5-pytorch-on-cifar-10)
 - [Q6: Network Visualization: Saliency Maps, Class Visualization, and Fooling Images](#q6-network-visualization-saliency-maps-class-visualization-and-fooling-images)
 - [Submitting your work](#submitting-your-work)
 
@@ -62,11 +62,11 @@ The notebook `Dropout.ipynb` will help you implement dropout and explore its eff
 
 In the notebook `ConvolutionalNetworks.ipynb` you will implement several new layers that are commonly used in convolutional networks.
 
-### Q5: PyTorch/TensorFlow on CIFAR-10
+### Q5: PyTorch on CIFAR-10
 
-For this part, you will be working in either TensorFlow or PyTorch, two popular and powerful deep learning frameworks. **You only need to complete ONE of these two notebooks.** While you are welcome to explore both for your own learning, there will be no extra credit.
+For this part, you will be working with PyTorch, a popular and powerful deep learning framework.
 
-Open up either `PyTorch.ipynb` or `TensorFlow.ipynb`. There, you will learn how the framework works, culminating in training a convolutional network of your own design on CIFAR-10 to get the best performance you can.
+Open up `PyTorch.ipynb`. There, you will learn how the framework works, culminating in training a convolutional network of your own design on CIFAR-10 to get the best performance you can.
 
 ### Q6: Network Visualization: Saliency Maps, Class Visualization, and Fooling Images
 
