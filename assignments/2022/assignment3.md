@@ -7,7 +7,7 @@ permalink: /assignments2022/assignment3/
 
 <span style="color:red">This assignment is due on **Tuesday, May 24 2022** at 11:59pm PST.</span>
 
-**Minor correction (May 15, 07:00pm PST)**: For the `MultiHeadAttention` class in `Transformer_Captioning.ipynb`, you are expected to apply dropout to the attention weights. Earlier instructions were unclear, the instructions have been updated to clarify this.
+**Update (May 15, 07:00pm PST)**: For `MultiHeadAttention` class in `Transformer_Captioning.ipynb` notebook, you are expected to apply dropout to the attention weights. Earlier instructions were unclear, the instructions have been updated to clarify this.
 
 Starter code containing Colab notebooks can be [downloaded here]({{site.hw_3_colab}}).
 
