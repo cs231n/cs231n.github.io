@@ -19,6 +19,6 @@ kramdown:
   syntax_highlighter: rouge
 
 # links to homeworks
-hw_1_colab: https://cs231n.github.io/assignments/2022/assignment1_colab.zip
-hw_2_colab: https://cs231n.github.io/assignments/2022/assignment2_colab.zip
-hw_3_colab: https://cs231n.github.io/assignments/2022/assignment3_colab.zip
+hw_1_colab: https://cs231n.github.io/assignments/2023/assignment1_colab.zip
+hw_2_colab: https://cs231n.github.io/assignments/2023/assignment2_colab.zip
+hw_3_colab: https://cs231n.github.io/assignments/2023/assignment3_colab.zip
