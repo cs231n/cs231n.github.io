@@ -2,7 +2,7 @@
 layout: page
 title: Assignment 2
 mathjax: true
-permalink: /assignments2022/assignment2/
+permalink: /assignments2023/assignment2/
 ---
 
 <span style="color:red">This assignment is due on **Monday, May 08 2023** at 11:59pm PST.</span>
