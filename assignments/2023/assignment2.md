@@ -16,7 +16,6 @@ Starter code containing Colab notebooks can be [downloaded here]({{site.hw_2_col
 - [Q3: Dropout](#q3-dropout)
 - [Q4: Convolutional Neural Networks](#q4-convolutional-neural-networks)
 - [Q5: PyTorch on CIFAR-10](#q5-pytorch-on-cifar-10)
-- [Q6: Network Visualization: Saliency Maps, Class Visualization, and Fooling Images](#q6-network-visualization-saliency-maps-class-visualization-and-fooling-images)
 - [Submitting your work](#submitting-your-work)
 
 ### Setup
@@ -67,10 +66,6 @@ In the notebook `ConvolutionalNetworks.ipynb` you will implement several new lay
 For this part, you will be working with PyTorch, a popular and powerful deep learning framework.
 
 Open up `PyTorch.ipynb`. There, you will learn how the framework works, culminating in training a convolutional network of your own design on CIFAR-10 to get the best performance you can.
-
-### Q6: Network Visualization: Saliency Maps, Class Visualization, and Fooling Images
-
-The notebook `Network_Visualization.ipynb` will introduce the pretrained SqueezeNet model, compute gradients with respect to images, and use them to produce saliency maps and fooling images.
 
 ### Submitting your work
 
