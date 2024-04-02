@@ -1,6 +1,6 @@
 # Site settings
 title: CS231n Convolutional Neural Networks for Visual Recognition
-email: karpathy@cs.stanford.edu
+email: cgokmen@stanford.edu
 description: "Course materials and notes for Stanford class CS231n: Convolutional Neural Networks for Visual Recognition."
 baseurl: ""
 url: "https://cs231n.github.io"
