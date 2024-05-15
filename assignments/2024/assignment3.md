@@ -11,11 +11,10 @@ Starter code containing Colab notebooks can be [downloaded here]({{site.hw_3_col
 
 - [Setup](#setup)
 - [Goals](#goals)
-- [Q1: Network Visualization: Saliency Maps, Class Visualization, and Fooling Images](#q1-network-visualization-saliency-maps-class-visualization-and-fooling-images)
-- [Q2: Image Captioning with Vanilla RNNs](#q2-image-captioning-with-vanilla-rnns)
-- [Q3: Image Captioning with Transformers](#q3-image-captioning-with-transformers)
-- [Q4: Generative Adversarial Networks](#q4-generative-adversarial-networks)
-- [Q5: Self-Supervised Learning for Image Classification](#q5-self-supervised-learning-for-image-classification)
+- [Q1: Image Captioning with Vanilla RNNs](#q1-image-captioning-with-vanilla-rnns)
+- [Q2: Image Captioning with Transformers](#q2-image-captioning-with-transformers)
+- [Q3: Generative Adversarial Networks](#q3-generative-adversarial-networks)
+- [Q4: Self-Supervised Learning for Image Classification](#q4-self-supervised-learning-for-image-classification)
 - [Extra Credit: Image Captioning with LSTMs](#extra-credit-image-captioning-with-lstms-5-points)
 - [Submitting your work](#submitting-your-work)
 
