@@ -5,7 +5,7 @@ mathjax: true
 permalink: /assignments2024/assignment3/
 ---
 
-<span style="color:red">This assignment is due on **Tuesday, May 30 2023** at 11:59pm PST.</span>
+<span style="color:red">This assignment is due on **Tuesday, May 28 2024** at 11:59pm PST.</span>
 
 Starter code containing Colab notebooks can be [downloaded here]({{site.hw_3_colab}}).
 
