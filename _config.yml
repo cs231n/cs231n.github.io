@@ -1,7 +1,7 @@
 # Site settings
-title: CS231n Convolutional Neural Networks for Visual Recognition
+title: CS231n Deep Learning for Computer Vision
 email: cgokmen@stanford.edu
-description: "Course materials and notes for Stanford class CS231n: Convolutional Neural Networks for Visual Recognition."
+description: "Course materials and notes for Stanford class CS231n: Deep Learning for Computer Vision."
 baseurl: ""
 url: "https://cs231n.github.io"
 courseurl: "http://cs231n.stanford.edu/"
