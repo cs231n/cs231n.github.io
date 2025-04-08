@@ -5,14 +5,14 @@ mathjax: true
 permalink: /assignments2025/assignment1/
 ---
 
-<span style="color:red">This assignment is due on **Friday, April 19 2024** at 11:59pm PST.</span>
+<span style="color:red">This assignment is due on **Wednesday, April 23 2025** at 11:59pm Pacific Time.</span>
 
 Starter code containing Colab notebooks can be [downloaded here]({{site.hw_1_colab}}).
 
 - [Setup](#setup)
 - [Goals](#goals)
 - [Q1: k-Nearest Neighbor classifier](#q1-k-nearest-neighbor-classifier)
-- [Q2: Training a Support Vector Machine](#q2-training-a-support-vector-machine)
+- [Q2: Training a fully connected network](#q2-training-a-fully-connected-network)
 - [Q3: Implement a Softmax classifier](#q3-implement-a-softmax-classifier)
 - [Q4: Two-Layer Neural Network](#q4-two-layer-neural-network)
 - [Q5: Higher Level Representations: Image Features](#q5-higher-level-representations-image-features)
@@ -46,9 +46,9 @@ In this assignment you will practice putting together a simple image classificat
 
 The notebook **knn.ipynb** will walk you through implementing the kNN classifier.
 
-### Q2: Training a Support Vector Machine
+### Q2: Training a fully connected network
 
-The notebook **svm.ipynb** will walk you through implementing the SVM classifier.
+The notebook **FullyConnectedNets.ipynb** will walk you through implementing the fully connected network.
 
 ### Q3: Implement a Softmax classifier
 
@@ -80,6 +80,6 @@ If your submission for this step was successful, you should see the following di
 
 `### Done! Please submit a1_code_submission.zip and a1_inline_submission.pdf to Gradescope. ###`
 
-**2.** Submit the PDF and the zip file to [Gradescope](https://www.gradescope.com/courses/527613).
+**2.** Submit the PDF and the zip file to [Gradescope](https://www.gradescope.com/courses/1012166).
 
 Remember to download `a1_code_submission.zip` and `a1_inline_submission.pdf` locally before submitting to Gradescope.
