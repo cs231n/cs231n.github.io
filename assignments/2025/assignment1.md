@@ -12,10 +12,10 @@ Starter code containing Colab notebooks can be [downloaded here]({{site.hw_1_col
 - [Setup](#setup)
 - [Goals](#goals)
 - [Q1: k-Nearest Neighbor classifier](#q1-k-nearest-neighbor-classifier)
-- [Q2: Training a fully connected network](#q2-training-a-fully-connected-network)
-- [Q3: Implement a Softmax classifier](#q3-implement-a-softmax-classifier)
-- [Q4: Two-Layer Neural Network](#q4-two-layer-neural-network)
-- [Q5: Higher Level Representations: Image Features](#q5-higher-level-representations-image-features)
+- [Q2: Implement a Softmax classifier](#q2-implement-a-softmax-classifier)
+- [Q3: Two-Layer Neural Network](#q3-two-layer-neural-network)
+- [Q4: Higher Level Representations: Image Features](#q4-higher-level-representations-image-features)
+- [Q5: Training a fully connected network](#q5-training-a-fully-connected-network)
 - [Submitting your work](#submitting-your-work)
 
 ### Setup
@@ -36,9 +36,9 @@ In this assignment you will practice putting together a simple image classificat
 - Understand the train/val/test **splits** and the use of validation data for **hyperparameter tuning**.
 - Develop proficiency in writing efficient **vectorized** code with numpy.
 - Implement and apply a k-Nearest Neighbor (**kNN**) classifier.
-- Implement and apply a Multiclass Support Vector Machine (**SVM**) classifier.
 - Implement and apply a **Softmax** classifier.
 - Implement and apply a **Two layer neural network** classifier.
+- Implement and apply a **fully connected network** classifier.
 - Understand the differences and tradeoffs between these classifiers.
 - Get a basic understanding of performance improvements from using **higher-level representations** as opposed to raw pixels, e.g. color histograms, Histogram of Oriented Gradient (HOG) features, etc.
 
@@ -46,22 +46,22 @@ In this assignment you will practice putting together a simple image classificat
 
 The notebook **knn.ipynb** will walk you through implementing the kNN classifier.
 
-### Q2: Training a fully connected network
-
-The notebook **FullyConnectedNets.ipynb** will walk you through implementing the fully connected network.
-
-### Q3: Implement a Softmax classifier
+### Q2: Implement a Softmax classifier
 
 The notebook **softmax.ipynb** will walk you through implementing the Softmax classifier.
 
-### Q4: Two-Layer Neural Network
+### Q3: Two-Layer Neural Network
 
 The notebook **two\_layer\_net.ipynb** will walk you through the implementation of a two-layer neural network classifier.
 
-### Q5: Higher Level Representations: Image Features
+### Q4: Higher Level Representations: Image Features
 
 The notebook **features.ipynb** will examine the improvements gained by using higher-level representations
 as opposed to using raw pixel values.
+
+### Q5: Training a fully connected network
+
+The notebook **FullyConnectedNets.ipynb** will walk you through implementing the fully connected network.
 
 ### Submitting your work
 
