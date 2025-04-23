@@ -5,17 +5,17 @@ mathjax: true
 permalink: /assignments2025/assignment2/
 ---
 
-<span style="color:red">This assignment is due on **Monday, May 06 2024** at 11:59pm PST.</span>
+<span style="color:red">This assignment is due on **Wednesday, May 07 2024** at 11:59pm PST.</span>
 
 Starter code containing Colab notebooks can be [downloaded here]({{site.hw_2_colab}}).
 
 - [Setup](#setup)
 - [Goals](#goals)
-- [Q1: Multi-Layer Fully Connected Neural Networks](#q1-multi-layer-fully-connected-neural-networks)
-- [Q2: Batch Normalization](#q2-batch-normalization)
-- [Q3: Dropout](#q3-dropout)
-- [Q4: Convolutional Neural Networks](#q4-convolutional-neural-networks)
-- [Q5: PyTorch on CIFAR-10](#q5-pytorch-on-cifar-10)
+- [Q1: Batch Normalization](#q1-batch-normalization)
+- [Q2: Dropout](#q2-dropout)
+- [Q3: Convolutional Neural Networks](#q3-convolutional-neural-networks)
+- [Q4: PyTorch on CIFAR-10](#q4-pytorch-on-cifar-10)
+- [Q5: Image Captioning with Vanilla RNNs](#q5-image-captioning-with-vanilla-rnns)
 - [Submitting your work](#submitting-your-work)
 
 ### Setup
@@ -34,37 +34,33 @@ Once you have completed all Colab notebooks **except `collect_submission.ipynb`*
 
 In this assignment you will practice writing backpropagation code, and training Neural Networks and Convolutional Neural Networks. The goals of this assignment are as follows:
 
-- Understand **Neural Networks** and how they are arranged in layered architectures.
-- Understand and be able to implement (vectorized) **backpropagation**.
-- Implement various **update rules** used to optimize Neural Networks.
 - Implement **Batch Normalization** and **Layer Normalization** for training deep networks.
 - Implement **Dropout** to regularize networks.
 - Understand the architecture of **Convolutional Neural Networks** and get practice with training them.
 - Gain experience with a major deep learning framework, **PyTorch**.
+- Understand and implement RNN networks. Combine them with CNN networks for image captioning.
 
-### Q1: Multi-Layer Fully Connected Neural Networks
 
-The notebook `FullyConnectedNets.ipynb` will have you implement fully connected
-networks of arbitrary depth. To optimize these models you will implement several
-popular update rules.
-
-### Q2: Batch Normalization
+### Q1: Batch Normalization
 
 In notebook `BatchNormalization.ipynb` you will implement batch normalization, and use it to train deep fully connected networks.
 
-### Q3: Dropout
+### Q2: Dropout
 
 The notebook `Dropout.ipynb` will help you implement dropout and explore its effects on model generalization.
 
-### Q4: Convolutional Neural Networks
+### Q3: Convolutional Neural Networks
 
 In the notebook `ConvolutionalNetworks.ipynb` you will implement several new layers that are commonly used in convolutional networks.
 
-### Q5: PyTorch on CIFAR-10
+### Q4: PyTorch on CIFAR-10
 
 For this part, you will be working with PyTorch, a popular and powerful deep learning framework.
 
 Open up `PyTorch.ipynb`. There, you will learn how the framework works, culminating in training a convolutional network of your own design on CIFAR-10 to get the best performance you can.
+
+### Q5: Image Captioning with Vanilla RNNs
+The notebook `RNN_Captioning_pytorch.ipynb` will walk you through the implementation of vanilla recurrent neural networks and apply them to image captioning on COCO.
 
 ### Submitting your work
 
@@ -85,6 +81,6 @@ If your submission for this step was successful, you should see the following di
 
 **_Note: When you have completed all notebookes, please ensure your most recent kernel execution order is chronological as this can otherwise cause issues for the Gradescope autograder. If this isn't the case, you should restart your kernel for that notebook and rerun all cells in the notebook using the Runtime Menu option "Restart and Run All"._**
 
-**2.** Submit the PDF and the zip file to [Gradescope](https://www.gradescope.com/courses/527613).
+**2.** Submit the PDF and the zip file to [Gradescope](https://www.gradescope.com/courses/1012166).
 
 Remember to download `a2_code_submission.zip` and `a2_inline_submission.pdf` locally before submitting to Gradescope.
