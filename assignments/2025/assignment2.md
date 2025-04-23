@@ -5,7 +5,7 @@ mathjax: true
 permalink: /assignments2025/assignment2/
 ---
 
-<span style="color:red">This assignment is due on **Wednesday, May 07 2024** at 11:59pm PST.</span>
+<span style="color:red">This assignment is due on **Wednesday, May 07 2025** at 11:59pm PST.</span>
 
 Starter code containing Colab notebooks can be [downloaded here]({{site.hw_2_colab}}).
 
