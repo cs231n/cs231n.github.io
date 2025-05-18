@@ -8,7 +8,7 @@ permalink: /assignments2025/assignment3/
 <span style="color:red">This assignment is due on **Friday, May 30 2025** at 11:59pm PST.</span>
 
 Starter code containing Colab notebooks can
-be [downloaded here](https://drive.google.com/file/d/1nXFMxObwSCW7bH7AYiyrlaiThhkQXkCU/view?usp=drive_link).
+be [downloaded here](https://drive.google.com/file/d/14J1IBXY50431YBbOWmPpYngudbnIqUFP/view?usp=drive_link).
 
 - [Setup](#setup)
 - [Goals](#goals)
