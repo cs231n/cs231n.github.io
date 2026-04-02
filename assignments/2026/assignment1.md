@@ -24,7 +24,10 @@ Please familiarize yourself with the recommended workflow by watching the Colab 
 
 <iframe style="display: block; margin: auto;" width="560" height="315" src="https://www.youtube.com/embed/DsGd2e9JNH4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-**Note**. Ensure you are periodically saving your notebook (`File -> Save`) so that you don't lose your progress if you step away from the assignment and the Colab VM disconnects.
+
+**Notes**:
+- Ensure you are periodically saving your notebook (`File -> Save`) so that you don't lose your progress if you step away from the assignment and the Colab VM disconnects.
+- To support in-session file editing, do the following whenever in a new notebook: before running any cells, click "Runtime" -> "Change runtime type". In the pop-up window, change "Runtime version" from "Latest" to "2025.07". (If you have already started a runtime, click "Runtime" -> "Disconnect and delete runtime")
 
 Once you have completed all Colab notebooks **except `collect_submission.ipynb`**, proceed to the [submission instructions](#submitting-your-work).
 
@@ -80,6 +83,6 @@ If your submission for this step was successful, you should see the following di
 
 `### Done! Please submit a1_code_submission.zip and a1_inline_submission.pdf to Gradescope. ###`
 
-**2.** Submit the PDF and the zip file to [Gradescope](https://www.gradescope.com/courses/1012166).
+**2.** Submit the PDF and the zip file to [Gradescope](https://www.gradescope.com/courses/1288404).
 
 Remember to download `a1_code_submission.zip` and `a1_inline_submission.pdf` locally before submitting to Gradescope.
