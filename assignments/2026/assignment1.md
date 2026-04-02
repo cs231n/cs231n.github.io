@@ -5,7 +5,7 @@ mathjax: true
 permalink: /assignments2026/assignment1/
 ---
 
-<span style="color:red">This assignment is due on **Wednesday, April 16 2026** at 11:59pm Pacific Time.</span>
+<span style="color:red">This assignment is due on **Thursday, April 16 2026** at 11:59pm Pacific Time.</span>
 
 Starter code containing Colab notebooks can be [downloaded here]({{site.hw_1_colab}}).
 
