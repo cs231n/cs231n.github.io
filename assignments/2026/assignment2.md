@@ -26,8 +26,6 @@ Please familiarize yourself with the [recommended workflow]({{site.baseurl}}/set
 
 **Note**. Ensure you are periodically saving your notebook (`File -> Save`) so that you don't lose your progress if you step away from the assignment and the Colab VM disconnects.
 
-While we don't officially support local development, we've added a <b>requirements.txt</b> file that you can use to setup a virtual env.
-
 Once you have completed all Colab notebooks **except `collect_submission.ipynb`**, proceed to the [submission instructions](#submitting-your-work).
 
 ### Goals
