@@ -1,0 +1,903 @@
+<html>
+<head>
+<title>Multiclass SVM optimization demo</title>
+
+<!-- Mathjax -->
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- jqueryui -->
+<link href="external/jquery-ui.min.css" rel="stylesheet">
+
+<script type="text/javascript" src="external/d3.min.js"></script>
+<script src="external/jquery-1.11.2.min.js"></script>
+<script src="external/jquery-ui.min.js"></script>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-46895817-2', 'auto');
+ga('send', 'pageview');
+</script>
+
+<style type="text/css">
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+}
+
+h1 {
+  text-align: center;
+}
+canvas { 
+    border: 1px solid #555;
+    margin-top: 10px;
+}
+
+.nf {
+  border: 1px solid #555;
+  margin-bottom: 2px;
+  text-align: center;
+  padding: 5px;
+}
+
+.col {
+  display: inline-block;
+  width: 50px;
+  margin: 2px;
+  padding: 2px;
+  vertical-align: top;
+}
+.colsep {
+  border-right: 4px solid black;
+}
+.ns {
+  font-weight: bold;
+  background-color: #EEE;
+}
+.wcol {
+  display: inline-block;
+  width: 50px;
+  margin: 2px;
+  padding: 2px;
+  vertical-align: top;
+}
+.ud {
+  font-size: 20px;
+  text-align: center;
+  height: 22px;
+  cursor: pointer;
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+}
+.wdiv {
+  border: 1px solid #555;
+  text-align: center;
+  margin-top: 2px;
+  height: 40px;
+  padding-top: 10px;
+}
+.wval {
+  font-weight: bold;
+}
+.wgrad {
+  font-style: italic;
+  color: red;
+}
+#intro {
+  border-bottom: 1px solid black;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+#wrap {
+  width: 1050px;
+}
+.numvis {
+  font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+}
+#svmformdiv {
+  color: #999;
+}
+hr {
+  color: #333;
+  background-color: #333;
+  height: 1px;
+  border: 0;
+}
+</style>
+
+<script type="text/javascript">
+
+var data = new Array(9);
+var labels = new Array(9);
+data[0] = [0.5, 0.4];
+data[1] = [0.8, 0.3];
+data[2] = [0.3, 0.8];
+data[3] = [-0.4, 0.3];
+data[4] = [-0.3, 0.7];
+data[5] = [-0.7, 0.2];
+data[6] = [0.7, -0.4];
+data[7] = [0.5, -0.6];
+data[8] = [-0.4, -0.5];
+labels[0] = 0;
+labels[1] = 0;
+labels[2] = 0;
+labels[3] = 1;
+labels[4] = 1;
+labels[5] = 1;
+labels[6] = 2;
+labels[7] = 2;
+labels[8] = 2;
+N = data.length;
+D = 2;
+
+// for(var i=0;i<data.length;i++) {
+//   for(var j=0;j<2;j++) {
+//     data[i][j] += 1.0;
+//   }
+// }
+
+var data_color = {};
+data_color[0] = 'rgb(100,100,200)';
+data_color[1] = 'rgb(100,200,100)';
+data_color[2] = 'rgb(200,100,100)';
+
+var data_color_light = {};
+data_color_light[0] = 'rgb(200,200,250)';
+data_color_light[1] = 'rgb(200,250,200)';
+data_color_light[2] = 'rgb(250,200,200)';
+
+
+// drawing
+ss = 200;
+HEIGHT = 400;
+WIDTH = 400;
+
+// parameters for the three classes
+var W = [1.0, 2.0, 2, -4, 3, -1];
+var b = [0.0, 0.5, -0.5];
+
+function drawCircle(x, y, r){
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI*2, true); 
+  ctx.closePath();
+  ctx.stroke();
+  ctx.fill();
+}
+
+/*
+var JET_colormap = function() {
+}
+JET_colormap.prototype = {
+  interpolate: function(val, y0, x0, y1, x1) {
+    return (val-x0)*(y1-y0)/(x1-x0) + y0;
+  },
+  base: function(val) {
+    if ( val <= -0.75 ) return 0;
+    else if ( val <= -0.25 ) return this.interpolate( val, 0.0, -0.75, 1.0, -0.25 );
+    else if ( val <= 0.25 ) return 1.0;
+    else if ( val <= 0.75 ) return this.interpolate( val, 1.0, 0.25, 0.0, 0.75 );
+    else return 0.0;
+  },
+  red: function(v) {
+    return this.base(v - 0.5);
+  },
+  green: function(v) {
+    return this.base(v);
+  },
+  blue: function(v) {
+    return this.base(v + 0.5);
+  },
+  rgb: function(v) {
+    // v is between -1 and 1
+    var r = Math.floor(this.red(v)*255);
+    var g = Math.floor(this.green(v)*255);
+    var b = Math.floor(this.blue(v)*255);
+    return 'rgb('+r+','+g+','+b+')';
+  },
+}
+var JET = new JET_colormap();
+*/
+
+
+var drawAll = function() {
+  ctx.clearRect(0,0,WIDTH,HEIGHT);
+  drawDecisions();
+  drawAxes();
+  drawData();
+  drawClassifiers();
+}
+
+var drawAxes = function() {
+  // draw axes
+  ctx.beginPath();
+  ctx.strokeStyle = 'rgb(0,0,0)';
+  ctx.lineWidth = 1;
+  ctx.moveTo(0, HEIGHT/2);
+  ctx.lineTo(WIDTH, HEIGHT/2);
+  ctx.moveTo(WIDTH/2, 0);
+  ctx.lineTo(WIDTH/2, HEIGHT);
+  ctx.stroke();
+}
+
+var drawDecisions = function() {
+  // draw decisions in the grid
+  var density= 5.0;
+  for(var x=0.0; x<=WIDTH; x+= density) {
+    for(var y=0.0; y<=HEIGHT; y+= density) {
+      // forward this point through
+      var dx = (x-WIDTH/2)/ss;
+      var dy = (y-HEIGHT/2)/ss;
+      
+      var s0 = W[0]*dx + W[1]*dy + b[0];
+      var s1 = W[2]*dx + W[3]*dy + b[1];
+      var s2 = W[4]*dx + W[5]*dy + b[2];
+
+      if(s0 > s1 && s0 > s2) ctx.fillStyle = data_color_light[0];
+      if(s1 > s0 && s1 > s2) ctx.fillStyle = data_color_light[1];
+      if(s2 > s0 && s2 > s1) ctx.fillStyle = data_color_light[2];
+
+      ctx.fillRect(x-density/2-1, y-density-1, density+2, density+2);
+    }
+  }
+}
+
+var drawData = function() {
+
+  // draw datapoints. Draw support vectors larger
+  ctx.strokeStyle = 'rgb(0,0,0)';
+  ctx.lineWidth = 1;
+  for(var i=0;i<N;i++) {
+    ctx.fillStyle = data_color[labels[i]];
+    drawCircle(data[i][0]*ss+WIDTH/2, data[i][1]*ss+HEIGHT/2, 6);
+  }
+}
+
+var drawClassifiers = function() {
+
+  for(var i=0;i<3;i++) {
+    var wb = {};
+    wb.b = b[i];
+    wb.w = [W[2*i], W[2*i+1]];
+    ctx.strokeStyle = data_color[i];
+
+    var xs= [-5, 5, 0];
+    var ys= [0, 0, 0];
+    ys[0]= (-wb.b - wb.w[0]*xs[0])/wb.w[1];
+    ys[1]= (-wb.b - wb.w[0]*xs[1])/wb.w[1];
+    ys[2]= (-wb.b - wb.w[0]*xs[2])/wb.w[1];
+    ctx.fillStyle = 'rgb(0,0,0)';
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+    // wx+b=0 line
+    ctx.moveTo(xs[0]*ss+WIDTH/2, ys[0]*ss+HEIGHT/2);
+    ctx.lineTo(xs[1]*ss+WIDTH/2, ys[1]*ss+HEIGHT/2);
+    ctx.stroke();
+
+    // draw arrow indicating increasing direction
+    ctx.beginPath();
+    var xx = xs[2]*ss+WIDTH/2;
+    var yy = ys[2]*ss+HEIGHT/2;
+    var xp = xx + wb.w[0]*20;
+    var yp = yy + wb.w[1]*20;
+    ctx.moveTo(xx, yy);
+    ctx.lineTo(xp, yp);
+
+    // lol sigh oh welll
+    var ax = xx - xp;
+    var ay = yy - yp;
+    var ad = Math.sqrt(ax*ax+ay*ay);
+    ax *= 15/ad; ay *= 15/ad; // 10 pixel arrows
+    var t = 0.5;
+    var ax2 = ax * Math.cos(t) - ay * Math.sin(t);
+    var ay2 = ax * Math.sin(t) + ay * Math.cos(t);
+    ctx.moveTo(xp, yp);
+    ctx.lineTo(xp+ax2, yp+ay2);
+    // copy paste lol
+    var ax = xx - xp;
+    var ay = yy - yp;
+    var ad = Math.sqrt(ax*ax+ay*ay);
+    ax *= 15/ad; ay *= 15/ad; // 10 pixel arrows
+    var t = -0.5;
+    var ax2 = ax * Math.cos(t) - ay * Math.sin(t);
+    var ay2 = ax * Math.sin(t) + ay * Math.cos(t);
+    ctx.moveTo(xp, yp);
+    ctx.lineTo(xp+ax2, yp+ay2);
+
+    ctx.stroke();
+
+
+    /*
+    // lighter, thinner lines
+    ctx.strokeStyle = data_color_light[i];
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+    // wx+b=1 line
+    //ctx.moveTo(xs[0]*ss+WIDTH/2, (ys[0]-1.0/wb.w[1])*ss+HEIGHT/2);
+    //ctx.lineTo(xs[1]*ss+WIDTH/2, (ys[1]-1.0/wb.w[1])*ss+HEIGHT/2);
+    // wx+b=-1 line
+    ctx.moveTo(xs[0]*ss+WIDTH/2, (ys[0]+1.0/wb.w[1])*ss+HEIGHT/2);
+    ctx.lineTo(xs[1]*ss+WIDTH/2, (ys[1]+1.0/wb.w[1])*ss+HEIGHT/2);
+    ctx.stroke();
+    */
+  }
+}
+
+var visLoss = function() {
+  d3.select('#lossvis').html('');
+
+  // vis all data
+  var pdiv = d3.select('#lossvis').append('div');
+
+  // data columns
+  for(var j=0;j<D;j++) {
+    var div = pdiv.append('div').attr('class', 'col');
+    div.append('div').attr('class', 'nf ns').text('x['+j+']');
+    for(var i=0;i<N;i++) {
+      div.append('div').attr('class', 'nf').text(data[i][j].toFixed(2));
+    }
+  }
+
+  // label column
+  var div = pdiv.append('div').attr('class', 'col colsep');
+  div.append('div').attr('class', 'nf ns').text('y');
+  for(var i=0;i<N;i++) {
+    div.append('div').attr('class', 'nf').attr('style', 'background-color:'+data_color_light[labels[i]]).text(labels[i]);
+  }
+
+  // score (Wx + b) column
+  for(var j=0;j<3;j++) {
+    var div = pdiv.append('div').attr('class', j < 2 ? 'col' : 'col colsep');
+    div.append('div').attr('class', 'nf ns').text('s['+j+']');
+    for(var i=0;i<N;i++) {
+      var d = div.append('div').attr('class', 'nf').text(scores[i][j].toFixed(2));
+      d.attr('style', 'background-color:'+data_color_light[j]);
+    }
+  }
+
+  // loss column
+  var div = pdiv.append('div').attr('class', 'col');
+  div.append('div').attr('class', 'nf ns').text('L');
+  for(var i=0;i<N;i++) {
+    var d = div.append('div').attr('class', 'nf nb').text(loss[i].toFixed(2));
+    d.attr('style', 'border-color:' + (loss[i] > 0 ? 'red' : 'green') );
+  }
+  div.append('div').attr('class', 'nf ns').text('mean:');
+  div.append('div').attr('class', 'nf').text(cost_loss.toFixed(2));
+
+  // aggregate statistics
+  d3.select('#losstot').html('');
+  var pdiv = d3.select('#losstot').append('div');
+  pdiv.append('div').text('Total data loss: ' + cost_loss.toFixed(2));
+  pdiv.append('div').text('Regularization loss: ' + reg_loss.toFixed(2));
+  pdiv.append('div').text('Total loss: ' + total_loss.toFixed(2));
+}
+
+svmform = 'ww'; // can be ww or ova or ssvm
+scores = [];
+loss = [];
+total_loss = 0.0;
+cost_loss = 0.0;
+reg_loss = 0.0;
+regc = 0.1;
+grad_W = [];
+grad_b = [];
+var computeLoss = function() {
+
+  // compute scores, loss and gradient
+  scores = [];
+  loss = [];
+  grad_W = []; for(var q=0;q<W.length;q++) {grad_W.push(0);}
+  grad_b = []; for(var q=0;q<b.length;q++) {grad_b.push(0);}
+  cost_loss = 0.0;
+  for(var i=0;i<N;i++) {
+    var li = labels[i];
+
+    // scores compute
+    var s = [];
+    var maxj = -1;
+    var maxjscore = -999999;
+    for(var j=0;j<3;j++) { // 3 classes
+      var sj = W[j*2]*data[i][0] + W[j*2+1]*data[i][1] + b[j];
+      s.push(sj);
+      if(sj > maxjscore && j !== li) {
+        maxj = j;
+        maxjscore = sj;
+      }
+    }
+    scores.push(s);
+
+    if(svmform === 'softmax') {
+      // exp
+      var p = new Array(3);
+      var esum = 0.0;
+      for(var j=0;j<3;j++) {
+        p[j] = Math.exp(s[j]);
+        esum += p[j];
+      }
+      // normalize
+      for(var j=0;j<3;j++) {
+        p[j] /= esum;
+      }
+    }
+
+    // loss/grad compute
+    var lossi = 0;
+    for(var j=0;j<3;j++) { 
+
+      // Weston Watkins formulation
+      if(svmform === 'ww') {
+        if(li === j) continue;
+        var lossij = Math.max(0, s[j] - s[li] + 1);
+        if(lossij > 0) {
+          lossi += lossij;
+          grad_W[j*2] += data[i][0];
+          grad_W[j*2+1] += data[i][1];
+          grad_b[j] += 1;
+          grad_W[li*2] -= data[i][0];
+          grad_W[li*2+1] -= data[i][1];
+          grad_b[li] -= 1;
+        }
+      }
+
+      // OVA formulation
+      if(svmform === 'ova') {
+        var yij = li === j ? 1.0 : -1.0;
+        var lossij = Math.max(0, 1 - yij * s[j]);
+        if(lossij > 0) {
+          lossi += lossij;
+          grad_W[j*2] += -yij * data[i][0];
+          grad_W[j*2+1] += -yij * data[i][1];
+          grad_b[j] += -yij;
+        }
+      }
+
+      // Structured SVM
+      if(svmform === 'ssvm') {
+        if(j === maxj) {
+          var lossij = s[j] - s[li] + 1;
+          if(lossij > 0) {
+            lossi += lossij;
+            grad_W[j*2] += data[i][0];
+            grad_W[j*2+1] += data[i][1];
+            grad_b[j] += 1;
+            grad_W[li*2] -= data[i][0];
+            grad_W[li*2+1] -= data[i][1];
+            grad_b[li] -= 1;
+          }
+        }
+      }
+
+      if(svmform === 'softmax') {
+        if(li === j) {
+          lossi += -Math.log(p[j]);
+          grad_W[j*2] += (p[j]-1) * data[i][0];
+          grad_W[j*2+1] += (p[j]-1) * data[i][1];
+          grad_b[j] += (p[j]-1);
+        } else {
+          grad_W[j*2] += p[j] * data[i][0];
+          grad_W[j*2+1] += p[j] * data[i][1];
+          grad_b[j] += p[j];
+
+        }
+      }
+
+    }
+    
+    loss.push(lossi);
+    cost_loss += lossi;
+  }
+
+  // normalize to make mean
+  cost_loss /= N;
+  for(var i=0;i<grad_W.length;i++) { grad_W[i] /= N; }
+    for(var i=0;i<grad_b.length;i++) { grad_b[i] /= N; }
+
+  reg_loss = 0.0;
+  for(var j=0;j<W.length;j++) {
+    reg_loss += regc * W[j] * W[j];
+    grad_W[j] += 0.5 * regc * W[j];
+  }
+  total_loss = cost_loss + reg_loss;
+}
+
+var computeLossFast = function() {
+  var loss = 0.0;
+  for(var i=0;i<N;i++) {
+    // scores compute
+    var s = [];
+    for(var j=0;j<3;j++) { // 3 classes
+      s.push(W[j*2]*data[i][0] + W[j*2+1]*data[i][1] + b[j]);
+    }
+    // loss compute
+    var li = labels[i];
+    var lossi = 0;
+    for(var j=0;j<3;j++) { 
+      if(li === j) continue;
+      var lossij = Math.max(0, s[j] - s[li] + 1);
+      if(lossij > 0) {
+        lossi += lossij;
+      }
+    }
+    loss += lossi;
+  }
+  for(var j=0;j<W.length;j++) {
+    loss += regc * W[j] * W[j];
+  }
+  return loss;
+}
+
+
+var click_step = 0.1;
+var visWeights = function() {
+  d3.select('#weightvis').html('');
+
+  var pdiv = d3.select('#weightvis').append('div');
+
+  for(var i=0;i<3;i++) {
+    var div = pdiv.append('div').attr('class', 'wcol');
+    if(i<2) { div.attr('style', 'background-color: #FFC;'); }
+    else { div.attr('style', 'background-color: #CFF;'); }
+
+    for(var j=0;j<3;j++) {
+      if(i<2) {
+        div.append('div').attr('style','text-align:center').html('W['+j+','+i+']');
+      } else {
+        div.append('div').attr('style','text-align:center').html('b['+j+']');
+      }
+      var u = div.append('div').html('&#x25B2;').attr('class', 'ud');
+      var ix = j*2+i;
+      if(i <2) {
+        var dd = div.append('div').attr('class', 'wdiv');
+        dd.append('div').attr('class', 'wval').text(W[ix].toFixed(2));
+        dd.append('div').attr('class', 'wgrad').text(grad_W[ix].toFixed(2));
+        dd.attr('style', 'background-color:' + data_color_light[j]);
+      } else {
+        var dd = div.append('div').attr('class', 'wdiv');
+        dd.append('div').attr('class', 'wval').text(b[j].toFixed(2));
+        dd.append('div').attr('class', 'wgrad').text(grad_b[j].toFixed(2));
+        dd.attr('style', 'background-color:' + data_color_light[j]);
+      }
+      var d = div.append('div').html('&#x25BC;').attr('class', 'ud');
+
+      // attach click handlers
+      if(i < 2) {
+        // weights
+        d.on('click', function(q){
+          return function() {
+            W[q] -= click_step;
+            refreshW();
+          }
+        }(ix));
+        u.on('click', function(q){
+          return function() {
+            W[q] += click_step;
+            refreshW();
+          }
+        }(ix));
+      } else {
+        // biases
+        d.on('click', function(q){
+          return function() {
+            b[q] -= click_step;
+            refreshW();
+          }
+        }(j));
+        u.on('click', function(q){
+          return function() {
+            b[q] += click_step;
+            refreshW();
+          }
+        }(j));
+      }
+    }
+  }
+
+}
+
+var refreshW = function() {
+  // for now redo all
+  drawAll();
+  computeLoss();
+  visLoss();
+  visWeights();
+}
+
+var learning_rate = 0.1;
+var dostep = function() {
+
+  // perform SGD step
+  for(var i=0;i<W.length;i++) { 
+    W[i] += -learning_rate * grad_W[i];
+  }
+  for(var i=0;i<b.length;i++) { 
+    b[i] += -learning_rate * grad_b[i];
+  }
+
+  refreshW();
+  //drawLossSurfaceCurrentPosition();
+}
+
+
+var iid = -1;
+var startstep = function() {
+  if(iid !== -1) { clearInterval(iid); }
+  iid = setInterval(dostep, 100);
+}
+var stopstep = function() {
+  if(iid !== -1) { clearInterval(iid); }
+  iid = -1;
+}
+
+var randomizevars = function() {
+  for(i=0;i<W.length;i++) { W[i] = Math.random()-0.5; }
+  for(i=0;i<b.length;i++) { b[i] = Math.random()-0.5; }
+  refreshW();
+}
+
+/*
+var ss2 = 40;
+var drawLossSurface = function() {
+  // change numbers in W/b and see what the full data loss is
+  var ow1 = W[0];
+  var ow2 = W[1];
+
+  var density= 10.0;
+  var losses = [];
+  var min_loss = 999999;
+  var max_loss = -999999;
+  for(var x=0.0; x<=WIDTH; x+= density) {
+    for(var y=0.0; y<=HEIGHT; y+= density) {
+      // forward this point through
+      var dx = (x-WIDTH/2)/ss2;
+      var dy = (y-HEIGHT/2)/ss2;
+      
+      // eval loss at W + [dx, dy]
+      W[0] = ow1 + dx;
+      W[1] = ow2 + dy;
+      var loss = computeLossFast();
+      if(loss < min_loss) { min_loss = loss; }
+      if(loss > max_loss) { max_loss = loss; }
+      losses.push(loss);
+    }
+  }
+  // go again and draw
+  var n = 0;
+  for(var x=0.0; x<=WIDTH; x+= density) {
+    for(var y=0.0; y<=HEIGHT; y+= density) {
+      // make loss go from -1 to 1 which JET expects
+      var loss = 2 * (losses[n] - min_loss)/(max_loss - min_loss) - 1;
+      n++;
+      ctx2.fillStyle = JET.rgb(loss);
+      ctx2.fillRect(x-density/2-1, y-density-1, density+2, density+2);
+    }
+  }
+  
+  // reset
+  W[0] = ow1;
+  W[1] = ow2;
+}
+
+var drawLossSurfaceCurrentPosition = function() {
+  // draw current position
+  var ow1 = W[0];
+  var ow2 = W[1];
+  ctx2.strokeStyle = 'rgb(0,0,0)';
+  ctx2.lineWidth = 1;  
+  ctx2.fillStyle = 'rgb(255,255,255)';
+  var x = ow1*ss2 + WIDTH/2;
+  var y = ow2*ss2 + HEIGHT/2;
+  ctx2.beginPath();
+  ctx2.arc(x, y, 3, 0, Math.PI*2, true); 
+  ctx2.closePath();
+  ctx2.stroke();
+  ctx2.fill();
+}
+*/
+
+function handleMouseOut(e){
+  handleMouseUp(e);
+}
+function handleMouseUp(e){
+  dragging = -1;
+}
+var dragging = -1;
+function handleMouseDown(e){
+  var canvasOffset=$("#datacanvas").offset();
+  offsetX = canvasOffset.left;
+  offsetY = canvasOffset.top;
+
+  var mouseX=parseInt(e.clientX-offsetX);
+  var mouseY=parseInt(e.clientY-offsetY);
+  var mx = (mouseX-WIDTH/2)/ss;
+  var my = (mouseY-HEIGHT/2)/ss;
+
+  // find nearest data point
+  var N = data.length;
+  var mind = 999999;
+  var mini = -1;
+  for(var i=0;i<N;i++) {
+    var di = (data[i][0] - mx)*(data[i][0] - mx) + (data[i][1] - my)*(data[i][1] - my);
+    if(di < mind) {
+      mind = di;
+      mini = i;
+    }
+  }
+  dragging = mini; // store its index in dragging var
+}
+function handleMouseMove(e){
+  if(dragging >= 0) {
+    var mouseX = parseInt(e.clientX-offsetX);
+    var mouseY = parseInt(e.clientY-offsetY);
+    var mx = (mouseX-WIDTH/2)/ss;
+    var my = (mouseY-HEIGHT/2)/ss;
+    data[dragging] = [mx, my]; // reposition the dragged point
+    // redraw the canvas
+    drawAll();
+    computeLoss();
+    visLoss();
+  }
+}
+
+var svmformchange = function(r) {
+  var val = r.value;
+  svmform = val;
+  refreshW();
+}
+
+$(function() {
+  
+  // init main canvas
+  canvas = document.getElementById('datacanvas');
+  ctx = canvas.getContext('2d');
+
+  $("#datacanvas").mousedown(function(e){handleMouseDown(e);});
+  $("#datacanvas").mousemove(function(e){handleMouseMove(e);});
+  $("#datacanvas").mouseup(function(e){handleMouseUp(e);});
+  $("#datacanvas").mouseout(function(e){handleMouseOut(e);});
+
+  // and loss canvas
+  //canvas2 = document.getElementById('losscanvas');
+  //ctx2 = canvas2.getContext('2d');
+
+  // draw everything
+  drawAll();
+  computeLoss();
+  visLoss();
+  visWeights();
+
+  //drawLossSurface();
+  //drawLossSurfaceCurrentPosition();
+
+  $("#lrslider").slider({
+    min: Math.log10(0.05) - 2.0,
+    max: Math.log10(0.05) + 2.0,
+    step: 0.05,
+    value: Math.log10(learning_rate),
+    slide: function( event, ui ) {
+      learning_rate = Math.pow(10, ui.value);
+      $("#lrtext").text(learning_rate.toFixed(5));
+    }
+  });
+  $("#lrtext").text(learning_rate.toFixed(5));
+
+  $("#regcslider").slider({
+    min: Math.log10(1) - 2.0,
+    max: Math.log10(1) + 2.05,
+    step: 0.05,
+    value: Math.log10(regc),
+    slide: function( event, ui ) {
+      regc = Math.pow(10, ui.value);
+      $("#regctext").text(regc.toFixed(5));
+      refreshW();
+    }
+  });
+  $("#regctext").text(regc.toFixed(5));
+
+});
+</script>
+
+
+
+</head>
+
+<body>
+<div id="wrap">
+<h1>Linear Classification Loss Visualization</h1>
+
+<div id="intro">
+These linear classifiers were written in Javascript for Stanford's <a href="http://vision.stanford.edu/teaching/cs231n/">CS231n: Convolutional Neural Networks for Visual Recognition</a>.
+
+<br><br>
+
+The class scores for linear classifiers are computed as \( f(x_i; W, b) =  W x_i + b \), where the parameters consist of weights \(W\) and biases \(b\). The training data is \(x_i\) with labels \(y_i\). In this demo, the datapoints \(x_i\) are 2-dimensional and there are 3 classes, so the weight matrix is of size [3 x 2] and the bias vector is of size [3 x 1].
+
+The multiclass loss function can be formulated in many ways. The default in this demo is an SVM that follows [Weston and Watkins 1999]. Denoting \( f \) as the [3 x 1] vector that holds the class scores, the loss has the form:
+
+$$
+L = \underbrace{ \frac{1}{N} \sum_i \sum_{j \neq y_i} \max(0, f_j - f_{y_i} + 1)}_{\text{data loss}} + \lambda \underbrace{\sum_k\sum_l W_{k,l}^2 }_{\text{regularization loss}}
+$$
+
+Where\( N \) is the number of examples, and \(\lambda\) is a hyperparameter that controls the strength of the L2 regularization penalty \(R(W) = \sum_k\sum_l W_{k,l}^2\). On the bottom right of this demo you can also flip to different formulations for the Multiclass SVM including One vs All (OVA) where a separate binary SVM is trained for every class independently (vs. other classes all labeled as negatives), and Structured SVM which maximizes the margin between the correct score and the score of the highest runner-up class. You can also choose to use the cross-entropy loss which is used by the Softmax classifier. These loses are explained the <a href="http://cs231n.github.io/linear-classify/">CS231n notes on Linear Classification</a>.
+
+</div>
+
+<div id="blockwrap" style="position:relative;">
+
+<div id="datadiv" style="width:400px; text-align:justify; position:absolute; left:10px; top:0px;">
+Datapoints are shown as circles colored by their class (red/gree/blue). The background regions are colored by whichever class is most likely at any point according to the current weights. Each classifier is visualized by a line that indicates its zero score level set. For example, the blue classifier computes scores as \(W_{0,0} x_0 + W_{0,1} x_1 + b_0\) and the blue line shows the set of points \((x_0, x_1)\) that give score of zero. The blue arrow draws the vector \((W_{0,0}, W_{0,1})\), which shows the direction of score increase and its length is proportional to how steep the increase is. 
+<div style="text-align:left;"><b>Note: you can drag the datapoints</b>.</div>
+<canvas id="datacanvas" width="400" height="400"></canvas>
+</div>
+
+<div style="width:185px;position:absolute; left:420px; top:0px;text-align:justify;">
+  <div>
+  Parameters \(W,b\) are shown below. The value is in <b>bold</b> and its gradient (computed with backprop) is in <span style="color:red;font-style:italic;">red, italic</span> below. Click the triangles to control the parameters.
+  </div>
+<div id="weightvis" class="numvis"></div>
+</div>
+
+<div style="width:420px;position:absolute;left:620px; top:0px;text-align:justify;">
+  Visualization of the data loss computation. Each row is loss due to one datapoint. The first three columns are the 2D data \(x_i\) and the label \(y_i\). The next three columns are the three class scores from each classifier \( f(x_i; W, b) =  W x_i + b \) (E.g. s[0] = x[0] * W[0,0] + x[1] * W[0,1] + b[0]). The last column is the data loss for a single example, \(L_i\).
+  <div id="lossvis" class="numvis">
+  </div>
+</div>
+
+<div id="losstot" style="width:220px;position:absolute;left:650px; top:450px;" class="numvis"></div>
+
+<div style="width:250px; position:absolute; left:650px; top:510px;">
+<div id="regcslider"></div>
+<div> 
+  L2 Regularization strength: <div id="regctext" style="display:inline-block; margin-bottom:5px; margin-top: 5px;"></div>
+</div>
+</div>
+
+
+<div id="weightup" style="position:absolute;left:420px; top:490px;">
+  
+  <hr>
+
+  <div id="lrslider"></div>
+  <div> 
+    Step size: <div id="lrtext" style="display:inline-block; margin-bottom:5px; margin-top: 5px;"></div>
+  </div>
+
+  <button type="button" onclick="dostep()" style="height:40px; width:180px; margin-bottom: 10px;">Single parameter update</button><br>
+  <button type="button" onclick="startstep()" style="height:40px; width:180px; margin-bottom: 10px;">Start repeated update</button><br>
+  <button type="button" onclick="stopstep()" style="height:40px; width:180px; margin-bottom: 10px;">Stop repeated update</button><br>
+  <button type="button" onclick="randomizevars()" style="height:40px; width:180px; margin-bottom: 10px;">Randomize parameters</button><br>
+</div>
+
+<div id="svmformdiv" style="position:absolute;left:650px; top:600px;">
+  Multiclass SVM loss formulation:<br>
+  <form action="">
+  <input type="radio" name="ff" value="ww" onclick="svmformchange(this);" checked>Weston Watkins 1999<br>
+  <input type="radio" name="ff" value="ova" onclick="svmformchange(this);">One vs. All<br>
+  <input type="radio" name="ff" value="ssvm" onclick="svmformchange(this);">Structured SVM<br>
+  <input type="radio" name="ff" value="softmax" onclick="svmformchange(this);">Softmax
+</form>
+</div>
+
+
+
+<!-- 
+<div id="lossdiv">
+<canvas id="losscanvas" width="400" height="400"></canvas>
+</div>  -->
+
+</div> <!-- end of blockwrap -->
+</div> <!-- end of wrap -->
+
+<div style="height:600px; width:100%;"></div>
+
+</body>
+</html>
