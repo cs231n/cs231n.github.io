@@ -261,7 +261,7 @@ $$
 Since the probabilities of class 1 and 0 sum to one, the probability for class 0 is \\(P(y = 0 \mid x; w, b) = 1 - P(y = 1 \mid x; w,b)\\). Hence, an example is classified as a positive example (y = 1) if \\(\sigma (w^Tx + b) > 0.5\\), or equivalently if the score \\(w^Tx +b > 0\\). The loss function then maximizes this probability. You can convince yourself that this simplifies to minimizing the negative log-likelihood:
 
 $$
-L_i = -\sum_j y_{ij} \log(\sigma(f_j)) + (1 - y_{ij}) \log(1 - \sigma(f_j))
+L_i = -\sum_j \left[ y_{ij} \log(\sigma(f_j)) + (1 - y_{ij}) \log(1 - \sigma(f_j)) \right]
 $$
 
 where the labels \\(y_{ij}\\) are assumed to be either 1 (positive) or 0 (negative), and \\(\sigma(\cdot)\\) is the sigmoid function. The expression above can look scary but the gradient on \\(f\\) is in fact extremely simple and intuitive: \\(\partial{L_i} / \partial{f_j} = \sigma(f_j) - y_{ij}\\) (as you can double check yourself by taking the derivatives).
@@ -278,7 +278,7 @@ $$
 L_i = \Vert f - y_i \Vert_1 = \sum_j \mid f_j - (y_i)_j \mid
 $$
 
-where the sum \\(\sum_j\\) is a sum over all dimensions of the desired prediction, if there is more than one quantity being predicted. Looking at only the j-th dimension of the i-th example and denoting the difference between the true and the predicted value by \\(\delta_{ij}\\), the gradient for this dimension (i.e. \\(\partial{L_i} / \partial{f_j}\\)) is easily derived to be either \\(\delta_{ij}\\) with the L2 norm, or \\(sign(\delta_{ij})\\). That is, the gradient on the score will either be directly proportional to the difference in the error, or it will be fixed and only inherit the sign of the difference.
+where the sum \\(\sum_j\\) is a sum over all dimensions of the desired prediction, if there is more than one quantity being predicted. Looking at only the j-th dimension of the i-th example and denoting the prediction error by \\(\delta_{ij} = f_j - (y_i)_j\\), the gradient for this dimension (i.e. \\(\partial{L_i} / \partial{f_j}\\)) is easily derived to be either \\(2\delta_{ij}\\) with the squared L2 norm, or \\(sign(\delta_{ij})\\) with the L1 norm. That is, the gradient on the score will either be directly proportional to the difference in the error, or it will be fixed and only inherit the sign of the difference.
 
 *Word of caution*: It is important to note that the L2 loss is much harder to optimize than a more stable loss such as Softmax. Intuitively, it requires a very fragile and specific property from the network to output exactly one correct value for each input (and its augmentations). Notice that this is not the case with Softmax, where the precise value of each score is less important: It only matters that their magnitudes are appropriate. Additionally, the L2 loss is less robust because outliers can introduce huge gradients. When faced with a regression problem, first consider if it is absolutely inadequate to quantize the output into bins. For example, if you are predicting star rating for a product, it might work much better to use 5 independent classifiers for ratings of 1-5 stars instead of a regression loss. Classification has the additional benefit that it can give you a distribution over the regression outputs, not just a single output with no indication of its confidence. If you're certain that classification is not appropriate, use the L2 but be careful: For example, the L2 is more fragile and applying dropout in the network (especially in the layer right before the L2 loss) is not a great idea.
 

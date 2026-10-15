@@ -172,7 +172,7 @@ $$
 $$
 
 where RNN thinks that the next character $$\text{"h"}$$ is $$1.0$$ likely to come next, $$\text{"e"}$$ is $$2.2$$ likely,
-$$\text{"e"}$$ is $$-3.0$$ likely, and $$\text{"o"}$$ is $$4.1$$ likely to come next. In this case,
+$$\text{"l"}$$ is $$-3.0$$ likely, and $$\text{"o"}$$ is $$4.1$$ likely to come next. In this case,
 RNN incorrectly suggests that $$\text{"o"}$$ should come next, as the score of $$4.1$$ is the highest.
 However, of course, we know that in this training sequence $$\text{"e"}$$ should follow $$\text{"h"}$$,
 so in fact the score of $$2.2$$ is the correct answer as it's highlighted in green in Figure 3, and we want that to be high and all other scores
@@ -222,31 +222,24 @@ $$ h_t = tanh(W_{hh}h_{t-1} + W_{xh}x_t) $$
 
 For the back propagation, Let's examine how the output at the very last timestep affects the weights at the very first time step.
 The partial derivative of $$h_t$$ with respect to $$h_{t-1}$$ is written as: 
-$$ \frac{\partial h_t}{\partial h_{t-1}} =  tanh^{'}(W_{hh}h_{t-1} + W_{xh}x_t)W_{hh} $$
+$$ J_t = \frac{\partial h_t}{\partial h_{t-1}} = D_t W_{hh}, \qquad D_t = \operatorname{diag}(1 - h_t \odot h_t) $$
 
 We update the weights $$W_{hh}$$ by getting the derivative of the loss at the very last time step $$L_{t}$$ with respect to $$W_{hh}$$. 
 
+For a loss $$L_T$$ at the final timestep, using column vectors for hidden states and their loss gradients, the gradient propagated to an earlier hidden state is a product of these Jacobians:
 $$
-\begin{aligned}
-\frac{\partial L_{t}}{\partial W_{hh}} = \frac{\partial L_{t}}{\partial h_{t}} \frac{\partial h_{t}}{\partial h_{t-1} } \dots \frac{\partial h_{1}}{\partial W_{hh}} \\
-= \frac{\partial L_{t}}{\partial h_{t}}(\prod_{t=2}^{T} \frac{\partial h_{t}}{\partial  h_{t-1}})\frac{\partial h_{1}}{\partial W_{hh}} \\
-= \frac{\partial L_{t}}{\partial h_{t}}(\prod_{t=2}^{T}  tanh^{'}(W_{hh}h_{t-1} + W_{xh}x_t)W_{hh}^{T-1})\frac{\partial h_{1}}{\partial W_{hh}} \\
-\end{aligned}
+\frac{\partial L_T}{\partial h_k} = J_{k+1}^{\mathsf T} J_{k+2}^{\mathsf T} \cdots J_T^{\mathsf T}\frac{\partial L_T}{\partial h_T}, \qquad k < T.
+$$
+Because the recurrent weights $$W_{hh}$$ are shared across timesteps, their gradient sums the contribution from every use of the matrix:
+$$
+\frac{\partial L_T}{\partial W_{hh}} = \sum_{t=1}^{T} \frac{\partial L_T}{\partial a_t} h_{t-1}^{\mathsf T}, \qquad a_t = W_{hh}h_{t-1} + W_{xh}x_t.
 $$
 
-* **Vanishing gradient:** We see that $$tanh^{'}(W_{hh}h_{t-1} + W_{xh}x_t)$$ will almost always be less than 1 because tanh is always between negative one and one. Thus, as $$t$$ gets larger (i.e. longer timesteps),  the gradient ($$\frac{\partial L_{t}}{\partial W} $$) will descrease in value and get close to zero. 
-This will lead to vanishing gradient problem, where gradients at future time steps rarely impact gradients at the very first time step. This is problematic when we model long sequence of inputs because the updates will be extremely slow. 
+* **Vanishing and exploding gradients:** As sequence length grows, products of recurrent Jacobians can become very small or very large. Saturated tanh activations can shrink gradients, while the recurrent weights can also amplify or shrink them; the outcome depends on the Jacobians across the sequence, not on the tanh derivative alone. Vanishing gradients make it difficult for losses at later timesteps to influence earlier states, while exploding gradients can produce excessively large updates (including non-finite values).
 
-* **Removing non-linearity (tanh):** If we remove non-linearity (tanh) to solve the vanishing gradient problem, then we will be left with  
-$$
-\begin{aligned}
-\frac{\partial L_{t}}{\partial W} = \frac{\partial L_{t}}{\partial h_{t}}(\prod_{t=2}^{T} W_{hh}^{T-1})\frac{\partial h_{1}}{\partial W} 
-\end{aligned}
-$$
-    * Exploding gradients: If the largest singular value of W_{hh} is greater than 1, then the gradients will blow up and the model will get very large gradients coming back from future time steps. Exploding gradient often leads to getting gradients that are NaNs. 
-    * Vanishing gradients: If the laregest singular value of W_{hh} is smaller than 1, then we will have vanishing gradient problem as mentioned above which will significantly slow down learning.   
- 
-In practice, we can treat the exploding gradient problem through gradient clipping, which is clipping large gradient values to a maximum threshold. However, since vanishing gradient problem still exists in cases where largest singular value of W_{hh} matrix is less than one, LSTM was designed to avoid this problem. 
+* **Removing the non-linearity (tanh):** Without tanh, each hidden-state Jacobian is $$W_{hh}$$, so gradients involve repeated matrix powers. Eigenvalues with magnitude above one can amplify gradients in associated modes, while those below one can attenuate them; more generally, amplification depends on the full matrix product. This illustrates why removing the non-linearity does not generally solve the vanishing-gradient problem.
+
+In practice, gradient clipping can limit exploding updates. LSTMs provide a cell-state path that can make it easier to preserve information over long sequences, but they do not guarantee that vanishing or exploding gradients cannot occur.
 
 
 ### LSTM Formulation
@@ -264,10 +257,10 @@ and LSTM computes the next hidden state $$h_t$$, and next cell state $$c_t$$ at 
 
 $$
 \begin{aligned}
-f_t &= \sigma(W_{hf}h_{t_1} + W_{xf}x_t) \\
-i_t &= \sigma(W_{hi}h_{t_1} + W_{xi}x_t) \\
-o_t &= \sigma(W_{ho}h_{t_1} + W_{xo}x_t) \\
-g_t &= \text{tanh}(W_{hg}h_{t_1} + W_{xg}x_t) \\
+f_t &= \sigma(W_{hf}h_{t-1} + W_{xf}x_t) \\
+i_t &= \sigma(W_{hi}h_{t-1} + W_{xi}x_t) \\
+o_t &= \sigma(W_{ho}h_{t-1} + W_{xo}x_t) \\
+g_t &= \text{tanh}(W_{hg}h_{t-1} + W_{xg}x_t) \\
 \end{aligned}
 $$
 
@@ -286,8 +279,8 @@ $$
   <img src="/assets/rnn/lstm_mformula_2.png" width="40%" >
 </div>
 
-where $$\odot$$ is an element-wise Hadamard product. $$g_t$$ in the above formulas is an intermediary
-calculation cache that's later used with $$o$$ gate in the above formulas.
+where $$\odot$$ is an element-wise Hadamard product. $$g_t$$ is the candidate cell update, which is
+combined with the input gate $$i_t$$ to update $$c_t$$.
 
 Since all $$f, i, o$$ gate vector values range from 0 to 1, because they were squashed by sigmoid function
 $$\sigma$$, when multiplied element-wise, we can see that:
@@ -302,10 +295,12 @@ This serves as a switch, where values are either almost always zero or almost al
 
 The key idea of LSTM is the cell state, the horizontal line running through between recurrent timesteps. You can imagine the cell
 state to be some kind of highway of information passing through straight down the entire chain, with
-only some minor linear interactions. With the formulation above, it's easy for information to just flow
-along this highway (Figure 5). Thus, even when there is a bunch of LSTMs stacked together, we can get an uninterrupted gradient flow where the gradients flow back through cell states instead of hidden states $$h$$ without vanishing in every time step.
+only some minor linear interactions. With the formulation above, information can flow along this highway (Figure 5).
+When the forget gate stays near one, this path can help preserve information and gradients across timesteps; it does not guarantee
+an uninterrupted gradient flow, since the forget-gate values and other paths still affect the gradients.
 
-This greatly fixes the gradient vanishing/exploding problem we have outlined above. Figure 5 also shows that gradient contains a vector of activations of the "forget" gate. This allows better control of gradients values by using suitable parameter updates of the "forget" gate.
+This can mitigate vanishing gradients, but does not in general prevent vanishing or exploding gradients. Figure 5 also shows that
+gradient flow through the cell state depends on the forget gate, whose learned values control how much of the previous cell state is retained.
 
 <div class="fig figcenter fighighlight">
   <img src="/assets/rnn/lstm_highway.png" width="70%" >
