@@ -969,16 +969,16 @@ We will highlight some parts of SciPy that you might find useful for this class.
 <a name='scipy-image'></a>
 
 ### Image operations
-SciPy provides some basic functions to work with images.
-For example, it has functions to read images from disk into numpy arrays,
-to write numpy arrays to disk as images, and to resize images.
+Pillow (PIL) provides functions to read images from disk into numpy arrays,
+to resize images, and to write numpy arrays to disk as images.
 Here is a simple example that showcases these functions:
 
 ```python
-from scipy.misc import imread, imsave, imresize
+import numpy as np
+from PIL import Image
 
-# Read an JPEG image into a numpy array
-img = imread('assets/cat.jpg')
+# Read a JPEG image into a numpy array
+img = np.asarray(Image.open('assets/cat.jpg'))
 print(img.dtype, img.shape)  # Prints "uint8 (400, 248, 3)"
 
 # We can tint the image by scaling each of the color channels
@@ -987,13 +987,13 @@ print(img.dtype, img.shape)  # Prints "uint8 (400, 248, 3)"
 # numpy broadcasting means that this leaves the red channel unchanged,
 # and multiplies the green and blue channels by 0.95 and 0.9
 # respectively.
-img_tinted = img * [1, 0.95, 0.9]
+img_tinted = (img * [1, 0.95, 0.9]).astype(np.uint8)
 
 # Resize the tinted image to be 300 by 300 pixels.
-img_tinted = imresize(img_tinted, (300, 300))
+img_tinted = np.asarray(Image.fromarray(img_tinted).resize((300, 300)))
 
 # Write the tinted image back to disk
-imsave('assets/cat_tinted.jpg', img_tinted)
+Image.fromarray(img_tinted).save('assets/cat_tinted.jpg')
 ```
 
 <div class='fig figcenter fighighlight'>
@@ -1153,10 +1153,10 @@ You can use the `imshow` function to show images. Here is an example:
 
 ```python
 import numpy as np
-from scipy.misc import imread, imresize
+from PIL import Image
 import matplotlib.pyplot as plt
 
-img = imread('assets/cat.jpg')
+img = np.asarray(Image.open('assets/cat.jpg'))
 img_tinted = img * [1, 0.95, 0.9]
 
 # Show the original image
